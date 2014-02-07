@@ -1,0 +1,22 @@
+[Desktop Entry]
+Name=NetBit73 - development graphical setup script
+Name[en_GB]=NetBit73 - development graphical setup script
+Name[fr]=NetBit73 - développement l'installateur graphique NeteXt73
+Name[pl]=NetBit73 - opracowanie graficznego instalatora NeteXt73
+Comment=NetBit73 - development graphical setup script
+Comment[en_GB]=NetBit73 - development graphical setup script
+Comment[fr]=NetBit73 - développement l'installateur graphique NeteXt73
+Comment[pl]=NetBit73 - opracowanie graficznego instalatora NeteXt73
+GenericName=NetBit73 - development graphical setup script
+GenericName[en_GB]=NetBit73 - development graphical setup script
+GenericName[fr]=NetBit73 - développement l'installateur graphique NeteXt73
+GenericName[pl]=NetBit73 - opracowanie graficznego instalatora NeteXt73
+Exec=xdg-open 'http://netbit73.blogspot.com'
+Icon=/opt/NeteXt73/ikony/netbit73.jpg
+Terminal=false
+StartupNotify=true
+Type=Application
+Categories=Utility;
+Version=1.0
+Encoding=UTF-8
+# vi:set encoding=UTF-8:

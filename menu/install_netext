@@ -1,0 +1,2 @@
+#!/bin/bash
+wget https://dl.dropboxusercontent.com/u/2552069/ext73/instalator_NeteXt73; bash instalator_NeteXt73

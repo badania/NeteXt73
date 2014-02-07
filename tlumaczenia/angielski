@@ -1,0 +1,364 @@
+#!/bin/bash
+## Graficzny instalator kerneli e X t 7 3  - NeteXt'73
+## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
+## przygotowanie skryptów optymalizacyjnych e X t 7 3
+## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
+## tłumaczenie na język niemiecki: Karolina Franieczek
+## tłumaczenie na język francuski: Michał Radwański (enedil)
+## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
+#
+#                   _   _      _      __  ___   _ _____ _____
+#                  | \ | | ___| |_ ___\ \/ / |_( )___  |___ /
+#                  |  \| |/ _ \ __/ _ \\  /| __|/   / /  |_ \
+#                  | |\  |  __/ |_  __//  \| |_    / /  ___) |
+#                  |_| \_|\___|\__\___/_/\_\\__|  /_/  |____/
+#
+#                   __ _ _ __ __ _ / _(_) ___ _____ __  _   _
+#                  / _` | '__/ _` | |_| |/ __|_  / '_ \| | | |
+#                 | (_| | | | (_| |  _| | (__ / /| | | | |_| |
+#                  \__, |_|  \__,_|_| |_|\___/___|_| |_|\__, |
+#                  |___/                                |___/
+#     _           _        _       _                   _                        _ _
+#    (_)_ __  ___| |_ __ _| | __ _| |_ ___  _ __      | | _____ _ __ _ __   ___| (_)
+#    | | '_ \/ __| __/ _` | |/ _` | __/ _ \| '__|     | |/ / _ \ '__| '_ \ / _ \ | |
+#    | | | | \__ \ |_ (_| | | (_| | |_ (_) | |        |   <  __/ |  | | | |  __/ | |
+#    |_|_| |_|___/\__\__,_|_|\__,_|\__\___/|_|        |_|\_\___|_|  |_| |_|\___|_|_|
+#        __  __  _     _____   _____      ___     _   _      _   ____  _ _  _____ ____
+#   ___  \ \/ / | |_  |___  | |___ /     ( _ )   | \ | | ___| |_| __ )(_) |____  |___ /
+#  / _ \  \  /  | __|    / /    |_ \     / _ \/\ |  \| |/ _ \ __|  _ \| | __| / /  |_ \
+# |  __/  /  \  | |_    / /    ___) |   | (_>  < | |\  |  __/ |_| |_) | | |_ / /  ___) |
+#  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
+#
+#########################################################################################################################################################################
+#tłumaczenia
+ 
+ 
+#########################################################################################################################################################################
+#tlumaczenia_apm
+export TEXT_APM1="Current version APM script in system is corrupted or out of date.\nUpdate available.\nInstall?"
+export TEXT_AKTUALNY_PROFIL_APM="Current APM profile:"
+export TEXT_ZMIEN_PROFIL_APM="Change APM profile:"
+export TEXT_APM2="To change status of APM install update"
+export TEXT_WERSJA_APM="Installed APM version"
+
+#########################################################################################################################################################################
+#tlumaczenia_backuprepo
+export a1="Make backup repository with GPG keys"
+export a2="Restore repository from a backup file"
+export a3="Download missing GPG keys"
+export a4="Fix incorrect GPG signatures"
+export a5="Delete unnecessary GPG keys"
+export a6="Add or remove applications/drivers and repository"
+export a7="Software instalator"
+export a8="Instalator editor"
+export MENU1="Enable Canonical Partner Repository"
+export MENU2="Disable Canonical Partner Repository"
+export MENU_OPIS="Modify the list of packages:"
+export TEXT_BACKUP1="Create or restore backup repository or download a missing GPG keys."
+export TEXT_BACKUP2="Select backup file"
+export TEXT_BACKUP3="Repository will be restored from a backup file"
+export TEXT_BACKUP4="Successfully restored repository from backup file."
+export TEXT_BACKUP5="You interrupted recovery process a repository."
+export TEXT_BACKUP6="You chose incorrect file!"
+export TEXT_BACKUP7="Make a file: source.list.backup\n"
+export TEXT_INSTALACJA="\n\nDONE!!! - press enter"
+export TEXT_KLUCZ="GPG key"
+export TEXT_DOSTAWCA_KLUCZA="Software provider"
+export TEXT_ZAZNACZ_KLUCZE="Select GPG keys to remove:"
+export TEXT_NIC_NIE_ZAZNACZYLES="Nothing selected."
+export TEXT_NIE_POBRALES_KLUCZY="List of keys has not been downloaded."
+
+#########################################################################################################################################################################
+#tlumaczenia_config
+export lang1="english!polski!français"
+export TEXT_CONFIG1="Configurator NeteXt73"
+export TEXT_CONFIG2="Configure NeteXt73:"
+export TEXT_CONFIG3="Color highlighted subtitles"
+export TEXT_CONFIG4="URL premium kernels:"
+export TEXT_CONFIG5="URL testing version:"
+export TEXT_CONFIG6="Language:"
+export TEXT_CONFIG7="Reset NeteXt73 settings:"
+export TEXT_CONFIG8="Successfully deleted configuration files."
+export TEXT_CONFIG9="APM Profile:"
+export TEXT_CONFIG10="Kernel Profile:"
+export TEXT_CONFIG11="Automatically use selected Kernel Profile"
+export TEXT_CONFIG12="Keep a copy downloaded deb files in /var/cache/apt/archives"
+
+#########################################################################################################################################################################
+#tlumaczenia_deinstalator
+export TEXT_MENU_DEINSTALATOR1="Delete kernel"
+export TEXT_MENU_DEINSTALATOR2="Delete kernel - expert mode"
+export TEXT_MENU_DEINSTALATOR3="Uninstaller broadcom"
+export TEXT_MENU_DEINSTALATOR4="Uninstaller APM"
+export TEXT_MENU_DEINSTALATOR5="Uninstaller microcode and firmware"
+export TEXT_MENU_DEINSTALATOR6="Delete cron job free up unused memory"
+export TEXT_MENU_DEINSTALATOR7="Uninstall NeteXt73"
+export TEXT_DEINSTALATOR="Uninstallers."
+export TEXT_DEINSTALATOR1="Select:"
+export TEXT_DEINSTALATOR2="Really want to delete WLAN Broadcom drivers?"
+export TEXT_DEINSTALATOR3="Removing WLAN Broadcom driver may cause system instability!"
+export TEXT_DEINSTALATOR4="Currently in use:"
+export TEXT_DEINSTALATOR5="case you did not remove it, it will not be visible in the list below.\n\n If this list is empty it means that you have installed a kernel that is used and can not be removed.\n\nSelect kernel to remove it:"
+export TEXT_DEINSTALATOR6="kernel version"
+export TEXT_DEINSTALATOR7="Successfully deleted selected kernels."
+export TEXT_DEINSTALATOR8="Aborted removal process of kernels!"
+export TEXT_DEINSTALATOR10="Are you sure you want to delete APM script?"
+export TEXT_DEINSTALATOR11="Are you sure you want to delete microcode and firmware for CPU and GPU?"
+export TEXT_BRAK_KERNELI="There is no kernels to remove."
+
+#########################################################################################################################################################################
+#tlumaczenia_gosc
+export TEXT_GOSC1="Enable or disable guest session."
+export TEXT_GOSC2="Enable guest session"
+export TEXT_GOSC3="Disable guest session"
+export TEXT_GOSC4="Enter root password to disable guest session."
+export TEXT_GOSC5="Enter root password to enable guest session."
+export TEXT_INFO="\n\nDONE !!! - press enter"
+
+#########################################################################################################################################################################
+#tlumaczenia_grub
+export TEXT_SKRYPTEXT_10="Current GRUB entry:"
+export TEXT_SKRYPTEXT_11="What you want to do?"
+export TEXT_GRUB4A="Make GRUB settings backup"
+export TEXT_GRUB5A="Restore GRUB settings from backup"
+export TEXT_GRUB6A="Setup custom GRUB flags"
+export TEXT_GRUB7A="Manual edit custom GRUB flags"
+export TEXT_NETBIT_MENU1D="Set display time GRUB menu"
+export TEXT_GRUB8="Create backup"
+export TEXT_GRUB9="Interrupted creating a backup file!"
+export TEXT_GRUB10="Restoring GRUB settings from a backup file"
+export TEXT_GRUB11="Aborted restoring GRUB settings!."
+export TEXT_GRUB12="Backup file is missing."
+export TEXT_GRUB13="There is no backup file of GRUB settings. Backup will be automatically created in the default directory."
+export TEXT_GRUB14="Select correct version of kernel:?\n"
+#export TEXT_GRUB15="Optimized settings for most PCs"
+#export TEXT_GRUB16="Sandy and Ivy Bridge /i3-i7/ with integrated Intel GPU"
+export TEXT_GRUB17="Backlight settings.\n"
+export TEXT_GRUB18="Choose this when there are problems with default entries."
+export TEXT_GRUB19="Fixed"
+export TEXT_GRUB_STD="CPU Intel (minimum Core2Duo CPU) or AMD (minimum K8 Series)"
+export TEXT_GRUB_INTEL="Intel i3-i5-i7 - Sandy/Ivy Bridge, Haswell  with integrated Intel GPU"
+export TEXT_GRUB_RADEON="Radeon DPM - open graphics drivers. Designed only for kernel version v26.xx (based on 3.11)"
+export TEXT_GRUB21="Final approval of changes.\n"
+export TEXT_GRUB21A="Selected changes will be made. Are you sure?"
+export TEXT_GRUB21B="Advanced mode"
+export TEXT_GRUB21C="Edit custom entries"
+export TEXT_GRUB22="Customize entries or accept present:"
+export TEXT_GRUB23="For advanced users only. Be careful!\nMake changes or return to the previous menu"
+export TEXT_NETBIT_MENU18="Display time GRUB menu:"
+export TEXT_NETBIT_MENU19="Enter root password or close this window."
+
+
+#########################################################################################################################################################################
+#tlumaczenia_kernele
+export TEXT_INSTLATOR1="<b>WARNING!</b> - Install the kernel by e X t 7 3,APM script, Microcode CPU and firmware for PC working properly."
+export TEXT_MENU_INSTALATOR3="Local"
+export TEXT_MENU_INSTALATOR4="Headers Only"
+export TEXT_MENU_INSTALATOR5="PPA Mainline"
+export TEXT_PPA_1="Select your version system, suggesting:"
+export TEXT_RODZAJ_SYSTEMU="OS version"
+export TEXT_LISTA_KERNELI="List of kernels for Ubuntu"
+export TEXT_ZAZNACZ_KERNEL="Select kernel that you want to download"
+export TEXT_STEROWNIKI1="Not found kernel for your system version"
+export TEXT_INSTALOWAC="INSTALL?"
+export TEXT_INSTALOWAC_KERNEL="was downloaded. \n\nInstall? Press:\n\nYES\n"
+export TEST_INSTALOWAC_KERNEL2="Command installation is saved in clipboard. You can paste it into terminal via keyboard shortcuts:\n\nSHIFT+INSERT or CTRL+SHIFT+V\n"
+export TEST_INSTALOWAC_KERNEL3="Will be install kernel"
+export TEST_INSTALOWAC_KERNEL4="based on downloaded files:"
+export TEST_INSTALOWAC_KERNEL5="URL of downloaded files is saved in clipboard. You can paste it into terminal via keyboard shortcuts:\n\nSHIFT+INSERT or CTRL+SHIFT+V\n"
+export TEXT_INSTALOWAC_KERNEL6="Not downloaded files. Please try again."
+export TEXT_INSTALOWAC_KERNEL7="You have already installed this version of kernel. Before reinstalling you need to remove it."
+export TEXT_STRONA1="Enter path to payable kernels.\nIf you do not have it please contact: Tomasz e X t 7 3 Miś,mail:ext73@wp.pl"
+export TEXT_SUMA_KONTROLNA="Incorrect checksums. Download file again."
+export TEXT_K8="K8 - from Intel C2D, AMD K8"
+export TEXT_DEB1="Select the file linux-headers or linux-image, which do you want to install:"
+
+#########################################################################################################################################################################
+#tlumaczenia_kontakt
+export TEXT_KONTAKT_Z_AUTORAMI="Contact with authors:"
+export TEXT_NETBIT="NetBit73 - development graphical setup script"
+export TEXT_EXT="e X t 7 3 - development a custom kernel and APM script"
+export TEXT_FADEMIND="FadeMind - translations and beta tests"
+export TEXT_KAROLINA="Karolina Franieczek - German translation"
+export TEXT_ENEDIL="enedil - French translation"
+
+#########################################################################################################################################################################
+#tlumaczenia_logi
+export TEXT_LOGI0="Current version kernel:"
+export TEXT_LOGI1="Installed versions of kernels:"
+export TEXT_LOGI2="Hardware:"
+export TEXT_LOGI6="Status APM Script and Microcode CPU:"
+export TEXT_LOGI7="Yes, an update is available."
+export TEXT_LOGI8="Owner"
+export TEXT_LOGI9="Custom GRUB flags:"
+export TEXT_LOGI10="Files versions:"
+export TEXT_LOGI12="OS"
+export TEXT_SKRYPT="Script"
+export TEXT_WYGENERUJ="Create logs"
+
+#########################################################################################################################################################################
+#tlumaczenia_microcode
+export TEXT_MICROCODE1="You have the latest version of Microcode CPU and Firmware.\n No updates available."
+export TEXT_MICROCODE2="Will be installed Microcode CPU and Firmware."
+
+#########################################################################################################################################################################
+#tlumaczenia_monitor
+export TEXT_MONITOR1="Select applications to launch:"
+
+#########################################################################################################################################################################
+#tlumaczenia_netext73
+export TEXT_WERSJA="NeteXt'73 update available to"
+export TEXT_LICENCJA="License"
+export TEXT_BUG="Bug report"
+export TEXT_CHANGELOG="Changelog"
+export TEXT_PASSWD="Wrong password, would you like to cancel the NeteXt73?"
+export TEXT_PASSWD1="Please enter a password"
+
+#########################################################################################################################################################################
+#tlumaczenia_nvidia
+
+
+#########################################################################################################################################################################
+#tlumaczenia_radeon
+
+#########################################################################################################################################################################
+#tlumaczenia_ram
+export TEXT_NETBIT_RAM1="Free up unused memory now"
+export TEXT_NETBIT_RAM2="Set percent usage RAM, after which free up unused memory."
+export TEXT_POWROT="Cancel"
+export TEXT_RAM6="In a moment will be executed free up unused memory job. If you do not want to do this, close this window."
+export TEXT_RAM7="Before:"
+export TEXT_RAM8="After:"
+
+#########################################################################################################################################################################
+#tlumaczenia_tasksel
+export TEXT_TASKSEL1="In a moment will be installed server services. If you do not want to do this, close this window."
+
+#########################################################################################################################################################################
+#tlumaczenia_update
+export TEXT_UPDATE1="Updater"
+export TEXT_UPDATE1a="What do you want to update?"
+export TEXT_UPDATE2="Update system"
+export TEXT_UPDATE3="Update NeteXt'73"
+export TEXT_UPDATE4="No updates available"
+export TEXT_UPDATE5="Update available"
+export TEXT_UPDATE6="Begin update NeteXt73?"
+export TEXT_UPDATE7="Install All"
+export TEXT_UPDATE8="Install available updates"
+export TEXT_INSTALACJA_NOWEJ="Install a new version NeteXt73"
+export TEXT_STABLE="Last stable kernel"
+export TEXT_MICROCODE1="You have the latest version of Microcode CPU and Firmware.\n No updates available."
+export TEXT_ZAINSTALOWANY="NeteXt'73 has been successfully installed. \nRun this application from the menu: TOOLS/ACCESSORIES."
+export TEXT_BRAK_DANYCH="Servers not available. Check your Internet connection or try again later."
+
+#########################################################################################################################################################################
+#tlumaczenia_uslugi
+export TEXT_MENU_USLUGI="Select where you want to make changes:"
+export TEXT_MENU_USLUGI1="Manage services SysV"
+export TEXT_MENU_USLUGI1A="Manage services Upstart"
+export TEXT_MENU_USLUGI1B="Manage services SysV - expert mode"
+export TEXT_MENU_USLUGI1C="Manage services Upstart - expert mode"
+export TEXT_MENU_USLUGI1D="Show list of services with their status"
+export TEXT_MENU_USLUGI2="Select services to disable."
+export TEXT_MENU_USLUGI3="Service name"
+export TEXT_MENU_USLUGI4="Enable"
+export TEXT_MENU_USLUGI5="Disable"
+export TEXT_MENU_USLUGI6="Select services to manage."
+export TEXT_MENU_USLUGI7="Start"
+export TEXT_MENU_USLUGI8="Manage autostart services."
+export TEXT_MENU_USLUGI9="Service"
+export TEXT_MENU_USLUGI10="Status"
+export TEXT_MENU_USLUGI11="No proc."
+export TEXT_MENU_USLUGI12="You manage service:"
+export TEXT_MENU_USLUGI22A="Start service"
+export TEXT_MENU_USLUGI22B="Stop service"
+export TEXT_MENU_USLUGI22C="Enable autostart service"
+export TEXT_MENU_USLUGI22D="Disable autostart service"
+export TEXT_MENU_USLUGI30="Service will be enabled"
+export TEXT_MENU_USLUGI31="Enter root password or close this window."
+export TEXT_MENU_USLUGI32="Service \$a1 will be enabled and added to autostart."
+export TEXT_MENU_USLUGI33="Service will be disabled."
+export TEXT_MENU_USLUGI34="Service is disabled."
+export TEXT_MENU_USLUGI35="Service is enabled."
+export TEXT_MENU_USLUGI36="Service \$a1 will be remove from autostart."
+export TEXT_MENU_USLUGI37="Service is disabled."
+export TEXT_MENU_USLUGI38="Status services:"
+export TEXT_MENU_USLUGI39="Name"
+export TEXT_BRAK="none"
+
+#########################################################################################################################################################################
+#tlumaczenia_procedury
+export BRAKNETA="<span color=\"$kolor_textu\">Servers not available. Check your Internet connection or try again later.</span>"  
+export TEXT_PROCEDURA_4="Install linux-firmware-nonfree?"
+export TEXT_POBIERANIE="<span color=\"$kolor_textu\">Connecting to server. Wait!</span>"
+export TEXT_NETEXT2="optimizer"
+export TEXT_POB1="s/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Speed: \2\/s, Remaining \3/"
+export TEXT_POB2="Downloading:"
+export TEXT_INFO1="<br>Customized kernels and APM script - e X t 7 3<br>Script NeteXt'73 - NetBit73<br>English translation, beta tests: Tomasz Przybył /FadeMind/<br>German translation: Karolina Franieczek"
+export TEXT_PROCEDURA_1="Installing e X t 7 3 customized kernel"
+export TEXT_PROCEDURA_2="Installing Microcode CPU for $komputerek OS"
+export TEXT_PROCEDURA_3="Deleting Microcode CPU for $komputerek"
+export TEXT_PROCEDURA_6="Installing APM Script"
+export TEXT_PROCEDURA_8_1="Change current profile APM to "
+export TEXT_PROCEDURA_9="Deleting APM Script"
+export TEXT_PROCEDURA_13="Saving changes in GRUB configuration file"
+export TEXT_PROCEDURA_14="Installing drivers for AMD GPU"
+export TEXT_PROCEDURA_15="Installing drivers for Nvidia GPU"
+export TEXT_KERNEL1="Will be deleted kernels:"
+export TEXT_KERNEL2="Kernel was installed.\n\nClick OK. Temp files will be deleted.\n U must reboot system now."
+export TEXT_INSTALACJA1="Enter root password or close this window."
+export TEXT_INSTALACJA2="\n\nDONE !!! - press enter"
+export TEXT_PLATFORMA1="Selected platform"
+export TEXT_PLATFORMA2=".\nWARNING !!\nReinstalling of installed kernels is not recommended.."
+export TEXT_WYBIERZ_KERNEL="Select kernel for install:"
+export TEXT_ZNITY1="Installed?"
+export TEXT_GRUB1="Deleting unwanted entries in file"
+export TEXT_GRUB2="Make changes"
+export TEXT_GRUB3="Aborted save changes in GRUB. Start from the beginning."
+export TEXT_WYMAGANY_RESTART="Restart makes changes."
+export TEXT_INFO2="Installation was canceled. Downloaded files are in:"
+export TEXT_ZAMKNIJ_PROGRAM="Aborted download. Application will shutdown in 25 seconds."
+export TEXT_RESTART="Reboot?"
+#często powtarzane
+export TEXT_INSTALACJA1="Enter root password or close this window."
+export TEXT_INST1="Installing dependencies."
+export TEXT_INFORMACJA="INFORMATION"
+export TEXT_INSTALACJA2="\n\nDONE !!! - press enter"
+export TEXT_MENU="menu"
+export TEXT_NIE="No"
+export TEXT_OPIS="description"
+export TEXT_POWROT="Cancel"
+export TEXT_STEROWNIKI1="Unavailable drivers for this operating system version"
+export TEXT_STEROWNIKI2="Installer GPU Drivers:"
+export TEXT_STEROWNIKI3="Setup did not find a supported GPU card."
+export TEXT_TAK="Yes"
+export TEXT_SUMA_KONTROLNA="Incorrect checksums. Download file again."
+export TEXT_UWAGA="WARNING"
+export TEXT_ZAMKNIJ="Close"
+export TEXT_ZAZNACZ="select"
+export TEXT_STEROWNIK="Select a driver"
+
+#########################################################################################################################################################################
+
+#tlumaczenia_skrypty
+
+export TEXT_SKRYPT1="Utilities Scripts"
+export MENU3="Delete unnecessary configuration files"
+export MENU4="Kill the zombie processes"
+export MENU5="Xterm"
+export MENU6="Synchronize time with NTP server"
+export MENU7="Disable IPv6"
+export MENU8="Enable IPv6"
+export MENU9="Backdoor SSHD test"
+export MENU10="Google-Chrome GTK theme FIX"
+export TEXT_ZOMBIE1="Zombie processes"
+export TEXT_ZOMBIE2="There aren't any zombie processes."
+export TEXT_CONFIG1="Not found unnecessary configuration files."
+export TEXT_BACK_CRITIC="CRITICAL: Fokirtor strings found in sshd process"
+export TEXT_BACK_OK="OK: No indication of Fokirtor found."
+
+
+#########################################################################################################################################################################
+
+

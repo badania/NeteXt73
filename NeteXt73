@@ -1,0 +1,116 @@
+#!/bin/bash
+## Graficzny instalator kerneli e X t 7 3  - NeteXt'73
+## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
+## przygotowanie skryptów optymalizacyjnych e X t 7 3
+## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
+## tłumaczenie na język niemiecki: Karolina Franieczek
+## tłumaczenie na język francuski: Michał Radwański (enedil)
+## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
+#
+#		    _   _      _      __  ___   _ _____ _____
+#		   | \ | | ___| |_ ___\ \/ / |_( )___  |___ /
+#		   |  \| |/ _ \ __/ _ \\  /| __|/   / /  |_ \
+#		   | |\  |  __/ |_  __//  \| |_    / /  ___) |
+#		   |_| \_|\___|\__\___/_/\_\\__|  /_/  |____/
+#
+#	            __ _ _ __ __ _ / _(_) ___ _____ __  _   _
+#	           / _` | '__/ _` | |_| |/ __|_  / '_ \| | | |
+#	          | (_| | | | (_| |  _| | (__ / /| | | | |_| |
+#	           \__, |_|  \__,_|_| |_|\___/___|_| |_|\__, |
+#	           |___/                                |___/
+#     _           _        _       _                   _                        _ _
+#    (_)_ __  ___| |_ __ _| | __ _| |_ ___  _ __      | | _____ _ __ _ __   ___| (_)
+#    | | '_ \/ __| __/ _` | |/ _` | __/ _ \| '__|     | |/ / _ \ '__| '_ \ / _ \ | |
+#    | | | | \__ \ |_ (_| | | (_| | |_ (_) | |        |   <  __/ |  | | | |  __/ | |
+#    |_|_| |_|___/\__\__,_|_|\__,_|\__\___/|_|        |_|\_\___|_|  |_| |_|\___|_|_|
+#        __  __  _     _____   _____      ___     _   _      _   ____  _ _  _____ ____
+#   ___  \ \/ / | |_  |___  | |___ /     ( _ )   | \ | | ___| |_| __ )(_) |____  |___ /
+#  / _ \  \  /  | __|    / /    |_ \     / _ \/\ |  \| |/ _ \ __|  _ \| | __| / /  |_ \
+# |  __/  /  \  | |_    / /    ___) |   | (_>  < | |\  |  __/ |_| |_) | | |_ / /  ___) |
+#  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
+#
+#########################################################################################################################################################################
+#procedury
+
+source /opt/NeteXt73/procedury
+
+aktualizacja(){
+which curl 1> /dev/null || {
+    xterm -T instalator -e bash -c "echo '$TEXT_INST1'; sudo apt-get install curl -y"
+}
+which pastebinit 1> /dev/null || {
+    xterm -T instalator -e bash -c "echo '$TEXT_INST1'; sudo apt-get install pastebinit -y"
+}
+
+if [ "$(dpkg -l ca-certificates | grep "ii" | awk '{print $1}'| head -n1)" != "ii" ];  then
+    xterm -T instalator -e bash -c "echo '$TEXT_INST1'; sudo apt-get install ca-certificates -y"
+fi
+
+netext_twoj=$(cat /opt/NeteXt73/procedury | grep wersja | head -n 1 | sed 's/=/ /' 	| sed 's/wersja //')
+if [ -e ~/.netext73/netext_testing ] && [ "$(cat ~/.netext73/netext_testing | grep 'http')" != "" ]; then
+      twoj_netext=$(curl "$polozenie_skryptu/testing" 	| sed 's/wersja=//')
+else
+      twoj_netext=$(curl "$polozenie_skryptu/stable" 	| sed 's/wersja=//') 
+fi
+
+if [ "$twoj_netext" != "$netext_twoj" ] && [ "$twoj_netext" != "" ]; then
+      notify-send -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_WERSJA $twoj_netext"
+      echo "$TEXT_UWAGA" "$TEXT_WERSJA"
+      echo "$twoj_netext"
+fi
+
+if [ -e ~/.netext73/https_link ]; then
+      echo "ok" > /dev/null
+else
+      if [ "$(cat /opt/NeteXt73/procedury | grep https.*dl)" != "" ]; then
+	  echo "TRUE" > ~/.netext73/https_link
+      else
+	  echo "FALSE" > ~/.netext73/https_link
+      fi
+fi
+}
+
+
+#########################################################################################################################################################################
+
+if [ -e /root/.gtkrc* ]; then
+    echo "ok" > /dev/null
+else
+    cp ~/.gtkrc* /tmp/
+fi
+if [ -e /tmp/userek ]; then
+    echo "ok" > /dev/null
+else
+    echo $USER > /tmp/userek
+fi
+aktualizacja &
+if [ -e /tmp/stan_netext ] && [ $(cat /tmp/stan_netext) = "root" ]; then
+    yad --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click
+    klawisz=$?
+else
+    yad --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="Root:5" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click
+    klawisz=$?
+fi
+
+if [ "$klawisz" = "2" ]; then
+      yad  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/tlumaczenia/LICENSE --width=600 --height=600 --button="gtk-ok:1" 
+      cd /opt/NeteXt73 && ./NeteXt73
+elif [ "$klawisz" = "3" ]; then
+      yad  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1"
+      cd /opt/NeteXt73 && ./NeteXt73
+elif [ "$klawisz" = "4" ]; then
+      if [ "$USER" = "root" ]; then
+	    userek=$(cat /tmp/userek)
+	    su $userek -c "xdg-open \"http://ubuntu.pl/forum/viewtopic.php?f=216&t=167845\""
+      else
+	    xdg-open "http://ubuntu.pl/forum/viewtopic.php?f=216&t=167845"
+      fi
+      cd /opt/NeteXt73 && ./NeteXt73
+elif [ "$klawisz" = "5" ]; then
+      cd /opt/NeteXt73 && ./NeteXt73_root
+fi
+
+if [ $USER = "root" ] && [ -e /home/root ]; then
+    sudo rm -rf /home/root
+fi

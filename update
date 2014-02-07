@@ -1,0 +1,276 @@
+#!/bin/bash
+## Graficzny instalator kerneli e X t 7 3  - NeteXt'73
+## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
+## przygotowanie skryptów optymalizacyjnych e X t 7 3
+## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
+## tłumaczenie na język niemiecki: Karolina Franieczek
+## tłumaczenie na język francuski: Michał Radwański (enedil)
+## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
+#
+#		    _   _      _      __  ___   _ _____ _____
+#		   | \ | | ___| |_ ___\ \/ / |_( )___  |___ /
+#		   |  \| |/ _ \ __/ _ \\  /| __|/   / /  |_ \
+#		   | |\  |  __/ |_  __//  \| |_    / /  ___) |
+#		   |_| \_|\___|\__\___/_/\_\\__|  /_/  |____/
+#
+#	            __ _ _ __ __ _ / _(_) ___ _____ __  _   _
+#	           / _` | '__/ _` | |_| |/ __|_  / '_ \| | | |
+#	          | (_| | | | (_| |  _| | (__ / /| | | | |_| |
+#	           \__, |_|  \__,_|_| |_|\___/___|_| |_|\__, |
+#	           |___/                                |___/
+#     _           _        _       _                   _                        _ _
+#    (_)_ __  ___| |_ __ _| | __ _| |_ ___  _ __      | | _____ _ __ _ __   ___| (_)
+#    | | '_ \/ __| __/ _` | |/ _` | __/ _ \| '__|     | |/ / _ \ '__| '_ \ / _ \ | |
+#    | | | | \__ \ |_ (_| | | (_| | |_ (_) | |        |   <  __/ |  | | | |  __/ | |
+#    |_|_| |_|___/\__\__,_|_|\__,_|\__\___/|_|        |_|\_\___|_|  |_| |_|\___|_|_|
+#        __  __  _     _____   _____      ___     _   _      _   ____  _ _  _____ ____
+#   ___  \ \/ / | |_  |___  | |___ /     ( _ )   | \ | | ___| |_| __ )(_) |____  |___ /
+#  / _ \  \  /  | __|    / /    |_ \     / _ \/\ |  \| |/ _ \ __|  _ \| | __| / /  |_ \
+# |  __/  /  \  | |_    / /    ___) |   | (_>  < | |\  |  __/ |_| |_) | | |_ / /  ___) |
+#  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
+#
+#########################################################################################################################################################################
+#procedury
+
+source /opt/NeteXt73/procedury
+
+#########################################################################################################################################################################
+#Update
+cd /tmp
+
+usun(){
+rm *.html* -f
+rm -f /tmp/*.txt 
+rm -f /tmp/NeteXt73*.tar.gz
+rm -rf /tmp/NeteXt73
+}
+
+
+aktualizuj_calosc(){
+konfiguracja=$(yad --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_UPDATE1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
+		  "$a1" "microcode" \
+		  "$a2" "grub" \
+		  "$a3" "apm" \
+		  "$a4" "kernel" \
+		  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
+		  klawisz=$?
+		  if [ "$klawisz" = "0" ]; then
+			  if [ "$(echo $konfiguracja | grep microcode)" != "" ]; then
+				  /opt/NeteXt73/./microcode
+			  fi
+			  if [ "$(echo $konfiguracja | grep grub)" != "" ]; then
+				  /opt/NeteXt73/./grub
+			  fi
+			  if [ "$(echo $konfiguracja | grep apm)" != "" ]; then
+				  /opt/NeteXt73/./apm
+			  fi
+			  if [ "$(echo $konfiguracja | grep kernel)" != "" ]; then
+				  /opt/NeteXt73/./kernele
+			  fi
+		  fi
+}
+
+
+
+usun
+
+menu=""
+ilosc_aktualizacji=0
+
+twoj_netext=$(cat /opt/NeteXt73/procedury | grep wersja | head -n 1 | sed 's/wersja=//')
+
+if [ -e ~/.netext73/netext_testing ] && [ "$(cat ~/.netext73/netext_testing | grep 'http')" != "" ]; then
+      nowy_netext=$(curl $polozenie_skryptu/testing 	| grep 'wersja' | sed 's/wersja=//')
+else
+      nowy_netext=$(curl $polozenie_skryptu/stable 	| grep 'wersja' | sed 's/wersja=//')
+fi
+
+wget $adres_firmware/index.html -O microcode.txt | \
+wget $adres_glowny/kernele/index.html -O kernel.txt | \
+wget https://www.kernel.org/ -O stable.txt | \
+wget $adres_skryptow/APM2/index.html -O apm.txt  2>&1 | pobieranie2 
+
+nowy_firmware=$(cat microcode.txt | grep "href=.*linux" | cut -d '"' -f 2 | cut -d '_' -f 2)
+twoj_firmware=$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1)
+
+if [ "$(uname -r | grep ext | grep pro )" != "" ];then
+    twoj_kernel="e X t 7 3 - pro v$(uname -r| cut -d "-" -f 4)_$(uname -r | cut -d '-' -f 1)"
+elif [ "$(uname -r | grep ext )" != "" ];then
+    twoj_kernel="e X t 7 3 v$(uname -r| cut -d "-" -f 4)_$(uname -r | cut -d '-' -f 1)"
+else
+    twoj_kernel=$(uname -r)
+fi
+nowy_kernel=$(grep 'href='   ./kernel.txt | grep 'href="v'| cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/' | sort -r | head -n 1 | sed 's/v...._//')
+
+twoj_apm=$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)
+wersja_apm=$(cat apm.txt | grep "href=.*advanced" | cut -d '"' -f 2 | cut -d '_' -f 6 | head -n 1 | sed 's/.tar.gz//')
+
+
+#GRUB
+if [ "$(grep 'acpi_osi=' /etc/default/grub)" != "" ]; then
+      a2="FALSE"
+else
+      a2="TRUE"
+      ((ilosc_aktualizacji++))
+fi
+
+if [ "$(cat microcode.txt)" = "" ]; then
+      firm=$TEXT_BRAK_DANYCH
+      a1="TRUE"
+else
+      if [ "$twoj_firmware" = "$nowy_firmware" ] ; then
+	  firm="$TEXT_UPDATE4"
+	  a1="FALSE"
+      else
+	  firm="$TEXT_UPDATE5  v$nowy_firmware"
+	  menu="$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE1 NeteXt73!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 APM!$TEXT_UPDATE2!$TEXT_UPDATE8"
+	  a1="TRUE"
+	  ((ilosc_aktualizacji++))
+      fi
+fi
+if [ "$(cat apm.txt)" = "" ]; then
+      apm=$TEXT_BRAK_DANYCH
+      a3="TRUE"
+else
+      if [ "$twoj_apm" = "$wersja_apm" ]  ; then
+	  apm="$TEXT_UPDATE4"
+	  a3="FALSE"
+      else
+	  apm="$TEXT_UPDATE5 $wersja_apm"
+	  menu="$TEXT_UPDATE1 APM!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE1 NeteXt73!$TEXT_UPDATE2!$TEXT_UPDATE8"
+	  a3="TRUE"
+	  ((ilosc_aktualizacji++))
+      fi
+fi
+if  [ "$(cat stable.txt)" = "" ]; then
+      stable=$TEXT_BRAK_DANYCH
+      nr=""
+else
+      stable=$(cat stable.txt | grep tar.xz | head -n 1 | cut -d '-' -f 2 | sed 's/.tar.*//')
+      nr=$stable
+fi
+if [ "$(cat kernel.txt)" = "" ]; then
+      kern=$TEXT_BRAK_DANYCH
+      a4="TRUE"
+else
+      if [ "$(dpkg -l | grep $(echo $nowy_kernel | sed 's/-ags.*//g'))" != "" ]; then
+	  kern="$TEXT_UPDATE4"
+	  a4="FALSE"
+      else
+	  kern="$TEXT_UPDATE5  v$(echo $nowy_kernel | cut -d "-" -f 4)_$(echo  $nowy_kernel | cut -d "-" -f 1)"
+	  menu="$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE1 NeteXt73!$TEXT_UPDATE1 APM!$TEXT_UPDATE2!$TEXT_UPDATE8"
+	  a4="TRUE"
+	  ((ilosc_aktualizacji++))
+      fi
+fi
+if [ "$nowy_netext" = "" ]; then
+      netext=$TEXT_BRAK_DANYCH
+else
+      if [ "$twoj_netext" = "$nowy_netext" ] ; then
+	  netext="$TEXT_UPDATE4"
+      else
+	  netext="$TEXT_UPDATE5  v$(echo $nowy_netext)"
+	  menu="$TEXT_UPDATE1 NeteXt73!$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 APM!$TEXT_UPDATE2!$TEXT_UPDATE8"
+      fi
+fi
+if [ "$menu" = "" ]; then
+      menu="$TEXT_UPDATE2"
+fi
+
+
+if [ "$ilosc_aktualizacji" -gt "1" ]; then
+	if [ "$twoj_netext" = "$nowy_netext" ] ; then
+		 menu="$TEXT_UPDATE8"
+        else
+		 menu="$TEXT_UPDATE1 NeteXt73!$TEXT_UPDATE8"
+	fi
+fi
+a=$(yad --title="$nazwa_skryptu" --width=610 --window-icon="/opt/NeteXt73/ikony/netext.png" --form \
+--field="NeteXt73 v$twoj_netext:RO" "$netext" \
+--field="Firmware/microcode v$twoj_firmware:RO" "$firm" \
+--field="Kernel $twoj_kernel:RO" "$kern" \
+--field="APM $twoj_apm:RO" "$apm" \
+--field="$TEXT_STABLE:RO" "$stable" \
+--field="$TEXT_UPDATE1:CB" "$menu" \
+--button="Changelog $nr:3" \
+--button="$TEXT_UPDATE7:2" \
+--button="gtk-ok:0" --button="$TEXT_POWROT:1")
+
+klawisz=$?; a=$(echo $a | cut -d "|" -f 6)
+if [ $klawisz = "0" ]; then 
+	if [ "$a" = "$TEXT_UPDATE1 APM" ]; then 
+	    usun
+	    cd /opt/NeteXt73 && ./apm
+	elif [ "$a" = "$TEXT_UPDATE1 Firmware/microcode" ]; then 
+	    usun
+	    if [ "$firm" = "$TEXT_UPDATE4" ]; then
+		  yad --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_MICROCODE1"
+	    else
+		  cd /opt/NeteXt73 && ./microcode
+	    fi
+	elif [ "$a" = "$TEXT_UPDATE1 Kernel" ]; then 
+	    usun
+	    cd /opt/NeteXt73 && ./kernele
+	elif [ "$a" = "$TEXT_UPDATE1 NeteXt73" ] && [ "$nowy_netext" != "" ]; then 
+		if [ "$netext" = "$TEXT_UPDATE4" ]; then
+		    yad --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_UPDATE4"
+		else
+		    if [ "$twoj_netext" != "$nowy_netext" ]; then
+			  if [ -e ~/.netext73/netext_testing ] && [ "$(cat ~/.netext73/netext_testing | grep 'http')" != "" ]; then
+				  wget $polozenie_skryptu/1.txt | wget $(cat ~/.netext73/netext_testing) 2>&1 | pobieranie2 
+				  xterm -T instalator -e bash -c "tar -zxvf /tmp/NeteXt73_testing.tar.gz -C /tmp/"
+			  else
+				  wget $polozenie_skryptu/1.txt | wget $polozenie_skryptu/NeteXt73.tar.gz 2>&1 | pobieranie2 
+				  xterm -T instalator -e bash -c "tar -zxvf /tmp/NeteXt73.tar.gz -C /tmp/"
+			  fi
+		    fi
+		    if [ -e NeteXt73*.gz ] && [ -e 1.txt ] && [ "$(grep $(md5sum NeteXt73*.gz ) 1.txt)" != "" ]; then
+			if [ "$(cat /opt/NeteXt73/procedury | grep wersja | head -n 1 )" != "$(cat /tmp/NeteXt73/procedury | grep wersja | head -n 1 )" ]; then
+			      yad --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_UPDATE6"
+			      if [ $? = 0 ]; then
+				      xterm -e bash -c "echo \"$TEXT_INSTALACJA_NOWEJ\"; sudo rm -rf /opt/NeteXt73; sudo cp /tmp/NeteXt73 /opt/ -r; sudo cp /opt/NeteXt73/menu/NeteXt73.desktop /usr/share/applications/; sudo cp /opt/NeteXt73/menu/NeteXt73.png /usr/share/pixmaps/; sudo cp /opt/NeteXt73/menu/install_netext /usr/local/bin/"
+				      killall -9 yad
+				      if [ -e ~/.netext73/https_link ] && [ "$(cat ~/.netext73/https_link)" = "TRUE" ] && [ "$(cat /opt/NeteXt73/procedury | grep https)" = "" ]; then
+					    xterm -T instalator -e bash -c "sudo sed -i 's/http:/https:/g' /opt/NeteXt73/procedury"
+				      elif [ -e ~/.netext73/https_link ] && [ "$(cat ~/.netext73/https_link)" = "FALSE" ] && [ "$(cat /opt/NeteXt73/procedury | grep https)" != "" ]; then
+					    xterm -T instalator -e bash -c "sudo sed -i 's/https:/http:/g' /opt/NeteXt73/procedury"
+				      fi
+					    
+				      yad  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1" 
+				      klawisz=$?
+				      if [ "$klawisz" = "1" ];then
+					    notify-send  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_ZAINSTALOWANY"
+					    usun
+					    exit 0    
+				      fi
+			      fi
+			fi
+		    else
+			yad --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
+		    fi
+		fi
+	elif [ "$a" = "$TEXT_UPDATE2" ]; then
+	    xterm -T update -e bash -c "echo 'sudo apt-get update && sudo apt-get dist-upgrade'; sudo apt-get update && sudo apt-get dist-upgrade -y;echo -e \"$TEXT_INSTALACJA2\"; read ent"
+	
+	elif [ "$a" = "$TEXT_UPDATE8" ]; then
+	    aktualizuj_calosc
+	fi
+elif [ $klawisz = "2" ]; then
+	a1="TRUE"
+	a2="TRUE"
+	a3="TRUE"
+	a4="TRUE"
+	aktualizuj_calosc 
+elif [ $klawisz = "3" ]; then
+    if [ "$stable" != "$TEXT_BRAK_DANYCH" ]; then
+	  if [ "$USER" = "root" ]; then
+	      userek=$(cat /tmp/userek)
+	      su $userek -c "xdg-open \"https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable\""
+	  else
+	      xdg-open "https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable"
+	  fi
+    fi
+fi
+
+usun

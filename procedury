@@ -1,0 +1,767 @@
+#!/bin/bash
+## Graficzny instalator kerneli e X t 7 3  - NeteXt'73
+## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
+## przygotowanie skryptów optymalizacyjnych e X t 7 3
+## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
+## tłumaczenie na język niemiecki: Karolina Franieczek
+## tłumaczenie na język francuski: Michał Radwański (enedil)
+## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
+#
+#		    _   _      _      __  ___   _ _____ _____
+#		   | \ | | ___| |_ ___\ \/ / |_( )___  |___ /
+#		   |  \| |/ _ \ __/ _ \\  /| __|/   / /  |_ \
+#		   | |\  |  __/ |_  __//  \| |_    / /  ___) |
+#		   |_| \_|\___|\__\___/_/\_\\__|  /_/  |____/
+#
+#	            __ _ _ __ __ _ / _(_) ___ _____ __  _   _
+#	           / _` | '__/ _` | |_| |/ __|_  / '_ \| | | |
+#	          | (_| | | | (_| |  _| | (__ / /| | | | |_| |
+#	           \__, |_|  \__,_|_| |_|\___/___|_| |_|\__, |
+#	           |___/                                |___/
+#     _           _        _       _                   _                        _ _
+#    (_)_ __  ___| |_ __ _| | __ _| |_ ___  _ __      | | _____ _ __ _ __   ___| (_)
+#    | | '_ \/ __| __/ _` | |/ _` | __/ _ \| '__|     | |/ / _ \ '__| '_ \ / _ \ | |
+#    | | | | \__ \ |_ (_| | | (_| | |_ (_) | |        |   <  __/ |  | | | |  __/ | |
+#    |_|_| |_|___/\__\__,_|_|\__,_|\__\___/|_|        |_|\_\___|_|  |_| |_|\___|_|_|
+#        __  __  _     _____   _____      ___     _   _      _   ____  _ _  _____ ____
+#   ___  \ \/ / | |_  |___  | |___ /     ( _ )   | \ | | ___| |_| __ )(_) |____  |___ /
+#  / _ \  \  /  | __|    / /    |_ \     / _ \/\ |  \| |/ _ \ __|  _ \| | __| / /  |_ \
+# |  __/  /  \  | |_    / /    ___) |   | (_>  < | |\  |  __/ |_| |_) | | |_ / /  ___) |
+#  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
+#
+#########################################################################################################################################################################
+wersja=7.02.12
+
+jezyczek(){
+
+#teksty w języku polskim
+if [ -e ~/.netext73 ]; then
+    echo "nic nie robię bo jest" 1 > /dev/null
+else
+    mkdir ~/.netext73
+fi
+if [ -e ~/.netext73/jezyk ] && [ "$(cat ~/.netext73/jezyk)" = "niemiecki" ]; then
+    export jezyk="angielski"
+    echo 'angielski' >  ~/.netext73/jezyk
+fi
+if [ -e ~/.netext73/jezyk ]; then
+    export jezyk=$(cat ~/.netext73/jezyk)
+else
+    if [ "$(echo $LANG | grep pl)" != "" ]; then
+	    export jezyk="polski"
+	    echo 'polski' >  ~/.netext73/jezyk
+#    elif [ "$(echo $LANG | grep de)" != "" ]; then
+#	    export jezyk="niemiecki"
+#	    echo 'niemiecki' >  ~/.netext73/jezyk
+    elif [ "$(echo $LANG | grep fr)" != "" ]; then
+	    export jezyk="francuski"
+	    echo 'francuski' >  ~/.netext73/jezyk
+    else
+	    export jezyk="angielski"
+	    echo 'angielski' >  ~/.netext73/jezyk
+    fi
+fi
+
+}
+
+source /opt/NeteXt73/lang
+
+export nazwa_skryptu="NeteXt'73 v$wersja - $TEXT_NETEXT2"
+export nazwa_skryptu1="NeteXt'73 v$wersja"
+#1 conservative-conservative
+#2 ondemand-ondemand
+#3 intel-performance
+#4 intel-powersave
+#5 performance-conservative
+#6 performance-ondemand
+export wersja_apm1="advanced_power_management_by_ext73_conservative-conservative"
+export wersja_apm2="advanced_power_management_by_ext73_ondemand-ondemand"
+export wersja_apm3="advanced_power_management_by_ext73_intel-performance"
+export wersja_apm4="advanced_power_management_by_ext73_intel-powersave"
+export wersja_apm5="advanced_power_management_by_ext73_performance-conservative"
+export wersja_apm6="advanced_power_management_by_ext73_performance-ondemand"
+export error1="dialog-error"
+export ikona_info1="dialog-information"
+export warning1="dialog-warning"
+export adres_glowny="https://dl.dropbox.com/u/72313101"
+export adres_skryptow="$adres_glowny/skrypty"
+export adres_firmware="$adres_glowny/linux-firmware"
+export adres_sterownikow="$adres_glowny/sterowniki2"
+export adres_opisu="$adres_skryptow/netext73-opis.html"
+export polozenie_skryptu="https://dl.dropboxusercontent.com/u/2552069/ext73"
+
+#kolor textu
+if [ -e ~/.netext73/kolor_textu ]; then
+      kolor_textu=$(cat ~/.netext73/kolor_textu)
+else
+      kolor_textu="blue"
+fi
+if [ "$(cat /proc/cpuinfo | grep Intel)" != "" ]; then
+	     export komputerek="INTEL"
+elif [ "$(cat /proc/cpuinfo | grep AMD)" != "" ]; then
+	     export komputerek="AMD"
+fi
+if [ "$(uname -m)" = "x86_64" ]; then
+    bit="64bit"
+    bit2="amd64"
+else 
+    bit="32bit"
+    bit2="i386"
+fi
+if [ -e ~/Pobrane ]; then
+  export download="/home/$USER/Pobrane"
+else
+  export download="/home/$USER/Downloads"
+fi
+
+if [ $USER = "root" ]; then
+     export download="/root"
+fi
+if [ -e $download ]; then
+  echo "nic nie robię bo jest" 1 > /dev/null
+else
+  mkdir -p $download
+fi
+
+#########################################################################################################################################################################
+#procedury
+
+#pasek postępu pobierania dla dużych plików
+pobieranie(){
+sed -u "$TEXT_POB1" | yad --width=610 --progress --title="$TEXT_POB2 $a $MB" --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
+}
+
+#pasek postępu pobierania pulsujący gdy coś długo trwa
+pobieranie2(){
+yad --width=560 --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
+}
+
+#ubijanie wget jak się zawiesi yad
+kill_wget(){
+dziala=0
+while [ $dziala -eq 0 ]
+do
+  if [ -z "$(pidof yad)" ]; then
+      pkill wget
+      dziala=1
+  fi
+done
+}
+
+#pobieranie plików do instalacji kerneli
+pobieranie_kerneli(){
+if [ "$kern" = "ppa mainline" ];then
+	wget $strona/$a 2>&1    | pobieranie 
+	zamknij_program
+	dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep "all" | grep "linux-headers") 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
+	wget $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep "all" | grep "linux-headers")      2>&1 | pobieranie 
+	zamknij_program
+	dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-headers") 2>&1 | grep ength | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
+	wget $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-headers")      2>&1 | pobieranie 
+	zamknij_program
+	dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image") 2>&1   | grep ength | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
+	wget $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image")        2>&1 | pobieranie 
+	zamknij_program
+	if [ "$WERSJA_DISTRO" != "saucy" ]; then
+		dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image-extra") 2>&1 | grep ength | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
+		wget $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image-extra")  2>&1 | pobieranie  
+		zamknij_program
+	fi
+else
+
+#pobieranie kerneli e X t 7 3
+	wget $strona/$a/1.txt 2>&1 | pobieranie 
+	zamknij_program
+	dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $strona/$a/$(grep "href=" ./index.html   | cut -d '"' -f 2 | grep  $rodzaj | grep $bit2 | grep "linux-headers") 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
+	wget $strona/$a/$(grep "href=" ./index.html   | cut -d '"' -f 2 | grep  $rodzaj | grep $bit2 | grep "linux-headers") 2>&1 | pobieranie 
+	zamknij_program
+	dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $strona/$a/$(grep "href=" ./index.html   | cut -d '"' -f 2 | grep  $rodzaj | grep $bit2 | grep "linux-image") 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
+	wget $strona/$a/$(grep "href=" ./index.html   | cut -d '"' -f 2 | grep  $rodzaj | grep $bit2 | grep "linux-image")   2>&1 | pobieranie  
+	zamknij_program
+fi
+rm ./index.html -f
+}
+
+wersja(){
+notify-send -i "preferences-other" "$nazwa_skryptu" "$TEXT_INFO1"
+}
+
+naglowek(){
+echo '#!/bin/bash'
+}
+
+naglowek2(){
+echo "echo \"$TEXT_PROCEDURA_1\""
+echo "sudo sed -i 's+^start on mounted MOUNTPOINT=/proc TYPE=proc+start on mounted MOUNTPOINT=/var+' /etc/init/mounted-proc.conf"
+echo "sudo sed -i 's+^start on starting mountall+start on mounted MOUNTPOINT=/var+' /etc/init/ureadahead.conf"
+echo "/usr/bin/yes | sudo dpkg -i linux-headers* linux-image*"
+echo "if [ -e ~/.netext73/archiwum_deb ] && [ \"\$(cat ~/.netext73/archiwum_deb)\" = \"TRUE\" ]; then"
+#echo "if [ \"\$(ls *.deb | grep 'i7')\" = \"\" ] && [ \"\$(ls *.deb | grep 'brazos')\" = \"\" ]; then"
+echo "sudo cp *.deb /var/cache/apt/archives/ -f"
+#echo "fi"
+echo "fi"
+echo "echo 'tak' > /tmp/ok.txt"
+}
+
+microcode_firmware(){
+#nonfree
+if [ "$(dpkg -l | grep linux-firmware-nonfree | grep ii )" = "" ]; then
+      yad --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_PROCEDURA_4"
+      if [ $? = 0 ]; then
+	    echo "tak" > /tmp/ok.txt
+      else
+	    echo "nie" > /tmp/ok.txt
+      fi
+else
+      echo "nie" > /tmp/ok.txt
+fi
+rm *.*deb -f
+inst="tak"
+if [ "$(dpkg -l | grep linux-firmware | head -n 1 | awk '{print $3}')" != "$wersja_firmware" ]; then
+    a="linux-firmware_"$wersja_firmware"_all.deb"
+    dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $adres_firmware/$a 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
+    wget $adres_firmware/$a 2>&1 | pobieranie  
+    zamknij_program
+    rm 1.txt; wget $adres_firmware/1.txt 2>&1 | pobieranie  
+    if [ "$(grep $(md5sum linux-firmware*) 1.txt)" != "" ]; then
+	  inst="tak"
+    else
+	  yad --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
+	  rm 1.txt -f
+	  rm *.deb -f
+	  inst="nie"
+    fi
+fi
+if [ "$inst" = "tak" ]; then
+  instalacja
+  rm *.html -f
+  rm 1.txt -f
+fi
+}
+
+microcode_inst(){
+echo "echo \"$TEXT_PROCEDURA_2\""
+echo "if [ -e linux-firmware* ]; then"
+echo "/usr/bin/yes | sudo dpkg -i linux-firmware*"
+echo "fi"
+echo "if [ \"\$(cat /tmp/ok.txt)\" = \"tak\" ]; then"
+echo "sudo apt-get install linux-firmware-nonfree -y"
+echo "fi"
+echo "if [ \"\$(cat /proc/cpuinfo | grep Intel)\" != \"\" ]; then sudo apt-get install intel-microcode -y"
+echo "if [ \"\$(lsb_release -c | awk '{print \$2}' | grep 'precise' )\" != \"\" ]; then"
+echo "sudo /usr/sbin/update-intel-microcode && sudo microcode_ctl -u"
+echo "fi"
+echo "fi"
+echo "rm *.*deb -f"
+
+}
+
+microcode_usun(){
+echo "echo \"$TEXT_PROCEDURA_3\""
+echo "/usr/bin/yes | sudo dpkg -r linux-firmware-nonfree"
+echo "if [ \"\$(cat /proc/cpuinfo | grep Intel)\" != \"\" ]; then sudo apt-get purge intel-microcode -y; fi"
+echo "sudo rm /lib/firmware/amd-ucode -r"
+echo "sudo apt-get autoremove -y"
+}
+
+
+apm_inst(){
+echo "echo \"$TEXT_PROCEDURA_6\""
+echo "sudo rm -fr /etc/pm/power.d/* /usr/lib/pm-utils/power.d/readahead /usr/lib/pm-utils/power.d/journal-commit"
+echo "if [ -e /usr/lib/pm-utils/power.d/wireless ];then"
+echo "echo 'ok' > /dev/null"
+echo "else"
+echo "wget $adres_skryptow/wireless"
+echo "sudo mv wireless /usr/lib/pm-utils/power.d/"
+echo "fi"
+echo "echo 'ok' > /dev/null"
+echo "if [ -e /usr/lib/pm-utils/power.d/laptop-mode ];then"
+echo "echo 'ok' > /dev/null"
+echo "else"
+echo "wget $adres_skryptow/laptop-mode"
+echo "sudo mv laptop-mode /usr/lib/pm-utils/power.d/"
+echo "fi"
+echo "sudo sh -c 'echo \"options rts5139 ss_en=0\" > /etc/modprobe.d/rts5139.conf'"
+echo "sudo sh -c 'echo \"options ums_realtek ss_en=0\" > /etc/modprobe.d/ums-realtek.conf'"
+echo "sudo chmod a-x /usr/lib/pm-utils/power.d/*"
+wget $adres_skryptow/apm2/advanced_power_management_by_ext73_$wersja_apm.tar.gz 2>&1 | pobieranie  
+echo "tar -xvzf advanced_power_management_by_ext73_$wersja_apm.tar.gz"
+echo "sudo mv $wersja_apm1*$wersja_apm $wersja_apm2*$wersja_apm $wersja_apm3*$wersja_apm $wersja_apm4*$wersja_apm $wersja_apm5*$wersja_apm $wersja_apm6*$wersja_apm /etc/pm/power.d/"
+echo "sudo mv readahead /usr/lib/pm-utils/power.d/"
+echo "rm *tar.gz"
+echo "sudo chmod a-x /etc/pm/power.d/*"
+
+echo "if [ \"\$(cat ~/.netext73/apm_status | grep 'conservative-conservative')\" != \"\" ] ; then "
+echo "sudo chmod a+x /etc/pm/power.d/$wersja_apm1*$wersja_apm /usr/lib/pm-utils/power.d/readahead"
+
+echo "elif [ \"\$(cat ~/.netext73/apm_status | grep 'ondemand-ondemand')\" != \"\" ] ; then "
+echo "sudo chmod a+x /etc/pm/power.d/$wersja_apm2*$wersja_apm /usr/lib/pm-utils/power.d/readahead"
+
+echo "elif [ \"\$(cat ~/.netext73/apm_status | grep 'intel-performance')\" != \"\" ] ; then "
+echo "sudo chmod a+x /etc/pm/power.d/$wersja_apm3*$wersja_apm /usr/lib/pm-utils/power.d/readahead"
+
+echo "elif [ \"\$(cat ~/.netext73/apm_status | grep 'intel-powersave')\" != \"\" ] ; then "
+echo "sudo chmod a+x /etc/pm/power.d/$wersja_apm4*$wersja_apm /usr/lib/pm-utils/power.d/readahead"
+
+echo "elif [ \"\$(cat ~/.netext73/apm_status | grep 'performance-conservative')\" != \"\" ] ; then "
+echo "sudo chmod a+x /etc/pm/power.d/$wersja_apm5*$wersja_apm /usr/lib/pm-utils/power.d/readahead"
+
+echo "elif [ \"\$(cat ~/.netext73/apm_status | grep 'performance-ondemand')\" != \"\" ] ; then "
+echo "sudo chmod a+x /etc/pm/power.d/$wersja_apm6*$wersja_apm /usr/lib/pm-utils/power.d/readahead"
+echo "else"
+echo "sudo chmod a+x /etc/pm/power.d/$wersja_apm1*$wersja_apm /usr/lib/pm-utils/power.d/readahead"
+echo "fi"
+echo "sudo chmod a+x /usr/lib/pm-utils/power.d/xfs_buffer /usr/lib/pm-utils/power.d/anacron /usr/lib/pm-utils/power.d/disable_wol /usr/lib/pm-utils/power.d/readahead"
+echo "sudo chown root:root /usr/lib/pm-utils/power.d/*"
+echo "sudo chown root:root /etc/pm/power.d/*"
+echo "sudo apt-get install ethtool"
+echo "sudo /etc/init.d/ondemand stop"
+echo "sudo update-rc.d -f ondemand remove"
+echo "ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//' > ~/.netext73/apm_status"
+#naprawa powerbtn
+echo "if [ \"\$(uname -m)\" = \"x86_64\" ]; then "
+echo "if [ \"\$(cat /etc/acpi/powerbtn.sh | grep '/usr/.../qdbus')\" != \"\" ]; then"
+echo "sudo cp /etc/acpi/powerbtn.sh /etc/acpi/powerbtn.sh.bak -f"
+echo "sudo sed -i 's/\/usr\/...\/qdbus/\/usr\/lib\/x86_64-linux-gnu\/qt4\/bin\/qdbus/' /etc/acpi/powerbtn.sh"
+echo "if [ \"\$(cat /etc/acpi/powerbtn.sh | grep '#\/sbin')\" = \"\" ];then"
+echo "sudo sed -i '/Power button pressed/ s/\/sbin/#\/sbin/' /etc/acpi/powerbtn.sh"
+echo "fi"
+echo "fi"
+echo "fi"
+echo "echo \"$TEXT_MENU_USLUGI31\""
+echo "sudo sed -i '/apm_status_fix/d' /etc/rc.local"
+echo "sudo sed -i '/exit 0/d' /etc/rc.local"
+echo "echo 'bash /opt/NeteXt73/apm_status_fix' | sudo tee -a /etc/rc.local"
+echo "echo 'exit 0' | sudo tee -a /etc/rc.local" 
+}
+
+#1 conservative-conservative
+#2 ondemand-ondemand
+#3 intel-performance
+#4 intel-powersave
+#5 performance-conservative
+#6 performance-ondemand
+
+apm_zmiana(){
+echo "echo \"$TEXT_PROCEDURA_8_1 $1\""
+echo "sudo chmod a-x /etc/pm/power.d/*"
+echo "sudo chmod a+x /etc/pm/power.d/$2 /usr/lib/pm-utils/power.d/readahead"
+echo "sudo chown root:root /etc/pm/power.d/* /usr/lib/pm-utils/power.d/readahead"
+echo "ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//' > ~/.netext73/apm_status"
+
+echo "if [ \"\$wififix\" = \"FALSE\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i '1,/wlan0 power on/ s/power on/power off/' \$i"
+echo "sudo sed -i '1,/eth1 power on/ s/power on/power off/' \$i"
+echo "done"
+echo "else"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i '1,/wlan0 power off/ s/power off/power on/' \$i"
+echo "sudo sed -i '1,/eth1 power off/ s/power off/power on/' \$i"
+echo "done"
+echo "fi"
+
+echo "if [ \"\$rts5139fix\" = \"TRUE\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i '/sudo rmmod rts5139/ s/sudo rmmod rts5139/sudo modprobe rts5139/' \$i"
+echo "sudo sed -i '1,/sudo modprobe rts5139/ s/sudo modprobe rts5139/sudo rmmod rts5139/' \$i"
+echo "done"
+echo "else"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i '/sudo modprobe rts5139/ s/sudo modprobe rts5139/sudo rmmod rts5139/' \$i"
+echo "done"
+echo "fi"
+
+}
+
+
+apm_usun(){
+echo "ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//' > ~/.netext73/apm_status"
+echo "echo \"$TEXT_PROCEDURA_9\""
+echo "sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/pm-utils/power.d/readahead"
+echo "if [ -e /usr/lib/pm-utils/power.d/laptop-mode ];then"
+echo "echo 'ok' > /dev/null"
+echo "else"
+echo "wget $adres_skryptow/wireless"
+echo "sudo mv wireless /usr/lib/pm-utils/power.d/"
+echo "fi"
+echo "echo 'ok' > /dev/null"
+echo "if [ -e /usr/lib/pm-utils/power.d/wireless ];then"
+echo "echo 'ok' > /dev/null"
+echo "else"
+echo "wget $adres_skryptow/laptop-mode"
+echo "sudo mv laptop-mode /usr/lib/pm-utils/power.d/"
+echo "fi"
+echo "sudo chmod a+x /usr/lib/pm-utils/power.d/*"
+echo "sudo chown root:root /usr/lib/pm-utils/power.d/*" 
+#przywrócenie powerbtn
+echo "if [ -e /etc/acpi/powerbtn.sh.bak ]; then"
+echo "sudo mv /etc/acpi/powerbtn.sh.bak /etc/acpi/powerbtn.sh -f"
+echo "sudo chmod a+x /etc/acpi/powerbtn.sh"
+echo "sudo chown root:root /etc/acpi/powerbtn.sh"
+echo "sudo rm /etc/modprobe.d/rts5139.conf -f"
+echo "sudo rm /etc/modprobe.d/ums-realtek.conf -f"
+echo "fi"
+echo "sudo update-rc.d -f ondemand defaults"
+echo "sudo /etc/init.d/ondemand start"
+echo "sudo sed -i '/apm_status_fix/d' /etc/rc.local"
+}
+
+stan_apm(){
+stan_apm=""
+wget $adres_skryptow/APM2/index.html -O apm.txt  2>&1 | pobieranie2 
+export wersja_apm=$(cat apm.txt | grep "href=.*advanced" | cut -d '"' -f 2 | cut -d '_' -f 6 | head -n 1 | sed 's/.tar.gz//')
+if [ "$(ls /etc/pm/power.d/ | wc | awk '{print $1}')" != "6" ]; then
+      stan_apm="-"
+else
+      if [ -e /etc/pm/power.d/$wersja_apm1*$wersja_apm ]; then
+	    stan_apm=$(ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//')
+      else
+	    stan_apm="-"
+      fi
+fi
+if [ -e /etc/modprobe.d/rts5139.conf ] && [ -e /etc/modprobe.d/ums-realtek.conf ]; then
+      echo 'ok' > /dev/null
+else
+      stan_apm="-"
+fi
+if [ "$(ls /etc/pm/power.d/ | wc | awk '{print $1}')" = "6" ] && [ $( ls /usr/lib/pm-utils/power.d/ -la | grep rwxr | wc | awk '{print $1}') != "6" ]; then 
+	    stan_apm="-"
+fi
+if [ "$(grep apm_status_fix /etc/rc.local)" = "" ]; then
+	    stan_apm="-"
+fi
+}
+
+#broadcom_usun(){
+#echo "echo \"$TEXT_PROCEDURA_11\""
+#echo "sudo dpkg -P broadcom-sta-*"
+#}
+
+#broadcom_instaluj(){
+#echo "echo \"$TEXT_PROCEDURA_12\""
+#echo "echo \"$TEXT_INSTALOWAC_BROADCOM\"; /usr/bin/yes | sudo dpkg -i *.deb; rm *.deb -f"
+#echo "echo 'install wl /sbin/modprobe --ignore-install wl \$CMDLINE_OPTS' | sudo tee -a /etc/modprobe.d/broadcom-sta-dkms.conf"
+#}
+
+usun_kernel(){
+echo "echo \"$TEXT_KERNEL1 $(cat /tmp/kasuj.txt| tr '\n' ' ' )\""
+echo "sudo apt-get purge $(cat /tmp/kasuj.txt | tr '\n' ' ')"
+echo "if [ \"$(dpkg -l | grep '^rc' | awk '{print $2}' | head -n1)\" != \"\" ]; then sudo dpkg -l | grep '^rc' | awk '{print \$2}' | xargs sudo dpkg --purge; fi"
+echo "rm /tmp/*.txt -f; rm /tmp/*.sh -f"
+}
+
+instalacja(){
+xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
+}
+
+instalacja2(){
+xterm -T instalator -e bash -c "sh instaluj.sh && rm instaluj.sh -f"
+}
+
+instalacja3(){
+xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
+}
+
+lista_kerneli(){
+echo $(grep 'href='   ./index.html | grep 'href="v'| cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/') > 1.txt
+cat 1.txt | tr ' ' '\n' > 2.txt
+dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj-ags-cfs//g" > 3.txt
+for kernel in $(cat 2.txt); do
+    echo "$kernel" >> 4.txt
+	for kernel1 in $(cat 3.txt); 	    do
+	      if [ "$(echo $kernel | grep $(echo $kernel1))" != "" ]; then
+		  sed 4.txt -i -e "s/$kernel/$kernel tak/g"
+	      fi
+	done
+done
+cat 4.txt | awk '{print $2}' >5.txt; sed -i 's/^[ \t]*$/-/' 5.txt
+paste -d " "  2.txt 5.txt > 4.txt
+sort -r 4.txt > 3.txt;  echo $(sed -e '/^[^#]/s:^:FALSE :' 3.txt) > 1.txt
+lista=$(sed  's/FALSE/TRUE/' 1.txt ); rm *.txt -f
+if [ "$(echo $lista)" = "TRUE" ]; then
+    yad --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="Błąd pobierania danych z serwera"
+    blad=11
+else
+    a=$(yad --height=340 --width=690 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_PLATFORMA1 <b><span color=\"$kolor_textu\">$rodzaj</span></b>$TEXT_PLATFORMA2" --column="$TEXT_ZAZNACZ" --column="$TEXT_WYBIERZ_KERNEL" --column="$TEXT_ZNITY1" --button="$TEXT_POWROT:1" --button="gtk-ok:0" --list --radiolist $lista)
+    klawisz=$?
+    a=$(echo $a | cut -d "|" -f 2)
+fi
+}
+
+grub(){
+echo "echo \"$TEXT_PROCEDURA_13\""
+echo "echo \"$TEXT_GRUB1 /etc/default/grub\"; sudo sed -i '/GRUB_CMDLINE_LINUX=/d' $sciezka/grub"
+echo "echo \"$TEXT_GRUB2 /etc/default/grub\"; sudo sed \"/GRUB_CMDLINE_LINUX_DEFAULT/a\GRUB_CMDLINE_LINUX=\\\"$wpis_grub\\\"\" $sciezka/grub > /tmp/grub1"
+echo "sudo mv /tmp/grub1 $sciezka/grub -f"
+echo "sudo chown root:root /etc/default/grub"
+echo "sudo update-grub"  
+echo "echo 'tak' > /tmp/ok.txt"
+}
+
+instaluj_grub(){
+echo "echo \"$TEXT_PROCEDURA_13\"'"
+echo "nie" > /tmp/ok.txt
+naglowek > /tmp/instaluj.sh
+grub >> /tmp/instaluj.sh
+instalacja
+if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
+      notify-send -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_GRUB2 $sciezka/grub. $TEXT_WYMAGANY_RESTART"
+else
+      notify-send i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB3"
+fi
+}
+
+wywal_pobrane_pliki_kernela(){
+if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
+    yad --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_KERNEL2"
+    rm -rf $PWD
+elif  [ "$(cat /tmp/ok.txt)" = "nie" ]; then
+    notify-send -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_INFO2<br>/tmp/$a"
+fi
+}
+
+sysv(){
+rm [1-9].txt -f
+chkconfig --list | awk '{print $1}' > 1.txt
+for a in {2..8}
+do
+chkconfig --list | awk "{print \$$a}" | sed -e 's/.*on/X/g' -e 's/.*off/-/g' > $a.txt
+done 2>&1 | pobieranie2
+chkconfig --list | awk '{print $9}'   | sed -e 's/^$/-/g'   -e 's/.*on/X/g' -e 's/.*off/-/g' > 9.txt
+}
+
+klucze(){
+echo "sudo apt-get update 2> /tmp/keymissing"
+echo "for key in \$(grep 'NO_PUBKEY' /tmp/keymissing |sed \"s/.*NO_PUBKEY //\"); do"
+echo "gpg --recv-keys \"\$key\""
+echo "gpg --armor --export \"\$key\" | sudo apt-key add -"
+echo "done"
+echo "sudo apt-get update 2> /tmp/keymissing"
+echo "cat /tmp/keymissing |sed \"s/.*publicznego://\" > 1.txt"
+echo "sed -e \"/^$/d\" 1.txt > /tmp/keymissing"
+echo "for key in \$(cat /tmp/keymissing); do"
+echo "gpg --keyserver keyserver.ubuntu.com --recv-keys \$key"
+echo "gpg --export -a \$key | sudo apt-key add -"
+echo "done"
+echo "rm -f /tmp/keymissing 1.txt"
+}
+
+radeon(){
+echo "echo \"$TEXT_PROCEDURA_14\""
+echo "sudo apt-get install lib32gcc1 libc6-i386"
+echo "sudo dpkg -P fglrx fglrx-amdcccle xvba-va-driver"
+echo "/usr/bin/yes | sudo dpkg -i *.deb"
+echo "sudo apt-get install xvba-va-driver -y"
+echo "if [ -e ~/.netext73/archiwum_deb ] && [ \"\$(cat ~/.netext73/archiwum_deb)\" = \"TRUE\" ]; then"
+echo "sudo cp *.deb /var/cache/apt/archives/ -f"
+echo "fi"
+echo "rm *.deb -f"
+echo "DRIVER=/usr/lib/fglrx/xorg/modules/drivers/fglrx_drv.so"
+echo "for x in \$(objdump -d \$DRIVER|awk '/call/&&/EnableLogo/{print \"\\\x\"\$2\"\\\x\"\$3\"\\\x\"\$4\"\\\x\"\$5\"\\\x\"\$6}'); do"
+echo "sudo sed -i \"s/\$x/\\x90\\x90\\x90\\x90\\x90/g\" \$DRIVER"
+echo "done"
+echo "if [ -e /usr/X11R6/lib64/modules/dri ]; then"
+echo "echo 'ok' > /dev/null"
+echo "else"
+echo "sudo mkdir -p /usr/X11R6/lib64/modules/"
+echo "sudo ln -s /usr/lib/dri/ /usr/X11R6/lib64/modules/"
+echo "fi"
+}
+
+nvidia(){
+echo "echo \"$TEXT_PROCEDURA_15\""
+echo "dpkg -l | grep nvidia-current | awk '{print \$2}' > nv.txt"
+echo "dpkg -l | grep nvidia-experimental | awk '{print \$2}' >> nv.txt"
+echo "dpkg -l | grep nvidia-settings | awk '{print \$2}' >> nv.txt"
+echo "dpkg -l | grep nvidia-common | awk '{print \$2}' >> nv.txt"
+echo "sudo dpkg -P \$(cat nv.txt | tr '\\n' ' ')"
+echo "rm -f nv.txt"
+echo "if [ \"\$(ls | grep '304')\" != \"\" ]; then"
+echo "sudo apt-get install nvidia-settings nvidia-common"
+echo "else"
+echo "sudo apt-get install nvidia-settings-319 nvidia-common"
+echo "fi"
+echo "/usr/bin/yes | sudo dpkg -i *.deb"
+echo "if [ -e ~/.netext73/archiwum_deb ] && [ \"\$(cat ~/.netext73/archiwum_deb)\" = \"TRUE\" ]; then"
+echo "sudo cp *.deb /var/cache/apt/archives/ -f"
+echo "fi"
+echo "rm *.deb -f"
+echo "if [ \"\$(grep 'GRUB_GFXMOD' /etc/default/grub)\" != \"\" ] && [ \"\$(grep '#GRUB_GFXMODE' /etc/default/grub)\" = \"\" ]; then"
+echo "sudo sed -i 's/GRUB_GFXMODE.*/#GRUB_GFXMODE=1280x1024/' /etc/default/grub"
+echo "fi"
+echo "if [ \"\$(grep 'GRUB_GFXPAYLOAD_LINUX' /etc/default/grub)\" = \"\" ]; then"
+echo "sudo sed -i \"s/#GRUB_GFXMODE.*/#GRUB_GFXMODE=1280x1024\nGRUB_GFXPAYLOAD_LINUX=1024x768x32/\" /etc/default/grub"
+echo "fi"
+#echo "if [ \"\$(grep \"FRAMEBUFFER=y\" /etc/initramfs-tools/conf.d/splash)\" = \"\" ]; then"
+#echo "echo \"FRAMEBUFFER=y\" | sudo tee -a /etc/initramfs-tools/conf.d/splash"
+#echo "fi"
+echo "sudo update-initramfs -u -k all"
+echo "sudo update-grub"
+}
+
+
+zamknij_program(){
+if [ "$dziala" = "1" ]; then
+      yad --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=25 --title="$TEXT_UWAGA" --text="$TEXT_ZAMNIJ_PROGRAM"
+      exit 1
+fi
+}
+
+RAMIK_USUN(){
+echo "sudo sed /var/spool/cron/crontabs/root -i -e '/then sync && echo 3/ d'"
+echo "sudo sed /var/spool/cron/crontabs/root -i -e '/freemem.sh/ d'"
+echo "sudo sed -i '/^[ \t]*$/ d' /var/spool/cron/crontabs/root"
+echo "sudo rm -f /etc/cron.d/freemem.sh"
+}
+
+RAMIK(){
+echo "if [ -e /var/spool/cron/crontabs/root ]; then"
+echo "echo 'nic nie robię bo jest' 1 > /dev/null"
+echo "else"
+echo "sudo mkdir -p /var/spool/cron/crontabs/"
+echo "sudo touch /var/spool/cron/crontabs/root"
+echo "fi"
+echo "sudo sed /var/spool/cron/crontabs/root -i -e '/freemem.sh/ d'"
+echo "sudo sed -i '/^[ \t]*$/ d' /var/spool/cron/crontabs/root"
+echo "sudo rm -f /etc/cron.d/freemem.sh"
+echo "#!/bin/bash" > ramik.txt
+echo "if [ \"\$(echo \$((\$(free -m | awk '{print \$3}' | sed -n 2p)*100/\$(free -m | awk '{print \$2}' | sed -n 2p))))\" -gt \"$wartosc\" ]; then sync && echo 3 > /proc/sys/vm/drop_caches; fi" >> ramik.txt
+echo "cat ramik.txt | sudo tee -a /etc/cron.d/freemem.sh"
+echo "sudo chmod +x /etc/cron.d/freemem.sh"
+echo "rm -f ramik.txt"
+echo "echo '* * * * * /etc/cron.d/freemem.sh' | sudo tee -a /var/spool/cron/crontabs/root"
+}
+     
+restart(){
+gnome-session-quit --reboot || yad --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_NIE:1" --text="$TEXT_RESTART"
+if [ $? = 0 ]; then
+	dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart || xterm -T reboot -e bash -c "sudo reboot"
+fi
+}
+
+adres_kerneli_premium() {
+#adres premium
+if [ -e ~/.netext73/kernel_premium ]; then
+      adres_premium=$(cat ~/.netext73/kernel_premium)
+else
+      adres_premium=""
+fi
+#adres testing
+if [ -e ~/.netext73/netext_testing ]; then
+      adres_testing=$(cat ~/.netext73/netext_testing)
+else
+      adres_testing=""
+fi
+}
+
+sprawdz_klucze(){
+xterm -T GPG-KEY -e bash -c "echo 'sudo apt-key list';sudo apt-key list > klucze1.txt ; echo -e \"$TEXT_INSTALACJA2\""
+}
+usun_klucze(){
+xterm -T GPG-KEY -e bash -c "echo 'Podaj hasło aby usunąć zaznaczone klucze'; for i in \$(cat usun.txt); do sudo apt-key del \$i; done; read ent; echo 'tak' > /tmp/ok.txt"
+}
+
+stan_baterii(){
+if [ -e /sys/class/power_supply/BAT*/uevent ];then
+      cat /sys/class/power_supply/BAT*/uevent > bateria.txt
+      sed -i 's/=/ /g' bateria.txt
+      sed -i '/POWER_SUPPLY_POWER_NOW/ d' bateria.txt
+      sed -i '/SERIAL_NUMBER/ d' bateria.txt
+      sed -i '/POWER_SUPPLY_CYCLE_COUNT/ d' bateria.txt
+      sed -i 's/POWER_SUPPLY_ENERGY_FULL_DESIGN/POWER_SUPPLY_ENERGY_DESIGN_FULL/g' bateria.txt
+      sed -i 's/POWER_SUPPLY_CHARGE_FULL_DESIGN/POWER_SUPPLY_CHARGE_DESIGN_FULL/g' bateria.txt
+      sed -i '/POWER_SUPPLY_PRESENT/ s/0/NO/' bateria.txt
+      sed -i '/POWER_SUPPLY_PRESENT/ s/1/YES/' bateria.txt
+      sed -i '/POWER_SUPPLY_CAPACITY/ s/$/%/' bateria.txt
+      cp bateria.txt bateria2.txt
+      v=$(grep 'POWER_SUPPLY_ENERGY_DESIGN_FULL' bateria.txt | awk '{print $2}')
+      v1=$(grep 'POWER_SUPPLY_ENERGY_FULL' bateria.txt | awk '{print $2}')
+
+      va=$(grep 'POWER_SUPPLY_CHARGE_DESIGN_FULL' bateria.txt | awk '{print $2}')
+      va1=$(grep 'POWER_SUPPLY_CHARGE_FULL' bateria.txt | awk '{print $2}')
+
+      if [ "$v" = "" ]; then
+	      echo "POWER_SUPPLY_MAX_CAPACITY $((100*$va1/$va))%" >> bateria2.txt
+	      for i in POWER_SUPPLY_CHARGE_DESIGN_FULL POWER_SUPPLY_CHARGE_FULL POWER_SUPPLY_CHARGE_NOW
+	      do
+		    v=$(grep "$i" bateria.txt | awk '{print $2}')
+		    v1=$(echo "scale=2;$v/1000" | bc -q | sed 's/$/mAh/')
+		    sed -i "/$v/ s/$v/$v1/" bateria2.txt
+	      done
+      else
+	      echo "POWER_SUPPLY_MAX_CAPACITY $((100*$v1/$v))%" >> bateria2.txt
+	      for i in POWER_SUPPLY_ENERGY_DESIGN_FULL POWER_SUPPLY_ENERGY_FULL POWER_SUPPLY_ENERGY_NOW
+	      do
+		    v=$(grep "$i" bateria.txt | awk '{print $2}')
+		    v1=$(echo "scale=2;$v/10000" | bc -q | sed 's/$/mAh/')
+		    sed -i "/$v/ s/$v/$v1/" bateria2.txt
+	      done
+
+      fi
+      for i in POWER_SUPPLY_VOLTAGE_MIN_DESIGN POWER_SUPPLY_VOLTAGE_NOW
+      do
+	    v=$(grep "$i" bateria.txt | awk '{print $2}')
+	    v1=$(echo "scale=2;$v/1000000" | bc -q | sed 's/$/V/')
+	    sed -i "/$i/ s/$v/$v1/" bateria2.txt
+      done
+      Stan_baterii="Battery status"
+      sed -i '/POWER_SUPPLY_MANUFACTURER / s/ /_/g' bateria2.txt
+      sed -i 's/POWER_SUPPLY_MANUFACTURER_/POWER_SUPPLY_MANUFACTURER /' bateria2.txt
+      if [ "$(echo $LANG | grep pl)" != "" ]; then
+	    Stan_baterii="Stan baterii"
+	    sed -i 's/POWER_SUPPLY_NAME/Nazwa_baterii/' bateria2.txt 
+	    sed -i 's/POWER_SUPPLY_STATUS/Tryb_pracy_baterii/' bateria2.txt
+	    sed -i 's/Discharging/Rozładowywanie/' bateria2.txt
+	    sed -i 's/Charging/Ładowywanie/' bateria2.txt
+	    sed -i 's/Unknown/Nieznany/' bateria2.txt
+	    sed -i 's/Full/Pełna/' bateria2.txt
+	    sed -i 's/POWER_SUPPLY_PRESENT/Zainstalowana_bateria/' bateria2.txt
+	    sed -i 's/POWER_SUPPLY_TECHNOLOGY/Rodzaj_baterii/' bateria2.txt
+	    sed -i 's/POWER_SUPPLY_VOLTAGE_MIN_DESIGN/Konstrukcyjne_napięcie_baterii/' bateria2.txt
+	    sed -i 's/POWER_SUPPLY_VOLTAGE_NOW/Aktualne_napięcie_baterii/' bateria2.txt
+	    sed -i 's/POWER_SUPPLY_.*_DESIGN_FULL/Konstrukcyjna_pojemność_baterii/' bateria2.txt
+	    sed -i 's/POWER_SUPPLY_.*_FULL/Pojemność_ostatniego_naładowania/' bateria2.txt
+	    sed -i 's/POWER_SUPPLY_.*_NOW/Aktualna_pojemność_baterii/' bateria2.txt
+	    sed -i 's/POWER_SUPPLY_CAPACITY/Stan_naładowania_baterii/' bateria2.txt
+	    sed -i 's/POWER_SUPPLY_MODEL_NAME/Model_baterii/' bateria2.txt
+	    sed -i 's/POWER_SUPPLY_MANUFACTURER/Producent_baterii/' bateria2.txt
+	    sed -i 's/POWER_SUPPLY_MAX_CAPACITY/Maksymalny_poziom_naładowania_baterii/' bateria2.txt
+	    sed -i 's/NO/NIE/' bateria2.txt
+	    sed -i 's/YES/TAK/' bateria2.txt
+      fi
+      cat bateria2.txt | tr '=' ' ' | tr '\n' ' ' > bateria.txt
+      yad  --list --title="$nazwa_skryptu" --width="395" --height="460" --window-icon="/opt/NeteXt73/ikony/battery.png" --text="<span color=\"$kolor_textu\">$Stan_baterii:</span>" --column="" --column="" $(cat bateria.txt) --button="gtk-ok:0"
+      rm *.txt -f
+else
+      yad --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"
+fi
+
+
+}
+
+ipv6_off(){
+echo "sudo apt-get autoremove miredo -y && dpkg -l | awk '/^rc/{ print \$2}' | sudo xargs dpkg --purge"
+echo "echo \"#disable ipv6\" | sudo tee -a /etc/sysctl.conf"
+echo "echo \"net.ipv6.conf.all.disable_ipv6 = 1\" | sudo tee -a /etc/sysctl.conf"
+echo "echo \"net.ipv6.conf.default.disable_ipv6 = 1\" | sudo tee -a /etc/sysctl.conf"
+echo "echo \"net.ipv6.conf.lo.disable_ipv6 = 1\" | sudo tee -a /etc/sysctl.conf"
+echo "sudo sysctl -p"
+}
+
+
+ipv6_on(){
+echo "sudo apt-get install miredo -y"
+echo "sudo sed -i '/#disable ipv6/d' /etc/sysctl.conf"
+echo "sudo sed -i '/net.ipv6.conf.all.disable_ipv6 = 1/d' /etc/sysctl.conf"
+echo "sudo sed -i '/net.ipv6.conf.default.disable_ipv6 = 1/d' /etc/sysctl.conf"
+echo "sudo sed -i '/net.ipv6.conf.lo.disable_ipv6 = 1/d' /etc/sysctl.conf"
+echo "sudo sysctl -p"
+}
+
+

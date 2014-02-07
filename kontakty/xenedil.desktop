@@ -1,0 +1,22 @@
+[Desktop Entry]
+Name=enedil - French translation
+Name[en_GB]=enedil - French translation
+Name[fr]=enedil - la traduction française
+Name[pl]=enedil - tłumaczenie na język francuski
+Comment=enedil - French translation
+Comment[en_GB]=enedil - French translation
+Comment[fr]=enedil - la traduction française
+Comment[pl]=enedil - tłumaczenie na język francuski
+GenericName=enedil - French translation 
+GenericName[en_GB]=enedil - French translation
+GenericName[fr]=enedil - la traduction française
+GenericName[pl]=enedil - tłumaczenie na język francuski
+Exec=xdg-open 'https://debian-polska.blogspot.com'
+Icon=/opt/NeteXt73/ikony/enedil.jpg
+Terminal=false
+StartupNotify=true
+Type=Application
+Categories=Utility;
+Version=1.0
+Encoding=UTF-8
+# vi:set encoding=UTF-8:

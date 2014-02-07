@@ -1,0 +1,356 @@
+﻿#!/bin/bash
+## Graficzny instalator kerneli e X t 7 3  - NeteXt'73
+## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
+## przygotowanie skryptów optymalizacyjnych e X t 7 3
+## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
+## tłumaczenie na język niemiecki: Karolina Franieczek
+## tłumaczenie na język francuski: Michał Radwański (enedil)
+## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
+#
+#                   _   _      _      __  ___   _ _____ _____
+#                  | \ | | ___| |_ ___\ \/ / |_( )___  |___ /
+#                  |  \| |/ _ \ __/ _ \\  /| __|/   / /  |_ \
+#                  | |\  |  __/ |_  __//  \| |_    / /  ___) |
+#                  |_| \_|\___|\__\___/_/\_\\__|  /_/  |____/
+#
+#                   __ _ _ __ __ _ / _(_) ___ _____ __  _   _
+#                  / _` | '__/ _` | |_| |/ __|_  / '_ \| | | |
+#                 | (_| | | | (_| |  _| | (__ / /| | | | |_| |
+#                  \__, |_|  \__,_|_| |_|\___/___|_| |_|\__, |
+#                  |___/                                |___/
+#     _           _        _       _                   _                        _ _
+#    (_)_ __  ___| |_ __ _| | __ _| |_ ___  _ __      | | _____ _ __ _ __   ___| (_)
+#    | | '_ \/ __| __/ _` | |/ _` | __/ _ \| '__|     | |/ / _ \ '__| '_ \ / _ \ | |
+#    | | | | \__ \ |_ (_| | | (_| | |_ (_) | |        |   <  __/ |  | | | |  __/ | |
+#    |_|_| |_|___/\__\__,_|_|\__,_|\__\___/|_|        |_|\_\___|_|  |_| |_|\___|_|_|
+#        __  __  _     _____   _____      ___     _   _      _   ____  _ _  _____ ____
+#   ___  \ \/ / | |_  |___  | |___ /     ( _ )   | \ | | ___| |_| __ )(_) |____  |___ /
+#  / _ \  \  /  | __|    / /    |_ \     / _ \/\ |  \| |/ _ \ __|  _ \| | __| / /  |_ \
+# |  __/  /  \  | |_    / /    ___) |   | (_>  < | |\  |  __/ |_| |_) | | |_ / /  ___) |
+#  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
+#
+#########################################################################################################################################################################
+#tłumaczenia
+ 
+ 
+#########################################################################################################################################################################
+#tlumaczenia_apm
+export TEXT_APM1="Masz zainstalowany skrypt APM w starszej wersji lub niepełnej, zainstaluj nowszą.\nZa chwilę nastąpi instalacja skryptu APM.\n\nInstalować?"
+export TEXT_AKTUALNY_PROFIL_APM="Aktualny profil APM:"
+export TEXT_ZMIEN_PROFIL_APM="Zmień profil APM na:"
+export TEXT_APM2="Aby zmienić status APM zainstaluj jego najnowszą wersję"
+export TEXT_WERSJA_APM="Zainstalowana wersja APM"
+
+#########################################################################################################################################################################
+#tlumaczenia_backuprepo
+export a1="Stwórz kopię zapasową repozytorium wraz z kluczami GPG"
+export a2="Przywróć repozytorium z kopii zapasowej"
+export a3="Pobierz brakujące klucze GPG"
+export a4="Napraw błędne podpisy GPG"
+export a5="Usuń zbędne klucze GPG"
+export a6="Dodaj lub usuń aplikacje/sterowniki oraz repozytorium"
+export a7="Instalator oprogramowania"
+export a8="Edytor plików instalatora"
+export MENU1="Włącz repozytorium partnerów"
+export MENU2="Wyłącz repozytorium partnerów"
+export MENU_OPIS="Zmodyfikuj listę pakietów:"
+export TEXT_BACKUP1="Zbiór skryptów dotyczących kluczy GPG i repozytorium."
+export TEXT_BACKUP2="Wskaż plik source.list.backup"
+export TEXT_BACKUP3="Za chwilę nastąpi podmiana repozytoriów"
+export TEXT_BACKUP4="Podmieniłeś pliki repozytorium."
+export TEXT_BACKUP5="Przerwałeś proces podmiany repozytorium."
+export TEXT_BACKUP6="Wskazałeś błędny plik !"
+export TEXT_BACKUP7="Tworzenie pliku: source.list.backup\n"
+export TEXT_INSTALACJA="\n\nGOTOWE !!! - wciśnij enter"
+export TEXT_KLUCZ="klucz"
+export TEXT_DOSTAWCA_KLUCZA="dostawca klucza"
+export TEXT_ZAZNACZ_KLUCZE="Zaznacz klucze GPG, które chcesz usunąć:"
+export TEXT_NIC_NIE_ZAZNACZYLES="Nic nie zaznaczyłeś"
+export TEXT_NIE_POBRALES_KLUCZY="Nie pobrałeś listy kluczy"
+
+#########################################################################################################################################################################
+#tlumaczenia_config
+export lang1="polski!english!français"
+export TEXT_CONFIG1="Konfigurator NeteXt73"
+export TEXT_CONFIG2="Menu konfiguracyjne NeteXt73:"
+export TEXT_CONFIG3="Kolor wyróżnionych napisów"
+export TEXT_CONFIG4="Adres kerneli płatnych:"
+export TEXT_CONFIG5="Adres wersji testing:"
+export TEXT_CONFIG6="Język programu:"
+export TEXT_CONFIG7="Skasuj pliki konfiguracyjne:"
+export TEXT_CONFIG8="Pliki konfiguracyjne skryptu NeteXt73 zostały skasowane"
+export TEXT_CONFIG9="Profil APM:"
+export TEXT_CONFIG10="Profil Kernela:"
+export TEXT_CONFIG11="Automatycznie używaj wybrany Profil Kernela"
+export TEXT_CONFIG12="Pozostaw kopię plików *.deb w /var/cache/apt/archives"
+
+#########################################################################################################################################################################
+#tlumaczenia_deinstalator
+export TEXT_MENU_DEINSTALATOR1="Usuń kernel"          
+export TEXT_MENU_DEINSTALATOR2="Usuń kernel - expert"
+export TEXT_MENU_DEINSTALATOR3="Usuń broadcom"
+export TEXT_MENU_DEINSTALATOR4="Usuń APM"
+export TEXT_MENU_DEINSTALATOR5="Usuń microcode i firmware"
+export TEXT_MENU_DEINSTALATOR6="Usuń cykliczne czyszczenie pamięci cache"
+export TEXT_MENU_DEINSTALATOR7="Usuń NeteXt73"
+export TEXT_DEINSTALATOR="Deinstalatory systemowe."
+export TEXT_DEINSTALATOR1="Wybierz opcję:"
+export TEXT_DEINSTALATOR2="Czy na pewno usunąć sterownik wifi broadcom?"
+export TEXT_DEINSTALATOR3="Usunięcie sterownika zamkniętego broadcom rodzi konsekwencje dla całego systemu w tym pozostałych kerneli zainstalowanych w systemie."
+export TEXT_DEINSTALATOR4="Obecnie używasz:"
+export TEXT_DEINSTALATOR5="abyś go przypadkiem nie usunął, nie będzie on widoczny na poniższej liście.\n\n Jeżeli lista wyboru jest pusta to znaczy, że jest to Twój jedyny kernel.\n\nZaznacz kernel, który chcesz usunąć:"
+export TEXT_DEINSTALATOR6="wersja kernela"
+export TEXT_DEINSTALATOR7="Usunąłeś zbędne kernele."
+export TEXT_DEINSTALATOR8="Przerwałeś proces usuwania zbędnych kerneli."
+export TEXT_DEINSTALATOR10="Czy na pewno chcesz usunąć skrypt APM?"
+export TEXT_DEINSTALATOR11="Czy na pewno chcesz usunąć microcode i firmware dla CPU i GPU?"
+export TEXT_BRAK_KERNELI="Brak kerneli do usunięcia."
+
+#########################################################################################################################################################################
+#tlumaczenia_gosc
+export TEXT_GOSC1="Dodaj lub usuń konto gościa"
+export TEXT_GOSC2="Dodaj konto gościa"
+export TEXT_GOSC3="Usuń konto gościa"
+export TEXT_GOSC4="Po podaniu hasła nastąpi wyłączenie sesji gościa"
+export TEXT_GOSC5="Po podaniu hasła nastąpi włączenie sesji gościa"
+export TEXT_INFO="\n\nGOTOWE !!! - wciśnij enter"
+
+#########################################################################################################################################################################
+#tlumaczenia_grub
+export TEXT_SKRYPTEXT_10="Twój aktualny wpis w GRUB to:"
+export TEXT_SKRYPTEXT_11="Co chcesz zrobić?"
+export TEXT_GRUB4A="Stworzyć backup pliku konfiguracyjnego GRUB"
+export TEXT_GRUB5A="Przywrócić backup pliku konfiguracyjnego GRUB"
+export TEXT_GRUB6A="Wprowadzić wybrane wpisy do GRUB za pomocą kreatora"
+export TEXT_GRUB7A="Ręcznie wprowadzić wpisy do GRUB "
+export TEXT_NETBIT_MENU1D="Ustawić maksymalny czas pokazywania menu GRUB"
+export TEXT_GRUB8="Backup pliku"
+export TEXT_GRUB9="Przerwałeś proces backupu."
+export TEXT_GRUB10="Przywracanie pliku /etc/default/grub z backup"
+export TEXT_GRUB11="Przerwałeś proces przywracania gruba z pliku backup."
+export TEXT_GRUB12="Brak pliku backup."
+export TEXT_GRUB13="Nie było backupu pliku grub, plik grub.backup zostnie utworzony automatycznie w katalogu"
+export TEXT_GRUB14="Podaj jaką masz platformę?\n"
+#export TEXT_GRUB15="Optymalne ustawienia dla większości komputerów"
+#export TEXT_GRUB16="Sandy i Ivy Bridge /i3-i7/ ze zintegrowaną grafiką Intel"
+export TEXT_GRUB17="Ustawienia podświetlenia matrycy.\n"
+export TEXT_GRUB18="ustawienia używane w przypadku kłopotów z ustawieniami standardowymi"
+export TEXT_GRUB19="Poprawione"
+export TEXT_GRUB_STD="Intel (minimum Core2Duo) lub AMD (minimum z serii K8)"
+export TEXT_GRUB_INTEL="Intel i3-i5-i7 - Sandy/Ivy Bridge, Haswell  ze zintegrowaną grafiką Intel"
+export TEXT_GRUB_RADEON="Radeon DPM - otwarte sterowniki grafiki. Tylko dla kernela w wersji v26.xx (bazujący na 3.11)"
+export TEXT_GRUB21="Końcowa akceptacja zmian.\n"
+export TEXT_GRUB21A="Wprowadza zmiany wg wcześniejszych wytycznych"
+export TEXT_GRUB21B="Tryb zaawansowany"
+export TEXT_GRUB21C="Umożliwia edycję dokonywanego wpisu"
+export TEXT_GRUB22="Dokonaj zmian lub zaakceptuj wybrany wpis:"
+export TEXT_GRUB23="Tryb tylko i wyłącznie dla osób zaawansowanych.\nDokonaj zmian lub wróć do poprzedniego menu"
+export TEXT_NETBIT_MENU18="Ustaw czas po jakim zniknie menu GRUB:"
+export TEXT_NETBIT_MENU19="Po podaniu hasła zmiana czasu pokazywania menu GRUB zostanie wprowadzona. Zamknięcie tego okna anuluje proces dokonywania zmiany."
+
+#########################################################################################################################################################################
+#tlumaczenia_kernele
+export TEXT_INSTLATOR1="<b>UWAGA !!</b> - do poprawnego działania komputera\nwymagana jest instalacja kernela oraz wszystkich skryptów e X t 7 3"
+export TEXT_MENU_INSTALATOR3="Lokalne"
+export TEXT_MENU_INSTALATOR4="Tylko nagłówki"
+export TEXT_MENU_INSTALATOR5="ppa mainline"
+export TEXT_PPA_1="Wybierz posiadaną wersję systemu, sugeruję:"
+export TEXT_RODZAJ_SYSTEMU="Rodzaj systemu"
+export TEXT_LISTA_KERNELI="Lista kerneli dla Ubuntu"
+export TEXT_ZAZNACZ_KERNEL="Zaznacz kernel, który chcesz pobrać na dysk."
+export TEXT_STEROWNIKI1="brak kernela dla twojej wersji systemu"
+export TEXT_INSTALOWAC="INSTALOWAĆ"
+export TEXT_INSTALOWAC_KERNEL="został pobrany. \n\nJeżeli chcesz go zainstalować automatycznie kliknij:\n\nTAK\n"
+export TEST_INSTALOWAC_KERNEL2="Program zapamiętał polecenie instalacyjne, możesz je wkleić w terminalu skrótem klawiszy:\n\nSHIFT+INSERT lub CTRL+SHIFT+V\n"
+export TEST_INSTALOWAC_KERNEL3="Za chwilę nastąpi proces instalacji kernela"
+export TEST_INSTALOWAC_KERNEL4="na podstawie pobranych plików:"
+export TEST_INSTALOWAC_KERNEL5="Program zapamiętał ścieżkę do pobranych plików, możesz je wkleić w terminalu skrótem klawiszy:\n\nSHIFT+INSERT lub CTRL+SHIFT+V\n"
+export TEXT_INSTALOWAC_KERNEL6="Nie pobrały się pliki instalacyjne, spróbuj jeszcze raz."
+export TEXT_INSTALOWAC_KERNEL7="Masz już zainstalowany ten kernel.\nPrzed ponowną instalacją musisz go usunąć."
+export TEXT_STRONA1="Podaj ścieżkę dostępu do płatnych kerneli.\nJeżeli nie masz jeszcze dostępu  skontaktuj się z: Tomasz e X t 7 3 Miś,mail:ext73@wp.pl" 
+export TEXT_K8="K8 - od Intel C2D, AMD K8"
+export TEXT_DEB1="Wskaż plik linux-headers lub linux-image, który chcesz zainstalować:"
+
+#########################################################################################################################################################################
+#tlumaczenia_kontakt
+export TEXT_KONTAKT_Z_AUTORAMI="Kontakt z autorami:"
+export TEXT_NETBIT="NetBit73 - opracowanie graficznego instalatora NeteXt73"
+export TEXT_EXT="e X t 7 3 - przygotowanie kerneli,skryptów APM oraz sterowników do kart graficznych"
+export TEXT_FADEMIND="FadeMind - tłumaczenie na język angielski i beta testy"
+export TEXT_KAROLINA="Karolina Franieczek - tłumaczenia na język niemiecki"
+export TEXT_ENEDIL="enedil - tłumaczenie na język francuski"
+
+#########################################################################################################################################################################
+#tlumaczenia_logi
+export TEXT_LOGI0="Aktualna wersja kernela:"
+export TEXT_LOGI1="Zainstalowane wersje kerneli:"
+export TEXT_LOGI2="Informacje o sprzęcie:"
+export TEXT_LOGI6="Zainstalowane skrypty optymalizacyjne:"
+export TEXT_LOGI7="TAK, starsza wersja, sugeruję zainstalowanie nowej"
+export TEXT_LOGI8="Prawa pliku"
+export TEXT_LOGI9="Dodatkowy wpis w sekcji GRUB:"
+export TEXT_LOGI10="Wersje plików:"
+export TEXT_LOGI12="Informacje o systemie"
+export TEXT_SKRYPT="Skrypt"
+export TEXT_WYGENERUJ="wygeneruj logi"
+
+#########################################################################################################################################################################
+#tlumaczenia_microcode
+export TEXT_MICROCODE1="Masz już zainstalowany najnowszy microcode i firmware dla CPU i GPU.\nNie ma konieczności aktualizacji."
+export TEXT_MICROCODE2="Nie masz zainstalowanego najnowszego microcode.\nZa chwilę nastąpi jego instalacja."
+
+#########################################################################################################################################################################
+#tlumaczenia_monitor
+export TEXT_MONITOR1="Wybierz programy, które chcesz uruchomić:"
+
+#########################################################################################################################################################################
+#tlumaczenia_netext73
+export TEXT_WERSJA="Możliwa aktualizacja programu NeteXt'73 do wersji"
+export TEXT_LICENCJA="Licencja"
+export TEXT_BUG="Zgłoś błąd"
+export TEXT_CHANGELOG="Lista zmian"
+export TEXT_PASSWD="Złe hasło, czy chcesz przerwać uruchamianie programu NeteXt73 w trybie root?"
+export TEXT_PASSWD1="Proszę wprowadzić hasło"
+
+#########################################################################################################################################################################
+#tlumaczenia_nvidia
+
+#########################################################################################################################################################################
+#tlumaczenia_radeon
+
+#########################################################################################################################################################################
+#tlumaczenia_ram
+export TEXT_NETBIT_RAM1="Zwolnij RAM natychmiast"
+export TEXT_NETBIT_RAM2="Podaj procentowe wykorzystanie RAM, po przekroczeniu którego ma nastąpić wyczyszczenie pamięci cache."
+export TEXT_RAM6="Za chwilę nastąpi wyczyszczenie pamięci cache, jeżeli tego nie chcesz, zamknij to okno"
+export TEXT_RAM7="Stan przed:"
+export TEXT_RAM8="Stan po:"
+
+#########################################################################################################################################################################
+#tlumaczenia_tasksel
+export TEXT_TASKSEL1="Za chwilę będziesz mógł zainstalować usługi serwerowe,zamknięcie tego okna anuluje instalację."
+
+#########################################################################################################################################################################
+#tlumaczenia_update
+export TEXT_UPDATE1="Aktualizuj"
+export TEXT_UPDATE1a="Co chcesz zaktualizować?"
+export TEXT_UPDATE2="Aktualizuj system"
+export TEXT_UPDATE3="Aktualizuj NeteXt'73"
+export TEXT_UPDATE4="Brak dostępnych aktualizacji"
+export TEXT_UPDATE5="Możliwa aktualizacja do wersji"
+export TEXT_UPDATE6="Czy instalować dostępną aktualizację programu NeteXt73 ?"
+export TEXT_UPDATE7="Instaluj wszystko"
+export TEXT_UPDATE8="Instaluj dostępne aktualizacje"
+export TEXT_INSTALACJA_NOWEJ="Instalacja nowej wersji NeteXt73"
+export TEXT_STABLE="Ostatnia stabilna wersja kernela"
+export TEXT_MICROCODE1="Masz już zainstalowany najnowszy microcode i firmware dla CPU i GPU.\nNie ma konieczności aktualizacji."
+export TEXT_ZAINSTALOWANY="Program Netext73 został zainstalowany.\nUruchom go z menu: NARZĘDZIA/AKCESORIA."
+export TEXT_BRAK_DANYCH="Brak danych, przerwane połączenia w trakcie pobierania informacji z serwera"
+
+#########################################################################################################################################################################
+#tlumaczenia_uslugi
+export TEXT_MENU_USLUGI="Wybierz sekcję, w której chcesz dokonać zmian:"
+export TEXT_MENU_USLUGI1="Zarządzaj usługami SysV"
+export TEXT_MENU_USLUGI1A="Zarządzaj usługami Upstart"
+export TEXT_MENU_USLUGI1B="Zarządzaj usługami SysV - tryb expert"
+export TEXT_MENU_USLUGI1C="Zarządzaj usługami Upstart - tryb expert"
+export TEXT_MENU_USLUGI1D="Wyświetl listę usług wraz ze stanami"
+export TEXT_MENU_USLUGI2="Wybierz usługi, które chcesz włączyć lub wyłączyć."
+export TEXT_MENU_USLUGI3="Nazwa usługi"
+export TEXT_MENU_USLUGI4="Włączony"
+export TEXT_MENU_USLUGI5="Wyłączony"
+export TEXT_MENU_USLUGI6="Wybierz usługi, które chcesz  uruchomić lub zatrzymać."
+export TEXT_MENU_USLUGI7="Uruchamianie"
+export TEXT_MENU_USLUGI8="Wybierz usługi, które chcesz  uruchomić lub zatrzymać, usunąć z lub dodać do autostartu."
+export TEXT_MENU_USLUGI9="Usługa"
+export TEXT_MENU_USLUGI10="Stan"
+export TEXT_MENU_USLUGI11="Nr procesu"
+export TEXT_MENU_USLUGI12="Zarządzasz usługą:"
+export TEXT_MENU_USLUGI22A="Uruchamia usługę"
+export TEXT_MENU_USLUGI22B="Zatrzymuje usługę"
+export TEXT_MENU_USLUGI22C="Włącza usługę przy autostarcie"
+export TEXT_MENU_USLUGI22D="Wyłącza usługę z autostartu"
+export TEXT_MENU_USLUGI30="Nastąpi włączenie usługi"
+export TEXT_MENU_USLUGI31="Zamknięcie tego okna anuluje proces wprowadzania zmiany.\nPodaj hasło."
+export TEXT_MENU_USLUGI32="Nastąpi dodanie usługi \$a1 do autostartu."
+export TEXT_MENU_USLUGI33="Nastąpi wyłączenie usługi"
+export TEXT_MENU_USLUGI34="Usługa jest wyłączona."
+export TEXT_MENU_USLUGI35="Usługa jest już aktywna"
+export TEXT_MENU_USLUGI36="Nastąpi wyłączenie usługi \$a1 z autostartu."
+export TEXT_MENU_USLUGI37="Usługa jest już nieaktywna."
+export TEXT_MENU_USLUGI38="Lista procesów wraz ze stanami:"
+export TEXT_MENU_USLUGI39="Nazwa"
+export TEXT_BRAK="brak"
+
+#########################################################################################################################################################################
+#tlumaczenia_procedury
+export BRAKNETA="<span color=\"$kolor_textu\">Brak połączenia z internetem lub serwerem programu NeteXt'73. Spróbuj później.</span>"  
+export TEXT_PROCEDURA_4="Czy chcesz zainstalować linux-firmware-nonfree ?"
+export TEXT_POBIERANIE="<span color=\"$kolor_textu\">Pobieranie informacji z serwera. Czekaj!</span>"
+export TEXT_NETEXT2="optymalizator systemu"
+export TEXT_POB1="s/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Prędkość pobierania: \2\/s, pozostało \3/"
+export TEXT_POB2="Pobieram plik:"
+export TEXT_INFO1="<br>Kernele i skrypt APM - e X t 7 3<br>Skrypt NeteXt'73 - NetBit73<br>Tłumaczenie angielskie: Tomasz Przybył /FadeMind/<br>Tłumaczenie niemieckie: Karolina Franieczek"
+export TEXT_PROCEDURA_1="Instalacja kernela e X t 7 3"
+export TEXT_PROCEDURA_2="Instalacja microcode dla platformy $komputerek"
+export TEXT_PROCEDURA_3="Usuwanie microcode dla platformy $komputerek"
+export TEXT_PROCEDURA_6="Instalacja skryptów APM"
+export TEXT_PROCEDURA_8_1="Zmiana ustawień skryptów APM  na "
+export TEXT_PROCEDURA_9="Usuwanie skryptów APM"
+export TEXT_PROCEDURA_13="Dokonywanie zmian w pliku konfiguracyjnym GRUB"
+export TEXT_PROCEDURA_14="Instalowanie sterowników do kart graficznych Radeon"
+export TEXT_PROCEDURA_15="Instalowanie sterowników do kart graficznych Nvidia"
+export TEXT_KERNEL1="Zostaną usunięte następujące wersje kerneli:"
+export TEXT_KERNEL2="Kernel został zainstalowany.\n\nPo kliknięciu na OK\nZostaną usunięte pobrane pliki.\n\nZmiany wymagają restartu systemu.\n\nNaciśnij OK"
+export TEXT_PLATFORMA1="Wybrałeś platformę"
+export TEXT_PLATFORMA2=".\nUWAGA !!\nPonowna instalacja zainstalowanych kerneli bez wcześniejszego ich usunięcie jest niezalecana."
+export TEXT_WYBIERZ_KERNEL="wybierz wersję kernela do instalacji z poniższej listy:"
+export TEXT_ZNITY1="zainstalowany?"
+export TEXT_GRUB1="Usuwanie zbędnych linii w pliku"
+export TEXT_GRUB2="Dokonywanie zmian w pliku"
+export TEXT_GRUB3="Przerwałeś proces instalacji, zacznij od początku, kontynuacja może doprowadzić do uszkodzenia systemu! Zacznij jeszcze raz dokonywać zmian w sekcji GRUB."
+export TEXT_WYMAGANY_RESTART="Restart wprowadzi ustawienia w życie."
+export TEXT_INFO2="Anulowałeś instalację. Pliki instalacyjne zostały w katalogu:"
+export TEXT_ZAMKNIJ_PROGRAM="Przerwałeś pobieranie pliku! \n\n\nDalsze działanie programu niesie ryzyko awarii\ndlatego za 25 sekund nastąpi jego automatyczne zamknięcie."
+export TEXT_RESTART="Czy na pewno zrestartować komputer?"
+#często powtarzane
+export TEXT_INSTALACJA1="Za chwilę nastąpi wprowadzenie wybranych zmian. Zamknięcie tego okna anuluje operację."
+export TEXT_INST1="Instalacja zależności niezbędnych do prawidłowego działania programu."
+export TEXT_INFORMACJA="INFORMACJA"
+export TEXT_INSTALACJA2="\n\nGOTOWE !!! - wciśnij enter"
+export TEXT_MENU="menu"
+export TEXT_NIE="Nie"
+export TEXT_OPIS="opis"
+export TEXT_POWROT="Przerwij"
+export TEXT_STEROWNIKI1="brak dla twojej wersji systemu"
+export TEXT_STEROWNIKI2="Instalator sterowników do kart graficznych:"
+export TEXT_STEROWNIKI3="Instalator nie znalazł obsługiwanej karty graficznej."
+export TEXT_TAK="Tak"
+export TEXT_SUMA_KONTROLNA="Uwaga ! Nastąpiła próba pobrania pliku - sumy kontrolne są niezgodne z założonymi."
+export TEXT_UWAGA="UWAGA !"
+export TEXT_ZAMKNIJ="Zamknij"
+export TEXT_ZAZNACZ="zaznacz"
+export TEXT_STEROWNIK="Wybierz sterownik"
+
+#########################################################################################################################################################################
+
+#tlumaczenia_skrypty
+export TEXT_SKRYPT1="Zbiór skryptów"
+export MENU3="Usuń pozostałości plików konfiguracyjnych"
+export MENU4="Zabij procesy zombie"
+export MENU5="Xterm"
+export MENU6="Synchronizuj czas z serwerem NTP"
+export MENU7="Wyłącz IPv6"
+export MENU8="Włącz IPv6"
+export MENU9="Backdoor SSHD test"
+export MENU10="Napraw GTK dla Chrome" ##
+export TEXT_ZOMBIE1="Lista procesów zombie"
+export TEXT_ZOMBIE2="Brak procesów zombie."
+export TEXT_CONFIG1="Brak pozostałości po plikach konfiguracyjnych do usunięcia."
+export TEXT_BACK_CRITIC="UWAGA: Znaleziono ciągi Fokirtor w procesie SSHD:"
+export TEXT_BACK_OK="OK: Brak zagrożenia w procesach SSHD."
+
+
+
+#########################################################################################################################################################################

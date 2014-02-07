@@ -1,0 +1,227 @@
+#!/bin/bash
+## Graficzny instalator kerneli e X t 7 3  - NeteXt'73
+## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
+## przygotowanie skryptów optymalizacyjnych e X t 7 3
+## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
+## tłumaczenie na język francuski: Michał Radwański (enedil)
+## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
+#
+#		    _   _      _      __  ___   _ _____ _____
+#		   | \ | | ___| |_ ___\ \/ / |_( )___  |___ /
+#		   |  \| |/ _ \ __/ _ \\  /| __|/   / /  |_ \
+#		   | |\  |  __/ |_  __//  \| |_    / /  ___) |
+#		   |_| \_|\___|\__\___/_/\_\\__|  /_/  |____/
+#
+#	            __ _ _ __ __ _ / _(_) ___ _____ __  _   _
+#	           / _` | '__/ _` | |_| |/ __|_  / '_ \| | | |
+#	          | (_| | | | (_| |  _| | (__ / /| | | | |_| |
+#	           \__, |_|  \__,_|_| |_|\___/___|_| |_|\__, |
+#	           |___/                                |___/
+#     _           _        _       _                   _                        _ _
+#    (_)_ __  ___| |_ __ _| | __ _| |_ ___  _ __      | | _____ _ __ _ __   ___| (_)
+#    | | '_ \/ __| __/ _` | |/ _` | __/ _ \| '__|     | |/ / _ \ '__| '_ \ / _ \ | |
+#    | | | | \__ \ |_ (_| | | (_| | |_ (_) | |        |   <  __/ |  | | | |  __/ | |
+#    |_|_| |_|___/\__\__,_|_|\__,_|\__\___/|_|        |_|\_\___|_|  |_| |_|\___|_|_|
+#        __  __  _     _____   _____      ___     _   _      _   ____  _ _  _____ ____
+#   ___  \ \/ / | |_  |___  | |___ /     ( _ )   | \ | | ___| |_| __ )(_) |____  |___ /
+#  / _ \  \  /  | __|    / /    |_ \     / _ \/\ |  \| |/ _ \ __|  _ \| | __| / /  |_ \
+# |  __/  /  \  | |_    / /    ___) |   | (_>  < | |\  |  __/ |_| |_) | | |_ / /  ___) |
+#  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
+#
+#########################################################################################################################################################################
+#procedury
+
+source /opt/NeteXt73/procedury
+
+#########################################################################################################################################################################
+#Usługi
+
+cd /tmp
+petla_duza="tak"
+while [ $petla_duza = "tak" ]; do
+	echo "nie" > /tmp/ok.txt
+	
+	uslugi=$(yad --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --text="<span color=\"$kolor_textu\">$TEXT_MENU_USLUGI</span>" --form --field=" :CB" "$TEXT_MENU_USLUGI1!$TEXT_MENU_USLUGI1A!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C!$TEXT_MENU_USLUGI1D"  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
+	klawisz=$?; uslugi=$(echo $uslugi | cut -d "|" -f 1)
+	#SysV - automat
+	if [ $klawisz = 0 ]; then 
+	if [ "$uslugi" = "$TEXT_MENU_USLUGI1" ] ; then
+		petla="tak"
+		while [ $petla = "tak" ]; do
+		      sysv
+		      paste -d " " 3.txt 4.txt 5.txt 6.txt 7.txt 8.txt 2.txt 9.txt  > 9a.txt
+		      sed -e 's/ //g' 9a.txt > sysv.txt 
+		      for i in $(seq 1 $(wc -l sysv.txt | awk '{print $1}')); do 
+		      head sysv.txt -n$i | tail -n1 > 10.txt
+			  if  [ "$(grep "X" 10.txt | head -n1)" != "" ]
+			  then
+			      echo -e "on\t-">> 11.txt
+			  else
+			      echo -e "-\toff" >> 11.txt
+			  fi
+		      done
+		      paste -d " " 1.txt 11.txt > 4.txt
+		      
+		      #usunięcie usług upstart z sysV
+		      ls /etc/init/*.conf* | sed 's/\.conf.*//g' | cut -d "/" -f 4 | tr '\n' ' ' > 1.txt
+		      for i in $(cat 1.txt) ; do
+		      sed -i "/$i/d" 4.txt 
+		      done
+		      
+		      echo $(sed -e '/^[^#]/s:^:FALSE :' 4.txt) > sysv.txt
+		      a=$(yad --height=540 --width=440   --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>SysV - automat</b></span>\n$TEXT_MENU_USLUGI2" --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU_USLUGI3"  --column="$TEXT_MENU_USLUGI4" --column="$TEXT_MENU_USLUGI5"  --checklist --list $(cat sysv.txt))
+		      if [ $? = "0" ]; then
+			  if [ "$a" != "" ]; then
+			    export a1=$a
+			    echo $a | sed 's/|/\n/g' | sed '/^on/ d' | sed '/^off/ d' | sed '/^-/ d' | sed '/^.*TRUE/ d' > 1.txt
+			    naglowek > /tmp/instaluj.sh
+			    cat sysv.txt | sed 's/FALSE/\nFALSE/g' > sysv1.txt
+			    for a in $(cat 1.txt)
+				do
+					export a1=$a
+					    if [ "$(grep $a1 sysv1.txt | awk '{print $3}' | grep "on")" != "" ]; then
+						echo "sudo update-rc.d -f $a1 remove" >> instaluj.sh
+					    else
+						echo "sudo update-rc.d -f $a1 defaults" >> instaluj.sh
+					    fi
+				done
+				instalacja2
+			  fi
+			    rm *.txt -f; rm *.sh -f
+		      fi
+		      if [ -z "$a" ]; then
+			    petla="nie"
+			    rm *.txt -f; rm *.sh -f
+		      fi
+		done
+	#Upstart - automat
+	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1A" ] ; then
+		  petla="tak"
+		  while [ $petla = "tak" ]; do
+			rm *.txt -f
+			xterm -T upstart -e bash -c "echo \"$TEXT_MENU_USLUGI38\";for SOFT in \$(ls /etc/init/*.conf | sed 's/\.conf//g' | cut -d \"/\" -f 4 | grep -v -E \"cryptdisks-udev|network-interface|network-interface-security|wait-for-state\"); do sudo status \$SOFT >> lista.txt; done"
+			
+			cat lista.txt | cut -d " " -f 1 > 1.txt
+			sed -e 's/,//g' lista.txt | cut -d " " -f 2 | sed -e 's/start.*/wł/g' | sed -e 's/stop.*/wł/g'  > 2.txt
+			paste -d " " 1.txt 2.txt  > 4.txt
+			for SOFT in $(ls /etc/init/*.conf-disabled | sed 's/\.conf-disabled//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state")
+			do
+			    echo "$SOFT wył" >> 4.txt
+			done  2>&1 | pobieranie2
+			sed  4.txt -i -e 's/wł/on -/g'
+			sed  4.txt -i -e 's/wył/- off/g'
+			echo $(sed -e '/^[^#]/s:^:FALSE :' 4.txt) > 1.txt
+			a=$(yad --height=540 --width=460   --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Upstart - automat</b></span>\n$TEXT_MENU_USLUGI6" --column="$TEXT_ZAZNACZ" --column="proces" --column="$TEXT_MENU_USLUGI4" --column="$TEXT_MENU_USLUGI5" --checklist --list $(cat 1.txt))
+			if [ $? = "0" ]; then
+				if [ "$a" != "" ]; then
+				echo $a | sed 's/|/\n/g' | sed '/^on/ d' | sed '/^off/ d' | sed '/^-/ d' | sed '/^.*TRUE/ d' > 1.txt
+				naglowek > /tmp/instaluj.sh
+				for a in $(cat 1.txt)
+					do
+						export a1=$a
+						if [ "$a1" = "binfmt-support" ]; then
+							if [ -e /etc/init/$a1.conf-disabled ]; then
+								echo "sudo update-rc.d -f $a1 defaults; sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start" >> instaluj.sh
+							elif [ -e /etc/init/$a1.conf ]; then
+								echo "sudo update-rc.d -f $a1 remove; sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled" >> instaluj.sh
+							fi
+						else
+							if [ -e /etc/init/$a1.conf-disabled ]; then
+								echo "sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start" >> instaluj.sh
+							elif [ -e /etc/init/$a1.conf ]; then
+								echo "sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled" >> instaluj.sh
+							fi
+						fi
+					done
+					instalacja2
+				fi
+			fi
+			if [ -z "$a" ]; then
+			    petla="nie"
+			    rm *.txt -f; rm *.sh -f
+			fi
+		  done
+		  rm *.txt -f; rm *.sh -f
+	#SysV - expert
+	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1B" ] ; then
+		xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI7 sysv-rc-conf\n\"; sudo sysv-rc-conf"
+	#Upstart - expert
+	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1C" ] ; then
+		  petla="tak"
+		  while [ $petla = "tak" ]; do
+			rm *.txt -f
+			xterm -T upstart -e bash -c "echo \"$TEXT_MENU_USLUGI38\";for SOFT in \$(ls /etc/init/*.conf | sed 's/\.conf//g' | cut -d \"/\" -f 4 | grep -v -E \"cryptdisks-udev|network-interface|network-interface-security|wait-for-state\"); do sudo status \$SOFT >> lista.txt; done"
+			#for SOFT in $(ls /etc/init/*.conf | sed 's/.conf//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state"); do sudo status $SOFT >> lista.txt; done 2>&1 | pobieranie2
+			
+			cat lista.txt | cut -d " " -f 1 > 1.txt
+			sed -e 's/,//g' lista.txt | cut -d " " -f 2 > 2.txt
+			cut lista.txt -d " " -f 4 | sed -e "s/^$/$TEXT_BRAK/g" > 3.txt
+			paste -d " " 1.txt 2.txt 3.txt  > 4.txt
+			for SOFT in $(ls /etc/init/*.conf-disabled | sed 's/\.conf-disabled//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state")
+			do
+			#do sprawdzenia
+			    echo "$SOFT off $TEXT_BRAK" >> 4.txt
+			done  2>&1 | pobieranie2
+			a=$(yad --height=540 --width=400 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Upstart - expert</b></span>\n$TEXT_MENU_USLUGI8" --column="$TEXT_MENU_USLUGI9" --column="$TEXT_MENU_USLUGI10" --column="$TEXT_MENU_USLUGI11" --list --list $(cat 4.txt))
+			if [ $? = "0" ]; then
+			    a=$(echo $a | cut -d '|' -f 1)
+			    if [ "$a" != "" ]; then
+				rm *.txt -f
+				usl=$( yad --height=240 --width=560 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="$TEXT_MENU_USLUGI12 $a" --list --radiolist --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU" --column="$TEXT_OPIS"\
+				  FALSE "start" 	"$TEXT_MENU_USLUGI22A"\
+				  TRUE "stop" 		"$TEXT_MENU_USLUGI22B"\
+				  FALSE "enable" 	"$TEXT_MENU_USLUGI22C"\
+				  FALSE "disable" 	"$TEXT_MENU_USLUGI22D")
+				  if [ $? = 0 ]; then
+					usl=$(echo $usl | cut -d '|' -f 2)
+					export usl1=$usl; export a1=$a
+					if [ "$usl" = "start" ]; then
+					    if [ -e /etc/init/$a1.conf ]; then
+					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI30 $a1.\n$TEXT_MENU_USLUGI31\"; sudo service $a1 $usl1; echo 'tak' > /tmp/ok.txt"
+					    else
+					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI32\n$TEXT_MENU_USLUGI31\"; sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start; echo 'tak' > /tmp/ok.txt"
+					    fi
+					elif [ "$usl" = "stop" ]; then
+					    if [ -e /etc/init/$a1.conf ]; then
+					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI33 $a1.\n$TEXT_MENU_USLUGI31\"; sudo service $a1 $usl1; echo 'tak' > /tmp/ok.txt"
+					    else
+					      notify-send  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI34"
+					    fi
+					elif [ "$usl" = "enable" ]; then
+					      echo /etc/int/$a1.conf
+					    if [ -e /etc/init/$a1.conf-disabled ]; then
+					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI32\n$TEXT_MENU_USLUGI31\"; sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start; echo 'tak' > /tmp/ok.txt"
+					    else
+					      notify-send  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI35"
+					    fi
+					    echo /etc/int/$a1.conf-disabed
+					elif [ "$usl" = "disable" ]; then
+					    if [ -e /etc/init/$a1.conf ]; then
+					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI36\n$TEXT_MENU_USLUGI31\"; sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled ; echo 'tak' > /tmp/ok.txt"
+					    else
+					      notify-send  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI37"
+					    fi
+					fi
+				  fi
+			    fi
+			fi
+			if [ -z "$a" ]; then
+			    petla="nie"
+			    rm *.txt -f
+			fi
+		  done
+	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1D" ] ; then
+	sysv
+	paste -d " " 1.txt 3.txt 4.txt 5.txt 6.txt 7.txt 2.txt 8.txt 9.txt > sysv.txt
+	a=$(yad --height=560 --width=560 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>SysV - list</b></span>\n$TEXT_MENU_USLUGI38" --column="$TEXT_MENU_USLUGI39"  --column="1" --column="2" --column="3" --column="4" --column="5" --column="0" --column="6" --column="S" --list --list $(cat sysv.txt))
+	rm *.txt -f
+
+	fi
+	fi
+	if [ -z "$uslugi" ]; then
+	      petla_duza="nie"
+	      rm *.txt -f
+	fi
+done
+
