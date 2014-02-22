@@ -69,6 +69,14 @@ else
 	  echo "FALSE" > ~/.netext73/https_link
       fi
 fi
+
+#odpalanie strony domowej 
+if [ -e ~/.netext73/strona_domowa ]; then
+echo "ok" > /dev/null
+else
+    xdg-open "http://www.netext73.pl/p/netext73-poczatek.html"
+    echo "TRUE" > ~/.netext73/strona_domowa
+fi
 }
 
 
@@ -94,7 +102,7 @@ else
 fi
 
 if [ "$klawisz" = "2" ]; then
-      yad  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/tlumaczenia/LICENSE --width=600 --height=600 --button="gtk-ok:1" 
+      yad  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/LICENSE --width=600 --height=600 --button="gtk-ok:1" 
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "3" ]; then
       yad  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1"
@@ -102,9 +110,9 @@ elif [ "$klawisz" = "3" ]; then
 elif [ "$klawisz" = "4" ]; then
       if [ "$USER" = "root" ]; then
 	    userek=$(cat /tmp/userek)
-	    su $userek -c "xdg-open \"http://ubuntu.pl/forum/viewtopic.php?f=216&t=167845\""
+	    su $userek -c "xdg-open \"http://netext73.blogspot.com/2014/02/netext73-zgaszanie-bedow.html\""
       else
-	    xdg-open "http://ubuntu.pl/forum/viewtopic.php?f=216&t=167845"
+	    xdg-open "http://netext73.blogspot.com/2014/02/netext73-zgaszanie-bedow.html"
       fi
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "5" ]; then

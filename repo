@@ -33,6 +33,7 @@
 #procedury
 
 source /opt/NeteXt73/procedury
+
 sofcik(){
 echo "audacity avidemux clementine compizconfig-settings-manager dropbox ffmulticonverter google-chrome-stable guake gufw homebank htop i-nex kadu kget kubuntu-restricted-extras language-pack-gnome-pl libnss3-tools libreoffice-gtk libreoffice-kde lubuntu-restricted-extras mc network-manager-openvpn openssh-client openssl oracle-java7-installer pidgin ppa-purge radiotray saidar showfoto shutter spotify-client synaptic tomahawk ubuntu-restricted-extras unetbootin unity-tweak-tool vlc wakeonlan wine wmctrl x2goclient x2goserver xbmc xubuntu-restricted-extras yakuake youtube-dl " > ~/.netext73/soft
 }
@@ -332,7 +333,7 @@ if [ "$klawisz" = "0" ]; then
 			  echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
 			elif [ "${repo[$i]}" = "deb http://dl.google.com/linux/chrome/deb/ stable main" ]; then
 			  echo "echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list" >> instaluj.sh
-			  echo "wget -q -O  https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -" >> instaluj.sh
+			  echo "wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -" >> instaluj.sh
 			  echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
 			elif [ "${repo[$i]}" = "ppa:bumblebee/stable" ]; then
 			      echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh

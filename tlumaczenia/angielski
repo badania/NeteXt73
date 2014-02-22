@@ -138,7 +138,7 @@ export TEXT_GRUB17="Backlight settings.\n"
 export TEXT_GRUB18="Choose this when there are problems with default entries."
 export TEXT_GRUB19="Fixed"
 export TEXT_GRUB_STD="CPU Intel (minimum Core2Duo CPU) or AMD (minimum K8 Series)"
-export TEXT_GRUB_INTEL="Intel i3-i5-i7 - Sandy/Ivy Bridge, Haswell  with integrated Intel GPU"
+export TEXT_GRUB_INTEL="Intel i3-i5-i7 - Sandy/Ivy Bridge, Haswell with integrated Intel GPU"
 export TEXT_GRUB_RADEON="Radeon DPM - open graphics drivers. Designed only for kernel version v26.xx (based on 3.11)"
 export TEXT_GRUB21="Final approval of changes.\n"
 export TEXT_GRUB21A="Selected changes will be made. Are you sure?"
@@ -289,7 +289,7 @@ export TEXT_BRAK="none"
 
 #########################################################################################################################################################################
 #tlumaczenia_procedury
-export BRAKNETA="<span color=\"$kolor_textu\">Servers not available. Check your Internet connection or try again later.</span>"  
+export BRAKNETA="<span color=\"$kolor_textu\">Servers not available. Check your Internet connection or try again later.</span>"
 export TEXT_PROCEDURA_4="Install linux-firmware-nonfree?"
 export TEXT_POBIERANIE="<span color=\"$kolor_textu\">Connecting to server. Wait!</span>"
 export TEXT_NETEXT2="optimizer"

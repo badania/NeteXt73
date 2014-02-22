@@ -36,7 +36,7 @@
  
 #########################################################################################################################################################################
 #tlumaczenia_apm
-export TEXT_APM1="Tu as installé le script d'APM en version vieux ou en version incomplet, installe la dernière version.\nDans cet moment l'installation du script  d'APM va se commencer.\n\nVeux-tu installer? "
+export TEXT_APM1="Tu as installé le script d'APM en version vieux ou en version incomplet, installe la dernière version.\nDans cet moment l'installation du script d'APM va se commencer.\n\nVeux-tu installer? "
 export TEXT_AKTUALNY_PROFIL_APM="Le profil actuel d'APM"
 export TEXT_ZMIEN_PROFIL_APM="Changes le profil APM à:"
 export TEXT_APM2="Pour changer le statut d'APM installe la dernière version"
@@ -102,7 +102,7 @@ export TEXT_DEINSTALATOR4="Actuellement tu utilises:"
 export TEXT_DEINSTALATOR5="pour ne pas les supprimer par hasard, ils ne vont pas être visible sur la liste suivante.\n\n Si la liste est vide, cela signifie que c'est ton seul kernel.\n\nSélectionne le kernel que tu souhaites supprimer:"
 export TEXT_DEINSTALATOR6="la version de kernel"
 export TEXT_DEINSTALATOR7="Tu as supprimé les kernels inutiles."
-export TEXT_DEINSTALATOR8="Tu as arrêté  le processus de supprimation des kernels inutils"
+export TEXT_DEINSTALATOR8="Tu as arrêté le processus de supprimation des kernels inutils"
 export TEXT_DEINSTALATOR10="Es-tu sûr que tu veux supprimer le script d'APM?"
 export TEXT_DEINSTALATOR11="Es-tu sûr que tu veux supprimer le microcode et le firmware pour CPU et GPU?"
 export TEXT_BRAK_KERNELI="Il n'y est rien kernels à supprimer."
@@ -201,11 +201,11 @@ export TEXT_MICROCODE1="Tu as déjà installé le dernier firmware et le microco
 export TEXT_MICROCODE2="Tu n'as pas installé le dernier microcode.\nDans un moment l'installation va commencer."
 
 #########################################################################################################################################################################
-tlumaczenia_monitor
+#tlumaczenia_monitor
 export TEXT_MONITOR1="Sélectionne les programmes que tu souhaite exécuter:"
 
 #########################################################################################################################################################################
-tlumaczenia_netext73
+#tlumaczenia_netext73
 export TEXT_WERSJA="Tu peux mettre à jour le programme NeteXt'73 à la version"
 export TEXT_LICENCJA="Licence"
 export TEXT_BUG="Signale une erreur"
@@ -275,7 +275,7 @@ export TEXT_MENU_USLUGI30="Le service sera activé"
 export TEXT_MENU_USLUGI31="Entrez le mot de passe de compte root ou fermer cette fenêtre."
 export TEXT_MENU_USLUGI32="Service \$a1 sera activé et ajouté à autostart."
 export TEXT_MENU_USLUGI33="Le service sera désactivé."
-export TEXT_MENU_USLUGI34="Le service est  désactivé."
+export TEXT_MENU_USLUGI34="Le service est désactivé."
 export TEXT_MENU_USLUGI35="Le service est déjà actif."
 export TEXT_MENU_USLUGI36="Cela va désactiver le service \$a1 de démarrage automatique."
 export TEXT_MENU_USLUGI37="Le service est déjà inactive."
@@ -328,7 +328,7 @@ export TEXT_STEROWNIK="Sélectionne le pilot"
 export TEXT_STEROWNIKI1="il n'y a pour ta version du système"
 export TEXT_STEROWNIKI2="L'Installateur des pilotes pour les cartes graphiques:"
 export TEXT_STEROWNIKI3="L'Installateur n'a pas trouvé de la carte graphique supporté."
-export TEXT_SUMA_KONTROLNA="ATTENTION !  Les checksums sont incorrectes. Télécharge à nouveau le fichier."
+export TEXT_SUMA_KONTROLNA="ATTENTION! Les checksums sont incorrectes. Télécharge à nouveau le fichier."
 export TEXT_TAK="Oui"
 export TEXT_UWAGA="ATTENTION"
 export TEXT_ZAMKNIJ="Ferme"

@@ -75,10 +75,11 @@ else
     archiwum_deb="FALSE"
 fi
 
-if [ "$(cat /opt/NeteXt73/procedury | grep https.*dl)" != "" ]; then
-    https_link="TRUE"
-else
+if [ -e ~/.netext73/https_link ] && [ "$(cat ~/.netext73/https_link)" = "FALSE" ];then
     https_link="FALSE"
+else
+    https_link="TRUE"
+    echo "TRUE" > ~/.netext73/https_link
 fi
 konfiguracja=$(yad --title="$TEXT_CONFIG1" --width="155" --height="320" --window-icon="/opt/NeteXt73/ikony/config.png" --text="<span color=\"$kolor_textu\">$TEXT_CONFIG2</span>" --form \
 --field="$TEXT_CONFIG7:CB" --field="$TEXT_CONFIG4" --field="$TEXT_CONFIG5" --field="$TEXT_CONFIG6:CB" --field="$TEXT_CONFIG9:RO" --field="$TEXT_CONFIG10:RO" --field="$TEXT_CONFIG11:CHK" --field="$TEXT_CONFIG12:CHK" --field="HTTPS On/Off:CHK" "$TEXT_NIE!$TEXT_TAK" "$adres_premium" "$adres_testing" "$lang1" "$apm_stat" "$ik" "$automatyczna_instalacja" "$archiwum_deb" "$https_link" \
@@ -104,11 +105,6 @@ if [ $klawisz = 0 ]; then
 		echo $konfiguracja | cut -d "|" -f 7 > ~/.netext73/kernel_automat
 		echo $konfiguracja | cut -d "|" -f 8 > ~/.netext73/archiwum_deb
 		echo $konfiguracja | cut -d "|" -f 9 > ~/.netext73/https_link
-		if [ "$https_link" = "TRUE" ] && [ "$(cat ~/.netext73/https_link)" = "FALSE" ]; then
-		    xterm -T instalator -e bash -c "sudo sed -i 's/https:/http:/g' /opt/NeteXt73/procedury"
-		elif [ "$https_link" = "FALSE" ] && [ "$(cat ~/.netext73/https_link)" = "TRUE" ]; then
-		    xterm -T instalator -e bash -c "sudo sed -i 's/http:/https:/g' /opt/NeteXt73/procedury"
-		fi
 		killall -9 yad && cd /opt/NeteXt73 && ./NeteXt73	      
 	fi
 fi

@@ -31,7 +31,7 @@
 #  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
 #
 #########################################################################################################################################################################
-wersja=7.02.12
+wersja=7.07a
 
 jezyczek(){
 
@@ -65,7 +65,17 @@ fi
 
 }
 
-source /opt/NeteXt73/lang
+source /opt/NeteXt73/tlumaczenia/angielski
+jezyczek; case $jezyk in de*)
+    source /opt/NeteXt73/tlumaczenia/niemiecki
+;;
+fr*)
+    source /opt/NeteXt73/tlumaczenia/francuski
+;;
+pol*)
+    source /opt/NeteXt73/tlumaczenia/polski
+;;
+esac
 
 export nazwa_skryptu="NeteXt'73 v$wersja - $TEXT_NETEXT2"
 export nazwa_skryptu1="NeteXt'73 v$wersja"
@@ -84,12 +94,20 @@ export wersja_apm6="advanced_power_management_by_ext73_performance-ondemand"
 export error1="dialog-error"
 export ikona_info1="dialog-information"
 export warning1="dialog-warning"
+export adres_opisu="http://www.netext73.pl/search/label/opis_netext73"
+if [ -e ~/.netext73/https_link ] && [ "$(cat ~/.netext73/https_link)" = "FALSE" ]; then
+export adres_glowny="http://dl.dropbox.com/u/72313101"
+export adres_skryptow="$adres_glowny/skrypty"
+export adres_firmware="$adres_glowny/linux-firmware"
+export adres_sterownikow="$adres_glowny/sterowniki2"
+export polozenie_skryptu="http://dl.dropboxusercontent.com/u/2552069/ext73"
+else
 export adres_glowny="https://dl.dropbox.com/u/72313101"
 export adres_skryptow="$adres_glowny/skrypty"
 export adres_firmware="$adres_glowny/linux-firmware"
 export adres_sterownikow="$adres_glowny/sterowniki2"
-export adres_opisu="$adres_skryptow/netext73-opis.html"
 export polozenie_skryptu="https://dl.dropboxusercontent.com/u/2552069/ext73"
+fi
 
 #kolor textu
 if [ -e ~/.netext73/kolor_textu ]; then
@@ -196,6 +214,7 @@ echo "echo \"$TEXT_PROCEDURA_1\""
 echo "sudo sed -i 's+^start on mounted MOUNTPOINT=/proc TYPE=proc+start on mounted MOUNTPOINT=/var+' /etc/init/mounted-proc.conf"
 echo "sudo sed -i 's+^start on starting mountall+start on mounted MOUNTPOINT=/var+' /etc/init/ureadahead.conf"
 echo "/usr/bin/yes | sudo dpkg -i linux-headers* linux-image*"
+echo "sudo update-initramfs -u -k \$(ls linux-head* | sed 's/linux-headers-//g' | sed 's/_.*//g')"
 echo "if [ -e ~/.netext73/archiwum_deb ] && [ \"\$(cat ~/.netext73/archiwum_deb)\" = \"TRUE\" ]; then"
 #echo "if [ \"\$(ls *.deb | grep 'i7')\" = \"\" ] && [ \"\$(ls *.deb | grep 'brazos')\" = \"\" ]; then"
 echo "sudo cp *.deb /var/cache/apt/archives/ -f"
@@ -332,7 +351,7 @@ echo "fi"
 echo "echo \"$TEXT_MENU_USLUGI31\""
 echo "sudo sed -i '/apm_status_fix/d' /etc/rc.local"
 echo "sudo sed -i '/exit 0/d' /etc/rc.local"
-echo "echo 'bash /opt/NeteXt73/apm_status_fix' | sudo tee -a /etc/rc.local"
+echo "echo 'bash /opt/NeteXt73/menu/apm_status_fix' | sudo tee -a /etc/rc.local"
 echo "echo 'exit 0' | sudo tee -a /etc/rc.local" 
 }
 
@@ -450,8 +469,8 @@ fi
 #}
 
 usun_kernel(){
-echo "echo \"$TEXT_KERNEL1 $(cat /tmp/kasuj.txt| tr '\n' ' ' )\""
-echo "sudo apt-get purge $(cat /tmp/kasuj.txt | tr '\n' ' ')"
+echo "echo \"$TEXT_KERNEL1 $(cat /tmp/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ' )\""
+echo "sudo apt-get purge $(cat /tmp/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ')"
 echo "if [ \"$(dpkg -l | grep '^rc' | awk '{print $2}' | head -n1)\" != \"\" ]; then sudo dpkg -l | grep '^rc' | awk '{print \$2}' | xargs sudo dpkg --purge; fi"
 echo "rm /tmp/*.txt -f; rm /tmp/*.sh -f"
 }
@@ -763,5 +782,4 @@ echo "sudo sed -i '/net.ipv6.conf.default.disable_ipv6 = 1/d' /etc/sysctl.conf"
 echo "sudo sed -i '/net.ipv6.conf.lo.disable_ipv6 = 1/d' /etc/sysctl.conf"
 echo "sudo sysctl -p"
 }
-
 

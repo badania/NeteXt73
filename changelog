@@ -199,3 +199,17 @@ v7.03
 wszystkimi zależnościami. Zmiany w sekcji update, porawki i nowa funkcjonalność - link do changelog najnowszego stabilnego kernela
 -	w skryptach pojawił się google-chrome fix autorstwa FadeMind
 -	przebudowa pliku lista zmian
+- 	poprawa instalacji chrome
+v7.04
+-	poprawki w plikach językowych
+v7.05
+-	poprawki w plikach językowych mogących mieć wpływ na działanie YAD np. podwójna spacja
+v7.06
+-	poprawka deinstalatora kerneli w wersji expert
+v7.07
+-	rozszerzenie raportowania logów o: lspci, lsmod, lsusb
+-	zmiany w modle przełączania HTTP/HTTPS - nie będzie już wymagane hasło root'a
+-	zmiany w instalatorze kerneli
+-	przekierowanie na nową stronę domową netext73.blogspot.com
+v7.07a
+-	testowy build na githubie + launchpadzie

@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 ## Graficzny instalator kerneli e X t 7 3  - NeteXt'73
 ## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
 ## przygotowanie skryptów optymalizacyjnych e X t 7 3
@@ -87,7 +87,7 @@ export TEXT_CONFIG12="Pozostaw kopię plików *.deb w /var/cache/apt/archives"
 
 #########################################################################################################################################################################
 #tlumaczenia_deinstalator
-export TEXT_MENU_DEINSTALATOR1="Usuń kernel"          
+export TEXT_MENU_DEINSTALATOR1="Usuń kernel"
 export TEXT_MENU_DEINSTALATOR2="Usuń kernel - expert"
 export TEXT_MENU_DEINSTALATOR3="Usuń broadcom"
 export TEXT_MENU_DEINSTALATOR4="Usuń APM"
@@ -138,8 +138,8 @@ export TEXT_GRUB17="Ustawienia podświetlenia matrycy.\n"
 export TEXT_GRUB18="ustawienia używane w przypadku kłopotów z ustawieniami standardowymi"
 export TEXT_GRUB19="Poprawione"
 export TEXT_GRUB_STD="Intel (minimum Core2Duo) lub AMD (minimum z serii K8)"
-export TEXT_GRUB_INTEL="Intel i3-i5-i7 - Sandy/Ivy Bridge, Haswell  ze zintegrowaną grafiką Intel"
-export TEXT_GRUB_RADEON="Radeon DPM - otwarte sterowniki grafiki. Tylko dla kernela w wersji v26.xx (bazujący na 3.11)"
+export TEXT_GRUB_INTEL="Intel i3-i5-i7 - Sandy/Ivy Bridge, Haswell ze zintegrowaną grafiką Intel"
+export TEXT_GRUB_RADEON="Radeon DPM - otwarte sterowniki grafiki. Tylko dla kernela od wersji v26.xx wzwyż"
 export TEXT_GRUB21="Końcowa akceptacja zmian.\n"
 export TEXT_GRUB21A="Wprowadza zmiany wg wcześniejszych wytycznych"
 export TEXT_GRUB21B="Tryb zaawansowany"
@@ -168,7 +168,7 @@ export TEST_INSTALOWAC_KERNEL4="na podstawie pobranych plików:"
 export TEST_INSTALOWAC_KERNEL5="Program zapamiętał ścieżkę do pobranych plików, możesz je wkleić w terminalu skrótem klawiszy:\n\nSHIFT+INSERT lub CTRL+SHIFT+V\n"
 export TEXT_INSTALOWAC_KERNEL6="Nie pobrały się pliki instalacyjne, spróbuj jeszcze raz."
 export TEXT_INSTALOWAC_KERNEL7="Masz już zainstalowany ten kernel.\nPrzed ponowną instalacją musisz go usunąć."
-export TEXT_STRONA1="Podaj ścieżkę dostępu do płatnych kerneli.\nJeżeli nie masz jeszcze dostępu  skontaktuj się z: Tomasz e X t 7 3 Miś,mail:ext73@wp.pl" 
+export TEXT_STRONA1="Podaj ścieżkę dostępu do płatnych kerneli.\nJeżeli nie masz jeszcze dostępu skontaktuj się z: Tomasz e X t 7 3 Miś,mail:ext73@wp.pl" 
 export TEXT_K8="K8 - od Intel C2D, AMD K8"
 export TEXT_DEB1="Wskaż plik linux-headers lub linux-image, który chcesz zainstalować:"
 
@@ -260,9 +260,9 @@ export TEXT_MENU_USLUGI2="Wybierz usługi, które chcesz włączyć lub wyłącz
 export TEXT_MENU_USLUGI3="Nazwa usługi"
 export TEXT_MENU_USLUGI4="Włączony"
 export TEXT_MENU_USLUGI5="Wyłączony"
-export TEXT_MENU_USLUGI6="Wybierz usługi, które chcesz  uruchomić lub zatrzymać."
+export TEXT_MENU_USLUGI6="Wybierz usługi, które chcesz uruchomić lub zatrzymać."
 export TEXT_MENU_USLUGI7="Uruchamianie"
-export TEXT_MENU_USLUGI8="Wybierz usługi, które chcesz  uruchomić lub zatrzymać, usunąć z lub dodać do autostartu."
+export TEXT_MENU_USLUGI8="Wybierz usługi, które chcesz uruchomić lub zatrzymać, usunąć z lub dodać do autostartu."
 export TEXT_MENU_USLUGI9="Usługa"
 export TEXT_MENU_USLUGI10="Stan"
 export TEXT_MENU_USLUGI11="Nr procesu"
@@ -285,7 +285,7 @@ export TEXT_BRAK="brak"
 
 #########################################################################################################################################################################
 #tlumaczenia_procedury
-export BRAKNETA="<span color=\"$kolor_textu\">Brak połączenia z internetem lub serwerem programu NeteXt'73. Spróbuj później.</span>"  
+export BRAKNETA="<span color=\"$kolor_textu\">Brak połączenia z internetem lub serwerem programu NeteXt'73. Spróbuj później.</span>"
 export TEXT_PROCEDURA_4="Czy chcesz zainstalować linux-firmware-nonfree ?"
 export TEXT_POBIERANIE="<span color=\"$kolor_textu\">Pobieranie informacji z serwera. Czekaj!</span>"
 export TEXT_NETEXT2="optymalizator systemu"
@@ -296,7 +296,7 @@ export TEXT_PROCEDURA_1="Instalacja kernela e X t 7 3"
 export TEXT_PROCEDURA_2="Instalacja microcode dla platformy $komputerek"
 export TEXT_PROCEDURA_3="Usuwanie microcode dla platformy $komputerek"
 export TEXT_PROCEDURA_6="Instalacja skryptów APM"
-export TEXT_PROCEDURA_8_1="Zmiana ustawień skryptów APM  na "
+export TEXT_PROCEDURA_8_1="Zmiana ustawień skryptów APM na "
 export TEXT_PROCEDURA_9="Usuwanie skryptów APM"
 export TEXT_PROCEDURA_13="Dokonywanie zmian w pliku konfiguracyjnym GRUB"
 export TEXT_PROCEDURA_14="Instalowanie sterowników do kart graficznych Radeon"

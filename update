@@ -231,12 +231,7 @@ if [ $klawisz = "0" ]; then
 			      if [ $? = 0 ]; then
 				      xterm -e bash -c "echo \"$TEXT_INSTALACJA_NOWEJ\"; sudo rm -rf /opt/NeteXt73; sudo cp /tmp/NeteXt73 /opt/ -r; sudo cp /opt/NeteXt73/menu/NeteXt73.desktop /usr/share/applications/; sudo cp /opt/NeteXt73/menu/NeteXt73.png /usr/share/pixmaps/; sudo cp /opt/NeteXt73/menu/install_netext /usr/local/bin/"
 				      killall -9 yad
-				      if [ -e ~/.netext73/https_link ] && [ "$(cat ~/.netext73/https_link)" = "TRUE" ] && [ "$(cat /opt/NeteXt73/procedury | grep https)" = "" ]; then
-					    xterm -T instalator -e bash -c "sudo sed -i 's/http:/https:/g' /opt/NeteXt73/procedury"
-				      elif [ -e ~/.netext73/https_link ] && [ "$(cat ~/.netext73/https_link)" = "FALSE" ] && [ "$(cat /opt/NeteXt73/procedury | grep https)" != "" ]; then
-					    xterm -T instalator -e bash -c "sudo sed -i 's/https:/http:/g' /opt/NeteXt73/procedury"
-				      fi
-					    
+   
 				      yad  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1" 
 				      klawisz=$?
 				      if [ "$klawisz" = "1" ];then

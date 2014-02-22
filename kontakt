@@ -42,8 +42,8 @@ cd /tmp
 if [ "$USER" = "root" ]; then
 	userek=$(cat /tmp/userek)
 	konfiguracja=$(yad --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/mail.png" --text="<span color=\"$kolor_textu\">$TEXT_KONTAKT_Z_AUTORAMI</span>" --form --field "$TEXT_EXT:BTN" --field "$TEXT_NETBIT:BTN" --field "$TEXT_FADEMIND:BTN" --field "$TEXT_ENEDIL:BTN" \
-	"su $userek -c \"xdg-open 'http://ubuntu.pl/forum/viewforum.php?f=216&sid=eef6481da8a48eb94b8d5dc1b0227578'\"" \
-	"su $userek -c \"xdg-open 'http://netbit73.blogspot.com'\"" \
+	"su $userek -c \"xdg-open 'http://www.netext73.pl/2014/02/e-x-t-7-3.html'\"" \
+	"su $userek -c \"xdg-open 'http://www.netext73.pl/2014/01/netbit73.html'\"" \
 	"su $userek -c \"xdg-open 'http://tomaszprzybyl-apel.blogspot.com/'\"" \
 	"su $userek -c \"xdg-open 'https://debian-polska.blogspot.com/'\"" \
 	--button="gtk-ok:0" --width="300")

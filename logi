@@ -103,6 +103,7 @@ echo "GCC - $(gcc --version | head -n 1)" >> system$losowa.log
 
 
 echo "Powertop - $(dpkg -l | grep powertop | awk '{print $3}' | head -n 1)" >> system$losowa.log
+echo "YAD - $(dpkg -l | grep yad -w | awk '{print $3}' | head -n 1)" >> system$losowa.log
 
 yad --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="pastebin:3"
 klawisz=$?
@@ -128,12 +129,21 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     cat /etc/init/ureadahead.conf >> system$losowa.log
     echo -e "\n\n#################################  wersja APM  ##########################################################" >> system$losowa.log
     ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' >> system$losowa.log
+    echo -e "\n" >> system$losowa.log
+    ls /usr/lib/pm-utils/power.d/ -la | grep rwxr >> system$losowa.log
     echo -e "\n\n#################################  readahead  ###########################################################" >> system$losowa.log
     cat /usr/lib/pm-utils/power.d/readahead >> system$losowa.log
     echo -e "\n\n#################################  GRUB  ################################################################" >> system$losowa.log
     grep GRUB_CMDLINE_LINUX= /etc/default/grub >> system$losowa.log
-    echo -e "\n\n#################################  APM   ################################################################" >> system$losowa.log
-    ls /usr/lib/pm-utils/power.d/ -la | grep rwxr >> system$losowa.log
+    echo -e "\n\n#################################  lsmod ################################################################" >> system$losowa.log
+    lsmod >> system$losowa.log
+    echo -e "\n\n#################################  lspci ################################################################" >> system$losowa.log
+    lspci >> system$losowa.log
+    echo -e "\n\n#################################  lsusb ################################################################" >> system$losowa.log
+    lsusb >> system$losowa.log
+    
+    
+    
     dmesg > dmesg_$USER
     if [ "$klawisz" = "2" ]; then
 	    if [ "$USER" = "root" ]; then

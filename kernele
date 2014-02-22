@@ -173,7 +173,7 @@ fi
 				mkdir $a; cd $a
 				pobieranie_kerneli
 				find $PWD -type f | grep -v -E "*.deb" | xargs rm -f
-				if yad --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="Kernel $a $TEXT_INSTALOWAC_KERNEL"; then
+				if yad --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1" --text="Kernel $a $TEXT_INSTALOWAC_KERNEL"; then
 					echo $PWD > /tmp/katalog.txt
 					xterm -T instalator -e bash -c "cd $(cat /tmp/katalog.txt) && /usr/bin/yes | sudo dpkg -i *.deb && rm katalog.txt -f"
 					restart

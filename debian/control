@@ -1,0 +1,18 @@
+Source: netext73
+Section: contrib/admin
+Priority: extra
+Maintainer: eloaders <eloaders@linux.pl>
+Uploaders: eloaders <eloaders@linux.pl>
+Homepage: http://www.netext73.pl
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.9.4
+Vcs-Browser: https://github.com/NetBit73/NeteXt73
+Vcs-Git: https://github.com/NetBit73/NeteXt73.git
+
+Package: netext73
+Architecture: all
+Depends: xterm, dkms, libnotify-bin, chkconfig, ppa-purge, tasksel, xclip, coreutils, yad, curl, pastebinit, powertop, build-essential, libncurses5, initramfs-tools, lm-sensors, gcc, notify-osd
+Replaces: netext73
+Recommends:
+Description: Instalator kerneli e X t 7 3
+  Instalator kerneli e X t 7 3
