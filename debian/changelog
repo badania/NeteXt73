@@ -6,9 +6,11 @@ netext73 (7.0.7-1) unstable; urgency=medium
   * przekierowanie na nową stronę domową netext73.blogspot.com
 
  -- eloaders <eloaders@linux.pl>  Wed, 29 Jan 2014 00:49:41 +0100
-netext73 (7.0.7-2) unstable; urgency=medium
-
-  * przekierowanie na nową domenę: netext73.pl
-
- -- NetBit73 <netbit73@gmail.com>  Sat, 22 Feb 2014 18:43:00
-
+ 
+netext73 (7.0.7-3) unstable; urgency=medium
+  * testowy build na githubie + launchpadzie
+  * dodanie eloaders'a - opiekuna paczek do kontaktów
+  * zmiana sposobu aktualizacji programu, testing zostaje na dotychczasowych warunkach, stable przez ppa
+  * poprawki kodu celem dostosowania do potrzeb launchpada
+  * zmiana yad na yad-netext, dzięki temu nie będzie on kolidował z paczkami pochodzącymi z webupd8
+ -- NetBit73 <netbit73@gmail.com> Sat, 22 Feb 2014 23:51:54 +0100

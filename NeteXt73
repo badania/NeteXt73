@@ -3,8 +3,8 @@
 ## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
 ## przygotowanie skryptów optymalizacyjnych e X t 7 3
 ## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## opiekun repozytorium eloaders eloaders.ubf.pl@gmail.com
 ## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
-## tłumaczenie na język niemiecki: Karolina Franieczek
 ## tłumaczenie na język francuski: Michał Radwański (enedil)
 ## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
 #
@@ -36,30 +36,17 @@
 source /opt/NeteXt73/procedury
 
 aktualizacja(){
-which curl 1> /dev/null || {
-    xterm -T instalator -e bash -c "echo '$TEXT_INST1'; sudo apt-get install curl -y"
-}
-which pastebinit 1> /dev/null || {
-    xterm -T instalator -e bash -c "echo '$TEXT_INST1'; sudo apt-get install pastebinit -y"
-}
-
-if [ "$(dpkg -l ca-certificates | grep "ii" | awk '{print $1}'| head -n1)" != "ii" ];  then
-    xterm -T instalator -e bash -c "echo '$TEXT_INST1'; sudo apt-get install ca-certificates -y"
-fi
-
-netext_twoj=$(cat /opt/NeteXt73/procedury | grep wersja | head -n 1 | sed 's/=/ /' 	| sed 's/wersja //')
+#sprawdzanie wersji dla testing
 if [ -e ~/.netext73/netext_testing ] && [ "$(cat ~/.netext73/netext_testing | grep 'http')" != "" ]; then
+      netext_twoj=$(cat /opt/NeteXt73/procedury | grep wersja | head -n 1 | sed 's/=/ /' 	| sed 's/wersja //')
       twoj_netext=$(curl "$polozenie_skryptu/testing" 	| sed 's/wersja=//')
-else
-      twoj_netext=$(curl "$polozenie_skryptu/stable" 	| sed 's/wersja=//') 
+
+      if [ "$twoj_netext" != "$netext_twoj" ] && [ "$twoj_netext" != "" ]; then
+	      notify-send -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_WERSJA $twoj_netext"
+      fi   
 fi
 
-if [ "$twoj_netext" != "$netext_twoj" ] && [ "$twoj_netext" != "" ]; then
-      notify-send -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_WERSJA $twoj_netext"
-      echo "$TEXT_UWAGA" "$TEXT_WERSJA"
-      echo "$twoj_netext"
-fi
-
+#przełącznik http/thhps
 if [ -e ~/.netext73/https_link ]; then
       echo "ok" > /dev/null
 else
@@ -69,7 +56,6 @@ else
 	  echo "FALSE" > ~/.netext73/https_link
       fi
 fi
-
 #odpalanie strony domowej 
 if [ -e ~/.netext73/strona_domowa ]; then
 echo "ok" > /dev/null
@@ -94,25 +80,25 @@ else
 fi
 aktualizacja &
 if [ -e /tmp/stan_netext ] && [ $(cat /tmp/stan_netext) = "root" ]; then
-    yad --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click
+    yad-netext --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click
     klawisz=$?
 else
-    yad --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="Root:5" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click
+    yad-netext --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="Root:5" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click
     klawisz=$?
 fi
 
 if [ "$klawisz" = "2" ]; then
-      yad  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/LICENSE --width=600 --height=600 --button="gtk-ok:1" 
+      yad-netext  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/LICENSE --width=600 --height=600 --button="gtk-ok:1" 
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "3" ]; then
-      yad  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1"
+      yad-netext  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1"
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "4" ]; then
       if [ "$USER" = "root" ]; then
 	    userek=$(cat /tmp/userek)
-	    su $userek -c "xdg-open \"http://netext73.blogspot.com/2014/02/netext73-zgaszanie-bedow.html\""
+	    su $userek -c "xdg-open \"http://netext73.pl/2014/02/netext73-zgaszanie-bedow.html\""
       else
-	    xdg-open "http://netext73.blogspot.com/2014/02/netext73-zgaszanie-bedow.html"
+	    xdg-open "http://netext73.pl/2014/02/netext73-zgaszanie-bedow.html"
       fi
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "5" ]; then

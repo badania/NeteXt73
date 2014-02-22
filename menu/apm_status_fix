@@ -1,12 +1,4 @@
 #!/bin/bash
-## Graficzny instalator kerneli e X t 7 3  - NeteXt'73
-## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
-## przygotowanie skryptów optymalizacyjnych e X t 7 3
-## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
-## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
-## tłumaczenie na język francuski: Michał Radwański (enedil)
-## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
-#
 #		    _   _      _      __  ___   _ _____ _____
 #		   | \ | | ___| |_ ___\ \/ / |_( )___  |___ /
 #		   |  \| |/ _ \ __/ _ \\  /| __|/   / /  |_ \

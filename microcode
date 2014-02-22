@@ -3,8 +3,8 @@
 ## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
 ## przygotowanie skryptów optymalizacyjnych e X t 7 3
 ## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## opiekun repozytorium eloaders eloaders.ubf.pl@gmail.com
 ## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
-## tłumaczenie na język niemiecki: Karolina Franieczek
 ## tłumaczenie na język francuski: Michał Radwański (enedil)
 ## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
 #
@@ -62,7 +62,7 @@ if [ -e index.html ]; then
 	#sprawdzenie czy jest nowsza wersja
 	if [ "$stan_microcode" != "-" ]; then
 	      if [ "$wersja_firmware" != "$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1)" ]; then
-	        yad --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_MICROCODE2"
+	        yad-netext --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_MICROCODE2"
 		if [ $? = 0 ]; then
 		  naglowek > instaluj.sh
 		  microcode_inst >> instaluj.sh
@@ -76,10 +76,10 @@ if [ -e index.html ]; then
 	naglowek > instaluj.sh
 	if [ "$stan_microcode" != "-" ] && [ "$wersja_firmware" = "$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1)" ]; then
 		notify-send -i $warning1 "$TEXT_UWAGA" "$TEXT_MICROCODE1"
-		#yad --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_MICROCODE1"
+		#yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_MICROCODE1"
 		
 	elif [ "$stan_microcode" = "-" ]; then
-		yad --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_MICROCODE2"
+		yad-netext --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_MICROCODE2"
 		if [ $? = 0 ]; then
 		    microcode_inst >> instaluj.sh
 		    microcode_firmware

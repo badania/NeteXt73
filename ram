@@ -3,8 +3,8 @@
 ## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
 ## przygotowanie skryptów optymalizacyjnych e X t 7 3
 ## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## opiekun repozytorium eloaders eloaders.ubf.pl@gmail.com
 ## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
-## tłumaczenie na język niemiecki: Karolina Franieczek
 ## tłumaczenie na język francuski: Michał Radwański (enedil)
 ## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
 #
@@ -39,7 +39,7 @@ source /opt/NeteXt73/procedury
 #RAM
 
 cd /tmp
-#wartosc=$(yad --scale --title="$nazwa_skryptu" --window-icon=/opt/NeteXt73/ikony/ram.png --text "<span color=\"$kolor_textu\">$TEXT_NETBIT_RAM2</span>" --min-value=0 --max-value=100 --value=70 --step 1 --button="$TEXT_NETBIT_RAM1:2" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+#wartosc=$(yad-netext --scale --title="$nazwa_skryptu" --window-icon=/opt/NeteXt73/ikony/ram.png --text "<span color=\"$kolor_textu\">$TEXT_NETBIT_RAM2</span>" --min-value=0 --max-value=100 --value=70 --step 1 --button="$TEXT_NETBIT_RAM1:2" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 #klawisz=$?
 #if [ "$klawisz" = "0" ]; then
 #      export wartosc

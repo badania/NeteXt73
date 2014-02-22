@@ -211,5 +211,9 @@ v7.07
 -	zmiany w modle przełączania HTTP/HTTPS - nie będzie już wymagane hasło root'a
 -	zmiany w instalatorze kerneli
 -	przekierowanie na nową stronę domową netext73.blogspot.com
-v7.07a
+v7.07-3
 -	testowy build na githubie + launchpadzie
+-	dodanie eloaders'a - opiekuna paczek do kontaktów
+-	zmiana sposobu aktualizacji programu, testing zostaje na dotychczasowych warunkach, stable przez ppa
+-	poprawki kodu celem dostosowania do potrzeb launchpada
+-	zmiana yad na yad-netext, dzięki temu nie będzie on kolidował z paczkami pochodzącymi z webupd8

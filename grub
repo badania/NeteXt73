@@ -3,8 +3,8 @@
 ## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
 ## przygotowanie skryptów optymalizacyjnych e X t 7 3
 ## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## opiekun repozytorium eloaders eloaders.ubf.pl@gmail.com
 ## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
-## tłumaczenie na język niemiecki: Karolina Franieczek
 ## tłumaczenie na język francuski: Michał Radwański (enedil)
 ## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
 #
@@ -55,7 +55,7 @@ fi
 sciezka="/etc/default"
 echo "nie" > /tmp/ok.txt
 
-grub=$(yad --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_SKRYPTEXT_10" --field="$TEXT_SKRYPTEXT_11:CB" "$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | sed 's/GRUB_CMDLINE_LINUX=//' | cut -d '"' -f 2)" "$TEXT_GRUB4A!$TEXT_GRUB5A!$TEXT_GRUB6A!$TEXT_GRUB7A!$TEXT_NETBIT_MENU1D" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
+grub=$(yad-netext --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_SKRYPTEXT_10" --field="$TEXT_SKRYPTEXT_11:CB" "$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | sed 's/GRUB_CMDLINE_LINUX=//' | cut -d '"' -f 2)" "$TEXT_GRUB4A!$TEXT_GRUB5A!$TEXT_GRUB6A!$TEXT_GRUB7A!$TEXT_NETBIT_MENU1D" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
 klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 	if [ $klawisz = 0 ]; then 
 	#backup pliku grub
@@ -67,7 +67,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 	      fi
 	#grub timeout
 	elif [ "$grub" = "$TEXT_NETBIT_MENU1D" ]; then
-		czas=$(yad --scale --title="$nazwa_skryptu" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text "$TEXT_NETBIT_MENU18" --min-value=-1 --max-value=10 --value=3 --step 1)
+		czas=$(yad-netext --scale --title="$nazwa_skryptu" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text "$TEXT_NETBIT_MENU18" --min-value=-1 --max-value=10 --value=3 --step 1)
 		if [ $? = 0 ]; then
 			  export czas=$czas
 			  xterm -T Grub -e bash -c "echo \"$TEXT_NETBIT_MENU19\"; sudo sed /etc/default/grub -i -e \"s/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=$czas/\"; sudo update-grub;  echo -e \"$TEXT_INSTALACJA2\"; read ent"
@@ -93,20 +93,20 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 		    xterm -e bash -c "sudo cp $sciezka/grub $sciezka/grub.backup -f; echo -e \"$TEXT_INSTALACJA2\"; read ent;  echo 'tak' > /tmp/ok.txt"
 	      fi
 	      if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
-	      acpi_wpis=$( yad --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="ACPI" --list --radiolist --column=""  --column="$TEXT_OPIS" \
+	      acpi_wpis=$( yad-netext --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="ACPI" --list --radiolist --column=""  --column="$TEXT_OPIS" \
 		TRUE "acpi_osi=Linux" \
 		FALSE "acpi_osi='!Windows 2012'" )
 		if [ $? = 0 ]; then 
 		    w0=$(echo $acpi_wpis  | cut -d "|" -f 2)
 		fi
 	      #--column="$TEXT_MENU"
-	      wpisy=$(yad --height=240 --width=610 --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="$TEXT_GRUB14" --list --radiolist --column=""  --column="$TEXT_OPIS" --button="gtk-ok:0" --button="$TEXT_POWROT:1" \
+	      wpisy=$(yad-netext --height=240 --width=610 --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="$TEXT_GRUB14" --list --radiolist --column=""  --column="$TEXT_OPIS" --button="gtk-ok:0" --button="$TEXT_POWROT:1" \
 		TRUE "$TEXT_GRUB_STD" \
 		FALSE "$TEXT_GRUB_INTEL" \
 		FALSE "$TEXT_GRUB_RADEON" )
 		if [ $? = 0 ]; then
 		    wpisy=$(echo $wpisy  | cut -d "|" -f 2)
-		    podswietlenie=$(yad --height=240 --width=600 --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="$TEXT_GRUB17" --list --radiolist --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU" --column="$TEXT_OPIS" --button="gtk-ok:0" --button="$TEXT_POWROT:1" \
+		    podswietlenie=$(yad-netext --height=240 --width=600 --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="$TEXT_GRUB17" --list --radiolist --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU" --column="$TEXT_OPIS" --button="gtk-ok:0" --button="$TEXT_POWROT:1" \
 		      TRUE "standard" "$TEXT_GRUB15"\
 		      FALSE "$TEXT_GRUB19" "$TEXT_GRUB18")
 		      if [ $? = 0 ]; then
@@ -120,7 +120,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			    elif [ "$podswietlenie" = "$TEXT_GRUB19" ]; then  	w2=" acpi_backlight=vendor"
 			    fi
 
-			    zmiany=$(yad --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="$TEXT_GRUB21" --list --radiolist --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU" --column="$TEXT_OPIS" \
+			    zmiany=$(yad-netext --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="$TEXT_GRUB21" --list --radiolist --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU" --column="$TEXT_OPIS" \
 			      TRUE "standard" "$TEXT_GRUB21A"\
 			      FALSE "$TEXT_GRUB21B" "$TEXT_GRUB21C")
 				zmiany=$(echo $zmiany | cut -d "|" -f 2)
@@ -128,7 +128,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 				    wpis_grub="$w0$w1$w2"
 				    instaluj_grub
 				elif [ "$zmiany" = "$TEXT_GRUB21B" ]; then
-				    wpis_grub=$(yad  --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --entry --text="$TEXT_GRUB22" --entry-text="$w0$w1$w2")
+				    wpis_grub=$(yad-netext  --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --entry --text="$TEXT_GRUB22" --entry-text="$w0$w1$w2")
 				    wpis_grub=$(echo $wpis_grub | cut -d "|" -f 2)
 				    if [ "$wpis_grub" != "" ];then
 					instaluj_grub
@@ -140,7 +140,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 	#ręczna edycja wpisów w pliku grub
 	elif [ "$grub" = "$TEXT_GRUB7A" ]; then
 	    echo "nie" > /tmp/ok.txt
-	    wpis_grub=$(yad  --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --entry --text="$TEXT_GRUB23" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --entry-text="$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | cut -d "\"" -f 2)")
+	    wpis_grub=$(yad-netext  --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --entry --text="$TEXT_GRUB23" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --entry-text="$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | cut -d "\"" -f 2)")
 	    if [ $? = 0 ]; then
 		    wpis_grub=$(echo $wpis_grub | cut -d "|" -f 2)
 		    instaluj_grub

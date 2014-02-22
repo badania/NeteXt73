@@ -4,14 +4,31 @@ Priority: extra
 Maintainer: eloaders <eloaders@linux.pl>
 Uploaders: eloaders <eloaders@linux.pl>
 Homepage: http://www.netext73.pl
-Build-Depends: debhelper (>= 7)
+Build-Depends: debhelper (>= 7), autotools-dev, mime-support, gettext, intltool, libgtk2.0-dev, libcroco3, libxml-parser-perl, libxml2, libexpat1, gawk
 Standards-Version: 3.9.4
 Vcs-Browser: https://github.com/NetBit73/NeteXt73
 Vcs-Git: https://github.com/NetBit73/NeteXt73.git
 
 Package: netext73
-Architecture: all
-Depends: xterm, dkms, libnotify-bin, chkconfig, ppa-purge, tasksel, xclip, coreutils, yad, curl, pastebinit, powertop, build-essential, libncurses5, initramfs-tools, lm-sensors, gcc, notify-osd
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends},
+  xterm, 
+  dkms, 
+  libnotify-bin, 
+  chkconfig, 
+  ppa-purge, 
+  tasksel, 
+  xclip, 
+  coreutils, 
+  curl, 
+  pastebinit, 
+  powertop, 
+  build-essential, 
+  libncurses5, 
+  initramfs-tools, 
+  lm-sensors, 
+  gcc, 
+  notify-osd
 Replaces: netext73
 Recommends:
 Description: Instalator kerneli e X t 7 3

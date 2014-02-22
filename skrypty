@@ -3,8 +3,8 @@
 ## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
 ## przygotowanie skryptów optymalizacyjnych e X t 7 3
 ## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## opiekun repozytorium eloaders eloaders.ubf.pl@gmail.com
 ## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
-## tłumaczenie na język niemiecki: Karolina Franieczek
 ## tłumaczenie na język francuski: Michał Radwański (enedil)
 ## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
 #
@@ -92,7 +92,7 @@ if [ "$(cat /etc/sysctl.conf | grep 'net.ipv6.conf.all.disable_ipv6 = 1')" = "" 
 	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU9!$MENU10"
 fi
 
-skrypt=$(yad --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/skrypty.png" --form --field="$TEXT_SKRYPT1:CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
+skrypt=$(yad-netext --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/skrypty.png" --form --field="$TEXT_SKRYPT1:CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
 klawisz=$?; skrypt=$(echo $skrypt | cut -d "|" -f 1)
 if [ $klawisz = 0 ]; then 
 	
@@ -101,7 +101,7 @@ if [ $klawisz = 0 ]; then
 	    if [ "$(dpkg -l | grep '^rc' | awk '{print $2}' | head -n1)" != "" ]; then 
 		  xterm -T configi -e bash -c "echo \"$TEXT_INSTALACJA1\"; sudo dpkg -l | grep '^rc' | awk '{print \$2}' | xargs sudo dpkg --purge; echo -e \"$TEXT_INSTALACJA2\" ;read ent"
 	    else 
-		  yad --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_CONFIG1" 
+		  yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_CONFIG1" 
 	    fi
 	#zabijamy procesy zombie
 	elif [ "$skrypt" = "$MENU4" ]; then
@@ -109,11 +109,11 @@ if [ $klawisz = 0 ]; then
 	    ps axo stat,ppid,pid,comm | grep -w defunct > procesy.txt
 	      
 	    if [ "$(cat procesy.txt)" = "" ]; then
-		  yad --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_ZOMBIE2"
+		  yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_ZOMBIE2"
 	    else
 		  sed -i 1d procesy.txt
 		  sed -i '/^[^#]/s:^:FALSE :' procesy.txt
-		  a=$(yad --height=540 --width=440 --window-icon="/opt/NeteXt73/ikony/skrypty.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="$TEXT_ZOMBIE1" --column="" --column="STAT" --column="PPID" --column="PID" --column="COMMAND" --checklist --list $(cat procesy.txt))
+		  a=$(yad-netext --height=540 --width=440 --window-icon="/opt/NeteXt73/ikony/skrypty.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="$TEXT_ZOMBIE1" --column="" --column="STAT" --column="PPID" --column="PID" --column="COMMAND" --checklist --list $(cat procesy.txt))
 		  echo $a > zabij
 		  sed -i 's/TRUE/\n/g' zabij; sed -i '/^\ *$/d' zabij
 		  for i in $(cat zabij  | cut -d '|' -f 3)

@@ -3,6 +3,7 @@
 ## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
 ## przygotowanie skryptów optymalizacyjnych e X t 7 3
 ## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## opiekun repozytorium eloaders eloaders.ubf.pl@gmail.com
 ## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
 ## tłumaczenie na język francuski: Michał Radwański (enedil)
 ## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
@@ -42,7 +43,7 @@ petla_duza="tak"
 while [ $petla_duza = "tak" ]; do
 	echo "nie" > /tmp/ok.txt
 	
-	uslugi=$(yad --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --text="<span color=\"$kolor_textu\">$TEXT_MENU_USLUGI</span>" --form --field=" :CB" "$TEXT_MENU_USLUGI1!$TEXT_MENU_USLUGI1A!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C!$TEXT_MENU_USLUGI1D"  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
+	uslugi=$(yad-netext --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --text="<span color=\"$kolor_textu\">$TEXT_MENU_USLUGI</span>" --form --field=" :CB" "$TEXT_MENU_USLUGI1!$TEXT_MENU_USLUGI1A!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C!$TEXT_MENU_USLUGI1D"  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
 	klawisz=$?; uslugi=$(echo $uslugi | cut -d "|" -f 1)
 	#SysV - automat
 	if [ $klawisz = 0 ]; then 
@@ -70,7 +71,7 @@ while [ $petla_duza = "tak" ]; do
 		      done
 		      
 		      echo $(sed -e '/^[^#]/s:^:FALSE :' 4.txt) > sysv.txt
-		      a=$(yad --height=540 --width=440   --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>SysV - automat</b></span>\n$TEXT_MENU_USLUGI2" --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU_USLUGI3"  --column="$TEXT_MENU_USLUGI4" --column="$TEXT_MENU_USLUGI5"  --checklist --list $(cat sysv.txt))
+		      a=$(yad-netext --height=540 --width=440   --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>SysV - automat</b></span>\n$TEXT_MENU_USLUGI2" --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU_USLUGI3"  --column="$TEXT_MENU_USLUGI4" --column="$TEXT_MENU_USLUGI5"  --checklist --list $(cat sysv.txt))
 		      if [ $? = "0" ]; then
 			  if [ "$a" != "" ]; then
 			    export a1=$a
@@ -112,7 +113,7 @@ while [ $petla_duza = "tak" ]; do
 			sed  4.txt -i -e 's/wł/on -/g'
 			sed  4.txt -i -e 's/wył/- off/g'
 			echo $(sed -e '/^[^#]/s:^:FALSE :' 4.txt) > 1.txt
-			a=$(yad --height=540 --width=460   --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Upstart - automat</b></span>\n$TEXT_MENU_USLUGI6" --column="$TEXT_ZAZNACZ" --column="proces" --column="$TEXT_MENU_USLUGI4" --column="$TEXT_MENU_USLUGI5" --checklist --list $(cat 1.txt))
+			a=$(yad-netext --height=540 --width=460   --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Upstart - automat</b></span>\n$TEXT_MENU_USLUGI6" --column="$TEXT_ZAZNACZ" --column="proces" --column="$TEXT_MENU_USLUGI4" --column="$TEXT_MENU_USLUGI5" --checklist --list $(cat 1.txt))
 			if [ $? = "0" ]; then
 				if [ "$a" != "" ]; then
 				echo $a | sed 's/|/\n/g' | sed '/^on/ d' | sed '/^off/ d' | sed '/^-/ d' | sed '/^.*TRUE/ d' > 1.txt
@@ -163,12 +164,12 @@ while [ $petla_duza = "tak" ]; do
 			#do sprawdzenia
 			    echo "$SOFT off $TEXT_BRAK" >> 4.txt
 			done  2>&1 | pobieranie2
-			a=$(yad --height=540 --width=400 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Upstart - expert</b></span>\n$TEXT_MENU_USLUGI8" --column="$TEXT_MENU_USLUGI9" --column="$TEXT_MENU_USLUGI10" --column="$TEXT_MENU_USLUGI11" --list --list $(cat 4.txt))
+			a=$(yad-netext --height=540 --width=400 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Upstart - expert</b></span>\n$TEXT_MENU_USLUGI8" --column="$TEXT_MENU_USLUGI9" --column="$TEXT_MENU_USLUGI10" --column="$TEXT_MENU_USLUGI11" --list --list $(cat 4.txt))
 			if [ $? = "0" ]; then
 			    a=$(echo $a | cut -d '|' -f 1)
 			    if [ "$a" != "" ]; then
 				rm *.txt -f
-				usl=$( yad --height=240 --width=560 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="$TEXT_MENU_USLUGI12 $a" --list --radiolist --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU" --column="$TEXT_OPIS"\
+				usl=$( yad-netext --height=240 --width=560 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="$TEXT_MENU_USLUGI12 $a" --list --radiolist --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU" --column="$TEXT_OPIS"\
 				  FALSE "start" 	"$TEXT_MENU_USLUGI22A"\
 				  TRUE "stop" 		"$TEXT_MENU_USLUGI22B"\
 				  FALSE "enable" 	"$TEXT_MENU_USLUGI22C"\
@@ -214,7 +215,7 @@ while [ $petla_duza = "tak" ]; do
 	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1D" ] ; then
 	sysv
 	paste -d " " 1.txt 3.txt 4.txt 5.txt 6.txt 7.txt 2.txt 8.txt 9.txt > sysv.txt
-	a=$(yad --height=560 --width=560 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>SysV - list</b></span>\n$TEXT_MENU_USLUGI38" --column="$TEXT_MENU_USLUGI39"  --column="1" --column="2" --column="3" --column="4" --column="5" --column="0" --column="6" --column="S" --list --list $(cat sysv.txt))
+	a=$(yad-netext --height=560 --width=560 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>SysV - list</b></span>\n$TEXT_MENU_USLUGI38" --column="$TEXT_MENU_USLUGI39"  --column="1" --column="2" --column="3" --column="4" --column="5" --column="0" --column="6" --column="S" --list --list $(cat sysv.txt))
 	rm *.txt -f
 
 	fi

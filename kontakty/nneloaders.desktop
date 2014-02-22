@@ -1,0 +1,22 @@
+[Desktop Entry]
+Name=eloaders
+Name[en_GB]=eloaders - maintainer of repository
+Name[fr]=eloaders
+Name[pl]=eloaders - opiekun repozytorium NeteXt'73
+Comment=eloaders - maintainer of repository
+Comment[en_GB]=eloaders - maintainer of repository
+Comment[fr]=eloaders
+Comment[pl]=eloaders - opiekun repozytorium NeteXt'73
+GenericName=eloaders -maintainer of repository
+GenericName[en_GB]=eloaders -maintainer of repository
+GenericName[fr]=eloaders
+GenericName[pl]=eloaders - opiekun repozytorium NeteXt'73
+Exec=xdg-open 'http://i-nex.linux.pl'
+Icon=/opt/NeteXt73/ikony/eloaders.png
+Terminal=false
+StartupNotify=true
+Type=Application
+Categories=Utility;
+Version=1.0
+Encoding=UTF-8
+# vi:set encoding=UTF-8:

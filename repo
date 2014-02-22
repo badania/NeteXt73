@@ -3,8 +3,9 @@
 ## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
 ## przygotowanie skryptów optymalizacyjnych e X t 7 3
 ## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## opiekun repozytorium eloaders eloaders.ubf.pl@gmail.com
 ## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
-## tłumaczenie na język francuski: Michał Radwański (enedil) - enedil@outlook.com
+## tłumaczenie na język francuski: Michał Radwański (enedil)
 ## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
 #
 #		    _   _      _      __  ___   _ _____ _____
@@ -174,7 +175,7 @@ if [ "$(cat /etc/apt/sources.list | grep 'deb' | grep 'partner' | grep '#')" = "
 else
     menu="$a1!$a2!$a3!$a4!$a5!$a6!$a7!$a8!$MENU1"
 fi
-backup=$(yad --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --text="<span color=\"$kolor_textu\">$TEXT_BACKUP1</span>" --form --field=" :CB" \
+backup=$(yad-netext --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --text="<span color=\"$kolor_textu\">$TEXT_BACKUP1</span>" --form --field=" :CB" \
 "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 klawisz=$?
 backup=$(echo $backup | cut -d "|" -f 1)
@@ -182,7 +183,7 @@ backup=$(echo $backup | cut -d "|" -f 1)
 if [ "$klawisz" = "0" ]; then
 #########################################################################################################################################################################
     if [ "$backup" = "$a2" ]; then
-	a=$(yad --file-selection --filename="$download/" --title="$TEXT_BACKUP2" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=550 --height=450)
+	a=$(yad-netext --file-selection --filename="$download/" --title="$TEXT_BACKUP2" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=550 --height=450)
 	if [ "$(echo $a | grep source.list.backu | grep tar.gz)" != "" ]; then
 		echo "nie" > /tmp/ok.txt
 		xterm -T backup_repo -e bash -c "echo \"$TEXT_BACKUP3\";sudo mv -f /etc/apt /etc/apt~; sudo tar -xvzf $a -C /etc/; echo "tak" > /tmp/ok.txt; echo -e \"$TEXT_INSTALACJA\"; read ent"
@@ -225,7 +226,7 @@ if [ "$klawisz" = "0" ]; then
 		echo $(sed -e '/^[^#]/s:^:FALSE :' lista.txt) > lista.txt
 		petla="tak"
 		while [ $petla = "tak" ]; do
-		wybor=$(yad --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/klucze.png" --height=420 --width=690  --column="" --column="$TEXT_KLUCZ" --column="$TEXT_DOSTAWCA_KLUCZA" --text="<span color=\"$kolor_textu\">$TEXT_ZAZNACZ_KLUCZE</span>" --list --checklist $(cat lista.txt))
+		wybor=$(yad-netext --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/klucze.png" --height=420 --width=690  --column="" --column="$TEXT_KLUCZ" --column="$TEXT_DOSTAWCA_KLUCZA" --text="<span color=\"$kolor_textu\">$TEXT_ZAZNACZ_KLUCZE</span>" --list --checklist $(cat lista.txt))
 		klawisz=$?
 		if [ "$klawisz" = "0" ]; then 
 			if [ "$(echo $wybor)" != "" ]; then
@@ -233,14 +234,14 @@ if [ "$klawisz" = "0" ]; then
 			    echo $wybor | sed -e 's/TRUE|/\n/g' | cut -d '|' -f 1 | sed -e '/^\ *$/d' > usun.txt
 			    usun_klucze
 			else
-			    yad --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_NIC_NIE_ZAZNACZYLES"
+			    yad-netext --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_NIC_NIE_ZAZNACZYLES"
 			fi
 		elif [ "$klawisz" = "1" ]; then 
 			petla="nie"
 		fi
 		done
 	else
-		yad --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_NIE_POBRALES_KLUCZY"
+		yad-netext --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_NIE_POBRALES_KLUCZY"
 	fi
 	rm *.txt -f
 #########################################################################################################################################################################
@@ -283,7 +284,7 @@ if [ "$klawisz" = "0" ]; then
 	paste -d "@" 1.txt 0.txt | tr "\n" "@" > lista_repo.txt
 	grep TRUE lista_repo.txt | sed 's/TRUE@//g' > lista_przed.txt
 	IFS=@
-	instalka=$(yad --height=540 --width=640 --separator="@"  --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" \
+	instalka=$(yad-netext --height=540 --width=640 --separator="@"  --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" \
 	--text="<span color=\"$kolor_textu\"><b>Add Repo - automat</b></span>\n$TEXT_MENU_USLUGI2" \
 	--column="$TEXT_ZAZNACZ"  --column="opis"  --checklist --list $(cat lista_repo.txt))
 	if [ $? = "0" ]; then		
@@ -398,7 +399,7 @@ if [ "$klawisz" = "0" ]; then
 	paste -d " " 1.txt 2.txt > lista_softu.txt
 	grep TRUE lista_softu.txt | awk '{print $2}' > lista_przed.txt
 
-	instalka=$(yad --height=540 --width=640   --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" \
+	instalka=$(yad-netext --height=540 --width=640   --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" \
 	--text="<span color=\"$kolor_textu\"><b>Add Soft - automat</b></span>\n$TEXT_MENU_USLUGI2" \
 	--column="$TEXT_ZAZNACZ" --column="$TEXT_MENU_USLUGI3"  --checklist --list $(cat lista_softu.txt))
 	if [ $? = "0" ]; then		 
@@ -432,7 +433,7 @@ if [ "$klawisz" = "0" ]; then
 	else
 	    sofcik
 	fi
-	nowa_lista=$(yad --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --width=400 --height=600 --form --field="$MENU_OPIS:TXT" "$(cat -e ~/.netext73/soft | tr ' ' '\n' | sed 's/\$//g' | sort)" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+	nowa_lista=$(yad-netext --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --width=400 --height=600 --form --field="$MENU_OPIS:TXT" "$(cat -e ~/.netext73/soft | tr ' ' '\n' | sed 's/\$//g' | sort)" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 	if [ $? = "0" ]; then
 	    echo -e $nowa_lista | sed 's/|//g'| tr ' ' '\n' | sed 's/\$//g' | sort > ~/.netext73/soft
 	    sed -i '/^[ \t]*$/ d' ~/.netext73/soft

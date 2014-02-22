@@ -3,8 +3,8 @@
 ## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
 ## przygotowanie skryptów optymalizacyjnych e X t 7 3
 ## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## opiekun repozytorium eloaders eloaders.ubf.pl@gmail.com
 ## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
-## tłumaczenie na język niemiecki: Karolina Franieczek
 ## tłumaczenie na język francuski: Michał Radwański (enedil)
 ## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
 #
@@ -42,15 +42,15 @@ cd /tmp
 
 
 if [ "$(grep 'allow-guest=false' /etc/lightdm/lightdm.conf)" = "" ]; then
-	while ! yad  --title="$nazwa_skryptu1" --entry --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --hide-text --text="$TEXT_GOSC4" --button="gtk-ok:0" | sudo -S /usr/lib/lightdm/lightdm-set-defaults -l false; do
-	    if $(yad --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png"  --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
+	while ! yad-netext  --title="$nazwa_skryptu1" --entry --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --hide-text --text="$TEXT_GOSC4" --button="gtk-ok:0" | sudo -S /usr/lib/lightdm/lightdm-set-defaults -l false; do
+	    if $(yad-netext --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png"  --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
 		exit 0
 	    fi
 	done
 	restart
 else
-	while ! yad --title="$nazwa_skryptu1" --entry --hide-text --text="$TEXT_GOSC5" | sudo -S /usr/lib/lightdm/lightdm-set-defaults -l true; do
-	    if $(yad --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png"  --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
+	while ! yad-netext --title="$nazwa_skryptu1" --entry --hide-text --text="$TEXT_GOSC5" | sudo -S /usr/lib/lightdm/lightdm-set-defaults -l true; do
+	    if $(yad-netext --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png"  --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
 		exit 0
 	    fi
 	done

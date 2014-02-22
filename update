@@ -3,8 +3,8 @@
 ## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
 ## przygotowanie skryptów optymalizacyjnych e X t 7 3
 ## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## opiekun repozytorium eloaders eloaders.ubf.pl@gmail.com
 ## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
-## tłumaczenie na język niemiecki: Karolina Franieczek
 ## tłumaczenie na język francuski: Michał Radwański (enedil)
 ## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
 #
@@ -48,7 +48,7 @@ rm -rf /tmp/NeteXt73
 
 
 aktualizuj_calosc(){
-konfiguracja=$(yad --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_UPDATE1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
+konfiguracja=$(yad-netext --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_UPDATE1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
 		  "$a1" "microcode" \
 		  "$a2" "grub" \
 		  "$a3" "apm" \
@@ -82,8 +82,6 @@ twoj_netext=$(cat /opt/NeteXt73/procedury | grep wersja | head -n 1 | sed 's/wer
 
 if [ -e ~/.netext73/netext_testing ] && [ "$(cat ~/.netext73/netext_testing | grep 'http')" != "" ]; then
       nowy_netext=$(curl $polozenie_skryptu/testing 	| grep 'wersja' | sed 's/wersja=//')
-else
-      nowy_netext=$(curl $polozenie_skryptu/stable 	| grep 'wersja' | sed 's/wersja=//')
 fi
 
 wget $adres_firmware/index.html -O microcode.txt | \
@@ -186,7 +184,9 @@ if [ "$ilosc_aktualizacji" -gt "1" ]; then
 		 menu="$TEXT_UPDATE1 NeteXt73!$TEXT_UPDATE8"
 	fi
 fi
-a=$(yad --title="$nazwa_skryptu" --width=610 --window-icon="/opt/NeteXt73/ikony/netext.png" --form \
+
+if [ -e ~/.netext73/netext_testing ] && [ "$(cat ~/.netext73/netext_testing | grep 'http')" != "" ]; then
+a=$(yad-netext --title="$nazwa_skryptu" --width=610 --window-icon="/opt/NeteXt73/ikony/netext.png" --form \
 --field="NeteXt73 v$twoj_netext:RO" "$netext" \
 --field="Firmware/microcode v$twoj_firmware:RO" "$firm" \
 --field="Kernel $twoj_kernel:RO" "$kern" \
@@ -197,6 +197,17 @@ a=$(yad --title="$nazwa_skryptu" --width=610 --window-icon="/opt/NeteXt73/ikony/
 --button="$TEXT_UPDATE7:2" \
 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 
+else
+a=$(yad-netext --title="$nazwa_skryptu" --width=610 --window-icon="/opt/NeteXt73/ikony/netext.png" --form \
+--field="Firmware/microcode v$twoj_firmware:RO" "$firm" \
+--field="Kernel $twoj_kernel:RO" "$kern" \
+--field="APM $twoj_apm:RO" "$apm" \
+--field="$TEXT_STABLE:RO" "$stable" \
+--field="$TEXT_UPDATE1:CB" "$menu" \
+--button="Changelog $nr:3" \
+--button="$TEXT_UPDATE7:2" \
+--button="gtk-ok:0" --button="$TEXT_POWROT:1")
+fi
 klawisz=$?; a=$(echo $a | cut -d "|" -f 6)
 if [ $klawisz = "0" ]; then 
 	if [ "$a" = "$TEXT_UPDATE1 APM" ]; then 
@@ -205,7 +216,7 @@ if [ $klawisz = "0" ]; then
 	elif [ "$a" = "$TEXT_UPDATE1 Firmware/microcode" ]; then 
 	    usun
 	    if [ "$firm" = "$TEXT_UPDATE4" ]; then
-		  yad --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_MICROCODE1"
+		  yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_MICROCODE1"
 	    else
 		  cd /opt/NeteXt73 && ./microcode
 	    fi
@@ -214,25 +225,22 @@ if [ $klawisz = "0" ]; then
 	    cd /opt/NeteXt73 && ./kernele
 	elif [ "$a" = "$TEXT_UPDATE1 NeteXt73" ] && [ "$nowy_netext" != "" ]; then 
 		if [ "$netext" = "$TEXT_UPDATE4" ]; then
-		    yad --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_UPDATE4"
+		    yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_UPDATE4"
 		else
 		    if [ "$twoj_netext" != "$nowy_netext" ]; then
 			  if [ -e ~/.netext73/netext_testing ] && [ "$(cat ~/.netext73/netext_testing | grep 'http')" != "" ]; then
 				  wget $polozenie_skryptu/1.txt | wget $(cat ~/.netext73/netext_testing) 2>&1 | pobieranie2 
 				  xterm -T instalator -e bash -c "tar -zxvf /tmp/NeteXt73_testing.tar.gz -C /tmp/"
-			  else
-				  wget $polozenie_skryptu/1.txt | wget $polozenie_skryptu/NeteXt73.tar.gz 2>&1 | pobieranie2 
-				  xterm -T instalator -e bash -c "tar -zxvf /tmp/NeteXt73.tar.gz -C /tmp/"
 			  fi
 		    fi
 		    if [ -e NeteXt73*.gz ] && [ -e 1.txt ] && [ "$(grep $(md5sum NeteXt73*.gz ) 1.txt)" != "" ]; then
 			if [ "$(cat /opt/NeteXt73/procedury | grep wersja | head -n 1 )" != "$(cat /tmp/NeteXt73/procedury | grep wersja | head -n 1 )" ]; then
-			      yad --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_UPDATE6"
+			      yad-netext --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_UPDATE6"
 			      if [ $? = 0 ]; then
-				      xterm -e bash -c "echo \"$TEXT_INSTALACJA_NOWEJ\"; sudo rm -rf /opt/NeteXt73; sudo cp /tmp/NeteXt73 /opt/ -r; sudo cp /opt/NeteXt73/menu/NeteXt73.desktop /usr/share/applications/; sudo cp /opt/NeteXt73/menu/NeteXt73.png /usr/share/pixmaps/; sudo cp /opt/NeteXt73/menu/install_netext /usr/local/bin/"
-				      killall -9 yad
+				      xterm -e bash -c "echo \"$TEXT_INSTALACJA_NOWEJ\"; sudo rm -rf /opt/NeteXt73; sudo cp /tmp/NeteXt73 /opt/ -r; sudo cp /opt/NeteXt73/menu/NeteXt73.desktop /usr/share/applications/; sudo cp /opt/NeteXt73/menu/NeteXt73.png /usr/share/pixmaps/"
+				      killall -9 yad-netext
    
-				      yad  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1" 
+				      yad-netext  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1" 
 				      klawisz=$?
 				      if [ "$klawisz" = "1" ];then
 					    notify-send  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_ZAINSTALOWANY"
@@ -242,7 +250,7 @@ if [ $klawisz = "0" ]; then
 			      fi
 			fi
 		    else
-			yad --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
+			yad-netext --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
 		    fi
 		fi
 	elif [ "$a" = "$TEXT_UPDATE2" ]; then
