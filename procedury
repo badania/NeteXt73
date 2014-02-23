@@ -31,7 +31,7 @@
 #  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
 #
 #########################################################################################################################################################################
-wersja=7.07-3
+wersja=7.08
 
 jezyczek(){
 
@@ -147,12 +147,12 @@ fi
 
 #pasek postępu pobierania dla dużych plików
 pobieranie(){
-sed -u "$TEXT_POB1" | yad-netext --width=610 --progress --title="$TEXT_POB2 $a $MB" --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
+sed -u "$TEXT_POB1" | yad-netext --center --width=610 --progress --title="$TEXT_POB2 $a $MB" --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
 }
 
 #pasek postępu pobierania pulsujący gdy coś długo trwa
 pobieranie2(){
-yad-netext --width=560 --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
+yad-netext --center --width=560 --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
 }
 
 #ubijanie wget jak się zawiesi yad-netext
@@ -226,7 +226,7 @@ echo "echo 'tak' > /tmp/ok.txt"
 microcode_firmware(){
 #nonfree
 if [ "$(dpkg -l | grep linux-firmware-nonfree | grep ii )" = "" ]; then
-      yad-netext --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_PROCEDURA_4"
+      yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_PROCEDURA_4"
       if [ $? = 0 ]; then
 	    echo "tak" > /tmp/ok.txt
       else
@@ -246,7 +246,7 @@ if [ "$(dpkg -l | grep linux-firmware | head -n 1 | awk '{print $3}')" != "$wers
     if [ "$(grep $(md5sum linux-firmware*) 1.txt)" != "" ]; then
 	  inst="tak"
     else
-	  yad-netext --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
+	  yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
 	  rm 1.txt -f
 	  rm *.deb -f
 	  inst="nie"
@@ -504,10 +504,10 @@ paste -d " "  2.txt 5.txt > 4.txt
 sort -r 4.txt > 3.txt;  echo $(sed -e '/^[^#]/s:^:FALSE :' 3.txt) > 1.txt
 lista=$(sed  's/FALSE/TRUE/' 1.txt ); rm *.txt -f
 if [ "$(echo $lista)" = "TRUE" ]; then
-    yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="Błąd pobierania danych z serwera"
+    yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="Błąd pobierania danych z serwera"
     blad=11
 else
-    a=$(yad-netext --height=340 --width=690 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_PLATFORMA1 <b><span color=\"$kolor_textu\">$rodzaj</span></b>$TEXT_PLATFORMA2" --column="$TEXT_ZAZNACZ" --column="$TEXT_WYBIERZ_KERNEL" --column="$TEXT_ZNITY1" --button="$TEXT_POWROT:1" --button="gtk-ok:0" --list --radiolist $lista)
+    a=$(yad-netext --center --height=340 --width=690 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_PLATFORMA1 <b><span color=\"$kolor_textu\">$rodzaj</span></b>$TEXT_PLATFORMA2" --column="$TEXT_ZAZNACZ" --column="$TEXT_WYBIERZ_KERNEL" --column="$TEXT_ZNITY1" --button="$TEXT_POWROT:1" --button="gtk-ok:0" --list --radiolist $lista)
     klawisz=$?
     a=$(echo $a | cut -d "|" -f 2)
 fi
@@ -538,7 +538,7 @@ fi
 
 wywal_pobrane_pliki_kernela(){
 if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
-    yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_KERNEL2"
+    yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_KERNEL2"
     rm -rf $PWD
 elif  [ "$(cat /tmp/ok.txt)" = "nie" ]; then
     notify-send -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_INFO2<br>/tmp/$a"
@@ -627,7 +627,7 @@ echo "sudo update-grub"
 
 zamknij_program(){
 if [ "$dziala" = "1" ]; then
-      yad-netext --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=25 --title="$TEXT_UWAGA" --text="$TEXT_ZAMNIJ_PROGRAM"
+      yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=25 --title="$TEXT_UWAGA" --text="$TEXT_ZAMNIJ_PROGRAM"
       exit 1
 fi
 }
@@ -658,7 +658,7 @@ echo "echo '* * * * * /etc/cron.d/freemem.sh' | sudo tee -a /var/spool/cron/cron
 }
      
 restart(){
-gnome-session-quit --reboot || yad-netext --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_NIE:1" --text="$TEXT_RESTART"
+gnome-session-quit --reboot || yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_NIE:1" --text="$TEXT_RESTART"
 if [ $? = 0 ]; then
 	dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart || xterm -T reboot -e bash -c "sudo reboot"
 fi
@@ -755,10 +755,10 @@ if [ -e /sys/class/power_supply/BAT*/uevent ];then
 	    sed -i 's/YES/TAK/' bateria2.txt
       fi
       cat bateria2.txt | tr '=' ' ' | tr '\n' ' ' > bateria.txt
-      yad-netext  --list --title="$nazwa_skryptu" --width="395" --height="460" --window-icon="/opt/NeteXt73/ikony/battery.png" --text="<span color=\"$kolor_textu\">$Stan_baterii:</span>" --column="" --column="" $(cat bateria.txt) --button="gtk-ok:0"
+      yad-netext --center --list --title="$nazwa_skryptu" --width="395" --height="460" --window-icon="/opt/NeteXt73/ikony/battery.png" --text="<span color=\"$kolor_textu\">$Stan_baterii:</span>" --column="" --column="" $(cat bateria.txt) --button="gtk-ok:0"
       rm *.txt -f
 else
-      yad-netext --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"
+      yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"
 fi
 
 

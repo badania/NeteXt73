@@ -42,9 +42,9 @@ cd /tmp
 
 if [ "$USER" = "root" ]; then
 	userek=$(cat /tmp/userek)
-	su $userek -c "yad-netext --icons --title=\"$nazwa_skryptu\" --window-icon=\"/opt/NeteXt73/ikony/mail.png\" --image-on-top --item-width=\"150\" --read-dir=\"/opt/NeteXt73/kontakty\" \
+	su $userek -c "yad-netext --center --icons --title=\"$nazwa_skryptu\" --window-icon=\"/opt/NeteXt73/ikony/mail.png\" --image-on-top --item-width=\"150\" --read-dir=\"/opt/NeteXt73/kontakty\" \
 	--button=\"gtk-ok:0\" --width=490 --height=400  --single-click"
 else
-	yad-netext --icons --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/mail.png" --image-on-top --item-width="150" --read-dir="/opt/NeteXt73/kontakty" \
+	yad-netext --center --icons --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/mail.png" --image-on-top --item-width="150" --read-dir="/opt/NeteXt73/kontakty" \
 	--button="gtk-ok:0" --width=490 --height=400  --single-click
 fi

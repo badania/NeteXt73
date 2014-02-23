@@ -80,18 +80,18 @@ else
 fi
 aktualizacja &
 if [ -e /tmp/stan_netext ] && [ $(cat /tmp/stan_netext) = "root" ]; then
-    yad-netext --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click
+    yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click
     klawisz=$?
 else
-    yad-netext --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="Root:5" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click
+    yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="Root:5" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click
     klawisz=$?
 fi
 
 if [ "$klawisz" = "2" ]; then
-      yad-netext  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/LICENSE --width=600 --height=600 --button="gtk-ok:1" 
+      yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/LICENSE --width=600 --height=600 --button="gtk-ok:1" 
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "3" ]; then
-      yad-netext  --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1"
+      yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1"
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "4" ]; then
       if [ "$USER" = "root" ]; then

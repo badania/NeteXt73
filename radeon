@@ -54,7 +54,7 @@ else
 		    rm *.txt -f
 		    petla_duza="tak"
 		    while [ $petla_duza = "tak" ]; do
-		    ster=$(yad-netext --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/radeon.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Radeon</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		    ster=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/radeon.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Radeon</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 			    klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
 			    if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 			      rm *.deb -f
@@ -73,7 +73,7 @@ else
 					      radeon >> instaluj.sh
 					      instalacja
 				      else
-					      yad-netext --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
+					      yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
 				      fi
 			    elif [ "$klawisz" = "1" ]; then
 				  petla_duza="nie"

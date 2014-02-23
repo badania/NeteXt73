@@ -45,7 +45,7 @@ stan_apm
 
 if [ "$stan_apm" = "-" ]; then
 	#instalacja APM
-	yad-netext --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_APM1"
+	yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_APM1"
 	if [ $? = 0 ]; then
 	      naglowek > instaluj.sh
 	      apm_inst >> instaluj.sh
@@ -87,7 +87,7 @@ else
 fi
 
 if [ "$stan_apm" != "-" ]; then
-	aa=$(yad-netext --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png" --form \
+	aa=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png" --form \
 	--field="$TEXT_WERSJA_APM:RO" --field="$TEXT_AKTUALNY_PROFIL_APM:RO" --field="$TEXT_ZMIEN_PROFIL_APM:CB" \
 	"$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)" "$aktualny_apm" "$menu" \
 	--field="APM Wifi FIX:CHK" "$wififix"  --field="APM rts5139 FIX:CHK" "$rts5139fix" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
@@ -117,7 +117,7 @@ if [ "$stan_apm" != "-" ]; then
 		apm_zmiana $a "$wersja_apm6*$wersja_apm" >> instaluj.sh
 		instalacja
 	elif [ "$a" = "-" ]; then
-		yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
+		yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
 		naglowek > instaluj.sh
 		apm_inst >> instaluj.sh
 		instalacja

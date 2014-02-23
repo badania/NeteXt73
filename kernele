@@ -65,7 +65,7 @@ else
 	    kern="Atom - Intel Atom 64bit"
     fi
     if [ "$kern" = "" ]; then
-	    yad-netext --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/linux.png" \
+	    yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/linux.png" \
 	    --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="260" --read-dir="/opt/NeteXt73/kernel" --width="560" --height="470" \
 	    --title="$nazwa_skryptu " --button="$TEXT_MENU_INSTALATOR3:2" --button="$TEXT_MENU_INSTALATOR4:3" --button="$TEXT_MENU_INSTALATOR5:4" --button="$TEXT_POWROT:1" \
 	    --single-click
@@ -97,7 +97,7 @@ fi
 		else
 		    str=""
 		    ##
-		    strona=$(yad-netext --entry --width=610 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_STRONA1" --entry-text="$str" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		    strona=$(yad-netext --center --entry --width=610 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_STRONA1" --entry-text="$str" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		    klawisz=$?
 		    if [ "$klawisz" = "1" ]; then
 			    blad=1
@@ -116,7 +116,7 @@ fi
 	elif [ "$(echo $kern | grep K8)" != "" ] || [ "$(echo $kern | grep Atom)" != "" ]; then
 		strona="$adres_glowny/kernele/"
 	elif [ "$kern" = "$TEXT_MENU_INSTALATOR3" ]; then
-		a=$(yad-netext --file-selection --filename="$download/" --title="$TEXT_DEB1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		a=$(yad-netext --center --file-selection --filename="$download/" --title="$TEXT_DEB1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		if [ $? = 0 ]; then
 			if [ "$(echo $a | grep 'linux-image' | grep '.deb')" != "" ]; then
 				cd $(echo $a | sed -e 's/linux.*//g');     b=$(echo $a | sed -e 's/linux-image/linux-headers/g')
@@ -125,7 +125,7 @@ fi
 				cd $(echo $a | sed -e 's/linux.*//g');     b=$(echo $a | sed -e 's/linux-headers/linux-image/g')
 				echo "tak" > /tmp/ok.txt
 			else
-				yad-netext --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=15 
+				yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=15 
 				echo "nie" > /tmp/ok.txt
 			fi
 			if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
@@ -139,7 +139,7 @@ fi
 			fi
 		fi
 	elif [ "$kern" = "$TEXT_MENU_INSTALATOR4" ]; then
-		a=$(yad-netext --file-selection --filename="$download/" --title="$TEXT_DEB1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		a=$(yad-netext --center --file-selection --filename="$download/" --title="$TEXT_DEB1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		if [ $? = 0 ]; then
 		if [ "$(echo $a | grep 'linux-image' | grep '.deb')" != "" ]; then
 			cd $(echo $a | sed -e 's/linux.*//g');	b=$(echo $a | sed -e 's/linux-image/linux-headers/g')
@@ -154,18 +154,18 @@ fi
 			xterm -T instalator -e bash -c "/usr/bin/yes | sudo dpkg -i linux-headers*"
 			restart
 		else
-			yad-netext --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=15
+			yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=15
 		fi
 		fi
 	    
 	elif [ "$kern" = "$TEXT_MENU_INSTALATOR5" ]; then
 		cd /tmp; rm *.html -f
 		strona="http://kernel.ubuntu.com/~kernel-ppa/mainline/"
-		WERSJA_DISTRO=$(yad-netext --title="$nazwa_skryptu" --width=420 --window-icon="/opt/NeteXt73/ikony/linux.png" --text="$TEXT_PPA_1 <span color=\"$kolor_textu\">$(lsb_release -cs)</span>" --form --field="$TEXT_RODZAJ_SYSTEMU:CB"  "precise!quantal!raring!saucy!trusty" )
+		WERSJA_DISTRO=$(yad-netext --center --title="$nazwa_skryptu" --width=420 --window-icon="/opt/NeteXt73/ikony/linux.png" --text="$TEXT_PPA_1 <span color=\"$kolor_textu\">$(lsb_release -cs)</span>" --form --field="$TEXT_RODZAJ_SYSTEMU:CB"  "precise!quantal!raring!saucy!trusty" )
 		klawisz=$?; export WERSJA_DISTRO=$(echo $WERSJA_DISTRO | cut -d "|" -f 1)
 		if [ "$klawisz" = 0 ];then
 			wget $strona  2>&1 | pobieranie2 
-			a=$(yad-netext --height=630 --width=410 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --window-icon="/opt/NeteXt73/ikony/linux.png" --list $(grep 'href=' ./index.html | cut -d '"' -f 8 | grep $WERSJA_DISTRO | sed -e "s/-$WERSJA_DISTRO//g"   | sed -e 's/v//g' | sed 's/\(.*\)./\1/' | sort -r  | awk 'ORS=NR%3?"\t\t\t":"\n"') --column="" --text="$TEXT_LISTA_KERNELI <b><span color=\"$kolor_textu\">$WERSJA_DISTRO</span></b> \n\n$TEXT_ZAZNACZ_KERNEL" --title="Kernel instalator")
+			a=$(yad-netext --center --height=630 --width=410 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --window-icon="/opt/NeteXt73/ikony/linux.png" --list $(grep 'href=' ./index.html | cut -d '"' -f 8 | grep $WERSJA_DISTRO | sed -e "s/-$WERSJA_DISTRO//g"   | sed -e 's/v//g' | sed 's/\(.*\)./\1/' | sort -r  | awk 'ORS=NR%3?"\t\t\t":"\n"') --column="" --text="$TEXT_LISTA_KERNELI <b><span color=\"$kolor_textu\">$WERSJA_DISTRO</span></b> \n\n$TEXT_ZAZNACZ_KERNEL" --title="Kernel instalator")
 			klawisz=$?
 			if [ "$klawisz" = 0 ] && [ "$a" != "" ];then
 				a="v"$(echo $a | cut -d '|' -f 1)"-"$WERSJA_DISTRO
@@ -173,13 +173,13 @@ fi
 				mkdir $a; cd $a
 				pobieranie_kerneli
 				find $PWD -type f | grep -v -E "*.deb" | xargs rm -f
-				if yad-netext --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1" --text="Kernel $a $TEXT_INSTALOWAC_KERNEL"; then
+				if yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1" --text="Kernel $a $TEXT_INSTALOWAC_KERNEL"; then
 					echo $PWD > /tmp/katalog.txt
 					xterm -T instalator -e bash -c "cd $(cat /tmp/katalog.txt) && /usr/bin/yes | sudo dpkg -i *.deb && rm katalog.txt -f"
 					restart
 				else
 					echo -n "cd "$PWD" && /usr/bin/yes | sudo dpkg -i *.deb" | xclip -selection clipboard
-					yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEST_INSTALOWAC_KERNEL2"
+					yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEST_INSTALOWAC_KERNEL2"
 					if [ "$?" = "1" ]; then
 					      exit 1
 					fi
@@ -191,7 +191,7 @@ fi
 	if [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] && [ "$blad" != "1" ]; then
 		if [ "$rodzaj" != "" ]; then
 		if  [ "$bit2" = "i386" ]; then
-			yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_STEROWNIKI1"
+			yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_STEROWNIKI1"
 		else
 			rm index.html -f; wget $strona/index.html 2>&1 | pobieranie2 
 			lista_kerneli
@@ -212,7 +212,7 @@ fi
 					if [ "$(grep $(md5sum linux-image*) 1.txt)" != "" ] && [ "$(grep $(md5sum linux-headers*) 1.txt)" != "" ]; then
 						echo "nie" > /tmp/ok.txt
 						if [ -e linux-headers* ] && [ -e linux-image* ]; then
-							if yad-netext --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --height=280 --width=590 --text="$TEST_INSTALOWAC_KERNEL3 $rodzaj $TEST_INSTALOWAC_KERNEL4\n\n$(ls *.deb)\n\n$TEXT_INSTALOWAC ?\n\n" ; then
+							if yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --height=280 --width=590 --text="$TEST_INSTALOWAC_KERNEL3 $rodzaj $TEST_INSTALOWAC_KERNEL4\n\n$(ls *.deb)\n\n$TEXT_INSTALOWAC ?\n\n" ; then
 								naglowek > instaluj.sh
 								naglowek2 >> instaluj.sh
 								instalacja
@@ -221,16 +221,16 @@ fi
 								restart
 							else
 								echo -n "cd $PWD" | xclip -selection clipboard
-								yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEST_INSTALOWAC_KERNEL5"
+								yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEST_INSTALOWAC_KERNEL5"
 							fi
 						else
 							notify-send  -i $warning1 "$TEXT_UWAGA" "$TEXT_INSTALOWAC_KERNEL6"
 						fi
 					else
-						yad-netext --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
+						yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
 					fi
 				elif [ "$(cat /tmp/ok.txt)" = "tak" ]; then
-				      yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_INSTALOWAC_KERNEL7"
+				      yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_INSTALOWAC_KERNEL7"
 				fi
 			fi
 		fi
