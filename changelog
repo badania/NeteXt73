@@ -217,3 +217,5 @@ v7.07-3
 -	zmiana sposobu aktualizacji programu, testing zostaje na dotychczasowych warunkach, stable przez ppa
 -	poprawki kodu celem dostosowania do potrzeb launchpada
 -	zmiana yad na yad-netext, dzięki temu nie będzie on kolidował z paczkami pochodzącymi z webupd8
+v7.07-4
+-	zamiana grafik z jpg na png, poprawki skrytpu logi

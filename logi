@@ -103,7 +103,6 @@ echo "GCC - $(gcc --version | head -n 1)" >> system$losowa.log
 
 
 echo "Powertop - $(dpkg -l | grep powertop | awk '{print $3}' | head -n 1)" >> system$losowa.log
-echo "YAD - $(dpkg -l | grep yad-netext -w | awk '{print $3}' | head -n 1)" >> system$losowa.log
 
 yad-netext --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="pastebin:3"
 klawisz=$?
