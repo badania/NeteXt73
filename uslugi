@@ -50,19 +50,18 @@ while [ $petla_duza = "tak" ]; do
 	if [ "$uslugi" = "$TEXT_MENU_USLUGI1" ] ; then
 		petla="tak"
 		while [ $petla = "tak" ]; do
-		      sysv
-		      paste -d " " 3.txt 4.txt 5.txt 6.txt 7.txt 8.txt 2.txt 9.txt  > 9a.txt
-		      sed -e 's/ //g' 9a.txt > sysv.txt 
+		      sysv2 2>&1 | pobieranie2
 		      for i in $(seq 1 $(wc -l sysv.txt | awk '{print $1}')); do 
 		      head sysv.txt -n$i | tail -n1 > 10.txt
 			  if  [ "$(grep "X" 10.txt | head -n1)" != "" ]
 			  then
-			      echo -e "on\t-">> 11.txt
+			      echo -e "on\t-">> stan_uslug.txt
 			  else
-			      echo -e "-\toff" >> 11.txt
+			      echo -e "-\toff" >> stan_uslug.txt
 			  fi
 		      done
-		      paste -d " " 1.txt 11.txt > 4.txt
+		      
+		      paste -d " " nazwy_uslug.txt stan_uslug.txt > 4.txt
 		      
 		      #usunięcie usług upstart z sysV
 		      ls /etc/init/*.conf* | sed 's/\.conf.*//g' | cut -d "/" -f 4 | tr '\n' ' ' > 1.txt
@@ -154,7 +153,7 @@ while [ $petla_duza = "tak" ]; do
 			rm *.txt -f
 			xterm -T upstart -e bash -c "echo \"$TEXT_MENU_USLUGI38\";for SOFT in \$(ls /etc/init/*.conf | sed 's/\.conf//g' | cut -d \"/\" -f 4 | grep -v -E \"cryptdisks-udev|network-interface|network-interface-security|wait-for-state\"); do sudo status \$SOFT >> lista.txt; done"
 			#for SOFT in $(ls /etc/init/*.conf | sed 's/.conf//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state"); do sudo status $SOFT >> lista.txt; done 2>&1 | pobieranie2
-			
+			 2>&1 | pobieranie2
 			cat lista.txt | cut -d " " -f 1 > 1.txt
 			sed -e 's/,//g' lista.txt | cut -d " " -f 2 > 2.txt
 			cut lista.txt -d " " -f 4 | sed -e "s/^$/$TEXT_BRAK/g" > 3.txt
@@ -213,8 +212,8 @@ while [ $petla_duza = "tak" ]; do
 			fi
 		  done
 	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1D" ] ; then
-	sysv
-	paste -d " " 1.txt 3.txt 4.txt 5.txt 6.txt 7.txt 2.txt 8.txt 9.txt > sysv.txt
+	#sysv lista usług
+	sysv2  2>&1 | pobieranie2
 	a=$(yad-netext --center --height=560 --width=560 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>SysV - list</b></span>\n$TEXT_MENU_USLUGI38" --column="$TEXT_MENU_USLUGI39"  --column="1" --column="2" --column="3" --column="4" --column="5" --column="0" --column="6" --column="S" --list --list $(cat sysv.txt))
 	rm *.txt -f
 

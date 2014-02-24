@@ -1,17 +1,17 @@
-netext73 (7.08) stable; urgency=low
+netext73 (0.7.09) stable; urgency=low
 
-  * wycentrowanie okien yad, poprawki kodu
+  * zmiana modułu sysv, przepisanie kodu z chkconfig na sysv-rc-conf, zmniejszenie zależności programu
 
- -- eloaders <eloaders@linux.pl>  Sun, 23 Feb 2014 19:18:34 +0100
+ -- eloaders <eloaders@linux.pl>  Mon, 24 Feb 2014 11:42:33 +0100
 
-netext73 (7.08) stable; urgency=low
+netext73 (0.7.08) stable; urgency=low
 
   * wycentrowanie okien yad, poprawki kodu
 
  -- eloaders <eloaders@linux.pl>  Sun, 23 Feb 2014 19:17:22 +0100
 
 
-netext73 (7.0.7) unstable; urgency=medium
+netext73 (0.7.07) unstable; urgency=medium
 
   * testowy build na githubie + launchpadzie
   * dodanie eloaders'a - opiekuna paczek do kontaktów
@@ -21,7 +21,7 @@ netext73 (7.0.7) unstable; urgency=medium
  
  -- NetBit73 <netbit73@gmail.com>  Sat, 22 Feb 2014 23:51:54 +0100
  
-netext73 (7.0.7-1) unstable; urgency=medium
+netext73 (0.7.07-1) unstable; urgency=medium
 
   * rozszerzenie raportowania logów o: lspci, lsmod, lsusb
   * zmiany w modle przełączania HTTP/HTTPS - nie będzie już wymagane hasło root'a

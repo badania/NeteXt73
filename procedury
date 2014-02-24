@@ -31,7 +31,7 @@
 #  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
 #
 #########################################################################################################################################################################
-wersja=7.08
+wersja=0.7.09
 
 jezyczek(){
 
@@ -545,16 +545,61 @@ elif  [ "$(cat /tmp/ok.txt)" = "nie" ]; then
 fi
 }
 
-sysv(){
-rm [1-9].txt -f
-chkconfig --list | awk '{print $1}' > 1.txt
-for a in {2..8}
-do
-chkconfig --list | awk "{print \$$a}" | sed -e 's/.*on/X/g' -e 's/.*off/-/g' > $a.txt
-done 2>&1 | pobieranie2
-chkconfig --list | awk '{print $9}'   | sed -e 's/^$/-/g'   -e 's/.*on/X/g' -e 's/.*off/-/g' > 9.txt
-}
 
+sysv2(){
+rm *.txt -f
+if [ -e /var/lib/sysv-rc-conf/ ]; then
+    sysv-rc-conf --list  > lista_uslug.txt
+else
+    xterm -T sysv -e bash -c "sudo sysv-rc-conf --list  > lista_uslug.txt"
+fi
+cat lista_uslug.txt | awk '{print $1}' > nazwy_uslug.txt
+for usluga in $(cat lista_uslug.txt | awk '{print $1}')
+do
+	stan_uslugi=$(cat lista_uslug.txt| grep $usluga)
+	if [ "$(echo $stan_uslugi | grep 0:on)" != "" ]; then
+		stanu0="X"
+	else
+		stanu0="-"
+	fi
+        if [ "$(echo $stan_uslugi | grep 1:on)" != "" ]; then
+                stanu1="X"
+        else
+                stanu1="-"
+        fi 
+        if [ "$(echo $stan_uslugi | grep 2:on)" != "" ]; then
+                stanu2="X"
+        else
+                stanu2="-"
+        fi 
+        if [ "$(echo $stan_uslugi | grep 3:on)" != "" ]; then
+                stanu3="X"
+        else
+                stanu3="-"
+        fi 
+        if [ "$(echo $stan_uslugi | grep 4:on)" != "" ]; then
+                stanu4="X"
+        else
+                stanu4="-"
+        fi 
+        if [ "$(echo $stan_uslugi | grep 5:on)" != "" ]; then
+                stanu5="X"
+        else
+                stanu5="-"
+        fi 
+        if [ "$(echo $stan_uslugi | grep 6:on)" != "" ]; then
+                stanu6="X"
+        else
+                stanu6="-"
+        fi 
+        if [ "$(echo $stan_uslugi | grep S:on)" != "" ]; then
+                stanuS="X"
+        else
+                stanuS="-"
+        fi 
+	echo -e "$usluga $stanu1 $stanu2 $stanu3 $stanu4 $stanu5 $stanu0 $stanu6 $stanuS" >> sysv.txt
+done
+}
 klucze(){
 echo "sudo apt-get update 2> /tmp/keymissing"
 echo "for key in \$(grep 'NO_PUBKEY' /tmp/keymissing |sed \"s/.*NO_PUBKEY //\"); do"

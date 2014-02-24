@@ -2,222 +2,224 @@
 -------------------------------------
 
 
-V6.0
+v0.6.0
 -	wydanie nowej wersji opartej o YAD
-V6.03
+v0.6.03
 -	testy sekcji update
-V6.04
+v0.6.04
 -	poprawki związane z błędem w sekcji aktualizacji
 -	rozszerzenie możliwości sekcji aktualizacji
 -	zmiana w sekcji konfiguracja, wybór dowolnego koloru zamiast listy wybranych kolorów
-V6.05
+v0.6.05
 -	zmiany w tłumaczeniach
-V6.06
+v0.6.06
 -	dodanie pliku changelog
-V6.07
+v0.6.07
 -	poprawka w sekcji zmiana kolorów, cancel ustawiał przezroczysty kolor
-V6.08
+v0.6.08
 -	zmiany w sekcji logi - przepisany na YAD, dodana możliwość obejrzenia pliku changelog
-V6.09
+v0.6.09
 -	poprawki i zmiany w sekcji aktualizacje
-v6.10
+v0.6.10
 -	pasek pobierania przepisany na YAD, dodana ikona pobierania
-v6.11
+v0.6.11
 -	zmiany w sposobie prezentacji wyników możliwych aktualizacji
 -	zmiana ikony tux z jpg na png, dodane ikony w oknach zenity
-v6.12
+v0.6.12
 -	dodany moduł czyszczenia pamięci oraz jego deinstalator
-v6.13
+v0.6.13
 -	dodana do modułu aktualizacji możliwość aktualizacji systemu operacyjnego, po aktualizacji ukaże się okno changelog
-v6.14
+v0.6.14
 -	dodany moduł usuwania i dodawania konta gościa
-v6.15
+v0.6.15
 -	dodana informacja o wersji programu w głównym oknie 
-v6.16
+v0.6.16
 -	w sekcji update dodana informacja o najnowszej wersji kernela stable ze strony: https://www.kernel.org/
-v6.17
+v0.6.17
 -	dodane testowo logo programu, oraz okno terminala w aktualizacjach do wykonywania poleceń
-v6.18
+v0.6.18
 -	dodany powertop do modułu monitor systemu
-v6.19
+v0.6.19
 -	zmiany w sekcji monitor systemu, doszły dodatkowe okna: powertop, saidar i HTOP wraz z możliwością wybory, który ma się uruchomić, oczywiście programy HTOP, saidar i powertop muszą być zainstalowane, program zapamiętuje wybrane przez nas programy w pliku konfiguracyjnym
 - 	doszły nazwy okien XTERM, wcześniej wszystkie nazywały się "bash"
 -	dodane pytanie o restart komputera po dodaniu lub usunięciu konta gościa, restart wymagany, aby ustawienia weszły w życie
-v6.20
--	zmiany w sekcji nvidia i radeon, automatycznie wybrany najnowszy sterownik, wystarczy enter, widok - rozwijana lista
+v0.6.20
+-	zmiany w sekcji nv0.idia i radeon, automatycznie wybrany najnowszy sterownik, wystarczy enter, widok - rozwijana lista
 -	poprawki w sekcji microcode
-v6.22
+v0.6.22
 -	kolejne poprawki w sekcji update	
-v6.23
+v0.6.23
 -	instalowanie zależności, aby działała sekcja monitor
-v6.24
+v0.6.24
 -	modyfikacja modułu instalator kerneli, doszła możliwość instalacji kerneli saucy z ppa
-v6.25
+v0.6.25
 -	zmiany w tworzeniu i przywracaniu repozytoriów. Teraz archiwizowany jest cały katalog /etc/apt do pliku: ~/Pobrane/source.list.backup_$(date +"%d-%m-%y")_$(lsb_release -irs | tr '\n' '_').tar.gz, przywracanie tworzy ze starego katalogu /etc/apt katalog /etc/apt~, tak aby w razie problemów przywrócić ręcznie stan wyjściowy
-v6.26
+v0.6.26
 -	backup repozytorium po jedną ikoną w menu
-v6.27-28
+v0.6.27-28
 -	zmiany w sekcji instalacji kerneli, poprawki wyglądu okien
-v6.30-32
+v0.6.30-32
 -	modyfikacje opisów i loga oraz instalatora kerneli
-v6.33
+v0.6.33
 -	zmiany w sekcji repozytoriów, doszła możliwość naprawy błędnych kluczy GPG
-v6.34
+v0.6.34
 -	wyciągniecie terminala do głównego menu z sekcji update
-v6.35-36
+v0.6.35-36
 -	dodanie tłumaczeń w klawiszach YAD, zmiana katalogu terminala na ~
-v6.37
+v0.6.37
 -	sprawdzanie dostępnych aktualizacji NeteXt'73 w sieci sygnalizowane dymkiem OSD, dodany instalator curl wymagany do działania tej funkcjonalności
-v6.38-39
+v0.6.38-39
 -	bardzo duże zmiany we wszystkich skryptach, pakiety językowe trafiły osobno do każdego z nich w celu łatwiejszej kontroli zmiennych oraz w celu ułatwienia procesu tłumaczenia na język angielski dodane tłumaczenia na angielski
-v6.40-45
+v0.6.40-45
 -	dodanie pliku licencji programu, wyciągniecie changelog do głównego menu, oraz dodane tłumaczenia
-v6.46
+v0.6.46
 -	sprawdzanie sum kontrolnych dla pobieranej aktualizacji NeteXt'a, zmiana ikony dla RAM
-v6.47
+v0.6.47
 -	zmiana w sekcji update, doszły klawisze dzięki, którym można uruchomić instalory
-v6.48
+v0.6.48
 -	zmiany w sekcji update oraz reboot
-v6.49-50
+v0.6.49-50
 -	w sekcji deinstalator doszła możliwość usunięcia skryptu NeteXt'73 z systemu :(
-v6.51
+v0.6.51
 -	zmiany w sekcji głównego okna programu: tłumaczenie i klawisz prowadzący do forum, do zgłaszania błędów
-v6.52-53
+v0.6.52-53
 -	zmiany w instalacji APM tak aby zarządzał energią kart bezprzewodowych
-v6.54-56
+v0.6.54-56
 -	zmiana instalatora APM od teraz dynamicznie pobiera dane z serwera
-v6.57
+v0.6.57
 -	poprawki kosmetyczne w sekcji logi
-v6.58
+v0.6.58
 -	zmiany w sekcji zarządzanie pamięcią, usunięcie crona, zmiany w sekcji update
-v6.59
+v0.6.59
 -	poprawki w sekcji update, zmiana wyglądu okna, znikną klawisz cancel, dodatkowy warunek sprawdzający czy nie przerwaliśmy pobierania danych z serwera
-v6.60-61
--	weryfikowanie rodzaju posiadanej karty graficznej przed uruchomieniem instalatora sterowników Nvidia i Radeon	
-v6.62-63
+v0.6.60-61
+-	weryfikowanie rodzaju posiadanej karty graficznej przed uruchomieniem instalatora sterowników Nv0.idia i Radeon	
+v0.6.62-63
 - 	instalator kerneli zapamiętuje ostatnio używany rodzaj kerneli i używa go następnym razem jako domyślny
-v6.64
+v0.6.64
 - 	rozszerzenie informacji w sekcji config
-v6.65-67
+v0.6.65-67
 - 	doszła możliwość automatycznego wyboru rodzaju instalatora kerneli w sekcji config za pomocą "czeka"
-v6.68
+v0.6.68
 -	poprawka instalatora radeon
-v6.69-70
--	poprawka w sekcji deinstalator kerneli, przy braku kerneli poza aktualnie używanym, zamiast pokazywać pustą listę wyświetla informację o braku kerneli do usunięcia, zmiana okna zenity na notify OSD przy instalatorach nvidia i radeon w przypadku nie wykrycia obsługiwanej karty graficznej
-v6.71
-- 	wyłączenie sprawdzania czy jest Nvidia, przy optimusie funkcja ta sprawiała kłopoty
-v6.72
+v0.6.69-70
+-	poprawka w sekcji deinstalator kerneli, przy braku kerneli poza aktualnie używanym, zamiast pokazywać pustą listę wyświetla informację o braku kerneli do usunięcia, zmiana okna zenity na notify OSD przy instalatorach nv0.idia i radeon w przypadku nie wykrycia obsługiwanej karty graficznej
+v0.6.71
+- 	wyłączenie sprawdzania czy jest Nv0.idia, przy optimusie funkcja ta sprawiała kłopoty
+v0.6.72
 -	poprawki opisów i tłumaczeń ikon programu (FadeMind)
-v6.73
+v0.6.73
 -	zmiany w sekcji update, nowy wygląd, szybsze sprawdzanie dostępnych aktualizacji
-v6.74
+v0.6.74
 -	zmiany w sekcji kontakt, skrócenie czasu uruchamiania aplikacji dzięki wprawdzaniu dostępnych aktualizacji w tle oraz drobne zmiany kosmetyczne
-v6.75
--	zmiana w sekcji: radeon,nvidia,kernel - pliki po instalacji będą przechowywane w /var/cache/apt/archives
-v6.76-77
+v0.6.75
+-	zmiana w sekcji: radeon,nv0.idia,kernel - pliki po instalacji będą przechowywane w /v0.ar/cache/apt/archiv0.es
+v0.6.76-77
 -	dodana możliwość usuwania zbędnych kluczy GPG w sekcji repozytorium
-v6.78-79
+v0.6.78-79
 -	wyprowadzenie tłumaczeń do osobnego pliku, poprawki w sekcji instalacji kerneli i konfiguracji, od teraz działa zapamiętywanie ustawień przy zmianie języka, doszły wstępne tłumaczenia na język niemiecki
-v6.80
+v0.6.80
 -	zmiany w sekcji update, od teraz gdy będzie jakaś aktualizacja, menu ustawi się automatycznie na takiej pozycji, gdy nie będzie żadnej ustawi się akutalizjacją systemu
-v6.81
+v0.6.81
 -	poprawka instalatora kerneli, terminal nie powinien już wyrzucać errorów
-v6.82
+v0.6.82
 -	zmiany w sekcji APM, dla systemów 64bit KDE 13.04 i 13.10 naprawa działania klawisza POWER, wymagana reinstalacja skryptów APM
-v6.83
+v0.6.83
 -	tłumaczenie programu na język francuski - enedil
-v6.84-85
+v0.6.84-85
 -	naprawa błędu: brak pliku crontab, dostosowanie zarządzania usługami upstart do Ubuntu 13.10, dostosowanie instalatora APM do APM 2.7
-v6.86-87
+v0.6.86-87
 -	duże zmiany w instalatorze APM, wyłącznie zarządzania pamięcią z poziomu CRON, dodany moduł testu baterii
-v6.88
+v0.6.88
 -	dodanie modułu skryptów, a w nim: dodawanie i usuwanie repozytorium partnerów, czyszczenie konfigów po deinstalacjach, zabijanie procesów zombie	
-v6.89
+v0.6.89
 - 	zmiany w sekcji GRUB - dotyczy GPU AMD Radeon - otwarte sterowniki. Tylko dla kernela w wersji 26.0, bazującego na 3.11 lub nowszego.
-v6.90
-- 	dodatkowe skrypty: synchronizacja czasu z serwerem NTP, włączanie i wyłączanie IPv6
-v6.91
+v0.6.90
+- 	dodatkowe skrypty: synchronizacja czasu z serwerem NTP, włączanie i wyłączanie IPv0.6
+v0.6.91
 -	zmiany w sekcji APM, doszedł APM HDD FIX oraz zapamiętywanie wybranego trybu APM, tak aby włączając i wyłączając fixy nie trzeba było przestawiać trybu APM
-v6.91.2
+v0.6.91.2
 -	poprawka grub sekcja intel, dostosowanie zarządzania usługami upstart do *buntu 13.10
-v6.91.3
+v0.6.91.3
 -	poprawki w tłumaczeniach
-V6.91.4-91.6
+v0.6.91.4-91.6
 -	naprawa braku włączania ondemand po deinstalacji apm, naprawa APM dla 12.10, autonaprawa APM na starcie systemu po "nadpisaniu" PM-utils
-v6.91.7-91.8
+v0.6.91.7-91.8
 -	root, doszła możliwość uruchamiania aplikacji w trybie root
-v6.91.9
+v0.6.91.9
 -	dodałem skrypt do sprawdzania backdoora SSHD
-v6.91.10
+v0.6.91.10
 -	dodatkowe fixy APM, dla wifi i rts5139
-v6.91.11
+v0.6.91.11
 -	poprawki dla powerbtn w APM
-v6.91.12
--	poprawa ekranu splash po instalacji sterowników NVidia, usuwanie katalogu /home/root/ po zakończeniu używania trybu root
-v6.91.13
+v0.6.91.12
+-	poprawa ekranu splash po instalacji sterowników Nv0.idia, usuwanie katalogu /home/root/ po zakończeniu używania trybu root
+v0.6.91.13
 -	zmieny w sekcji APM, sekcji gościa, sekcji kontakt i w instalatorze kerneli
-v6.91.14
+v0.6.91.14
 -	zmiany w sekcju update: one click update itp
-v6.91.15
--	naprawa dwukliku na ikonie logów, zmiana adresów na zmienne-przygotowanie pod migrację,poprawa splasha dla kart NV
-v6.91.16
+v0.6.91.15
+-	naprawa dwukliku na ikonie logów, zmiana adresów na zmienne-przygotowanie pod migrację,poprawa splasha dla kart Nv0.
+v0.6.91.16
 -	poprawki w sekcji update
-v6.91.17
+v0.6.91.17
 -	nowy moduł w sekcji repozytorium, do dodawania i usuwania repozytoriów
-v6.91.18
--	poprawki w sekcji instalatora sterowników NV, poprawki w sekcji update, dodatkowe wpisy dla sekcji grub
-v6.91.19
+v0.6.91.18
+-	poprawki w sekcji instalatora sterowników Nv0., poprawki w sekcji update, dodatkowe wpisy dla sekcji grub
+v0.6.91.19
 -	przeniesienie ze skryptów włączania i wyłączania repo partnerów do sekcji zarządzania oprogramowaniem dawniej repo. Nowe funkcjonalności związane z instalacją oprogramowania w sekcji zarządzanie oprogramowaniem, nazwy własnych pakietów, które mają pojawiać się w menu instalatora można dodać do pliku ~/.netext73/soft
-v6.91.20
+v0.6.91.20
 -	dodałem edytor instalatora pakietów oraz instalator programów z repozytoriów PPA, doszła możliwość wysyłania logów bezpośrednio na serwer, zmieniłem linki https na http z uwagi na błąd zgłoszony przez witko
-v6.91.21
+v0.6.91.21
 -	przywrócenie https i dodanie do zależności ca-certificates
-v6.91.22
+v0.6.91.22
 - 	poprawki w logach i starcie NeteXta
-v6.91.23
+v0.6.91.23
 - 	doszła możliwość przełączania http/https w configu :) 
-v6.91.24
+v0.6.91.24
 - 	poprawki w opisach sekcji update i dodatkowe sprawdzanie sensowności pobierania linux-firmware
-v6.91.25
+v0.6.91.25
 - 	poprawki w sekcji update teraz sprawdza czy mamy najnowszy kernel e X t zainstalowany, niekoniecznie musimy z niego sprawdzać
-v6.92
+v0.6.92
 -	poprawki w sekcji logi, poprawki w numeracji :) poprawki w opisach instalowanych repozytoriów-literówki, poprawki w sekcji update-zapamiętywanie ustawień http/https
-v6.93
+v0.6.93
 - 	rozbudowa instalatora repozytoriów
-v6.94
+v0.6.94
 -	rozbudowa modułu instalatora kerneli o wersje PRO
-v7.00
+v0.7.00
 -	drobne poprawki i stabilna wersja 
-v7.01
+v0.7.01
 -	początek całkowitego przejścia z zenity na YAD, poprawki tłumaczeń, dostosowanie skryptów do innego formatu danych YAD w stosunku do zenity, około 
 100 zmian z tym związanych
-v7.02
+v0.7.02
 -	poprawka błędu pobierania kerneli
-v7.03
+v0.7.03
 -	zmiany w tłumaczeniach, języki wracają do osobnych plików z tłumaczeniami,zostały usunięte zduplikowane, poprawki literówek
 -	install_netext  to polecenie wywoła skrypt, który znajduje się w /usr/local/bin. Dzięki temu w razie problemów będziemy mogli reinstalować skrypt wraz ze 
 wszystkimi zależnościami. Zmiany w sekcji update, porawki i nowa funkcjonalność - link do changelog najnowszego stabilnego kernela
 -	w skryptach pojawił się google-chrome fix autorstwa FadeMind
 -	przebudowa pliku lista zmian
 - 	poprawa instalacji chrome
-v7.04
+v0.7.04
 -	poprawki w plikach językowych
-v7.05
+v0.7.05
 -	poprawki w plikach językowych mogących mieć wpływ na działanie YAD np. podwójna spacja
-v7.06
+v0.7.06
 -	poprawka deinstalatora kerneli w wersji expert
-v7.07
+v0.7.07
 -	rozszerzenie raportowania logów o: lspci, lsmod, lsusb
 -	zmiany w modle przełączania HTTP/HTTPS - nie będzie już wymagane hasło root'a
 -	zmiany w instalatorze kerneli
 -	przekierowanie na nową stronę domową netext73.blogspot.com
-v7.07-3
+v0.7.07-3
 -	testowy build na githubie + launchpadzie
 -	dodanie eloaders'a - opiekuna paczek do kontaktów
 -	zmiana sposobu aktualizacji programu, testing zostaje na dotychczasowych warunkach, stable przez ppa
 -	poprawki kodu celem dostosowania do potrzeb launchpada
 -	zmiana yad na yad-netext, dzięki temu nie będzie on kolidował z paczkami pochodzącymi z webupd8
-v7.07-4
+v0.7.07-4
 -	zamiana grafik z jpg na png, poprawki skrytpu logi
-v7.08
+v0.7.08
 -	wycentrowanie okien yad, poprawki kodu
+v0.7.09
+-	zmiana modułu sysv, przepisanie kodu z chkconfig na sysv-rc-conf, zmniejszenie zależności programu
