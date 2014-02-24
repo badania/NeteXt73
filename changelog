@@ -223,3 +223,6 @@ v0.7.08
 -	wycentrowanie okien yad, poprawki kodu
 v0.7.09
 -	zmiana modułu sysv, przepisanie kodu z chkconfig na sysv-rc-conf, zmniejszenie zależności programu
+v0.7.10
+-	dodanie zależnosci pm-utils, wsparcie APM dla ubuntu gnome
+-	zmiana w configu programu, część opcji nie będzie wymagać restartu programu, root-mode wymaga ponownego uruchomienia programu, opcja jest zapamiętywana

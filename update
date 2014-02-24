@@ -196,7 +196,7 @@ a=$(yad-netext --center --title="$nazwa_skryptu" --width=610 --window-icon="/opt
 --button="Changelog $nr:3" \
 --button="$TEXT_UPDATE7:2" \
 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
-
+klawisz=$?; a=$(echo $a | cut -d "|" -f 6)
 else
 a=$(yad-netext --center --title="$nazwa_skryptu" --width=610 --window-icon="/opt/NeteXt73/ikony/netext.png" --form \
 --field="Firmware/microcode v$twoj_firmware:RO" "$firm" \
@@ -207,8 +207,8 @@ a=$(yad-netext --center --title="$nazwa_skryptu" --width=610 --window-icon="/opt
 --button="Changelog $nr:3" \
 --button="$TEXT_UPDATE7:2" \
 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+klawisz=$?; a=$(echo $a | cut -d "|" -f 5)
 fi
-klawisz=$?; a=$(echo $a | cut -d "|" -f 6)
 if [ $klawisz = "0" ]; then 
 	if [ "$a" = "$TEXT_UPDATE1 APM" ]; then 
 	    usun
