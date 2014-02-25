@@ -188,7 +188,7 @@ fi
 		fi
 	fi
   
-	if [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] && [ "$blad" != "1" ]; then
+	if [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] || [ "$(echo $kern | grep 'Intel C2D, AMD K8')" != "" ] && [ "$blad" != "1" ]; then
 		if [ "$rodzaj" != "" ]; then
 		if  [ "$bit2" = "i386" ]; then
 			yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_STEROWNIKI1"
