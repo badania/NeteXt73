@@ -1,3 +1,9 @@
+netext73 (0.7.13) stable; urgency=low
+
+  * dodana możliwość instalacji Vboxa
+
+ -- eloaders <eloaders@linux.pl>  Thu, 27 Feb 2014 20:00:11 +0100
+
 netext73 (0.7.12) stable; urgency=low
 
   * poprawka pobierania kerneli dla K8

@@ -161,7 +161,7 @@ fi
 	elif [ "$kern" = "$TEXT_MENU_INSTALATOR5" ]; then
 		cd /tmp; rm *.html -f
 		strona="http://kernel.ubuntu.com/~kernel-ppa/mainline/"
-		WERSJA_DISTRO=$(yad-netext --center --title="$nazwa_skryptu" --width=420 --window-icon="/opt/NeteXt73/ikony/linux.png" --text="$TEXT_PPA_1 <span color=\"$kolor_textu\">$(lsb_release -cs)</span>" --form --field="$TEXT_RODZAJ_SYSTEMU:CB"  "precise!quantal!raring!saucy!trusty" )
+		WERSJA_DISTRO=$(yad-netext --center --title="$nazwa_skryptu" --width=420 --window-icon="/opt/NeteXt73/ikony/linux.png" --text="$TEXT_PPA_1 <span color=\"$kolor_textu\">$(lsb_release -cs)</span>" --form --field="$TEXT_RODZAJ_SYSTEMU:CB"  "trusty!saucy!raring!!quantal!precise" )
 		klawisz=$?; export WERSJA_DISTRO=$(echo $WERSJA_DISTRO | cut -d "|" -f 1)
 		if [ "$klawisz" = 0 ];then
 			wget $strona  2>&1 | pobieranie2 
