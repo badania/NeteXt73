@@ -321,6 +321,7 @@ if [ "$klawisz" = "0" ]; then
 			elif [ "${repo[$i]}" = "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free" ]; then
 			  echo "sudo sed -i '/virtualbox/d' /etc/apt/sources.list"  >> instaluj.sh
 			  echo "sudo sed -i '/virtualbox/d' /etc/apt/sources.list.d/*"  >> instaluj.sh
+			  echo "sudo apt-get purge -y ${paczka[$i]}" >> instaluj.txt
 			elif [ "${repo[$i]}" = "deb http://dl.google.com/linux/chrome/deb/ stable main" ]; then
 			  echo "sudo sed -i '/deb.*dl.google.com\/linux\/chrome\/deb\/ stable main/ d' /etc/apt/sources.list"  >> instaluj.sh
 			  echo "sudo sed -i '/deb.*dl.google.com\/linux\/chrome\/deb\/ stable main/ d' /etc/apt/sources.list.d/*"  >> instaluj.sh
@@ -346,7 +347,12 @@ if [ "$klawisz" = "0" ]; then
 			  echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
 			elif [ "${repo[$i]}" = "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free" ]; then
 			  echo "sudo sh -c 'wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | apt-key add -' && sudo sh -c 'echo \"deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free\" >> /etc/apt/sources.list.d/virtualbox.list' " >> instaluj.sh
-			  echo "sudo apt-get install -y ${paczka[$i]} && sudo usermod -aG vboxusers $USER" >> instaluj.txt
+			  echo "sudo apt-get install -y ${paczka[$i]} && sudo usermod -aG vboxusers $(cat /tmp/userek)" >> instaluj.txt
+			    jezyczek;case $jezyk in pol*)
+				#dodanie języka polskiego
+				echo "wget http://admc.ubuntu-pomoc.org/files/vbox-langpack-pl/qt_pl.qm && wget http://admc.ubuntu-pomoc.org/files/vbox-langpack-pl/VirtualBox_pl.qm && sudo mv qt_pl.qm /usr/share/virtualbox/nls/ && sudo mv VirtualBox_pl.qm /usr/share/virtualbox/nls/" >> instaluj.txt
+			    ;;
+			    esac
 			elif [ "${repo[$i]}" = "ppa:bumblebee/stable" ]; then
 			      echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
 			      if [ "$(lsb_release -r | grep 12.04)" != "" ] || [ "$(lsb_release -r | grep 13.04)" != "" ];then
