@@ -33,7 +33,7 @@
 #########################################################################################################################################################################
 wersja=0.7.13
 
-LATEST_VERSION=$(grep 'v[0-9]' /opt/NeteXt73/changelog | awk '/./{line=$0} END{print line}' | cut -d 'v' -f 2)
+LATEST_VERSION=$(grep 'v[0-9]' /opt/NeteXt73/changelog | head -n 1 | cut -d 'v' -f 2)
 
 jezyczek(){
 

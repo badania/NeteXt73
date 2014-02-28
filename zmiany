@@ -1,4 +1,4 @@
 #!/bin/bash
-LATEST_VERSION=`grep 'v[0-9]' ./changelog | awk '/./{line=$0} END{print line}' | cut -d 'v' -f 2`
+LATEST_VERSION=`grep 'v[0-9]' ./changelog | head -n 1 | cut -d 'v' -f 2`
 PKG_NAME="netext73"
 dch --controlmaint --distribution stable -v $LATEST_VERSION --package netext73

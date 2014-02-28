@@ -1,3 +1,9 @@
+netext73 (0.7.14) stable; urgency=low
+
+  * zmiana kolejności w changelog
+
+ -- eloaders <eloaders@linux.pl>  Fri, 28 Feb 2014 08:28:11 +0100
+
 netext73 (0.7.13) stable; urgency=low
 
   * dodana możliwość instalacji Vboxa
