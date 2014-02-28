@@ -1,6 +1,7 @@
 netext73 (0.7.14) stable; urgency=low
 
   * zmiana kolejności w changelog
+  * wyłaczenie budowania paczek i386
 
  -- eloaders <eloaders@linux.pl>  Fri, 28 Feb 2014 08:28:11 +0100
 

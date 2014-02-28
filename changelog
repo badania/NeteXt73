@@ -3,6 +3,7 @@
 
 v0.7.14
 -	zmiany w pliku changelog - odwrócenie kolejności
+-	wyłączenie wsparcia dla platform i386
 v0.7.13
 -	dodana możliwość instalacji VirtualBoxa, poprawki w plikach językowych
 v0.7.12
