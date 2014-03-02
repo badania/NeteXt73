@@ -186,21 +186,21 @@ while [ $petla_duza = "tak" ]; do
 					    if [ -e /etc/init/$a1.conf ]; then
 					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI33 $a1.\n$TEXT_MENU_USLUGI31\"; sudo service $a1 $usl1; echo 'tak' > /tmp/ok.txt"
 					    else
-					      notify-send  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI34"
+					      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI34"
 					    fi
 					elif [ "$usl" = "enable" ]; then
 					      echo /etc/int/$a1.conf
 					    if [ -e /etc/init/$a1.conf-disabled ]; then
 					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI32\n$TEXT_MENU_USLUGI31\"; sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start; echo 'tak' > /tmp/ok.txt"
 					    else
-					      notify-send  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI35"
+					      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI35"
 					    fi
 					    echo /etc/int/$a1.conf-disabed
 					elif [ "$usl" = "disable" ]; then
 					    if [ -e /etc/init/$a1.conf ]; then
 					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI36\n$TEXT_MENU_USLUGI31\"; sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled ; echo 'tak' > /tmp/ok.txt"
 					    else
-					      notify-send  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI37"
+					      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI37"
 					    fi
 					fi
 				  fi

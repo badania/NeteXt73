@@ -243,7 +243,7 @@ if [ $klawisz = "0" ]; then
 				      yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1" 
 				      klawisz=$?
 				      if [ "$klawisz" = "1" ];then
-					    notify-send  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_ZAINSTALOWANY"
+					    dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_ZAINSTALOWANY"
 					    usun
 					    exit 0    
 				      fi

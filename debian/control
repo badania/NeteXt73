@@ -14,7 +14,6 @@ Architecture: amd64
 Depends: ${shlibs:Depends}, ${misc:Depends},
   xterm, 
   dkms, 
-  libnotify-bin, 
   ppa-purge, 
   tasksel, 
   xclip, 

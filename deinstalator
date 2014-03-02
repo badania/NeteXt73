@@ -46,7 +46,7 @@ klawisz=$?; usun=$(echo $usun | cut -d "|" -f 1)
 #if [ "$usun" = "$TEXT_MENU_DEINSTALATOR3" ] ; then
 #	yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_DEINSTALATOR2"
 #	if [ $? = 0 ]; then
-#		notify-send  -i $warning1 "$TEXT_UWAGA" "$TEXT_DEINSTALATOR3"
+#		dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_DEINSTALATOR3"
 #		naglowek > instaluj.sh
 #		broadcom_usun >> instaluj.sh
 #		instalacja
@@ -107,15 +107,15 @@ if [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINSTA
 			echo "nie" > /tmp/ok.txt
 			instalacja
 			if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
-				notify-send -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_DEINSTALATOR7"
+				dymek -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_DEINSTALATOR7"
 			else
-				notify-send -i $warning1 "$TEXT_UWAGA" "$TEXT_DEINSTALATOR8"
+				dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_DEINSTALATOR8"
 			fi
 		fi
 	else
 		rm /tmp/*.txt -f; rm /tmp/*.sh -f
 	fi
   else
-	notify-send -i $warning1 "$TEXT_UWAGA" "$TEXT_BRAK_KERNELI"
+	dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_BRAK_KERNELI"
   fi
 fi

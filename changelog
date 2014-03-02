@@ -1,6 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.16
+-	zmiany w sekcji GRUB
+v0.7.15
+-	usunięcie notify-send z zależności, system, który go nie będzie posiadał, będzie notyfikował YADem
 v0.7.14
 -	zmiany w pliku changelog - odwrócenie kolejności
 -	wyłączenie wsparcia dla platform i386

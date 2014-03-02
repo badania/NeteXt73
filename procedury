@@ -31,7 +31,7 @@
 #  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
 #
 #########################################################################################################################################################################
-wersja=0.7.14
+wersja=0.7.16
 
 LATEST_VERSION=$(grep 'v[0-9]' /opt/NeteXt73/changelog | head -n 1 | cut -d 'v' -f 2)
 
@@ -207,7 +207,7 @@ rm ./index.html -f
 }
 
 wersja(){
-notify-send -i "preferences-other" "$nazwa_skryptu" "$TEXT_INFO1"
+dymek -i "preferences-other" "$nazwa_skryptu" "$TEXT_INFO1"
 }
 
 naglowek(){
@@ -535,9 +535,9 @@ naglowek > /tmp/instaluj.sh
 grub >> /tmp/instaluj.sh
 instalacja
 if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
-      notify-send -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_GRUB2 $sciezka/grub. $TEXT_WYMAGANY_RESTART"
+      dymek -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_GRUB2 $sciezka/grub. $TEXT_WYMAGANY_RESTART"
 else
-      notify-send i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB3"
+      dymek i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB3"
 fi
 }
 
@@ -546,7 +546,7 @@ if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
     yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_KERNEL2"
     rm -rf $PWD
 elif  [ "$(cat /tmp/ok.txt)" = "nie" ]; then
-    notify-send -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_INFO2<br>/tmp/$a"
+    dymek -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_INFO2<br>/tmp/$a"
 fi
 }
 
@@ -830,3 +830,10 @@ echo "sudo sed -i '/net.ipv6.conf.lo.disable_ipv6 = 1/d' /etc/sysctl.conf"
 echo "sudo sysctl -p"
 }
 
+dymek (){
+if [ "$(which notify-send)" != "" ];then
+    notify-send "$1" "$2" "$3" "$4"
+else
+    yad-netext --center --info --title="$3"  --window-icon="$2" --text="$4" --button="gtk-ok:0"
+fi
+}

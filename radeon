@@ -41,10 +41,10 @@ source /opt/NeteXt73/procedury
 cd /tmp
 rm *.txt -f; rm *.sh -f; rm *.html -f
 if [ "$(lspci | grep VGA | awk '{print tolower($0)}' | grep radeon)" = "" ]; then
-    notify-send -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI3"
+    dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI3"
 else
     if  [ "$bit2" = "i386" ]; then
-	    notify-send -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI1"
+	    dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI1"
     elif [ "$bit2" = "amd64" ]; then
 	    wget $adres_sterownikow/index.html  2>&1 | pobieranie2 
 	    if [ -e index.html ]; then

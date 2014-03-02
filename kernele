@@ -224,7 +224,7 @@ fi
 								yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEST_INSTALOWAC_KERNEL5"
 							fi
 						else
-							notify-send  -i $warning1 "$TEXT_UWAGA" "$TEXT_INSTALOWAC_KERNEL6"
+							dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_INSTALOWAC_KERNEL6"
 						fi
 					else
 						yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"

@@ -63,7 +63,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 	      echo "nie" > /tmp/ok.txt
 	      xterm -T Grub -e bash -c "echo \"$TEXT_GRUB8 /etc/default/grub\";sudo cp $sciezka/grub $sciezka/grub.backup -f; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
 	      if [ "$(cat /tmp/ok.txt)" = "nie" ]; then
-		      notify-send  -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB9"
+		      dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB9"
 	      fi
 	#grub timeout
 	elif [ "$grub" = "$TEXT_NETBIT_MENU1D" ]; then
@@ -78,24 +78,24 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 		    echo "nie" > /tmp/ok.txt
 		    xterm -T Grub -e bash -c "echo \"$TEXT_GRUB10\"; sudo cp $sciezka/grub.backup $sciezka/grub -f; sudo update-grub; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
 		    if [ "$(cat /tmp/ok.txt)" = "nie" ]; then
-			  notify-send  -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB11"
+			  dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB11"
 		    fi
 	      else
-		    notify-send  -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB12"
+		    dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB12"
 	      fi
 	#dokonaie zmian we wpisach w pliku grub
 	elif [ "$grub" = "$TEXT_GRUB6A" ]; then
 	      if [ -e $sciezka/grub.backup ]; then
 		    echo 'tak' > /tmp/ok.txt
 	      else
-		    notify-send -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB13 $sciezka"
+		    dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB13 $sciezka"
 		    #kasowanie starych wpisów w grub
 		    xterm -e bash -c "sudo cp $sciezka/grub $sciezka/grub.backup -f; echo -e \"$TEXT_INSTALACJA2\"; read ent;  echo 'tak' > /tmp/ok.txt"
 	      fi
 	      if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
 	      acpi_wpis=$( yad-netext --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="ACPI" --list --radiolist --column=""  --column="$TEXT_OPIS" \
-		TRUE "acpi_osi=Linux" \
-		FALSE "acpi_osi='!Windows 2012'" )
+		TRUE "acpi_osi=Linux pcie_aspm=force" \
+		FALSE "acpi_osi='!Windows 2012' pcie_aspm=force" )
 		if [ $? = 0 ]; then 
 		    w0=$(echo $acpi_wpis  | cut -d "|" -f 2)
 		fi
