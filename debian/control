@@ -27,8 +27,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
   pm-utils,  
   initramfs-tools, 
   lm-sensors, 
-  gcc, 
-  notify-osd
+  gcc  
 Replaces: netext73
 Recommends:
 Description: Instalator kerneli e X t 7 3

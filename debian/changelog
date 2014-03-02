@@ -1,3 +1,9 @@
+netext73 (0.7.15) stable; urgency=low
+
+  * wyłączenie notify-send z zależności obowiązkowych
+
+ -- eloaders <eloaders@linux.pl>  Sun, 02 Mar 2014 17:39:58 +0100
+
 netext73 (0.7.14) stable; urgency=low
 
   * zmiana kolejności w changelog
