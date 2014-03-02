@@ -10,7 +10,7 @@ Vcs-Browser: https://github.com/NetBit73/NeteXt73
 Vcs-Git: https://github.com/NetBit73/NeteXt73.git
 
 Package: netext73
-Architecture: amd64
+Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
   xterm, 
   dkms, 

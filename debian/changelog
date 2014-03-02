@@ -1,8 +1,21 @@
+netext73 (0.7.17) stable; urgency=low
+
+  * przywrócenie paczek i386
+
+ -- eloaders <eloaders@linux.pl>  Sun, 02 Mar 2014 20:54:50 +0100
+
+netext73 (0.7.16) stable; urgency=low
+
+  * zmiany w sekcji GRUB
+
+ -- eloaders <eloaders@linux.pl>  Sun, 02 Mar 2014 20:39:58 +0100
+
 netext73 (0.7.15) stable; urgency=low
 
   * wyłączenie notify-send z zależności obowiązkowych
 
  -- eloaders <eloaders@linux.pl>  Sun, 02 Mar 2014 17:39:58 +0100
+
 
 netext73 (0.7.14) stable; urgency=low
 
