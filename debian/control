@@ -26,6 +26,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
   pm-utils,  
   initramfs-tools, 
   lm-sensors, 
+  perl,  
   gcc  
 Replaces: netext73
 Recommends:

@@ -1,3 +1,9 @@
+netext73 (0.7.18) stable; urgency=low
+
+  * naprawa modułu sysv
+
+ -- eloaders <eloaders@linux.pl>  Mon, 03 Mar 2014 11:35:32 +0100
+
 netext73 (0.7.17) stable; urgency=low
 
   * przywrócenie paczek i386

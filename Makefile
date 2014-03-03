@@ -112,3 +112,4 @@ install_bash_files:
 	$(INSTALL) 0755 update $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 uslugi $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 xterm1 $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
+	$(INSTALL) 0755 chconfig $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
