@@ -55,7 +55,7 @@ if [ "$stan_apm" = "-" ]; then
 fi
 
 #sprawdzenie stanu APM wifi FIX
-if [ "$(grep 'wlan0 power on' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
+if [ "$(grep 'echo auto > $ii' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
     wififix="FALSE"
 else
     wififix="TRUE"

@@ -31,7 +31,7 @@
 #  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
 #
 #########################################################################################################################################################################
-wersja=0.7.16a
+wersja=0.7.16f
 
 LATEST_VERSION=$(grep 'v[0-9]' /opt/NeteXt73/changelog | head -n 1 | cut -d 'v' -f 2)
 
@@ -377,14 +377,12 @@ echo "ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 
 echo "if [ \"\$wififix\" = \"FALSE\" ];then"
 echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
 echo "do"
-echo "sudo sed -i '1,/wlan0 power on/ s/power on/power off/' \$i"
-echo "sudo sed -i '1,/eth1 power on/ s/power on/power off/' \$i"
+echo "sudo sed -i 's/echo auto > \$ii/echo on > \$ii/g' \$i"
 echo "done"
 echo "else"
 echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
 echo "do"
-echo "sudo sed -i '1,/wlan0 power off/ s/power off/power on/' \$i"
-echo "sudo sed -i '1,/eth1 power off/ s/power off/power on/' \$i"
+echo "sudo sed -i 's/echo on > \$ii/echo auto > \$ii/g' \$i"
 echo "done"
 echo "fi"
 

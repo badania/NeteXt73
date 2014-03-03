@@ -1,3 +1,9 @@
+netext73 (0.7.19) stable; urgency=low
+
+  * dostosowanie APM do v3.3
+
+ -- eloaders <eloaders@linux.pl>  Mon, 03 Mar 2014 20:51:34 +0100
+
 netext73 (0.7.18) stable; urgency=low
 
   * naprawa modułu sysv
