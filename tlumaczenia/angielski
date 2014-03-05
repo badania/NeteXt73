@@ -41,6 +41,10 @@ export TEXT_AKTUALNY_PROFIL_APM="Current APM profile:"
 export TEXT_ZMIEN_PROFIL_APM="Change APM profile:"
 export TEXT_APM2="To change status of APM install update"
 export TEXT_WERSJA_APM="Installed APM version"
+export TEXT_FIX1="APM on/off WiFi power saving on the battery"
+export TEXT_FIX2="APM on/off WiFi on the battery"
+export TEXT_FIX3="APM on/off Bluetooth on the battery"
+export TEXT_FIX4="APM on/off module rts5139"
 
 #########################################################################################################################################################################
 #tlumaczenia_backuprepo

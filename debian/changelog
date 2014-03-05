@@ -1,3 +1,9 @@
+netext73 (0.7.20) stable; urgency=low
+
+  * zmiana w sekcji APM - dodanie 4 fixów, powrót do okna APM po wykonaniu zmian celem sprawdzenia czy zaszyły
+
+ -- eloaders <eloaders@linux.pl>  Wed, 05 Mar 2014 09:39:19 +0100
+
 netext73 (0.7.19) stable; urgency=low
 
   * dostosowanie APM do v3.3

@@ -31,7 +31,7 @@
 #  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
 #
 #########################################################################################################################################################################
-wersja=0.7.16f
+wersja=0.7.20
 
 LATEST_VERSION=$(grep 'v[0-9]' /opt/NeteXt73/changelog | head -n 1 | cut -d 'v' -f 2)
 
@@ -386,6 +386,33 @@ echo "sudo sed -i 's/echo on > \$ii/echo auto > \$ii/g' \$i"
 echo "done"
 echo "fi"
 
+echo "if [ \"\$btfix\" = \"FALSE\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/echo 1 > \$bt/echo 0 > \$bt/g' \$i"
+echo "done"
+echo "else"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/echo 0 > \$bt/echo 1 > \$bt/g' \$i"
+echo "done"
+echo "fi"
+
+echo "if [ \"\$wifionoff\" = \"FALSE\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/echo 1 > \$wifi/echo 0 > \$wifi/g' \$i"
+echo "done"
+echo "else"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' \$i"
+echo "done"
+echo "fi"
+
+
+
+
 echo "if [ \"\$rts5139fix\" = \"TRUE\" ];then"
 echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
 echo "do"
@@ -435,9 +462,6 @@ echo "sudo sed -i '/apm_status_fix/d' /etc/rc.local"
 }
 
 stan_apm(){
-stan_apm=""
-wget $adres_skryptow/APM2/index.html -O apm.txt  2>&1 | pobieranie2 
-export wersja_apm=$(cat apm.txt | grep "href=.*advanced" | cut -d '"' -f 2 | cut -d '_' -f 6 | head -n 1 | sed 's/.tar.gz//')
 if [ "$(ls /etc/pm/power.d/ | wc | awk '{print $1}')" != "6" ]; then
       stan_apm="-"
 else
