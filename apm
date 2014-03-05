@@ -83,9 +83,11 @@ while [ $petla_duza = "tak" ]; do
 	else
 	    rts5139fix="TRUE"
 	fi
-
-
-
+	wififix_przed=$wififix
+	wifionoff_przed=$wifionoff
+	btfix_przed=$btfix
+	rts5139fix_przed=$rts5139fix
+	
 	aktualny_apm=$(echo $stan_apm | awk '{print $1}')
 	if [ "$aktualny_apm" = "conservative-conservative" ];then
 	    menu="conservative-conservative!ondemand-ondemand!intel-performance!intel-powersave!performance-conservative!performance-ondemand"
@@ -113,35 +115,41 @@ while [ $petla_duza = "tak" ]; do
 		--field="$TEXT_FIX4:CHK" "$rts5139fix" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		
 		klawisz=$?; a=$(echo $aa | cut -d "|" -f 3); export wififix=$(echo $aa | cut -d "|" -f 4);export wifionoff=$(echo $aa | cut -d "|" -f 5); export btfix=$(echo $aa | cut -d "|" -f 6); export rts5139fix=$(echo $aa | cut -d "|" -f 7)
-		if [ "$a" = "conservative-conservative" ]; then
-			naglowek > instaluj.sh
-			apm_zmiana $a "$wersja_apm1*$wersja_apm" >> instaluj.sh
-			instalacja2
-		elif [ "$a" = "ondemand-ondemand" ]; then
-			naglowek > instaluj.sh
-			apm_zmiana $a "$wersja_apm2*$wersja_apm" >> instaluj.sh
-			instalacja2
-		elif [ "$a" = "intel-performance" ]; then
-			naglowek > instaluj.sh
-			apm_zmiana $a "$wersja_apm3*$wersja_apm" >> instaluj.sh
-			instalacja2
-		elif [ "$a" = "intel-powersave" ]; then
-			naglowek > instaluj.sh
-			apm_zmiana $a "$wersja_apm4*$wersja_apm" >> instaluj.sh
-			instalacja2
-		elif [ "$a" = "performance-conservative" ]; then
-			naglowek > instaluj.sh
-			apm_zmiana $a "$wersja_apm5*$wersja_apm" >> instaluj.sh
-			instalacja2
-		elif [ "$a" = "performance-ondemand" ]; then
-			naglowek > instaluj.sh
-			apm_zmiana $a "$wersja_apm6*$wersja_apm" >> instaluj.sh
-			instalacja2
-		elif [ "$a" = "-" ]; then
-			yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
-			naglowek > instaluj.sh
-			apm_inst >> instaluj.sh
-			instalacja2
+		#uruchomienie aktualizacji gdy zaszła jakś zmiana
+		if [ "$a" = "$aktualny_apm" ] && [ "$wififix_przed" = "$wififix" ] && [ "$wifionoff_przed" = "$wifionoff" ] && [ "$btfix_przed" = "$btfix" ] && [ "$rts5139fix_przed" = "$rts5139fix" ]; then
+		    petla_duza="nie"
+		    rm *.txt -f *.sh
+		else
+			if [ "$a" = "conservative-conservative" ]; then
+				naglowek > instaluj.sh
+				apm_zmiana $a "$wersja_apm1*$wersja_apm" >> instaluj.sh
+				instalacja2
+			elif [ "$a" = "ondemand-ondemand" ]; then
+				naglowek > instaluj.sh
+				apm_zmiana $a "$wersja_apm2*$wersja_apm" >> instaluj.sh
+				instalacja2
+			elif [ "$a" = "intel-performance" ]; then
+				naglowek > instaluj.sh
+				apm_zmiana $a "$wersja_apm3*$wersja_apm" >> instaluj.sh
+				instalacja2
+			elif [ "$a" = "intel-powersave" ]; then
+				naglowek > instaluj.sh
+				apm_zmiana $a "$wersja_apm4*$wersja_apm" >> instaluj.sh
+				instalacja2
+			elif [ "$a" = "performance-conservative" ]; then
+				naglowek > instaluj.sh
+				apm_zmiana $a "$wersja_apm5*$wersja_apm" >> instaluj.sh
+				instalacja2
+			elif [ "$a" = "performance-ondemand" ]; then
+				naglowek > instaluj.sh
+				apm_zmiana $a "$wersja_apm6*$wersja_apm" >> instaluj.sh
+				instalacja2
+			elif [ "$a" = "-" ]; then
+				yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
+				naglowek > instaluj.sh
+				apm_inst >> instaluj.sh
+				instalacja2
+			fi
 		fi
 	fi
 	if [ -z "$aa" ]; then
