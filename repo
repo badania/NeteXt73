@@ -175,6 +175,20 @@ baza=(
 	"Pinta is a free, open source drawing/editing program modeled after Paint.NET."
 	"pinta"
 	
+	"ppa:plushuang-tw/uget-stable"
+	"Uget - akcelerator pobierania plików"
+	"Uget - download manager"
+	"uget"
+
+	"ppa:leolik/leolik"
+	"notifyOSD Patch - poprawiona wersja OSD notify"
+	"notifyOSD Patch - fixed OSD notify version"
+	"notify-osd"
+
+	"ppa:t-tujikawa/ppa"
+	"Aria2 - narzędzie pobierania plików"
+	"Aria2 - command line download utility"
+	"aria2"
 	)
 #########################################################################################################################################################################
 #backuprepo
@@ -346,6 +360,36 @@ if [ "$klawisz" = "0" ]; then
 			  echo "sudo add-apt-repository -y 'deb http://repository.spotify.com stable non-free'" >> instaluj.sh
 			  echo "sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 94558F59"  >> instaluj.sh
 			  echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
+			elif [ "${repo[$i]}" = "ppa:leolik/leolik" ]; then
+			  if [ -e ~/.notify-osd ]; then
+				echo "ok" > /dev/null
+			  else
+				echo "slot-allocation = dynamic" > ~/.notify-osd
+				echo "bubble-expire-timeout = 10sec" >> ~/.notify-osd
+				echo "bubble-vertical-gap = 5px" >> ~/.notify-osd
+				echo "bubble-horizontal-gap = 5px" >> ~/.notify-osd
+				echo "bubble-corner-radius = 37,5%" >> ~/.notify-osd
+				echo "bubble-icon-size = 30px" >> ~/.notify-osd
+				echo "bubble-gauge-size = 6px" >> ~/.notify-osd
+				echo "bubble-width = 240px" >> ~/.notify-osd
+				echo "bubble-background-color = 131313" >> ~/.notify-osd
+				echo "bubble-background-opacity = 90%" >> ~/.notify-osd
+				echo "text-margin-size = 10px" >> ~/.notify-osd
+				echo "text-title-size = 100%" >> ~/.notify-osd
+				echo "text-title-weight = bold" >> ~/.notify-osd
+				echo "text-title-color = ffffff" >> ~/.notify-osd
+				echo "text-title-opacity = 100%" >> ~/.notify-osd
+				echo "text-body-size = 90%" >> ~/.notify-osd
+				echo "text-body-weight = normal" >> ~/.notify-osd
+				echo "text-body-color = eaeaea" >> ~/.notify-osd
+				echo "text-body-opacity = 100%" >> ~/.notify-osd
+				echo "text-shadow-opacity = 100%" >> ~/.notify-osd
+				echo "bubble-prevent-fade = 0" >> ~/.notify-osd
+				echo "bubble-close-on-click = 1" >> ~/.notify-osd
+				echo "bubble-as-desktop-bg = 0" >> ~/.notify-osd
+			 fi
+			 echo "sudo add-apt-repository ${repo[$i]}" >> instaluj.sh
+                         echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
 			elif [ "${repo[$i]}" = "deb http://dl.google.com/linux/chrome/deb/ stable main" ]; then
 			  echo "echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list" >> instaluj.sh
 			  echo "wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -" >> instaluj.sh

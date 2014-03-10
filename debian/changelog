@@ -1,3 +1,9 @@
+netext73 (0.7.21) stable; urgency=low
+
+  * dodane nowe repozytoria oraz drobne poprawki
+
+ -- eloaders <eloaders@linux.pl>  Mon, 10 Mar 2014 15:15:08 +0100
+
 netext73 (0.7.20) stable; urgency=low
 
   * zmiana w sekcji APM - dodanie 4 fixów, powrót do okna APM po wykonaniu zmian celem sprawdzenia czy zaszyły
