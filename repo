@@ -170,6 +170,11 @@ baza=(
 	"VirtualBox is a powerful x86 and AMD64/Intel64 virtualization product"
 	"virtualbox-4.3"
 	
+	"ppa:pinta-maintainers/pinta-stable"
+	"Pinta program graficzny wzorowany na Paint.NET."
+	"Pinta is a free, open source drawing/editing program modeled after Paint.NET."
+	"pinta"
+	
 	)
 #########################################################################################################################################################################
 #backuprepo

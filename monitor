@@ -74,7 +74,7 @@ else
     a5=FALSE
 fi
 
-konfiguracja=$(yad-netext --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_MONITOR1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
+konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_MONITOR1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
 "$a1" "system monitor" \
 "$a2" "powertop" \
 "$a3" "HTOP" \
