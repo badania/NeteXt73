@@ -545,9 +545,13 @@ echo "echo \"$TEXT_PROCEDURA_13\""
 echo "echo \"$TEXT_GRUB1 /etc/default/grub\"; sudo sed -i '/GRUB_CMDLINE_LINUX=/d' $sciezka/grub"
 echo "echo \"$TEXT_GRUB2 /etc/default/grub\"; sudo sed \"/GRUB_CMDLINE_LINUX_DEFAULT/a\GRUB_CMDLINE_LINUX=\\\"$wpis_grub\\\"\" $sciezka/grub > /tmp/grub1"
 echo "sudo mv /tmp/grub1 $sciezka/grub -f"
+if [ "$w3" != "" ]; then
+echo "sudo sed /etc/default/grub -i -e \"s/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=$w3/\""
+fi
 echo "sudo chown root:root /etc/default/grub"
 echo "sudo update-grub"  
 echo "echo 'tak' > /tmp/ok.txt"
+
 }
 
 instaluj_grub(){

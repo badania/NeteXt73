@@ -1,3 +1,9 @@
+netext73 (0.7.23) stable; urgency=low
+
+  * zmiany w sekcji GRUB
+
+ -- eloaders <eloaders@linux.pl>  Tue, 11 Mar 2014 21:43:02 +0100
+
 netext73 (0.7.22) stable; urgency=low
 
   * dodane nowe repozytoria

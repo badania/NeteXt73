@@ -93,34 +93,50 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 		    xterm -e bash -c "sudo cp $sciezka/grub $sciezka/grub.backup -f; echo -e \"$TEXT_INSTALACJA2\"; read ent;  echo 'tak' > /tmp/ok.txt"
 	      fi
 	      if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
-		    acpi_wpis=$( yad-netext --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --form  --item-separator="@"\
-		    --field="$TEXT_SKRYPTEXT_10" \
-		    --field="ACPI:CB" --field="$TEXT_GRUB14:CB" --field="$TEXT_GRUB17:CB" \
-		    --field="$TEXT_NETBIT_MENU18:NUM" \
-		    "$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | sed 's/GRUB_CMDLINE_LINUX=//' | cut -d '"' -f 2)" \
-		    "acpi_osi=Linux pcie_aspm=force@acpi_osi='!Windows 2012' pcie_aspm=force" \
-		    "$TEXT_GRUB_STD@$TEXT_GRUB_INTEL@$TEXT_GRUB_RADEON" \
-		    "standard@$TEXT_GRUB19" \
-		    "3[@-1..10[@1]]" )
-		    if [ $? = 0 ]; then
-			  w0=$(echo $acpi_wpis  | cut -d "|" -f 2)
-			  w1=$(echo $acpi_wpis  | cut -d "|" -f 3)
-			  w2=$(echo $acpi_wpis  | cut -d "|" -f 4)
-			  echo $w0
-			  echo $w1
-			  echo $w2
-			  export w3=$(echo $acpi_wpis  | cut -d "|" -f 5 | sed 's/,.*//g' )
-			  if [ "$w1" = "$TEXT_GRUB_STD" ]; then		w1=" acpi_enforce_resources=lax"
-			  elif [ "$w1" = "$TEXT_GRUB_INTEL" ]; then 	w1=" acpi_enforce_resources=lax i915.i915_enable_rc6=1 i915.i915_enable_fbc=1 i915.lvds_downclock=1 i915.semaphores=1"
-			  elif [ "$w1" = "$TEXT_GRUB_RADEON" ]; then	w1=" acpi_enforce_resources=lax radeon.dpm=1"
-			  fi
-			  if [ "$w2" = "standard" ]; then      		w2=""
-			  elif [ "$w2" = "$TEXT_GRUB19" ]; then  	w2=" acpi_backlight=vendor"
-			  fi
-			  wpis_grub="$w0$w1$w2"
-			  instaluj_grub
-		    fi
+	      acpi_wpis=$( yad-netext --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="ACPI" --list --radiolist --column=""  --column="$TEXT_OPIS" \
+		TRUE "acpi_osi=Linux pcie_aspm=force" \
+		FALSE "acpi_osi='!Windows 2012' pcie_aspm=force" )
+		if [ $? = 0 ]; then 
+		    w0=$(echo $acpi_wpis  | cut -d "|" -f 2)
 		fi
+	      #--column="$TEXT_MENU"
+	      wpisy=$(yad-netext --center --height=240 --width=610 --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="$TEXT_GRUB14" --list --radiolist --column=""  --column="$TEXT_OPIS" --button="gtk-ok:0" --button="$TEXT_POWROT:1" \
+		TRUE "$TEXT_GRUB_STD" \
+		FALSE "$TEXT_GRUB_INTEL" \
+		FALSE "$TEXT_GRUB_RADEON" )
+		if [ $? = 0 ]; then
+		    wpisy=$(echo $wpisy  | cut -d "|" -f 2)
+		    podswietlenie=$(yad-netext --center --height=240 --width=600 --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="$TEXT_GRUB17" --list --radiolist --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU" --column="$TEXT_OPIS" --button="gtk-ok:0" --button="$TEXT_POWROT:1" \
+		      TRUE "standard" "$TEXT_GRUB15"\
+		      FALSE "$TEXT_GRUB19" "$TEXT_GRUB18")
+		      if [ $? = 0 ]; then
+			    podswietlenie=$(echo $podswietlenie  | cut -d "|" -f 2)
+			    if [ "$wpisy" = "$TEXT_GRUB_STD" ]; then		w1=" acpi_enforce_resources=lax"
+			    elif [ "$wpisy" = "$TEXT_GRUB_INTEL" ]; then 	w1=" acpi_enforce_resources=lax i915.i915_enable_rc6=1 i915.i915_enable_fbc=1 i915.lvds_downclock=1 i915.semaphores=1"
+			    elif [ "$wpisy" = "$TEXT_GRUB_RADEON" ]; then w1=" acpi_enforce_resources=lax radeon.dpm=1"
+			    fi
+
+			    if [ "$podswietlenie" = "standard" ]; then      	w2=""
+			    elif [ "$podswietlenie" = "$TEXT_GRUB19" ]; then  	w2=" acpi_backlight=vendor"
+			    fi
+
+			    zmiany=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --text="$TEXT_GRUB21" --list --radiolist --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU" --column="$TEXT_OPIS" \
+			      TRUE "standard" "$TEXT_GRUB21A"\
+			      FALSE "$TEXT_GRUB21B" "$TEXT_GRUB21C")
+				zmiany=$(echo $zmiany | cut -d "|" -f 2)
+				if [ "$zmiany" = "standard" ]; then
+				    wpis_grub="$w0$w1$w2"
+				    instaluj_grub
+				elif [ "$zmiany" = "$TEXT_GRUB21B" ]; then
+				    wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --entry --text="$TEXT_GRUB22" --entry-text="$w0$w1$w2")
+				    wpis_grub=$(echo $wpis_grub | cut -d "|" -f 2)
+				    if [ "$wpis_grub" != "" ];then
+					instaluj_grub
+				    fi
+				fi
+		      fi
+		fi
+	    fi
 	#ręczna edycja wpisów w pliku grub
 	elif [ "$grub" = "$TEXT_GRUB7A" ]; then
 	    echo "nie" > /tmp/ok.txt
