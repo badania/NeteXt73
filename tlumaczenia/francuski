@@ -351,7 +351,10 @@ export TEXT_CONFIG1="Il n'y a pas des fichiers de configuration á supprimer."
 export TEXT_BACK_CRITIC="ATTENTION: On a trouvé des séries Fokirtor dans le processus SSHD:"
 export TEXT_BACK_OK="OK: rien menace dans les processus SSHD."
 
-
+export TEXT_FIX1="APM marche / arrêt pour économiser la batterie sur WiFi"
+export TEXT_FIX2="APM marche / arrêt le WiFi sur la batterie"
+export TEXT_FIX3="APM marche / arrêt le Bluetooth sur la batterie"
+export TEXT_FIX4="APM marche / arrêt le module rts5139"
 
 #########################################################################################################################################################################
 
