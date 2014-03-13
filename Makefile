@@ -2,8 +2,8 @@
 PROG_NAME = NeteXt73
 OPT_DIR = /opt
 PREFIX = /usr
+BINDIR = /bin
 datarootdir = $(PREFIX)/share
-USR_LOCAL_BIN_DIR = $(PREFIX)/local/bin
 MOVE_COMMAND = mv
 MKDIR = mkdir
 INSTALL = install -m
@@ -19,7 +19,7 @@ MENU_DIR = menu
 TRANSLATIONS_DIR = tlumaczenia
 make: nothing_to_make
 nothing_to_make:
-
+ 
 	@echo -e '\033[1;32mNie będę budował NeteXt73 :)...\033[0m'
 make_yad_netext:
 	
@@ -55,6 +55,7 @@ create_directories:
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(MENU_DIR)/
 	$(MKDIR) -p ${DESTDIR}${datarootdir}/pixmaps
 	$(MKDIR) -p $(DESTDIR)$(datarootdir)/applications/
+	$(MKDIR) -p $(DESTDIR)$(PREFIX)$(BINDIR)
 	
 install_desktopfiles:
 	
@@ -88,10 +89,10 @@ install_translations_files:
 	
 install_launcher:
 	
-	$(INSTALL) 0755 $(MENU_DIR)/netext73 $(DESTDIR)$(USR_LOCAL_BIN_DIR) 
+	$(INSTALL) 0755 $(MENU_DIR)/netext73 $(DESTDIR)$(PREFIX)$(BINDIR)
 	
 install_bash_files:
-
+ 
 	$(INSTALL) 0755 LICENSE $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 NeteXt73 $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 NeteXt73_root $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
