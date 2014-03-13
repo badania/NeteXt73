@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 PROG_NAME = NeteXt73
 OPT_DIR = /opt
+USR_LOCAL_BIN_DIR = /usr/local/bin
 PREFIX = /usr
 datarootdir = $(PREFIX)/share
 MOVE_COMMAND = mv
@@ -33,7 +34,8 @@ install: create_directories \
 	 install_menu \
 	 install_translations_files \
 	 install_bash_files \
-	 install_yad_netext
+	 install_yad_netext \
+	 install_launcher
 clean:
 
 	if test -f "yad-netext/Makefile" ; then $(MAKE) -C yad-netext distclean ; fi
@@ -83,6 +85,10 @@ install_desktop_menu_file:
 install_translations_files:
 
 	$(INSTALL) 0755 $(TRANSLATIONS_DIR)/* $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(TRANSLATIONS_DIR)
+
+install_launcher:
+
+	$(INSTALL) 0755 netext73 $(USR_LOCAL_BIN_DIR) 
 	
 install_bash_files:
 
