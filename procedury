@@ -31,7 +31,7 @@
 #  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
 #
 #########################################################################################################################################################################
-wersja=0.7.23g
+wersja=0.7.25
 
 LATEST_VERSION=$(grep 'v[0-9]' /opt/NeteXt73/changelog | head -n 1 | cut -d 'v' -f 2)
 
@@ -545,6 +545,9 @@ echo "echo \"$TEXT_PROCEDURA_13\""
 echo "echo \"$TEXT_GRUB1 /etc/default/grub\"; sudo sed -i '/GRUB_CMDLINE_LINUX=/d' $sciezka/grub"
 echo "echo \"$TEXT_GRUB2 /etc/default/grub\"; sudo sed \"/GRUB_CMDLINE_LINUX_DEFAULT/a\GRUB_CMDLINE_LINUX=\\\"$wpis_grub\\\"\" $sciezka/grub > /tmp/grub1"
 echo "sudo mv /tmp/grub1 $sciezka/grub -f"
+if [ "$(cat /etc/default/grub | grep '#GRUB_HIDDEN_TIMEOUT=')" = "" ]; then
+echo "sudo sed -i 's/GRUB_HIDDEN_TIMEOUT=/#GRUB_HIDDEN_TIMEOUT=/g' /etc/default/grub"
+fi
 if [ "$w3" != "" ]; then
 echo "sudo sed /etc/default/grub -i -e \"s/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=$w3/\""
 fi

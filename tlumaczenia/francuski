@@ -41,6 +41,10 @@ export TEXT_AKTUALNY_PROFIL_APM="Le profil actuel d'APM"
 export TEXT_ZMIEN_PROFIL_APM="Changes le profil APM à:"
 export TEXT_APM2="Pour changer le statut d'APM installe la dernière version"
 export TEXT_WERSJA_APM="version installée d'APM"
+export TEXT_FIX1="APM marche/arrêt pour économiser la batterie sur WiFi"
+export TEXT_FIX2="APM marche/arrêt le WiFi sur la batterie"
+export TEXT_FIX3="APM marche/arrêt le Bluetooth sur la batterie"
+export TEXT_FIX4="APM marche/arrêt le module rts5139"
 
 #########################################################################################################################################################################
 #tlumaczenia_backuprepo
@@ -349,11 +353,6 @@ export TEXT_ZOMBIE2="Il n'y a pas de processus zombie."
 export TEXT_CONFIG1="Il n'y a pas des fichiers de configuration á supprimer."
 export TEXT_BACK_CRITIC="ATTENTION: On a trouvé des séries Fokirtor dans le processus SSHD:"
 export TEXT_BACK_OK="OK: rien menace dans les processus SSHD."
-
-export TEXT_FIX1="APM marche / arrêt pour économiser la batterie sur WiFi"
-export TEXT_FIX2="APM marche / arrêt le WiFi sur la batterie"
-export TEXT_FIX3="APM marche / arrêt le Bluetooth sur la batterie"
-export TEXT_FIX4="APM marche / arrêt le module rts5139"
 
 #########################################################################################################################################################################
 
