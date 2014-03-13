@@ -88,7 +88,7 @@ install_translations_files:
 
 install_launcher:
 
-	$(INSTALL) 0755 netext73 $(USR_LOCAL_BIN_DIR) 
+	$(INSTALL) 0755 $(MENU_DIR)/netext73 $(USR_LOCAL_BIN_DIR) 
 	
 install_bash_files:
 

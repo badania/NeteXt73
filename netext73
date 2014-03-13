@@ -1,8 +1,0 @@
-#/bin/bash
-NETEXT_DIR=/opt/NeteXt73
-if [[ $1 = 'root' ]]
-then
-$NETEXT_DIR/./NeteXt73_root
-else
-$NETEXT_DIR/./NeteXt73
-fi

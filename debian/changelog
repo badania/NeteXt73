@@ -1,3 +1,9 @@
+netext73 (0.7.27) stable; urgency=low
+
+  * dodanie terminalowego launchera pod nazwą: netext73
+
+ -- eloaders <eloaders@linux.pl>  Thu, 13 Mar 2014 19:17:31 +0100
+
 netext73 (0.7.26) stable; urgency=low
 
   * poprawki w instalatorach oprogramowania-przyspieszenie wyszukiwania i wyświetlania listy, doszły repozytoria

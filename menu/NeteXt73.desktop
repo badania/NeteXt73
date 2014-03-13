@@ -152,7 +152,7 @@ GenericName[vi]=NeteXt'73 - optimizer
 GenericName[zh_CN]=NeteXt'73 - optimizer
 GenericName[zh_TW]=NeteXt'73 - optimizer
 
-Exec=/opt/NeteXt73/./NeteXt73 
+Exec=netext73
 Icon=NeteXt73.png
 Terminal=false
 StartupNotify=true
