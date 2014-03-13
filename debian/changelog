@@ -1,3 +1,9 @@
+netext73 (0.7.28) stable; urgency=low
+
+  * poprawki w pliku MakeFile
+
+ -- eloaders <eloaders@linux.pl>  Thu, 13 Mar 2014 20:21:13 +0100
+
 netext73 (0.7.27) stable; urgency=low
 
   * dodanie terminalowego launchera pod nazwą: netext73

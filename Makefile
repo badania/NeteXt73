@@ -1,9 +1,9 @@
 #!/usr/bin/make -f
 PROG_NAME = NeteXt73
 OPT_DIR = /opt
-USR_LOCAL_BIN_DIR = /usr/local/bin
 PREFIX = /usr
 datarootdir = $(PREFIX)/share
+USR_LOCAL_BIN_DIR = $(PREFIX)/local/bin
 MOVE_COMMAND = mv
 MKDIR = mkdir
 INSTALL = install -m
@@ -22,10 +22,10 @@ nothing_to_make:
 
 	@echo -e '\033[1;32mNie będę budował NeteXt73 :)...\033[0m'
 make_yad_netext:
-
+	
 	@echo -e '\033[1;32mBuild Yad-netext...\033[0m'
 	$(MAKE) -C yad-netext
-
+	
 install: create_directories \
 	 install_desktopfiles \
 	 install_desktopicons \
@@ -37,15 +37,15 @@ install: create_directories \
 	 install_yad_netext \
 	 install_launcher
 clean:
-
+	
 	if test -f "yad-netext/Makefile" ; then $(MAKE) -C yad-netext distclean ; fi
-
+	
 install_yad_netext:
-
+	
 	$(MAKE) -C yad-netext install
-
+	
 create_directories:
-
+	
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(DESKTOPFILES_DIR)/
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_BASE_DIR)/
@@ -55,22 +55,22 @@ create_directories:
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(MENU_DIR)/
 	$(MKDIR) -p ${DESTDIR}${datarootdir}/pixmaps
 	$(MKDIR) -p $(DESTDIR)$(datarootdir)/applications/
-
+	
 install_desktopfiles:
-
+	
 	$(INSTALL) 0755 $(DESKTOPFILES_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(DESKTOPFILES_DIR)/
 	
 install_desktopicons:
-
+	
 	$(INSTALL) 0755 $(GRAPHIC_BASE_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_BASE_DIR)
 	$(INSTALL) 0755 $(GRAPHIC_BASE_DIR)/xterm.desktop $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_BASE_DIR)
 	
 install_desktopfiles_kernel:
-
+	
 	$(INSTALL) 0755 $(GRAPHIC_KERNEL_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_KERNEL_DIR)
-
+	
 install_contacts:
-
+	
 	$(INSTALL) 0755 $(CONTACTS_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(CONTACTS_DIR)
 	
 install_menu: install_desktop_menu_file
@@ -83,12 +83,12 @@ install_desktop_menu_file:
 	$(INSTALL) 0755 $(MENU_DIR)/NeteXt73.desktop $(DESTDIR)$(datarootdir)/applications
 	
 install_translations_files:
-
+	
 	$(INSTALL) 0755 $(TRANSLATIONS_DIR)/* $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(TRANSLATIONS_DIR)
-
+	
 install_launcher:
-
-	$(INSTALL) 0755 $(MENU_DIR)/netext73 $(USR_LOCAL_BIN_DIR) 
+	
+	$(INSTALL) 0755 $(MENU_DIR)/netext73 $(DESTDIR)$(USR_LOCAL_BIN_DIR) 
 	
 install_bash_files:
 
