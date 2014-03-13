@@ -134,7 +134,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  if [ "$w2" = "standard" ]; then      		w2=""
 			  elif [ "$w2" = "$TEXT_GRUB19" ]; then  	w2=" acpi_backlight=vendor"
 			  fi
-			  wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --form --field="<span color=\"$kolor_textu\">$TEXT_GRUB22:TXT</span>" "$w0$w1$w2")
+			  wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2")
 				    wpis_grub=$(echo $wpis_grub | sed 's/|//g')
 				    if [ "$wpis_grub" != "" ];then
 					instaluj_grub

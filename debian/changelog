@@ -1,5 +1,11 @@
 netext73 (0.7.25) stable; urgency=low
 
+  * poprawki w instalatorach oprogramowania-przyspieszenie wyszukiwania i wyświetlania listy, doszły repozytoria
+
+ -- eloaders <eloaders@linux.pl>  Thu, 13 Mar 2014 18:13:44 +0100
+
+netext73 (0.7.25) stable; urgency=low
+
   * poprawki w tłumaczeniach, poprawki w sekcji GRUB
 
  -- eloaders <eloaders@linux.pl>  Thu, 13 Mar 2014 11:06:33 +0100

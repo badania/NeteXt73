@@ -195,6 +195,10 @@ baza=(
 	"The official repository of Firefox Beta"
 	"firefox"
 
+	"ppa:mehanik/ksuperkey"
+	"Ksuperkey - uruchom program uruchamiający za pomocą klawisza SuperKey"
+	"Ksuperkey - bind Superkey for open Launcher Menu"
+	"ksuperkey"
 	)
 #########################################################################################################################################################################
 #backuprepo
@@ -458,8 +462,9 @@ if [ "$klawisz" = "0" ]; then
 	    echo "$el" 
 	done | sort )) 
 	ilosc_softu=$(( ${#soft[*]} - 1 ))
+	dpkg -l | awk '{print $2}'| sed 's/:.*//g' > programy.txt
 	for (( i=0; i<=$ilosc_softu; i++ )); do
-		if [ "$(dpkg -l | awk '{print $2}'| sed 's/:.*//g' | grep ${soft[$i]} -x )" != "" ] ; then
+		if [ "$(cat programy.txt | grep ${soft[$i]} -x )" != "" ] ; then
 		    r[$i]="TRUE"
 		else
 		    r[$i]="FALSE"
