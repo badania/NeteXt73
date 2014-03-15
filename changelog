@@ -1,8 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.30
+-	dostosowanie zarządznia UPSTARTEM do trusty
 v0.7.29
--	zmiany w zarządzaniu UPSTART, sprawdznie stanu usługi nie będzie już wymagać podawania hasła
+-	zmiany w zarządzaniu UPSTARTEM, sprawdznie stanu usługi nie będzie już wymagać podawania hasła
 v0.7.28
 -	poprawki w pliku MakeFile
 v0.7.27

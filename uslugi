@@ -99,8 +99,7 @@ while [ $petla_duza = "tak" ]; do
 	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1A" ] ; then
 		  petla="tak"
 		  while [ $petla = "tak" ]; do
-			rm *.txt -f
-			initctl list | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state" > lista.txt
+			upstart_test
 			#xterm -T upstart -e bash -c "echo \"$TEXT_MENU_USLUGI38\";for SOFT in \$(ls /etc/init/*.conf | sed 's/\.conf//g' | cut -d \"/\" -f 4 | grep -v -E \"cryptdisks-udev|network-interface|network-interface-security|wait-for-state\"); do sudo status \$SOFT >> lista.txt; done"
 			
 			cat lista.txt | cut -d " " -f 1 > 1.txt
@@ -151,8 +150,7 @@ while [ $petla_duza = "tak" ]; do
 	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1C" ] ; then
 		  petla="tak"
 		  while [ $petla = "tak" ]; do
-			rm *.txt -f
-			initctl list | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state" > lista.txt
+			upstart_test
 			#xterm -T upstart -e bash -c "echo \"$TEXT_MENU_USLUGI38\";for SOFT in \$(ls /etc/init/*.conf | sed 's/\.conf//g' | cut -d \"/\" -f 4 | grep -v -E \"cryptdisks-udev|network-interface|network-interface-security|wait-for-state\"); do sudo status \$SOFT >> lista.txt; done"
 			#for SOFT in $(ls /etc/init/*.conf | sed 's/.conf//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state"); do sudo status $SOFT >> lista.txt; done 2>&1 | pobieranie2
 			# 2>&1 | pobieranie2
