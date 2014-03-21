@@ -122,9 +122,10 @@ if [ $klawisz = 0 ]; then
 		  done
 	    fi
 	    rm *.txt -f
-	#odpalamy terminal
+	#odpalamy tasksel
 	elif [ "$skrypt" = "$MENU5" ]; then
-	    /opt/NeteXt73/./xterm1
+	    cd /tmp
+	    x-terminal-emulator -e bash -c "echo -e \"$TEXT_TASKSEL1\"; sudo tasksel; echo -e \"$TEXT_INSTALACJA2\"; read ent"
 	#synchronizuj czas z internetu
 	elif [ "$skrypt" = "$MENU6" ]; then    
 	    xterm -T time -e bash -c "echo \"$TEXT_INSTALACJA1\"; sudo ntpdate tempus1.gum.gov.pl; echo -e \"$TEXT_INSTALACJA2\" ;read ent"

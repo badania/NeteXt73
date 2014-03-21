@@ -1,3 +1,13 @@
+netext73 (0.7.32) stable; urgency=low
+
+  * zmiana w tasksel i monitorach xterm na natywną konsolę
+  * zmiana w upstart, hasło podawane graficznie zamiast z xterma
+  * paypal :)
+  * zmiana w chkconfig długości nazw dla usług skanowanych
+  * zmiany w sekcji monitor, monitor baterii nie pokaże się w menu jeżeli nie mamy baterii
+
+ -- eloaders <eloaders@linux.pl>  Fri, 21 Mar 2014 13:58:01 +0100
+
 netext73 (0.7.31) stable; urgency=low
 
   * zmiana sposobu sprawdzania statusu usług upstart

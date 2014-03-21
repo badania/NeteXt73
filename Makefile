@@ -64,7 +64,6 @@ install_desktopfiles:
 install_desktopicons:
 	
 	$(INSTALL) 0755 $(GRAPHIC_BASE_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_BASE_DIR)
-	$(INSTALL) 0755 $(GRAPHIC_BASE_DIR)/xterm.desktop $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_BASE_DIR)
 	
 install_desktopfiles_kernel:
 	
@@ -115,8 +114,7 @@ install_bash_files:
 	$(INSTALL) 0755 repo $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 restart $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 skrypty $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
-	$(INSTALL) 0755 tasksel $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
+	$(INSTALL) 0755 paypal $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 update $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 uslugi $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
-	$(INSTALL) 0755 xterm1 $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 chkconfig $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)

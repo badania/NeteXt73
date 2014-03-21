@@ -39,5 +39,9 @@ source /opt/NeteXt73/procedury
 #tasksel
 
 cd /tmp
-xterm -T tasksel -e bash -c "echo -e \"$TEXT_TASKSEL1\"; sudo tasksel; echo -e \"$TEXT_INSTALACJA2\"; read ent"
-
+      if [ "$USER" = "root" ]; then
+	    userek=$(cat /tmp/userek)
+	    su $userek -c "xdg-open \"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J6MV2T7WKPEAY\""
+      else
+	    xdg-open "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J6MV2T7WKPEAY"
+      fi

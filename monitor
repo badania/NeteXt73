@@ -74,29 +74,39 @@ else
     a5=FALSE
 fi
 
-konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_MONITOR1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
-"$a1" "system monitor" \
-"$a2" "powertop" \
-"$a3" "HTOP" \
-"$a4" "saidar" \
-"$a5" "battery" \
---button="gtk-ok:0" --button="$TEXT_POWROT:1" )
-klawisz=$?
+if [ -e /sys/class/power_supply/BAT*/uevent ];then
+      konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_MONITOR1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
+      "$a1" "system monitor" \
+      "$a2" "powertop" \
+      "$a3" "HTOP" \
+      "$a4" "saidar" \
+      "$a5" "battery" \
+      --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
+      klawisz=$?
+else
+      konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_MONITOR1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
+      "$a1" "system monitor" \
+      "$a2" "powertop" \
+      "$a3" "HTOP" \
+      "$a4" "saidar" \
+      --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
+      klawisz=$?
+fi
 if [ "$klawisz" = "0" ]; then
     if [ "$klawisz" = "0" ]; then
 	echo $konfiguracja > ~/.netext73/monitor
     fi
     if [ "$(echo $konfiguracja | grep system)" != "" ]; then
-	    xterm -T 'System monitor' -e bash -c "watch -t 'uptime; echo '';echo 'Scaling governor:';cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor; echo ''; echo 'CPU Freq:'; cat /proc/cpuinfo | grep MHz; echo ''; echo 'Memory:'; free -m; echo ''; sensors'" &
+	    x-terminal-emulator -e bash -c "watch -t 'uptime; echo '';echo 'Scaling governor:';cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor; echo ''; echo 'CPU Freq:'; cat /proc/cpuinfo | grep MHz; echo ''; echo 'Memory:'; free -m; echo ''; sensors'" &
     fi
     if [ "$(echo $konfiguracja | grep powertop)" != "" ]; then
-	    xterm -T powertop -e bash -c "which powertop 1> /dev/null || echo '$TEXT_INST1'; which powertop 1> /dev/null || sudo apt-get install powertop -y; sudo powertop" &
+	    x-terminal-emulator -e bash -c "which powertop 1> /dev/null || echo '$TEXT_INST1'; which powertop 1> /dev/null || sudo apt-get install powertop -y; sudo powertop" &
     fi
     if [ "$(echo $konfiguracja | grep HTOP)" != "" ]; then
-	    xterm -T HTop -e bash -c "which htop 1> /dev/null || echo '$TEXT_INST1'; which htop 1> /dev/null || sudo apt-get install htop -y; htop" &
+	    x-terminal-emulator -e bash -c "which htop 1> /dev/null || echo '$TEXT_INST1'; which htop 1> /dev/null || sudo apt-get install htop -y; htop" &
     fi
     if [ "$(echo $konfiguracja | grep saidar)" != "" ]; then
-	    xterm -T saidar -e bash -c "which saidar 1> /dev/null || echo '$TEXT_INST1'; which saidar 1> /dev/null || sudo apt-get install saidar -y; saidar -c" &
+	    x-terminal-emulator -e bash -c "which saidar 1> /dev/null || echo '$TEXT_INST1'; which saidar 1> /dev/null || sudo apt-get install saidar -y; saidar -c" &
     fi
         if [ "$(echo $konfiguracja | grep battery)" != "" ]; then
 	    stan_baterii

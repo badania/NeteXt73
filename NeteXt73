@@ -93,6 +93,7 @@ elif [ "$klawisz" = "4" ]; then
 	    xdg-open "http://netext73.pl/2014/02/netext73-zgaszanie-bedow.html"
       fi
       cd /opt/NeteXt73 && ./NeteXt73
+
 fi
 
 if [ $USER = "root" ] && [ -e /home/root ]; then

@@ -190,7 +190,7 @@ sub DisplayInitList{
 
  #display config
   my $runColWidth="7";
-  my $serviceColWidth="22";
+  my $serviceColWidth="36";
   my $noConfigStr=":off";
   
   if($service){

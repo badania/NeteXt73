@@ -98,10 +98,12 @@ while [ $petla_duza = "tak" ]; do
 	#Upstart - automat
 	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1A" ] ; then
 		  petla="tak"
+		  pierwszy="tak"
 		  while [ $petla = "tak" ]; do
-			upstart_test
-			#xterm -T upstart -e bash -c "echo \"$TEXT_MENU_USLUGI38\";for SOFT in \$(ls /etc/init/*.conf | sed 's/\.conf//g' | cut -d \"/\" -f 4 | grep -v -E \"cryptdisks-udev|network-interface|network-interface-security|wait-for-state\"); do sudo status \$SOFT >> lista.txt; done"
-			
+			if [ "$pierwszy" = "tak" ]; then
+			    upstart_test
+			fi
+
 			cat lista.txt | cut -d " " -f 1 > 1.txt
 			sed -e 's/,//g' lista.txt | cut -d " " -f 2 | sed -e 's/start.*/wł/g' | sed -e 's/stop.*/wł/g'  > 2.txt
 			paste -d " " 1.txt 2.txt  > 4.txt
@@ -134,6 +136,8 @@ while [ $petla_duza = "tak" ]; do
 							fi
 						fi
 					done
+					echo "sudo initctl list | grep -v -E 'cryptdisks-udev|network-interface|network-interface-security|wait-for-state' > lista.txt" >> instaluj.sh 
+					pierwszy="nie"
 					instalacja2
 				fi
 			fi
@@ -151,9 +155,7 @@ while [ $petla_duza = "tak" ]; do
 		  petla="tak"
 		  while [ $petla = "tak" ]; do
 			upstart_test
-			#xterm -T upstart -e bash -c "echo \"$TEXT_MENU_USLUGI38\";for SOFT in \$(ls /etc/init/*.conf | sed 's/\.conf//g' | cut -d \"/\" -f 4 | grep -v -E \"cryptdisks-udev|network-interface|network-interface-security|wait-for-state\"); do sudo status \$SOFT >> lista.txt; done"
-			#for SOFT in $(ls /etc/init/*.conf | sed 's/.conf//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state"); do sudo status $SOFT >> lista.txt; done 2>&1 | pobieranie2
-			# 2>&1 | pobieranie2
+
 			cat lista.txt | cut -d " " -f 1 > 1.txt
 			sed -e 's/,//g' lista.txt | cut -d " " -f 2 > 2.txt
 			cut lista.txt -d " " -f 4 | sed -e "s/^$/$TEXT_BRAK/g" > 3.txt

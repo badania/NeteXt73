@@ -31,7 +31,7 @@
 #  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
 #
 #########################################################################################################################################################################
-wersja=0.7.26f
+wersja=0.7.30.03
 
 LATEST_VERSION=$(grep 'v[0-9]' /opt/NeteXt73/changelog | head -n 1 | cut -d 'v' -f 2)
 
@@ -716,79 +716,75 @@ xterm -T GPG-KEY -e bash -c "echo 'Podaj hasło aby usunąć zaznaczone klucze';
 }
 
 stan_baterii(){
-if [ -e /sys/class/power_supply/BAT*/uevent ];then
-      cat /sys/class/power_supply/BAT*/uevent > bateria.txt
-      sed -i 's/=/ /g' bateria.txt
-      sed -i '/POWER_SUPPLY_POWER_NOW/ d' bateria.txt
-      sed -i '/SERIAL_NUMBER/ d' bateria.txt
-      sed -i '/POWER_SUPPLY_CYCLE_COUNT/ d' bateria.txt
-      sed -i 's/POWER_SUPPLY_ENERGY_FULL_DESIGN/POWER_SUPPLY_ENERGY_DESIGN_FULL/g' bateria.txt
-      sed -i 's/POWER_SUPPLY_CHARGE_FULL_DESIGN/POWER_SUPPLY_CHARGE_DESIGN_FULL/g' bateria.txt
-      sed -i '/POWER_SUPPLY_PRESENT/ s/0/NO/' bateria.txt
-      sed -i '/POWER_SUPPLY_PRESENT/ s/1/YES/' bateria.txt
-      sed -i '/POWER_SUPPLY_CAPACITY/ s/$/%/' bateria.txt
-      cp bateria.txt bateria2.txt
-      v=$(grep 'POWER_SUPPLY_ENERGY_DESIGN_FULL' bateria.txt | awk '{print $2}')
-      v1=$(grep 'POWER_SUPPLY_ENERGY_FULL' bateria.txt | awk '{print $2}')
+cat /sys/class/power_supply/BAT*/uevent > bateria.txt
+sed -i 's/=/ /g' bateria.txt
+sed -i '/POWER_SUPPLY_POWER_NOW/ d' bateria.txt
+sed -i '/SERIAL_NUMBER/ d' bateria.txt
+sed -i '/POWER_SUPPLY_CYCLE_COUNT/ d' bateria.txt
+sed -i 's/POWER_SUPPLY_ENERGY_FULL_DESIGN/POWER_SUPPLY_ENERGY_DESIGN_FULL/g' bateria.txt
+sed -i 's/POWER_SUPPLY_CHARGE_FULL_DESIGN/POWER_SUPPLY_CHARGE_DESIGN_FULL/g' bateria.txt
+sed -i '/POWER_SUPPLY_PRESENT/ s/0/NO/' bateria.txt
+sed -i '/POWER_SUPPLY_PRESENT/ s/1/YES/' bateria.txt
+sed -i '/POWER_SUPPLY_CAPACITY/ s/$/%/' bateria.txt
+cp bateria.txt bateria2.txt
+v=$(grep 'POWER_SUPPLY_ENERGY_DESIGN_FULL' bateria.txt | awk '{print $2}')
+v1=$(grep 'POWER_SUPPLY_ENERGY_FULL' bateria.txt | awk '{print $2}')
 
-      va=$(grep 'POWER_SUPPLY_CHARGE_DESIGN_FULL' bateria.txt | awk '{print $2}')
-      va1=$(grep 'POWER_SUPPLY_CHARGE_FULL' bateria.txt | awk '{print $2}')
+va=$(grep 'POWER_SUPPLY_CHARGE_DESIGN_FULL' bateria.txt | awk '{print $2}')
+va1=$(grep 'POWER_SUPPLY_CHARGE_FULL' bateria.txt | awk '{print $2}')
 
-      if [ "$v" = "" ]; then
-	      echo "POWER_SUPPLY_MAX_CAPACITY $((100*$va1/$va))%" >> bateria2.txt
-	      for i in POWER_SUPPLY_CHARGE_DESIGN_FULL POWER_SUPPLY_CHARGE_FULL POWER_SUPPLY_CHARGE_NOW
-	      do
-		    v=$(grep "$i" bateria.txt | awk '{print $2}')
-		    v1=$(echo "scale=2;$v/1000" | bc -q | sed 's/$/mAh/')
-		    sed -i "/$v/ s/$v/$v1/" bateria2.txt
-	      done
-      else
-	      echo "POWER_SUPPLY_MAX_CAPACITY $((100*$v1/$v))%" >> bateria2.txt
-	      for i in POWER_SUPPLY_ENERGY_DESIGN_FULL POWER_SUPPLY_ENERGY_FULL POWER_SUPPLY_ENERGY_NOW
-	      do
-		    v=$(grep "$i" bateria.txt | awk '{print $2}')
-		    v1=$(echo "scale=2;$v/10000" | bc -q | sed 's/$/mAh/')
-		    sed -i "/$v/ s/$v/$v1/" bateria2.txt
-	      done
-
-      fi
-      for i in POWER_SUPPLY_VOLTAGE_MIN_DESIGN POWER_SUPPLY_VOLTAGE_NOW
-      do
-	    v=$(grep "$i" bateria.txt | awk '{print $2}')
-	    v1=$(echo "scale=2;$v/1000000" | bc -q | sed 's/$/V/')
-	    sed -i "/$i/ s/$v/$v1/" bateria2.txt
-      done
-      Stan_baterii="Battery status"
-      sed -i '/POWER_SUPPLY_MANUFACTURER / s/ /_/g' bateria2.txt
-      sed -i 's/POWER_SUPPLY_MANUFACTURER_/POWER_SUPPLY_MANUFACTURER /' bateria2.txt
-      if [ "$(echo $LANG | grep pl)" != "" ]; then
-	    Stan_baterii="Stan baterii"
-	    sed -i 's/POWER_SUPPLY_NAME/Nazwa_baterii/' bateria2.txt 
-	    sed -i 's/POWER_SUPPLY_STATUS/Tryb_pracy_baterii/' bateria2.txt
-	    sed -i 's/Discharging/Rozładowywanie/' bateria2.txt
-	    sed -i 's/Charging/Ładowywanie/' bateria2.txt
-	    sed -i 's/Unknown/Nieznany/' bateria2.txt
-	    sed -i 's/Full/Pełna/' bateria2.txt
-	    sed -i 's/POWER_SUPPLY_PRESENT/Zainstalowana_bateria/' bateria2.txt
-	    sed -i 's/POWER_SUPPLY_TECHNOLOGY/Rodzaj_baterii/' bateria2.txt
-	    sed -i 's/POWER_SUPPLY_VOLTAGE_MIN_DESIGN/Konstrukcyjne_napięcie_baterii/' bateria2.txt
-	    sed -i 's/POWER_SUPPLY_VOLTAGE_NOW/Aktualne_napięcie_baterii/' bateria2.txt
-	    sed -i 's/POWER_SUPPLY_.*_DESIGN_FULL/Konstrukcyjna_pojemność_baterii/' bateria2.txt
-	    sed -i 's/POWER_SUPPLY_.*_FULL/Pojemność_ostatniego_naładowania/' bateria2.txt
-	    sed -i 's/POWER_SUPPLY_.*_NOW/Aktualna_pojemność_baterii/' bateria2.txt
-	    sed -i 's/POWER_SUPPLY_CAPACITY/Stan_naładowania_baterii/' bateria2.txt
-	    sed -i 's/POWER_SUPPLY_MODEL_NAME/Model_baterii/' bateria2.txt
-	    sed -i 's/POWER_SUPPLY_MANUFACTURER/Producent_baterii/' bateria2.txt
-	    sed -i 's/POWER_SUPPLY_MAX_CAPACITY/Maksymalny_poziom_naładowania_baterii/' bateria2.txt
-	    sed -i 's/NO/NIE/' bateria2.txt
-	    sed -i 's/YES/TAK/' bateria2.txt
-      fi
-      cat bateria2.txt | tr '=' ' ' | tr '\n' ' ' > bateria.txt
-      yad-netext --center --list --title="$nazwa_skryptu" --width="395" --height="460" --window-icon="/opt/NeteXt73/ikony/battery.png" --text="<span color=\"$kolor_textu\">$Stan_baterii:</span>" --column="" --column="" $(cat bateria.txt) --button="gtk-ok:0"
-      rm *.txt -f
+if [ "$v" = "" ]; then
+	echo "POWER_SUPPLY_MAX_CAPACITY $((100*$va1/$va))%" >> bateria2.txt
+	for i in POWER_SUPPLY_CHARGE_DESIGN_FULL POWER_SUPPLY_CHARGE_FULL POWER_SUPPLY_CHARGE_NOW
+	do
+	      v=$(grep "$i" bateria.txt | awk '{print $2}')
+	      v1=$(echo "scale=2;$v/1000" | bc -q | sed 's/$/mAh/')
+	      sed -i "/$v/ s/$v/$v1/" bateria2.txt
+	done
 else
-      yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"
+	echo "POWER_SUPPLY_MAX_CAPACITY $((100*$v1/$v))%" >> bateria2.txt
+	for i in POWER_SUPPLY_ENERGY_DESIGN_FULL POWER_SUPPLY_ENERGY_FULL POWER_SUPPLY_ENERGY_NOW
+	do
+	      v=$(grep "$i" bateria.txt | awk '{print $2}')
+	      v1=$(echo "scale=2;$v/10000" | bc -q | sed 's/$/mAh/')
+	      sed -i "/$v/ s/$v/$v1/" bateria2.txt
+	done
+
 fi
+for i in POWER_SUPPLY_VOLTAGE_MIN_DESIGN POWER_SUPPLY_VOLTAGE_NOW
+do
+      v=$(grep "$i" bateria.txt | awk '{print $2}')
+      v1=$(echo "scale=2;$v/1000000" | bc -q | sed 's/$/V/')
+      sed -i "/$i/ s/$v/$v1/" bateria2.txt
+done
+Stan_baterii="Battery status"
+sed -i '/POWER_SUPPLY_MANUFACTURER / s/ /_/g' bateria2.txt
+sed -i 's/POWER_SUPPLY_MANUFACTURER_/POWER_SUPPLY_MANUFACTURER /' bateria2.txt
+if [ "$(echo $LANG | grep pl)" != "" ]; then
+      Stan_baterii="Stan baterii"
+      sed -i 's/POWER_SUPPLY_NAME/Nazwa_baterii/' bateria2.txt 
+      sed -i 's/POWER_SUPPLY_STATUS/Tryb_pracy_baterii/' bateria2.txt
+      sed -i 's/Discharging/Rozładowywanie/' bateria2.txt
+      sed -i 's/Charging/Ładowywanie/' bateria2.txt
+      sed -i 's/Unknown/Nieznany/' bateria2.txt
+      sed -i 's/Full/Pełna/' bateria2.txt
+      sed -i 's/POWER_SUPPLY_PRESENT/Zainstalowana_bateria/' bateria2.txt
+      sed -i 's/POWER_SUPPLY_TECHNOLOGY/Rodzaj_baterii/' bateria2.txt
+      sed -i 's/POWER_SUPPLY_VOLTAGE_MIN_DESIGN/Konstrukcyjne_napięcie_baterii/' bateria2.txt
+      sed -i 's/POWER_SUPPLY_VOLTAGE_NOW/Aktualne_napięcie_baterii/' bateria2.txt
+      sed -i 's/POWER_SUPPLY_.*_DESIGN_FULL/Konstrukcyjna_pojemność_baterii/' bateria2.txt
+      sed -i 's/POWER_SUPPLY_.*_FULL/Pojemność_ostatniego_naładowania/' bateria2.txt
+      sed -i 's/POWER_SUPPLY_.*_NOW/Aktualna_pojemność_baterii/' bateria2.txt
+      sed -i 's/POWER_SUPPLY_CAPACITY/Stan_naładowania_baterii/' bateria2.txt
+      sed -i 's/POWER_SUPPLY_MODEL_NAME/Model_baterii/' bateria2.txt
+      sed -i 's/POWER_SUPPLY_MANUFACTURER/Producent_baterii/' bateria2.txt
+      sed -i 's/POWER_SUPPLY_MAX_CAPACITY/Maksymalny_poziom_naładowania_baterii/' bateria2.txt
+      sed -i 's/NO/NIE/' bateria2.txt
+      sed -i 's/YES/TAK/' bateria2.txt
+fi
+cat bateria2.txt | tr '=' ' ' | tr '\n' ' ' > bateria.txt
+yad-netext --center --list --title="$nazwa_skryptu" --width="395" --height="460" --window-icon="/opt/NeteXt73/ikony/battery.png" --text="<span color=\"$kolor_textu\">$Stan_baterii:</span>" --column="" --column="" $(cat bateria.txt) --button="gtk-ok:0"
+rm *.txt -f
 
 
 }
@@ -820,12 +816,27 @@ else
 fi
 }
 
+
 upstart_test(){
 rm *.txt -f
 if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ] && [ -e /tmp/stan_netext ] && [ $(cat /tmp/stan_netext) = "root" ]; then
 	sudo initctl list | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state" > lista.txt
 else
-	xterm -T upstart -e bash -c "echo \"$TEXT_MENU_USLUGI38\";sudo initctl list | grep -v -E \"cryptdisks-udev|network-interface|network-interface-security|wait-for-state\" > lista.txt"
+	while ! yad-netext --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S initctl list | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state" > lista.txt; do
+	    if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
+		rm *.txt -f
+		exit 0
+	    fi
+	done
 fi
+} 
 
-}
+
+#upstart_test(){
+#rm *.txt -f
+#if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ] && [ -e /tmp/stan_netext ] && [ $(cat /tmp/stan_netext) = "root" ]; then
+#	sudo initctl list | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state" > lista.txt
+#else
+#	xterm -T upstart -e bash -c "echo \"$TEXT_MENU_USLUGI38\";sudo initctl list | grep -v -E \"cryptdisks-udev|network-interface|network-interface-security|wait-for-state\" > lista.txt"
+#fi
+#}
