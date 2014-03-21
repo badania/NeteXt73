@@ -152,7 +152,7 @@ GenericName[vi]=Management of services
 GenericName[zh_CN]=Management of services
 GenericName[zh_TW]=Management of services
 
-Exec=/opt/NeteXt73/./uslugi
+Exec=/opt/NeteXt73/./NeteXt73_root ./uslugi
 Icon=/opt/NeteXt73/ikony/uslugi.png
 Terminal=false
 StartupNotify=true

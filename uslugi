@@ -81,12 +81,12 @@ while [ $petla_duza = "tak" ]; do
 				do
 					export a1=$a
 					    if [ "$(grep $a1 sysv1.txt | awk '{print $3}' | grep "on")" != "" ]; then
-						echo "sudo update-rc.d -f $a1 remove" >> instaluj.sh
+						sudo update-rc.d -f $a1 remove
 					    else
-						echo "sudo update-rc.d -f $a1 defaults" >> instaluj.sh
+						sudo update-rc.d -f $a1 defaults
 					    fi
 				done
-				instalacja2
+				#instalacja2
 			  fi
 			    rm *.txt -f; rm *.sh -f
 		      fi
@@ -98,11 +98,8 @@ while [ $petla_duza = "tak" ]; do
 	#Upstart - automat
 	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1A" ] ; then
 		  petla="tak"
-		  pierwszy="tak"
 		  while [ $petla = "tak" ]; do
-			if [ "$pierwszy" = "tak" ]; then
-			    upstart_test
-			fi
+			upstart_test
 
 			cat lista.txt | cut -d " " -f 1 > 1.txt
 			sed -e 's/,//g' lista.txt | cut -d " " -f 2 | sed -e 's/start.*/wł/g' | sed -e 's/stop.*/wł/g'  > 2.txt
@@ -124,21 +121,19 @@ while [ $petla_duza = "tak" ]; do
 						export a1=$a
 						if [ "$a1" = "binfmt-support" ]; then
 							if [ -e /etc/init/$a1.conf-disabled ]; then
-								echo "sudo update-rc.d -f $a1 defaults; sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start" >> instaluj.sh
+								sudo update-rc.d -f $a1 defaults; sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start
 							elif [ -e /etc/init/$a1.conf ]; then
-								echo "sudo update-rc.d -f $a1 remove; sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled" >> instaluj.sh
+								sudo update-rc.d -f $a1 remove; sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled
 							fi
 						else
 							if [ -e /etc/init/$a1.conf-disabled ]; then
-								echo "sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start" >> instaluj.sh
+								sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start
 							elif [ -e /etc/init/$a1.conf ]; then
-								echo "sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled" >> instaluj.sh
+								sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled
 							fi
 						fi
 					done
-					echo "sudo initctl list | grep -v -E 'cryptdisks-udev|network-interface|network-interface-security|wait-for-state' > lista.txt" >> instaluj.sh 
-					pierwszy="nie"
-					instalacja2
+					sudo initctl list | grep -v -E 'cryptdisks-udev|network-interface|network-interface-security|wait-for-state' > lista.txt
 				fi
 			fi
 			if [ -z "$a" ]; then
@@ -149,7 +144,8 @@ while [ $petla_duza = "tak" ]; do
 		  rm *.txt -f; rm *.sh -f
 	#SysV - expert
 	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1B" ] ; then
-		xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI7 sysv-rc-conf\n\"; sudo sysv-rc-conf"
+		x-terminal-emulator -e bash -c "echo -e \"$TEXT_MENU_USLUGI7 sysv-rc-conf\n\"; sudo sysv-rc-conf"
+		exit 0
 	#Upstart - expert
 	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1C" ] ; then
 		  petla="tak"
@@ -180,27 +176,27 @@ while [ $petla_duza = "tak" ]; do
 					export usl1=$usl; export a1=$a
 					if [ "$usl" = "start" ]; then
 					    if [ -e /etc/init/$a1.conf ]; then
-					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI30 $a1.\n$TEXT_MENU_USLUGI31\"; sudo service $a1 $usl1; echo 'tak' > /tmp/ok.txt"
+					      sudo service $a1 $usl1; echo 'tak' > /tmp/ok.txt
 					    else
-					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI32\n$TEXT_MENU_USLUGI31\"; sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start; echo 'tak' > /tmp/ok.txt"
+					      sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start; echo 'tak' > /tmp/ok.txt
 					    fi
 					elif [ "$usl" = "stop" ]; then
 					    if [ -e /etc/init/$a1.conf ]; then
-					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI33 $a1.\n$TEXT_MENU_USLUGI31\"; sudo service $a1 $usl1; echo 'tak' > /tmp/ok.txt"
+					      sudo service $a1 $usl1; echo 'tak' > /tmp/ok.txt
 					    else
 					      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI34"
 					    fi
 					elif [ "$usl" = "enable" ]; then
 					      echo /etc/int/$a1.conf
 					    if [ -e /etc/init/$a1.conf-disabled ]; then
-					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI32\n$TEXT_MENU_USLUGI31\"; sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start; echo 'tak' > /tmp/ok.txt"
+					      sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start; echo 'tak' > /tmp/ok.txt
 					    else
 					      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI35"
 					    fi
 					    echo /etc/int/$a1.conf-disabed
 					elif [ "$usl" = "disable" ]; then
 					    if [ -e /etc/init/$a1.conf ]; then
-					      xterm -e bash -c "echo -e \"$TEXT_MENU_USLUGI36\n$TEXT_MENU_USLUGI31\"; sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled ; echo 'tak' > /tmp/ok.txt"
+					      sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled ; echo 'tak' > /tmp/ok.txt
 					    else
 					      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI37"
 					    fi

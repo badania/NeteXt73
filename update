@@ -254,7 +254,7 @@ if [ $klawisz = "0" ]; then
 		    fi
 		fi
 	elif [ "$a" = "$TEXT_UPDATE2" ]; then
-	    xterm -T update -e bash -c "echo 'sudo apt-get update && sudo apt-get dist-upgrade'; sudo apt-get update && sudo apt-get dist-upgrade -y;echo -e \"$TEXT_INSTALACJA2\"; read ent"
+	    x-terminal-emulator -e bash -c "echo 'sudo apt-get update && sudo apt-get dist-upgrade'; sudo apt-get update && sudo apt-get dist-upgrade -y;echo -e \"$TEXT_INSTALACJA2\"; read ent"
 	
 	elif [ "$a" = "$TEXT_UPDATE8" ]; then
 	    aktualizuj_calosc

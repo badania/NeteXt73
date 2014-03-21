@@ -108,7 +108,7 @@ baza=(
 	"ppa:webupd8team/java"
 	"Instalator Oracle Java (JDK)"
 	"Oracle Java (JDK) Installer"
-	"oracle-java7-installer"
+	"oracle-java8-installer"
 	
 	"ppa:kubuntu-ppa/backports"
 	"Kubuntu Backports - repozytorium nowych wersji środowiska KDE oraz najważniejszych aplikacji KDE dla Kubuntu"
@@ -216,6 +216,8 @@ backup=$(echo $backup | cut -d "|" -f 1)
 
 if [ "$klawisz" = "0" ]; then
 #########################################################################################################################################################################
+#Przywróć repozytorium z kopii zapasowej
+
     if [ "$backup" = "$a2" ]; then
 	a=$(yad-netext --center --file-selection --filename="$download/" --title="$TEXT_BACKUP2" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=550 --height=450)
 	if [ "$(echo $a | grep source.list.backu | grep tar.gz)" != "" ]; then
@@ -230,8 +232,10 @@ if [ "$klawisz" = "0" ]; then
 		dymek "$TEXT_UWAGA" "$TEXT_BACKUP6"
 	fi
 #########################################################################################################################################################################
+#Stwórz kopię zapasową repozytorium wraz z kluczami GPG
+
     elif [ "$backup" = "$a1" ]; then
-	xterm -T backup_repo -e bash -c "echo -e \"$TEXT_BACKUP7\";cd /etc; sudo tar -zcvf $download/source.list.backup_$(date +"%d-%m-%y")_$(lsb_release -irs | tr '\n' '_').tar.gz apt; echo -e \"\n\nBackup:$download/source.list.backup_$(date +'%d-%m-%y')_$(lsb_release -irs | tr '\n' '_').tar.gz\"; echo -e \"$TEXT_INSTALACJA\"; read ent"
+	x-terminal-emulator -e bash -c "echo -e \"$TEXT_BACKUP7\";cd /etc; sudo tar -zcvf $download/source.list.backup_$(date +"%d-%m-%y")_$(lsb_release -irs | tr '\n' '_').tar.gz apt; echo -e \"\n\nBackup:$download/source.list.backup_$(date +'%d-%m-%y')_$(lsb_release -irs | tr '\n' '_').tar.gz\"; echo -e \"$TEXT_INSTALACJA\"; read ent"
 #########################################################################################################################################################################
 #Pobieranie brakujących kluczy GPG
     elif [ "$backup" = "$a3" ]; then
@@ -241,7 +245,7 @@ if [ "$klawisz" = "0" ]; then
 	instalacja	
 #########################################################################################################################################################################
     elif [ "$backup" = "$a4" ]; then
-	xterm -T "$a4" -e bash -c "sudo apt-get clean; sudo mv /var/lib/apt/lists /tmp; sudo mkdir /var/lib/apt/lists; sudo apt-get update; echo -e \"$TEXT_INSTALACJA\"; read ent"
+	x-terminal-emulator -e bash -c "echo -e \"$a4\n\"; sudo apt-get clean; sudo mv /var/lib/apt/lists /tmp; sudo mkdir /var/lib/apt/lists; sudo apt-get update; echo -e \"$TEXT_INSTALACJA\"; read ent"
 #########################################################################################################################################################################
     elif [ "$backup" = "$a5" ]; then
 	rm *.txt -f
@@ -518,11 +522,11 @@ if [ "$klawisz" = "0" ]; then
 #########################################################################################################################################################################
     #dodajemy repo partnerów
     elif [ "$backup" = "$MENU1" ]; then
-	xterm -T repo -e bash -c "sudo sed -i '/partner/ s/#//' /etc/apt/sources.list;sudo apt-get update"
+	x-terminal-emulator -e bash -c "echo -e \"$MENU1\n\"; sudo sed -i '/partner/ s/#//' /etc/apt/sources.list;sudo apt-get update"
 #########################################################################################################################################################################
     #usuwamy repo partnerów
     elif [ "$backup" = "$MENU2" ]; then
-	xterm -T repo -e bash -c "sudo sed -i '/partner/ s/^/#/' /etc/apt/sources.list;sudo apt-get update"
+	x-terminal-emulator -e bash -c "echo -e \"$MENU2\n\"; sudo sed -i '/partner/ s/^/#/' /etc/apt/sources.list;sudo apt-get update"
 	      
     fi
 fi
