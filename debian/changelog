@@ -1,3 +1,9 @@
+netext73 (0.7.34) stable; urgency=low
+
+  * wymuszenie hasła dla opcji restart
+
+ -- eloaders <eloaders@linux.pl>  Thu, 27 Mar 2014 18:54:23 +0100
+
 netext73 (0.7.33) stable; urgency=low
 
   * kolejne zmiany w zarządzaniu usługami, teraz cały zbiór obsługiwnany jest jednym hasłem roota

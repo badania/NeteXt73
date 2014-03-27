@@ -31,7 +31,7 @@
 #  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
 #
 #########################################################################################################################################################################
-wersja=0.7.33
+wersja=0.7.34
 
 LATEST_VERSION=$(grep 'v[0-9]' /opt/NeteXt73/changelog | head -n 1 | cut -d 'v' -f 2)
 
@@ -687,10 +687,16 @@ echo "echo '* * * * * /etc/cron.d/freemem.sh' | sudo tee -a /var/spool/cron/cron
 }
      
 restart(){
-gnome-session-quit --reboot || yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_NIE:1" --text="$TEXT_RESTART"
+yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_RESTART"
 if [ $? = 0 ]; then
-	dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart || x-terminal-emulator -e bash -c "sudo reboot"
+while ! yad-netext --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S reboot; do
+    if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
+	rm /tmp/stan_netext
+	exit 0
+    fi
+done
 fi
+
 }
 
 adres_kerneli_premium() {

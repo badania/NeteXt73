@@ -1,8 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.34
+-	wymuszenie hasła dla opcji restart
 v0.7.33
--	kolejne zmiany w zarządzaniu usługami, teraz cały zbiór obsługiwnany jest jednym hasłem roota
+-	kolejne zmiany w zarządzaniu usługami, teraz cały zbiór obsługiwany jest jednym hasłem roota
 v0.7.32
 -	zmiana w tasksel i monitorach xterm na natywną konsolę
 -	zmiana w upstart, hasło podawane graficznie zamiast z xterma
@@ -12,9 +14,9 @@ v0.7.32
 v0.7.31
 -	zmiana sposobu sprawdzania statusu usług upstart
 v0.7.30
--	dostosowanie zarządznia UPSTARTEM do trusty
+-	dostosowanie zarządzania UPSTARTEM do trusty
 v0.7.29
--	zmiany w zarządzaniu UPSTARTEM, sprawdznie stanu usługi nie będzie już wymagać podawania hasła
+-	zmiany w zarządzaniu UPSTARTEM, sprawdzanie stanu usługi nie będzie już wymagać podawania hasła
 v0.7.28
 -	poprawki w pliku MakeFile
 v0.7.27
@@ -53,7 +55,7 @@ v0.7.12
 v0.7.11
 -	poprawka w zależnościach pm-utils
 v0.7.10
--	dodanie zależnosci pm-utils, wsparcie APM dla Ubuntu Gnome
+-	dodanie zależności pm-utils, wsparcie APM dla Ubuntu Gnome
 -	zmiana w configu programu, część opcji nie będzie wymagać restartu programu, root-mode wymaga ponownego uruchomienia programu, opcja jest zapamiętywana
 v0.7.09
 -	zmiana modułu sysv, przepisanie kodu z chkconfig na sysv-rc-conf, zmniejszenie zależności programu
@@ -164,7 +166,7 @@ v0.6.78-79
 v0.6.76-77
 -	dodana możliwość usuwania zbędnych kluczy GPG w sekcji repozytorium
 v0.6.75
--	zmiana w sekcji: radeon,nv0.idia,kernel - pliki po instalacji będą przechowywane w /v0.ar/cache/apt/archiv0.es
+-	zmiana w sekcji: radeon,nvidia,kernel - pliki po instalacji będą przechowywane w /var/cache/apt/archives
 v0.6.74
 -	zmiany w sekcji kontakt, skrócenie czasu uruchamiania aplikacji dzięki wprowadzaniu dostępnych aktualizacji w tle oraz drobne zmiany kosmetyczne
 v0.6.73
