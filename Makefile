@@ -32,6 +32,7 @@ install: create_directories \
 	 install_desktopfiles \
 	 install_desktopicons \
 	 install_desktopfiles_kernel \
+	 install_desktopfiles_kernel_premium \
 	 install_contacts \
 	 install_menu \
 	 install_translations_files \
@@ -52,6 +53,7 @@ create_directories:
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(DESKTOPFILES_DIR)/
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_BASE_DIR)/
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_KERNEL_DIR)/
+	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_KERNEL_PREMIUM_DIR)/
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(CONTACTS_DIR)/
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(TRANSLATIONS_DIR)/
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(MENU_DIR)/
@@ -70,7 +72,11 @@ install_desktopicons:
 install_desktopfiles_kernel:
 	
 	$(INSTALL) 0755 $(GRAPHIC_KERNEL_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_KERNEL_DIR)
-	
+
+install_desktopfiles_kernel_premium:
+
+        $(INSTALL) 0755 $(GRAPHIC_KERNEL_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_KERNEL_PREMIUM_DIR)
+
 install_contacts:
 	
 	$(INSTALL) 0755 $(CONTACTS_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(CONTACTS_DIR)
