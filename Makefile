@@ -21,7 +21,7 @@ MENU_DIR = menu
 TRANSLATIONS_DIR = tlumaczenia
 make: nothing_to_make
 nothing_to_make:
- 
+	
 	@echo -e '\033[1;32mNie będę budował NeteXt73 :)...\033[0m'
 make_yad_netext:
 	
@@ -75,7 +75,7 @@ install_desktopfiles_kernel:
 
 install_desktopfiles_kernel_premium:
 
-        $(INSTALL) 0755 $(GRAPHIC_KERNEL_PREMIUM_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_KERNEL_PREMIUM_DIR)
+	$(INSTALL) 0755 $(GRAPHIC_KERNEL_PREMIUM_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_KERNEL_PREMIUM_DIR)
 
 install_contacts:
 	
@@ -99,7 +99,7 @@ install_launcher:
 	$(INSTALL) 0755 $(MENU_DIR)/netext73 $(DESTDIR)$(PREFIX)$(BINDIR)
 	
 install_bash_files:
- 
+	
 	$(INSTALL) 0755 LICENSE $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 NeteXt73 $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 NeteXt73_root $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)

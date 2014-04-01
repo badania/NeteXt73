@@ -1,3 +1,9 @@
+netext73 (0.7.36) stable; urgency=medium
+
+  * dostosowanie Makefile do zmian
+
+ -- eloaders <eloaders@linux.pl>  Tue, 01 Apr 2014 13:11:11 +0200
+
 netext73 (0.7.35) stable; urgency=medium
 
   * duży zestaw poprawek
