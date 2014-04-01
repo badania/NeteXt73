@@ -76,7 +76,7 @@ fi
 
 aktualizacja &
 
-yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click
+yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="$TEXT_REBOOT:5" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click
 klawisz=$?
 
 if [ "$klawisz" = "2" ]; then
@@ -93,7 +93,8 @@ elif [ "$klawisz" = "4" ]; then
 	    xdg-open "http://netext73.pl/2014/02/netext73-zgaszanie-bedow.html"
       fi
       cd /opt/NeteXt73 && ./NeteXt73
-
+elif [ "$klawisz" = "5" ]; then
+      cd /opt/NeteXt73 && ./restart
 fi
 
 if [ $USER = "root" ] && [ -e /home/root ]; then

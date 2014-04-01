@@ -12,7 +12,9 @@ Vcs-Git: https://github.com/NetBit73/NeteXt73.git
 Package: netext73
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
-  xterm, 
+  xterm,
+  htop, 
+  saidar, 
   dkms, 
   ppa-purge, 
   tasksel, 

@@ -215,6 +215,7 @@ export TEXT_BUG="Zgłoś błąd"
 export TEXT_CHANGELOG="Lista zmian"
 export TEXT_PASSWD="Złe hasło, czy chcesz przerwać uruchamianie programu NeteXt73 w trybie root?"
 export TEXT_PASSWD1="Proszę wprowadzić hasło"
+export TEXT_REBOOT="Restart komputera"
 
 #########################################################################################################################################################################
 #tlumaczenia_nvidia
@@ -348,6 +349,8 @@ export MENU7="Wyłącz IPv6"
 export MENU8="Włącz IPv6"
 export MENU9="Backdoor SSHD test"
 export MENU10="Napraw GTK dla Chrome" ##
+export MENU11="Poprawka USB Modem Udev"
+export MENU12="Dodaj lub usuń konto gościa"
 export TEXT_ZOMBIE1="Lista procesów zombie"
 export TEXT_ZOMBIE2="Brak procesów zombie."
 export TEXT_CONFIG1="Brak pozostałości po plikach konfiguracyjnych do usunięcia."

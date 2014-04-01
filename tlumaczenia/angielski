@@ -217,6 +217,7 @@ export TEXT_BUG="Bug report"
 export TEXT_CHANGELOG="Changelog"
 export TEXT_PASSWD="Wrong password, would you like to cancel the NeteXt73?"
 export TEXT_PASSWD1="Please enter a password"
+export TEXT_REBOOT="Reboot system"
 
 #########################################################################################################################################################################
 #tlumaczenia_nvidia
@@ -355,6 +356,8 @@ export MENU7="Disable IPv6"
 export MENU8="Enable IPv6"
 export MENU9="Backdoor SSHD test"
 export MENU10="Google-Chrome GTK theme FIX"
+export MENU11="USB Modem Udev Fix"
+export MENU12="Enable or disable guest session"
 export TEXT_ZOMBIE1="Zombie processes"
 export TEXT_ZOMBIE2="There aren't any zombie processes."
 export TEXT_CONFIG1="Not found unnecessary configuration files."

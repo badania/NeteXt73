@@ -1,6 +1,11 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.35
+-	przeniesienie restartu do dolnej belki
+-	przeniesienie dodawania i usuwania konta gościa do skryptów
+-	podział kerneli na wersje standard i premium 
+-	uzupełnienie zależności
 v0.7.34
 -	wymuszenie hasła dla opcji restart
 v0.7.33

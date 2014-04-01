@@ -64,9 +64,14 @@ else
     elif [ "$1" = "atom" ]; then
 	    kern="Atom - Intel Atom 64bit"
     fi
+    if [ "$1" = "premium" ]; then
+	pliki="/opt/NeteXt73/kernel-premium"
+    else
+	pliki="/opt/NeteXt73/kernel"
+    fi
     if [ "$kern" = "" ]; then
 	    yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/linux.png" \
-	    --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="260" --read-dir="/opt/NeteXt73/kernel" --width="560" --height="470" \
+	    --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="260" --read-dir="$pliki" --width="560" --height="470" \
 	    --title="$nazwa_skryptu " --button="$TEXT_MENU_INSTALATOR3:2" --button="$TEXT_MENU_INSTALATOR4:3" --button="$TEXT_MENU_INSTALATOR5:4" --button="$TEXT_POWROT:1" --single-click
 	    klawisz=$?
 	   

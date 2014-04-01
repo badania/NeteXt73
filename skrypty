@@ -85,11 +85,11 @@ echo "exit"
 
 
 cd /tmp
-MENU11="USB Modem Udev FIX"
+
 if [ "$(cat /etc/sysctl.conf | grep 'net.ipv6.conf.all.disable_ipv6 = 1')" = "" ]; then
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU9!$MENU10!$MENU11"
+	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU9!$MENU10!$MENU11!$MENU12"
     else
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU9!$MENU10!$MENU11"
+	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU9!$MENU10!$MENU11!$MENU12"
 fi
 
 skrypt=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/skrypty.png" --form --field="$TEXT_SKRYPT1:CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
@@ -154,6 +154,8 @@ if [ $klawisz = 0 ]; then
 	    naglowek > instaluj.sh 
 	    echo "sudo mv /lib/udev/rules.d/40-usb_modeswitch.rules /lib/udev/rules.d/61-usb_modeswitch.rules" >> instaluj.sh
 	    instalacja3
+	elif [ "$skrypt" = "$MENU12" ]; then    
+	    /opt/NeteXt73/./gosc
 	fi
 	
 fi

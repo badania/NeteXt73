@@ -48,7 +48,7 @@ while [ $petla_duza = "tak" ]; do
 	stan_apm
 	if [ "$stan_apm" = "-" ]; then
 		#instalacja APM
-		yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_APM1"
+		yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="TEXT_TAK:0" --button="$TEXT_POWROT:1" --text="$TEXT_APM1"
 		if [ $? = 0 ]; then
 		      naglowek > instaluj.sh
 		      apm_inst >> instaluj.sh

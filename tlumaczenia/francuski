@@ -215,6 +215,7 @@ export TEXT_BUG="Signale une erreur"
 export TEXT_CHANGELOG="Liste des modifications"
 export TEXT_PASSWD="Le mot de passe n'est pas correct. Arrêter le logiciel dans le mode root?"
 export TEXT_PASSWD1="Entrer le mot de passe"
+export TEXT_REBOOT="Redémarre le système"
 
 #########################################################################################################################################################################
 #tlumaczenia_nvidia
@@ -348,6 +349,9 @@ export MENU6="Synchronise l'heure d'Internet."
 export MENU7="Activer le protocole IPv6" 
 export MENU8="Désactiver le protocole IPv6"
 export MENU9="Backdoor SSHD test"
+export MENU10="Google-Chrome GTK theme FIX"
+export MENU11="USB Modem Udev Fix"
+export MENU12="Activer ou désactiver la session d'invité"
 export TEXT_ZOMBIE1="La liste des processus zombie"
 export TEXT_ZOMBIE2="Il n'y a pas de processus zombie."
 export TEXT_CONFIG1="Il n'y a pas des fichiers de configuration á supprimer."
