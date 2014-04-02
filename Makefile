@@ -126,3 +126,4 @@ install_bash_files:
 	$(INSTALL) 0755 update $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 uslugi $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(INSTALL) 0755 first $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
+	$(INSTALL) 0755 chkconfig $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
