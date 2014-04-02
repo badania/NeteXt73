@@ -152,7 +152,7 @@ GenericName[vi]=Graphical installer \nAMD GPU Drivers
 GenericName[zh_CN]=Graphical installer \nAMD GPU Drivers
 GenericName[zh_TW]=Graphical installer \nAMD GPU Drivers
 
-Exec=/opt/NeteXt73/./radeon
+Exec=/opt/NeteXt73/./grafiki radeon
 Icon=/opt/NeteXt73/ikony/radeon.png
 Terminal=false
 StartupNotify=true

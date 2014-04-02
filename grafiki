@@ -40,12 +40,11 @@ source /opt/NeteXt73/procedury
 cd /tmp
 
 rm *.txt -f; rm *.sh -f; rm *.html -f
-#if [ "$(lspci | grep VGA | awk '{print tolower($0)}' | grep nvidia)" = "" ]; then
-#    dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI3"
-#else
-    if  [ "$bit2" = "i386" ]; then
-	    dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI1"
-    elif [ "$bit2" = "amd64" ]; then
+
+if  [ "$bit2" = "i386" ]; then
+	dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI1"
+else
+	if [ "$1" = "nvidia" ]; then
 	    wget $adres_sterownikow/index.html  2>&1 | pobieranie2 
 	    if [ -e index.html ]; then
 		cat index.html | grep "href=" ./index.html   | cut -d '"' -f 2 | grep 'nvidia-' | grep $bit2 | sed 's/.deb//' > 1a.txt
@@ -76,8 +75,47 @@ rm *.txt -f; rm *.sh -f; rm *.html -f
 		      petla_duza="nie"
 		      rm ./index.html *txt -f
 		fi
-	    done
+		done
 	    fi
-    fi
-#fi
-
+	elif [ "$1" = "radeon" ]; then
+		if [ "$(lspci | grep VGA | awk '{print tolower($0)}' | grep radeon)" = "" ]; then
+		  dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI3"
+		else
+		    wget $adres_sterownikow/index.html  2>&1 | pobieranie2 
+		    if [ -e index.html ]; then
+			cat index.html | grep "href=" ./index.html   | cut -d '"' -f 2 | grep 'fglrx_' | grep $bit2 | sed 's/.deb//' >> 1a.txt
+			cat 1a.txt | sort -r > 2a.txt
+			lista=$(cat 2a.txt | tr '\n' '!' | sed -e '$s/!$//g' )
+			rm *.txt -f
+			petla_duza="tak"
+			while [ $petla_duza = "tak" ]; do
+			ster=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/radeon.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Radeon</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+				klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
+				if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
+				  rm *.deb -f
+				  wget $adres_sterownikow/1.txt 2>&1 | pobieranie 
+				  
+					  a=$ster.deb; a1=$a
+					  dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $adres_sterownikow/$a 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
+					  wget $adres_sterownikow/$a 2>&1 | pobieranie 
+						a=$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")
+						dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $adres_sterownikow/$a 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
+						wget $adres_sterownikow/$a 2>&1 | pobieranie 
+					  if [ -e $a* ] && [ -e $a1* ] && [ "$(grep $(md5sum $a) 1.txt)" != "" ] && [ "$(grep $(md5sum $a1) 1.txt)" != "" ]; then
+						  echo "nie" > /tmp/ok.txt
+						  zamknij_program
+						  naglowek > instaluj.sh
+						  radeon >> instaluj.sh
+						  instalacja
+					  else
+						  yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
+					  fi
+				elif [ "$klawisz" = "1" ]; then
+				      petla_duza="nie"
+				      rm ./index.html *txt -f
+				fi
+				done
+		    fi
+		fi
+	fi
+fi

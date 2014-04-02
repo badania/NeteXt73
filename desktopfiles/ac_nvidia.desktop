@@ -152,7 +152,7 @@ GenericName[vi]=Graphical installer \nNVIDIA GPU Drivers
 GenericName[zh_CN]=Graphical installer \nNVIDIA GPU Drivers
 GenericName[zh_TW]=Graphical installer \nNVIDIA GPU Drivers
 
-Exec=/opt/NeteXt73/./nvidia
+Exec=/opt/NeteXt73/./grafiki nvidia
 Icon=/opt/NeteXt73/ikony/nvidia.png
 Terminal=false
 StartupNotify=true
