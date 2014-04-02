@@ -1,3 +1,9 @@
+netext73 (0.7.37) stable; urgency=medium
+
+  * poprawki kodu, usunięcie dublujących się skryptów
+
+ -- eloaders <eloaders@linux.pl>  Wed, 02 Apr 2014 20:23:31 +0200
+
 netext73 (0.7.36) stable; urgency=medium
 
   * dostosowanie Makefile do zmian

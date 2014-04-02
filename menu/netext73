@@ -1,5 +1,4 @@
 #/bin/bash
-NETEXT_DIR=/opt/NeteXt73
-cd $NETEXT_DIR 
+cd /opt/NeteXt73 
 ./NeteXt73
 

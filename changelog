@@ -1,6 +1,11 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.37
+-	poprawki w tłumaczeniach
+-	zmniejszenie ilości skryptów - usunięcie zdublowanego kodu
+-	drobne poprawki kodu
+-	zmiana xterm na natywny terminal w zarządzaniu czyszczeniem pamięci
 v0.7.36
 -	zmiany w pliku Makefile
 v0.7.35

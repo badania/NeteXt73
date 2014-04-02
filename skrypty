@@ -155,7 +155,22 @@ if [ $klawisz = 0 ]; then
 	    echo "sudo mv /lib/udev/rules.d/40-usb_modeswitch.rules /lib/udev/rules.d/61-usb_modeswitch.rules" >> instaluj.sh
 	    instalacja3
 	elif [ "$skrypt" = "$MENU12" ]; then    
-	    /opt/NeteXt73/./gosc
+	      if [ "$(grep 'allow-guest=false' /etc/lightdm/lightdm.conf)" = "" ]; then
+		      while ! yad-netext --center --title="$nazwa_skryptu1" --entry --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --hide-text --text="$TEXT_GOSC4" --button="gtk-ok:0" | sudo -S /usr/lib/lightdm/lightdm-set-defaults -l false; do
+			  if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png"  --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
+			      exit 0
+			  fi
+		      done
+		      restart
+	      else
+		      while ! yad-netext --center --title="$nazwa_skryptu1" --entry --hide-text --text="$TEXT_GOSC5" | sudo -S /usr/lib/lightdm/lightdm-set-defaults -l true; do
+			  if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png"  --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
+			      exit 0
+			  fi
+		      done
+		      restart
+
+	      fi
 	fi
 	
 fi

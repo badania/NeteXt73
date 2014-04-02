@@ -46,6 +46,20 @@ rm -f /tmp/NeteXt73*.tar.gz
 rm -rf /tmp/NeteXt73
 }
 
+if [ "$1" = "first" ]; then
+      usun
+      /opt/NeteXt73/./microcode
+      /opt/NeteXt73/./grub
+      /opt/NeteXt73/./apm
+      if [ -e ~/.netext73/kernel_premium ]; then
+	/opt/NeteXt73/./kernele premium
+      else
+	/opt/NeteXt73/./kernele
+      fi
+      usun
+      exit 0
+fi
+
 
 aktualizuj_calosc(){
 konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_UPDATE1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \

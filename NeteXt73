@@ -80,10 +80,10 @@ yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon
 klawisz=$?
 
 if [ "$klawisz" = "2" ]; then
-      yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/LICENSE --width=600 --height=600 --button="gtk-ok:1" 
+      yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=/opt/NeteXt73/LICENSE --width=600 --height=600 --button="gtk-ok:1" 
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "3" ]; then
-      yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1"
+      yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1"
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "4" ]; then
       if [ "$USER" = "root" ]; then
@@ -94,7 +94,7 @@ elif [ "$klawisz" = "4" ]; then
       fi
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "5" ]; then
-      cd /opt/NeteXt73 && ./restart
+      restart
 fi
 
 if [ $USER = "root" ] && [ -e /home/root ]; then

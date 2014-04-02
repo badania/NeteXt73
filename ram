@@ -48,6 +48,6 @@ cd /tmp
 #      instalacja
 #      rm instaluj.sh-f
 #elif [ "$klawisz" = "2" ]; then
-      xterm -T memory -e bash -c "echo \"$TEXT_RAM6\"; echo \"$TEXT_RAM7\"; free -m; sync; sudo bash -c 'echo 3 > /proc/sys/vm/drop_caches'; echo \"$TEXT_RAM8\"; free -m; echo -e \"$TEXT_INSTALACJA2\"; read ent"
+      x-terminal-emulator -e bash -c "echo -e \"$TEXT_RAM6\n\"; echo \"$TEXT_RAM7\"; free -m; sync; sudo bash -c 'echo 3 > /proc/sys/vm/drop_caches'; echo -e \"\n$TEXT_RAM8\"; free -m; echo -e \"$TEXT_INSTALACJA2\"; read ent"
 
 #fi
