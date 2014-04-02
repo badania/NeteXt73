@@ -818,7 +818,7 @@ dymek(){
 if [ "$(which notify-send)" != "" ];then
     notify-send "$1" "$2" "$3" "$4"
 else
-    yad-netext --center --info --title="$3"  --window-icon="$2" --text="$4" --button="gtk-ok:0"
+    yad-netext --center --info --title="$3"  --window-icon="$2" --image="$2" --text="$4" --button="gtk-ok:0"
 fi
 }
 
