@@ -91,7 +91,7 @@ fi
 
 
 konfiguracja=$(yad-netext --center --title="$TEXT_CONFIG1" --width="155" --height="320" --window-icon="/opt/NeteXt73/ikony/config.png" --text="<span color=\"$kolor_textu\">$TEXT_CONFIG2</span>" --form \
---field="$TEXT_CONFIG7:CB" --field="$TEXT_CONFIG4" --field="$TEXT_CONFIG5" --field="$TEXT_CONFIG6:CB" --field="$TEXT_CONFIG9:RO" --field="$TEXT_CONFIG10:RO" --field="$TEXT_CONFIG11:CHK" --field="$TEXT_CONFIG12:CHK" --field="HTTPS On/Off:CHK" --field="NeteXt'73 -root mode:CHK" "$TEXT_NIE!$TEXT_TAK" "$adres_premium" "$adres_testing" "$lang1" "$apm_stat" "$ik" "$automatyczna_instalacja" "$archiwum_deb" "$https_link" "$root_mode" \
+--field="$TEXT_CONFIG7:CB" --field="$TEXT_CONFIG4" --field="$TEXT_CONFIG6:CB" --field="$TEXT_CONFIG9:RO" --field="$TEXT_CONFIG10:RO" --field="$TEXT_CONFIG11:CHK" --field="$TEXT_CONFIG12:CHK" --field="HTTPS On/Off:CHK" --field="NeteXt'73 -root mode:CHK" "$TEXT_NIE!$TEXT_TAK" "$adres_premium" "$lang1" "$apm_stat" "$ik" "$automatyczna_instalacja" "$archiwum_deb" "$https_link" "$root_mode" \
 --button="$TEXT_CONFIG3:2" --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
 klawisz=$?
 if [ $klawisz = 2 ]; then
@@ -109,11 +109,10 @@ if [ $klawisz = 0 ]; then
 		yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_CONFIG8" --timeout=5
 	else
 		echo $konfiguracja | grep 'http' | cut -d "|" -f 2 > ~/.netext73/kernel_premium
-		echo $konfiguracja | grep 'http' | cut -d "|" -f 3 > ~/.netext73/netext_testing
-		echo $konfiguracja | cut -d "|" -f 4 > ~/.netext73/jezyk
-		echo $konfiguracja | cut -d "|" -f 7 > ~/.netext73/kernel_automat
-		echo $konfiguracja | cut -d "|" -f 8 > ~/.netext73/archiwum_deb
-		echo $konfiguracja | cut -d "|" -f 9 > ~/.netext73/https_link
+		echo $konfiguracja | cut -d "|" -f 3 > ~/.netext73/jezyk
+		echo $konfiguracja | cut -d "|" -f 6 > ~/.netext73/kernel_automat
+		echo $konfiguracja | cut -d "|" -f 7 > ~/.netext73/archiwum_deb
+		echo $konfiguracja | cut -d "|" -f 8 > ~/.netext73/https_link
 		echo $konfiguracja | cut -d "|" -f 10 > ~/.netext73/root_mode
 		if [ "$root_mode" != "$(cat ~/.netext73/root_mode)" ]; then
 		    killall -9 yad-netext
