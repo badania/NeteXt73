@@ -42,23 +42,7 @@ cd /tmp
 usun(){
 rm *.html* -f
 rm -f /tmp/*.txt 
-rm -f /tmp/NeteXt73*.tar.gz
-rm -rf /tmp/NeteXt73
 }
-
-if [ "$1" = "first" ]; then
-      usun
-      /opt/NeteXt73/./microcode
-      /opt/NeteXt73/./grub
-      /opt/NeteXt73/./apm
-      if [ -e ~/.netext73/kernel_premium ]; then
-	/opt/NeteXt73/./kernele premium
-      else
-	/opt/NeteXt73/./kernele
-      fi
-      usun
-      exit 0
-fi
 
 
 aktualizuj_calosc(){
@@ -88,10 +72,19 @@ konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.pn
 			  fi
 		  fi
 }
-
-
-
 usun
+
+if [ "$1" = "first" ]; then
+	a1="TRUE"
+	a2="TRUE"
+	a3="TRUE"
+	a4="TRUE"
+	aktualizuj_calosc
+	usun
+	exit 0
+fi
+
+
 
 menu=""
 ilosc_aktualizacji=0
@@ -189,19 +182,6 @@ if [ "$ilosc_aktualizacji" -gt "1" ]; then
       menu="$TEXT_UPDATE8"
 fi
 
-if [ -e ~/.netext73/netext_testing ] && [ "$(cat ~/.netext73/netext_testing | grep 'http')" != "" ]; then
-a=$(yad-netext --center --title="$nazwa_skryptu" --width=610 --window-icon="/opt/NeteXt73/ikony/netext.png" --form \
---field="NeteXt73 v$twoj_netext:RO" "$netext" \
---field="Firmware/microcode v$twoj_firmware:RO" "$firm" \
---field="Kernel $twoj_kernel:RO" "$kern" \
---field="APM $twoj_apm:RO" "$apm" \
---field="$TEXT_STABLE:RO" "$stable" \
---field="$TEXT_UPDATE1:CB" "$menu" \
---button="Changelog $nr:3" \
---button="$TEXT_UPDATE7:2" \
---button="gtk-ok:0" --button="$TEXT_POWROT:1")
-klawisz=$?; a=$(echo $a | cut -d "|" -f 6)
-else
 a=$(yad-netext --center --title="$nazwa_skryptu" --width=610 --window-icon="/opt/NeteXt73/ikony/netext.png" --form \
 --field="Firmware/microcode v$twoj_firmware:RO" "$firm" \
 --field="Kernel $twoj_kernel:RO" "$kern" \
@@ -212,7 +192,7 @@ a=$(yad-netext --center --title="$nazwa_skryptu" --width=610 --window-icon="/opt
 --button="$TEXT_UPDATE7:2" \
 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 klawisz=$?; a=$(echo $a | cut -d "|" -f 5)
-fi
+
 if [ $klawisz = "0" ]; then 
 	if [ "$a" = "$TEXT_UPDATE1 APM" ]; then 
 	    usun

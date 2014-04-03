@@ -32,5 +32,5 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
   gcc  
 Replaces: netext73
 Recommends:
-Description: Instalator kerneli e X t 7 3
-  Instalator kerneli e X t 7 3
+Description: NeteXt'73 - optymalizator systemu
+  NeteXt'73 to rozbudowane narzedzie do wprowadzania optymalizacji systemow opartych o Ubuntu. Modyfikacje maja na celu podwyzszenie responsywnosci systemu przy jednoczesnym obnizeniu zuzycia energii.

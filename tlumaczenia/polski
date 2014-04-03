@@ -237,7 +237,7 @@ export TEXT_TASKSEL1="Za chwilę będziesz mógł zainstalować usługi serwerow
 
 #########################################################################################################################################################################
 #tlumaczenia_update
-export TEXT_UPDATE1="Aktualizuj"
+export TEXT_UPDATE1="Aktualizuj/Instaluj"
 export TEXT_UPDATE1a="Co chcesz zaktualizować?"
 export TEXT_UPDATE2="Aktualizuj system"
 export TEXT_UPDATE3="Aktualizuj NeteXt'73"
