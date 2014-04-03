@@ -126,7 +126,7 @@ else
       a2="TRUE"
       ((ilosc_aktualizacji++))
 fi
-
+#microkode
 if [ "$(cat microcode.txt)" = "" ]; then
       firm=$TEXT_BRAK_DANYCH
       a1="TRUE"
@@ -141,6 +141,7 @@ else
 	  ((ilosc_aktualizacji++))
       fi
 fi
+#APM
 if [ "$(cat apm.txt)" = "" ]; then
       apm=$TEXT_BRAK_DANYCH
       a3="TRUE"
@@ -155,6 +156,7 @@ else
 	  ((ilosc_aktualizacji++))
       fi
 fi
+#kernele stable
 if  [ "$(cat stable.txt)" = "" ]; then
       stable=$TEXT_BRAK_DANYCH
       nr=""
@@ -162,6 +164,7 @@ else
       stable=$(cat stable.txt | grep tar.xz | head -n 1 | cut -d '-' -f 2 | sed 's/.tar.*//')
       nr=$stable
 fi
+#kernel zainstalowany
 if [ "$(cat kernel.txt)" = "" ]; then
       kern=$TEXT_BRAK_DANYCH
       a4="TRUE"

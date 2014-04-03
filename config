@@ -99,7 +99,6 @@ if [ $klawisz = 2 ]; then
 	klawisz=$?
 	if [ "$klawisz" = "0" ];then
 	      echo $kolor > ~/.netext73/kolor_textu
-	      #killall -9 yad-netext && cd /opt/NeteXt73 && ./NeteXt73
 	fi
 fi
 
@@ -116,8 +115,6 @@ if [ $klawisz = 0 ]; then
 		echo $konfiguracja | cut -d "|" -f 10 > ~/.netext73/root_mode
 		if [ "$root_mode" != "$(cat ~/.netext73/root_mode)" ]; then
 		    killall -9 yad-netext
-		fi
-		#killall -9 yad-netext && 
-		#cd /opt/NeteXt73 && ./NeteXt73	      
+		fi    
 	fi
 fi

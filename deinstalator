@@ -42,16 +42,7 @@ cd /tmp
 rm /tmp/*.txt -f; rm /tmp/*.sh -f
 usun=$(yad-netext --center --title="$nazwa_skryptu" --width=420 --window-icon="/opt/NeteXt73/ikony/delete.png" --text="<span color=\"$kolor_textu\">$TEXT_DEINSTALATOR</span>" --form --field="$TEXT_DEINSTALATOR1:CB"  "$TEXT_MENU_DEINSTALATOR1!$TEXT_MENU_DEINSTALATOR2!$TEXT_MENU_DEINSTALATOR4!$TEXT_MENU_DEINSTALATOR5!$TEXT_MENU_DEINSTALATOR6!$TEXT_MENU_DEINSTALATOR7" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
 klawisz=$?; usun=$(echo $usun | cut -d "|" -f 1)
-#Usuń broadcom
-#if [ "$usun" = "$TEXT_MENU_DEINSTALATOR3" ] ; then
-#	yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_DEINSTALATOR2"
-#	if [ $? = 0 ]; then
-#		dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_DEINSTALATOR3"
-#		naglowek > instaluj.sh
-#		broadcom_usun >> instaluj.sh
-#		instalacja
-#	fi
-	
+
 if [ "$usun" = "$TEXT_MENU_DEINSTALATOR4" ]; then
 	naglowek > instaluj.sh
 	yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_DEINSTALATOR10"

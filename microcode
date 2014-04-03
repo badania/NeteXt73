@@ -57,8 +57,6 @@ if [ -e index.html ]; then
 		    stan_microcode="-"
 	      fi
 	fi
-
-
 	#sprawdzenie czy jest nowsza wersja
 	if [ "$stan_microcode" != "-" ]; then
 	      if [ "$wersja_firmware" != "$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1)" ]; then
@@ -70,14 +68,9 @@ if [ -e index.html ]; then
 		fi
 	      fi
 	fi
-
-
-
 	naglowek > instaluj.sh
 	if [ "$stan_microcode" != "-" ] && [ "$wersja_firmware" = "$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1)" ]; then
 		dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_MICROCODE1"
-		#yad-netext --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_MICROCODE1"
-		
 	elif [ "$stan_microcode" = "-" ]; then
 		yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_MICROCODE2"
 		if [ $? = 0 ]; then

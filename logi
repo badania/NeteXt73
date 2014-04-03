@@ -49,7 +49,6 @@ else
     losowa=1; echo $losowa > losowa
 fi
 
-#losowa=$(grep -m1 -ao '[0-9]' /dev/urandom | sed s/0/10/ | head -n1)
 #informacje o systemie
 if [ "$(dmesg | grep gcc)" != "" ]; then
     echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI0</b></span>\n$(dmesg | grep gcc)" > system$losowa.log	

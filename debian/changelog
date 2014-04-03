@@ -1,3 +1,9 @@
+netext73 (0.7.38) stable; urgency=medium
+
+  * czyszczenie kodu
+
+ -- eloaders <eloaders@linux.pl>  Thu, 03 Apr 2014 15:38:08 +0200
+
 netext73 (0.7.37) stable; urgency=medium
 
   * poprawki kodu, usunięcie dublujących się skryptów
