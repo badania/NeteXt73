@@ -486,6 +486,7 @@ fi
 usun_kernel(){
 echo "echo \"$TEXT_KERNEL1 $(cat /tmp/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ' )\""
 echo "sudo apt-get purge $(cat /tmp/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ')"
+echo "sudo update-grub"
 echo "if [ \"$(dpkg -l | grep '^rc' | awk '{print $2}' | head -n1)\" != \"\" ]; then sudo dpkg -l | grep '^rc' | awk '{print \$2}' | xargs sudo dpkg --purge; fi"
 echo "rm /tmp/*.txt -f; rm /tmp/*.sh -f"
 }
