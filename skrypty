@@ -59,13 +59,13 @@ backdoor(){
 
 echo "for pid in \`/bin/pidof sshd\`; do"
 echo "        t=\$(/bin/mktemp)"
-echo "        /usr/bin/gdb </dev/null --nx --batch \ "
+echo "        /usr/bin/gdb </dev/null --nx --batch \ "instalacja_terminal
 echo "          -ex \"set pagination off\" -ex \"set height 0 \" -ex \"set width 0\" \ "
 echo "          -ex \"attach \$pid\" -ex \"gcore \$t\" -ex detach -ex quit"
 echo "        i=0"
 echo "        for str in hbt= key= dhost= sp= sk= dip=; do"
 echo "                /usr/bin/strings \$t | /bin/grep \"\${str}[[:digit:]]\""
-echo "                if [ \$? -eq 0 ]; then"
+echo "                if [ \$? -eq 0 ]; then"instalacja_terminal
 echo "                        i=\$((\$i + 1))"
 echo "                fi"
 echo "        done"
@@ -145,15 +145,18 @@ if [ $klawisz = 0 ]; then
 	    naglowek > instaluj.sh
 	    backdoor >> instaluj.sh
 	    instalacja3
+	#chrome gtk fix    
 	elif [ "$skrypt" = "$MENU10" ]; then  
 	    naglowek > instaluj.sh
 	    echo "sudo mv /usr/bin/google-chrome-stable /usr/bin/google-chrome" >> instaluj.sh
 	    echo "sudo sed -i 's/google-chrome-stable/google-chrome/' /usr/share/applications/google-chrome.desktop" >> instaluj.sh
 	    instalacja3
+	#modem usb fix
 	elif [ "$skrypt" = "$MENU11" ]; then  
 	    naglowek > instaluj.sh 
 	    echo "sudo mv /lib/udev/rules.d/40-usb_modeswitch.rules /lib/udev/rules.d/61-usb_modeswitch.rules" >> instaluj.sh
 	    instalacja3
+	#dodanie usunięcie konta gościa    
 	elif [ "$skrypt" = "$MENU12" ]; then    
 	      if [ "$(grep 'allow-guest=false' /etc/lightdm/lightdm.conf)" = "" ]; then
 		      while ! yad-netext --center --title="$nazwa_skryptu1" --entry --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --hide-text --text="$TEXT_GOSC4" --button="gtk-ok:0" | sudo -S /usr/lib/lightdm/lightdm-set-defaults -l false; do
@@ -161,16 +164,14 @@ if [ $klawisz = 0 ]; then
 			      exit 0
 			  fi
 		      done
-		      restart
 	      else
 		      while ! yad-netext --center --title="$nazwa_skryptu1" --entry --hide-text --text="$TEXT_GOSC5" | sudo -S /usr/lib/lightdm/lightdm-set-defaults -l true; do
 			  if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png"  --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
 			      exit 0
 			  fi
 		      done
-		      restart
-
 	      fi
+	      restart
 	fi
 	
 fi

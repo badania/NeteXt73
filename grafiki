@@ -47,7 +47,7 @@ else
 	if [ "$1" = "nvidia" ]; then
 	    wget $adres_sterownikow/index.html  2>&1 | pobieranie2 
 	    if [ -e index.html ]; then
-		cat index.html | grep "href=" ./index.html   | cut -d '"' -f 2 | grep 'nvidia-' | grep $bit2 | sed 's/.deb//' > 1a.txt
+		cat index.html | grep "href=" ./index.html   | cut -d '"' -f 2 | grep 'nvidia-' | grep $bit2 | sed 's/.deb//' | grep -v -E "nvidia-settings.*"> 1a.txt
 		cat 1a.txt | sort -r > 2a.txt
 		lista=$(cat 2a.txt | tr '\n' '!' | sed -e '$s/!$//g' )
 		echo $lista
@@ -67,7 +67,7 @@ else
 					  zamknij_program
 					  naglowek > instaluj.sh
 					  nvidia >> instaluj.sh
-					  instalacja
+					  instalacja_terminal
 				  else
 					  yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
 				  fi
@@ -106,7 +106,7 @@ else
 						  zamknij_program
 						  naglowek > instaluj.sh
 						  radeon >> instaluj.sh
-						  instalacja
+						  instalacja_terminal
 					  else
 						  yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
 					  fi

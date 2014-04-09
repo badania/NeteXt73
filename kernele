@@ -150,7 +150,7 @@ fi
 			rm /tmp/kernel -fr; 	mkdir /tmp/kernel
 			cd /tmp/kernel;    		cp $b /tmp/kernel/
 			xterm -T instalator -e bash -c "/usr/bin/yes | sudo dpkg -i linux-headers*"
-		      restart
+		        restart
 		elif [ "$(echo $a | grep 'linux-headers' | grep '.deb')" != "" ]; then
 			cd $(echo $a | sed -e 's/linux.*//g')
 			rm /tmp/kernel -fr; 	mkdir /tmp/kernel
@@ -220,7 +220,7 @@ fi
 								naglowek > instaluj.sh
 								naglowek2 >> instaluj.sh
 								instalacja
-								#wywalenie plików po instalacji
+								wywalenie plików po instalacji
 								wywal_pobrane_pliki_kernela
 								restart
 							else

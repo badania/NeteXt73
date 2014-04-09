@@ -36,16 +36,6 @@
 source /opt/NeteXt73/procedury
 
 aktualizacja(){
-#sprawdzanie wersji dla testing
-if [ -e ~/.netext73/netext_testing ] && [ "$(cat ~/.netext73/netext_testing | grep 'http')" != "" ]; then
-      netext_twoj=$(cat /opt/NeteXt73/procedury | grep wersja | head -n 1 | sed 's/=/ /' 	| sed 's/wersja //')
-      twoj_netext=$(curl "$polozenie_skryptu/testing" 	| sed 's/wersja=//')
-
-      if [ "$twoj_netext" != "$netext_twoj" ] && [ "$twoj_netext" != "" ]; then
-	      notify-send -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_WERSJA $twoj_netext"
-      fi   
-fi
-
 #odpalanie strony domowej 
 if [ -e ~/.netext73/strona_domowa ]; then
 echo "ok" > /dev/null

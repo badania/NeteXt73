@@ -97,7 +97,10 @@ if [ "$klawisz" = "0" ]; then
 	echo $konfiguracja > ~/.netext73/monitor
     fi
     if [ "$(echo $konfiguracja | grep system)" != "" ]; then
-	    x-terminal-emulator -e bash -c "watch -t 'uptime; echo '';echo 'Scaling governor:';cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor; echo ''; echo 'CPU Freq:'; cat /proc/cpuinfo | grep MHz; echo ''; echo 'Memory:'; free -m; echo ''; sensors'" &
+	    x-terminal-emulator -e bash -c "watch -t 'uptime; echo -n \"\n \
+	    Scaling governor: $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)\n  \
+	    CPU driver: $(cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_driver | head -n 1;)\n\n \
+	    CPU Freq:\n$(cat /proc/cpuinfo | grep MHz)\n\nMemory:$(free -m)\n\n\";sensors &'"
     fi
     if [ "$(echo $konfiguracja | grep powertop)" != "" ]; then
 	    x-terminal-emulator -e bash -c "sudo powertop" &

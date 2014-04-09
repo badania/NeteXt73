@@ -1,3 +1,15 @@
+netext73 (0.7.40) stable; urgency=medium
+
+  * zmiany w instalatorze NV i w monitorze
+
+ -- eloaders <eloaders@linux.pl>  Wed, 09 Apr 2014 21:16:00 +0200
+
+netext73 (0.7.39) stable; urgency=medium
+
+  * deinstalator przepisany na natywną konsolę
+
+ -- eloaders <eloaders@linux.pl>  Sat, 05 Apr 2014 12:34:57 +0200
+
 netext73 (0.7.38) stable; urgency=medium
 
   * czyszczenie kodu

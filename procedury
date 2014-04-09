@@ -494,6 +494,10 @@ echo "rm /tmp/*.txt -f; rm /tmp/*.sh -f"
 instalacja(){
 xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
 }
+instalacja_terminal(){
+x-terminal-emulator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent"
+}
+
 #instalacja bez pytań
 instalacja2(){
 xterm -T instalator -e bash -c "sh instaluj.sh && rm instaluj.sh -f"
@@ -638,6 +642,9 @@ echo "fi"
 echo "if [ \"\$(grep 'GRUB_GFXPAYLOAD_LINUX' /etc/default/grub)\" = \"\" ]; then"
 echo "sudo sed -i \"s/#GRUB_GFXMODE.*/#GRUB_GFXMODE=1280x1024\nGRUB_GFXPAYLOAD_LINUX=1024x768x32/\" /etc/default/grub"
 echo "fi"
+echo "if [ \"\$(ls | grep '337.12')\" != \"\" ]; then"
+echo "wget $adres_sterownikow/nvidia-settings && sudo mv nvidia-settings /usr/bin/ -f"
+echo "fi"
 echo "sudo update-initramfs -u -k all"
 echo "sudo update-grub"
 }
@@ -677,13 +684,13 @@ echo "echo '* * * * * /etc/cron.d/freemem.sh' | sudo tee -a /var/spool/cron/cron
      
 restart(){
 yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_RESTART"
-if [ $? = 0 ]; then
-while ! yad-netext --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S reboot; do
-    if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
-	rm /tmp/stan_netext
-	exit 0
-    fi
-done
+      if [ $? = 0 ]; then
+      while ! yad-netext --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S reboot; do
+	  if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
+	      rm /tmp/stan_netext
+	      exit 0
+	  fi
+      done
 fi
 
 }

@@ -40,43 +40,48 @@ source /opt/NeteXt73/procedury
 
 cd /tmp
 rm /tmp/*.txt -f; rm /tmp/*.sh -f
-usun=$(yad-netext --center --title="$nazwa_skryptu" --width=420 --window-icon="/opt/NeteXt73/ikony/delete.png" --text="<span color=\"$kolor_textu\">$TEXT_DEINSTALATOR</span>" --form --field="$TEXT_DEINSTALATOR1:CB"  "$TEXT_MENU_DEINSTALATOR1!$TEXT_MENU_DEINSTALATOR2!$TEXT_MENU_DEINSTALATOR4!$TEXT_MENU_DEINSTALATOR5!$TEXT_MENU_DEINSTALATOR6!$TEXT_MENU_DEINSTALATOR7" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
+usun=$(yad-netext --center --title="$nazwa_skryptu" --width=420 --window-icon="/opt/NeteXt73/ikony/delete.png" --text="<span color=\"$kolor_textu\">$TEXT_DEINSTALATOR</span>" --form --field="$TEXT_DEINSTALATOR1:CB"  "$TEXT_MENU_DEINSTALATOR1!$TEXT_MENU_DEINSTALATOR2!$TEXT_MENU_DEINSTALATOR4!$TEXT_MENU_DEINSTALATOR5!$TEXT_MENU_DEINSTALATOR6!$TEXT_MENU_DEINSTALATOR7" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1"  )
 klawisz=$?; usun=$(echo $usun | cut -d "|" -f 1)
 
+#usuwanie apm
 if [ "$usun" = "$TEXT_MENU_DEINSTALATOR4" ]; then
 	naglowek > instaluj.sh
-	yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_DEINSTALATOR10"
+	yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1" --text="$TEXT_DEINSTALATOR10"
 	if [ $? = 0 ]; then
 	      apm_usun >> instaluj.sh
-	      instalacja
+	      instalacja_terminal
 	fi
-
+#usuwanie microcode 
 elif [ "$usun" = "$TEXT_MENU_DEINSTALATOR5" ]; then
 	naglowek > instaluj.sh
 	yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_DEINSTALATOR11"
 	if [ $? = 0 ]; then
 	      microcode_usun >> instaluj.sh
-	      instalacja
+	      instalacja_terminal
 	fi
 
+#usuwanie kerneli
 elif [ "$usun" = "$TEXT_MENU_DEINSTALATOR1" ]; then
 	#generowanie listy na podstawie plików linux-image
 	dpkg -l | grep 'linux-image*'  | grep -v -E "linux-image-extra*|linux-image-generic|linux-image-$(uname -r)" | awk '{print $2}' > /tmp/lista_kerneli.txt
+#usuwanie kerneli expert
 elif [  "$usun" = "$TEXT_MENU_DEINSTALATOR2" ]; then
 	#generowanie listy na podstawie plików linux-image oraz linux-headers
 	dpkg -l | grep 'linux-image'   | grep -v -E "linux-image-$(uname -r)"   | awk '{print $2}' > /tmp/lista_kerneli.txt
 	dpkg -l | grep 'linux-headers' | grep -v -E "linux-headers-$(uname -r)" | awk '{print $2}'>> /tmp/lista_kerneli.txt
+#usuwanie czyszczenia ramu
 elif [  "$usun" = "$TEXT_MENU_DEINSTALATOR6" ]; then
 	naglowek > instaluj.sh
 	RAMIK_USUN >> instaluj.sh
-	instalacja
-	
+	instalacja_terminal
+#usuwanie netexta
 elif [  "$usun" = "$TEXT_MENU_DEINSTALATOR7" ]; then
-	xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sudo apt-get purge netext73; sudo rm -rf /opt/NeteXt73 /usr/share/applications/NeteXt73.desktop /usr/share/pixmaps/NeteXt73.png /usr/local/bin/install_netext; echo -e \"$TEXT_INSTALACJA2\";killall -9 yad-netext"
+	x-terminal-emulator -e bash -c "echo \"$TEXT_INSTALACJA1\";sudo apt-get purge netext73; sudo rm -rf /opt/NeteXt73 /usr/share/applications/NeteXt73.desktop /usr/share/pixmaps/NeteXt73.png /usr/local/bin/install_netext; echo -e \"$TEXT_INSTALACJA2\";killall -9 yad-netext"
 fi
+#usuwanie kerneli
 if [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINSTALATOR2" ]; then
   if [ "$(cat lista_kerneli.txt)" != "" ]; then
-  a=$(yad-netext --center --height=440 --width=560 --window-icon="/opt/NeteXt73/ikony/delete.png" --text="$TEXT_DEINSTALATOR4  <span color=\"$kolor_textu\"><b> linux-image-$(uname -r) </b></span>,\n$TEXT_DEINSTALATOR5\n" --title="Kernel wywalator" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --checklist --list  --column="$TEXT_ZAZNACZ" --column="$TEXT_DEINSTALATOR6"  $(sed -e '/^[^#]/s:^:FALSE :' /tmp/lista_kerneli.txt ))
+  a=$(yad-netext --center --height=440 --width=560 --window-icon="/opt/NeteXt73/ikony/delete.png" --text="$TEXT_DEINSTALATOR4  <span color=\"$kolor_textu\"><b> linux-image-$(uname -r) </b></span>,\n$TEXT_DEINSTALATOR5\n" --title="Kernel wywalator" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1" --checklist --list  --column="$TEXT_ZAZNACZ" --column="$TEXT_DEINSTALATOR6"  $(sed -e '/^[^#]/s:^:FALSE :' /tmp/lista_kerneli.txt ))
 	if [ $? = 0 ]; then
 		if [ "$a" != "" ]; then
 			if [ "$usun" = "$TEXT_MENU_DEINSTALATOR1" ]; then
@@ -96,13 +101,13 @@ if [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINSTA
 			#proces kasowania kerneli
 			naglowek > instaluj.sh
 			usun_kernel >> instaluj.sh
-			echo "nie" > /tmp/ok.txt
-			instalacja
-			if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
-				dymek -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_DEINSTALATOR7"
-			else
-				dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_DEINSTALATOR8"
-			fi
+			#echo "nie" > /tmp/ok.txt
+			instalacja_terminal
+			#if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
+			#	dymek -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_DEINSTALATOR7"
+			#else
+			#	dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_DEINSTALATOR8"
+			#fi
 		fi
 	else
 		rm /tmp/*.txt -f; rm /tmp/*.sh -f
