@@ -1,0 +1,161 @@
+#!/bin/bash
+## Graficzny instalator kerneli e X t 7 3  - NeteXt'73
+## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
+## przygotowanie skryptów optymalizacyjnych e X t 7 3
+## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## opiekun repozytorium eloaders eloaders@linux.pl
+## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
+## tłumaczenie na język francuski: Michał Radwański (enedil)
+## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
+#
+#		    _   _      _      __  ___   _ _____ _____
+#		   | \ | | ___| |_ ___\ \/ / |_( )___  |___ /
+#		   |  \| |/ _ \ __/ _ \\  /| __|/   / /  |_ \
+#		   | |\  |  __/ |_  __//  \| |_    / /  ___) |
+#		   |_| \_|\___|\__\___/_/\_\\__|  /_/  |____/
+#
+#	            __ _ _ __ __ _ / _(_) ___ _____ __  _   _
+#	           / _` | '__/ _` | |_| |/ __|_  / '_ \| | | |
+#	          | (_| | | | (_| |  _| | (__ / /| | | | |_| |
+#	           \__, |_|  \__,_|_| |_|\___/___|_| |_|\__, |
+#	           |___/                                |___/
+#     _           _        _       _                   _                        _ _
+#    (_)_ __  ___| |_ __ _| | __ _| |_ ___  _ __      | | _____ _ __ _ __   ___| (_)
+#    | | '_ \/ __| __/ _` | |/ _` | __/ _ \| '__|     | |/ / _ \ '__| '_ \ / _ \ | |
+#    | | | | \__ \ |_ (_| | | (_| | |_ (_) | |        |   <  __/ |  | | | |  __/ | |
+#    |_|_| |_|___/\__\__,_|_|\__,_|\__\___/|_|        |_|\_\___|_|  |_| |_|\___|_|_|
+#        __  __  _     _____   _____      ___     _   _      _   ____  _ _  _____ ____
+#   ___  \ \/ / | |_  |___  | |___ /     ( _ )   | \ | | ___| |_| __ )(_) |____  |___ /
+#  / _ \  \  /  | __|    / /    |_ \     / _ \/\ |  \| |/ _ \ __|  _ \| | __| / /  |_ \
+# |  __/  /  \  | |_    / /    ___) |   | (_>  < | |\  |  __/ |_| |_) | | |_ / /  ___) |
+#  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
+#
+#########################################################################################################################################################################
+#procedury
+
+source /opt/NeteXt73/procedury
+
+#########################################################################################################################################################################
+#Logi systemowe
+
+cd /tmp
+
+if [ -e losowa ];then
+    losowa=$(cat losowa)
+    (( losowa++ ))
+    echo $losowa > losowa
+    
+else
+    losowa=1; echo $losowa > losowa
+fi
+
+#informacje o systemie
+if [ "$(dmesg | grep gcc)" != "" ]; then
+    echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI0</b></span>\n$(dmesg | grep gcc)" > system$losowa.log	
+else
+    echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI0</b></span>\n$(uname -a)" > system$losowa.log	
+fi
+echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI2</b></span>" >> system$losowa.log
+echo -e "$(grep 'model name' /proc/cpuinfo | head -n1 | sed -e 's/model name'[[:space:]]:'//g' | sed -e 's/ //')" >>system$losowa.log
+if [ "$(lspci | grep "Network controller:" |sed -e 's/'.*:'//g' -e 's/Network Connection//g' | head -n1 | sed -e 's/ //')" = "" ]; then
+      wifi="no wifi"
+else
+      wifi="$(lspci | grep "Network controller:" |sed -e 's/'.*:'//g' -e 's/Network Connection//g' | head -n1 | sed -e 's/ //')"
+fi
+echo -e "$wifi" >> system$losowa.log
+echo -e "\n<span color=\"$kolor_textu\"><b>SYSTEM:</b></span> $(lsb_release -i | awk '{print $3}') $(lsb_release -r | awk '{print $2}') $(lsb_release -c | awk '{print $2}') $bit" >> system$losowa.log
+echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI6</b></span>" >> system$losowa.log
+if [ "$(dpkg -l intel-microcode | grep "ii" | awk '{print $1}'| head -n1)" = "ii" ];  then
+	  echo "microcode Intel - <b>ON</b>" >> system$losowa.log
+    else
+	  echo "microcode Intel- <b>OFF</b>" >> system$losowa.log
+    fi
+    if [ -e /lib/firmware/amd-ucode/microcode_amd.bin ];  then
+	  echo "microcode AMD - <b>ON</b>" >> system$losowa.log
+    else
+	  echo "microcode AMD - <b>OFF</b>" >> system$losowa.log
+    fi
+if [ -e /usr/lib/pm-utils/power.d/readahead ] ; then
+      if [ -e /etc/pm/power.d/$wersja_apm ]; then
+	  echo -e "$TEXT_SKRYPT APM - <b>ON</b>" >> system$losowa.log
+      else
+	  echo -e "$TEXT_SKRYPT APM - <b>$TEXT_LOGI7</b>" >> system$losowa.log
+      fi
+else
+      echo -e "$TEXT_SKRYPT APM - <b>OFF</b>" >> system$losowa.log
+fi
+if [ -e $wersja_apm ]; then
+      echo "$TEXT_LOGI8 APM: <b>$(ls -al /etc/default/grub | cut -d " " -f 3)</b>" >> system$losowa.log
+fi
+if [ -e /lib/firmware/amd-ucode/microcode_amd.bin ]; then
+      echo "$TEXT_LOGI8 microcode_amd.bin: <b>$(ls -al /lib/firmware/amd-ucode/microcode_amd.bin | cut -d " " -f 3)</b>" >> system$losowa.log
+fi
+if [ -e /lib/firmware/amd-ucode/microcode_amd_fam15h.bin ]; then
+      echo "$TEXT_LOGI8 microcode_amd_fam15h.bin: <b>$(ls -al /lib/firmware/amd-ucode/microcode_amd_fam15h.bin | cut -d " " -f 3)</b>" >> system$losowa.log
+fi
+echo "$TEXT_LOGI8 GRUB: <b>$(ls -al /etc/default/grub | cut -d " " -f 3)</b>" >> system$losowa.log
+echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI9</b></span>" >> system$losowa.log
+grep "GRUB_CMDLINE_LINUX=" /etc/default/grub >> system$losowa.log
+echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI10</b></span>" >> system$losowa.log
+
+echo "GCC - $(gcc --version | head -n 1)" >> system$losowa.log
+
+
+echo "Powertop - $(dpkg -l | grep powertop | awk '{print $3}' | head -n 1)" >> system$losowa.log
+
+yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="pastebin:3"
+klawisz=$?
+if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
+    echo -e "\n$TEXT_LOGI1\n$(dpkg -l | grep 'linux-image*'| grep -v -E 'linux-image-extra*|linux-image-generic' | sed -e 's/linux-image-//g' | awk '{print $2}'| sort -r | column -n)" > system$losowa.log
+    echo -e "\n\n#################################  microcode  ##########################################################" >> system$losowa.log
+    if [ "$(dpkg -l intel-microcode | grep "ii" | awk '{print $1}'| head -n1)" = "ii" ];  then
+	  echo "microcode Intel - ON" >> system$losowa.log
+    else
+	  echo "microcode Intel- OFF" >> system$losowa.log
+    fi
+    if [ -e /lib/firmware/amd-ucode/microcode_amd.bin ];  then
+	  echo "microcode AMD - ON" >> system$losowa.log
+    else
+	  echo "microcode AMD - OFF" >> system$losowa.log
+    fi
+    echo -e "\n\n$TEXT_LOGI12" >> system$losowa.log
+    echo -e "$(lsb_release -a)" >> system$losowa.log
+    echo -e "$(uname -a)" >> system$losowa.log
+    echo -e "\n\n#################################  mounted-proc.conf  ###################################################" >> system$losowa.log
+    cat /etc/init/mounted-proc.conf >> system$losowa.log
+    echo -e "\n\n#################################  ureadahead.conf  #####################################################" >> system$losowa.log
+    cat /etc/init/ureadahead.conf >> system$losowa.log
+    echo -e "\n\n#################################  wersja APM  ##########################################################" >> system$losowa.log
+    ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' >> system$losowa.log
+    echo -e "\n" >> system$losowa.log
+    ls /usr/lib/pm-utils/power.d/ -la | grep rwxr >> system$losowa.log
+    echo -e "\n\n#################################  readahead  ###########################################################" >> system$losowa.log
+    cat /usr/lib/pm-utils/power.d/readahead >> system$losowa.log
+    echo -e "\n\n#################################  GRUB  ################################################################" >> system$losowa.log
+    grep GRUB_CMDLINE_LINUX= /etc/default/grub >> system$losowa.log
+    echo -e "\n\n#################################  lsmod ################################################################" >> system$losowa.log
+    lsmod >> system$losowa.log
+    echo -e "\n\n#################################  lspci ################################################################" >> system$losowa.log
+    lspci >> system$losowa.log
+    echo -e "\n\n#################################  lsusb ################################################################" >> system$losowa.log
+    lsusb >> system$losowa.log
+    
+    
+    
+    dmesg > dmesg_$USER
+    if [ "$klawisz" = "2" ]; then
+	    if [ "$USER" = "root" ]; then
+		    userek=$(cat /tmp/userek)
+		    su $userek -c "xdg-open \"system$losowa.log\"" | su $userek -c "xdg-open \"dmesg_$USER\""
+	    else
+		    xdg-open "system$losowa.log" | xdg-open "dmesg_$USER"
+	    fi
+    elif [ "$klawisz" = "3" ]; then
+	    if [ "$USER" = "root" ]; then
+		  userek=$(cat /tmp/userek)
+		  su $userek -c "xdg-open $(cat dmesg_$USER | pastebinit)" | su $userek -c "xdg-open $(cat system$losowa.log | pastebinit)"
+	    else
+		  xdg-open $(cat dmesg_$USER | pastebinit) |  xdg-open $(cat system$losowa.log | pastebinit)
+	    fi
+    fi
+fi

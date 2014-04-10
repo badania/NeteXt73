@@ -1,0 +1,369 @@
+#!/bin/bash
+## Graficzny instalator kerneli e X t 7 3  - NeteXt'73
+## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
+## przygotowanie skryptów optymalizacyjnych e X t 7 3
+## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
+## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
+## tłumaczenie na język niemiecki: Karolina Franieczek
+## tłumaczenie na język francuski: Michał Radwański (enedil)
+## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
+#
+#                   _   _      _      __  ___   _ _____ _____
+#                  | \ | | ___| |_ ___\ \/ / |_( )___  |___ /
+#                  |  \| |/ _ \ __/ _ \\  /| __|/   / /  |_ \
+#                  | |\  |  __/ |_  __//  \| |_    / /  ___) |
+#                  |_| \_|\___|\__\___/_/\_\\__|  /_/  |____/
+#
+#                   __ _ _ __ __ _ / _(_) ___ _____ __  _   _
+#                  / _` | '__/ _` | |_| |/ __|_  / '_ \| | | |
+#                 | (_| | | | (_| |  _| | (__ / /| | | | |_| |
+#                  \__, |_|  \__,_|_| |_|\___/___|_| |_|\__, |
+#                  |___/                                |___/
+#     _           _        _       _                   _                        _ _
+#    (_)_ __  ___| |_ __ _| | __ _| |_ ___  _ __      | | _____ _ __ _ __   ___| (_)
+#    | | '_ \/ __| __/ _` | |/ _` | __/ _ \| '__|     | |/ / _ \ '__| '_ \ / _ \ | |
+#    | | | | \__ \ |_ (_| | | (_| | |_ (_) | |        |   <  __/ |  | | | |  __/ | |
+#    |_|_| |_|___/\__\__,_|_|\__,_|\__\___/|_|        |_|\_\___|_|  |_| |_|\___|_|_|
+#        __  __  _     _____   _____      ___     _   _      _   ____  _ _  _____ ____
+#   ___  \ \/ / | |_  |___  | |___ /     ( _ )   | \ | | ___| |_| __ )(_) |____  |___ /
+#  / _ \  \  /  | __|    / /    |_ \     / _ \/\ |  \| |/ _ \ __|  _ \| | __| / /  |_ \
+# |  __/  /  \  | |_    / /    ___) |   | (_>  < | |\  |  __/ |_| |_) | | |_ / /  ___) |
+#  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
+#
+#########################################################################################################################################################################
+#tłumaczenia
+ 
+ 
+#########################################################################################################################################################################
+tlumaczenia_apm(){
+export TEXT_APM1="Du hast eine ältere oder unvollständige Version des APM-Skriptes installiert. Eine neuere Version installieren.\nGleich beginnt die Installation des APM-Skriptes.\n\nInstallieren?"
+export TEXT_AKTUALNY_PROFIL_APM="Aktuelles APM-Profil"
+export TEXT_ZMIEN_PROFIL_APM="APM-Profil ändern auf:"
+export TEXT_POWROT="Zurück"
+export TEXT_APM2="Um den APM-Status zu ändern, installiere eine neuere Version."
+}
+#########################################################################################################################################################################
+tlumaczenia_backuprepo(){
+export a1="Ein Repository-Backup mit GPG-Schlüssel erstellen"
+export a2="Repository aus dem Backup wiederherstellen"
+export a3="Fehlende GPG-Schlüssel herunterladen"
+export a4="Fehlerhafte GPG-Unterschrifte reparieren"
+export TEXT_POWROT="Zurück"
+export TEXT_UWAGA="ACHTUNG"
+export TEXT_BACKUP1="Skripten bezüglich GPG-Schlüssel und Repository."
+export TEXT_BACKUP2="Die Datei source.list.backup zeigen"
+export TEXT_BACKUP3="Gleich werden die Repositories überschrieben"
+export TEXT_BACKUP4="Die Repository-Dateien wurden überschrieben."
+export TEXT_BACKUP5="Du hast das Überschreiben von Repository abgebrochen."
+export TEXT_BACKUP6="Du hast eine falsche Datei gezeigt!"
+export TEXT_BACKUP7="Die Datei: source.list.backup wird erstellt\n"
+export TEXT_INSTALACJA="\n\nABGESCHLOSSEN!!! - Enter-Taste drücken"
+}
+#########################################################################################################################################################################
+tlumaczenia_config(){
+export lang1="polski!english!français"
+export TEXT_CONFIG1="NeteXt73-Konfigurator"
+export TEXT_CONFIG2="NeteXt73-Konfigurationsmenü"
+export TEXT_CONFIG3="Farbe der markierten Aufschriften"
+export TEXT_CONFIG4="Adresse der zahlungspflichtigen Kernels:"
+export TEXT_CONFIG5="Adresse der Testversion:"
+export TEXT_CONFIG6="Softwaresprache:"
+export TEXT_CONFIG7="Konfigurationsdateien löschen:"
+export TEXT_CONFIG8="Die Konfigurationsdateien des NeteXt73-Skriptes wurden gelöscht"
+export TEXT_CONFIG9="APM-Profil:"
+export TEXT_CONFIG10="Kernel-Profil:"
+export TEXT_CONFIG11="Ausgewählte Kernel-Profil automatisch anwenden"
+export TEXT_TAK="JA"
+export TEXT_NIE="NEIN"
+export TEXT_POWROT="Zurück"
+}
+#########################################################################################################################################################################
+tlumaczenia_deinstalator(){
+export TEXT_MENU_DEINSTALATOR1="Kernel löschen"              
+export TEXT_MENU_DEINSTALATOR2="Kernel löschen - Expert"      
+export TEXT_MENU_DEINSTALATOR3="broadcom-Deinstallateur"      
+export TEXT_MENU_DEINSTALATOR4="APM-Deinstallateur"
+export TEXT_MENU_DEINSTALATOR5="Mikrocode- und Firmware-Deinstallateur"
+export TEXT_MENU_DEINSTALATOR6="Regelmäßige Reinigung von Cache-Speicher löschen"
+export TEXT_MENU_DEINSTALATOR7="NeteXt73 löschen"
+export TEXT_DEINSTALATOR="System-Deinstallateurs."
+export TEXT_DEINSTALATOR1="Option auswählen:"
+export TEXT_DEINSTALATOR2="Soll WiFi-broadcom-Treiber tatsächlich gelöscht werden?"
+export TEXT_DEINSTALATOR3="Löschen des geschlossenen broadcom-Treibers verursacht Konsequenzen für das ganze System, darunter auch für die im System installierten Kernels."
+export TEXT_DEINSTALATOR4="Im Moment wird verwendet:"
+export TEXT_DEINSTALATOR5="Nicht löschen. Er ist an der Liste nicht zu sehen.\n\n Wenn die Auswahlliste leer ist, bedeutet das, dass das Dein einziger Kernel ist.\n\nDen Kernel, den du löschen willst, markieren:"
+export TEXT_DEINSTALATOR6="Kernel-Version"
+export TEXT_DEINSTALATOR7="Unnötige Kernels wurden gelöscht."
+export TEXT_DEINSTALATOR8="Löschen von unnötigen Kernels wurde abgebrochen."
+export TEXT_DEINSTALATOR10="Soll APM-Skript tatsächlich gelöscht werden?"
+export TEXT_DEINSTALATOR11="Bist du sicher, dass du den Mikrocode und Firmware für CPU und GPU löschen willst?"
+export TEXT_POWROT="Zurück"
+export TEXT_INFORMACJA="INFORMATION"
+export TEXT_ZAZNACZ="Markieren"
+export TEXT_UWAGA="ACHTUNG"
+export TEXT_INSTALACJA1="Die ausgewählten Änderungen werden gleich ausgeführt. Schließen des Fensters wird den Prozess abbrechen."
+export TEXT_INSTALACJA2="\n\nABGESCHLOSSEN !!! - Enter-Taste drücken"
+export TEXT_BRAK_KERNELI="Es gibt keine Kernels zu löschen."
+}
+#########################################################################################################################################################################
+tlumaczenia_gosc(){
+export TEXT_GOSC1="Gastkonto hinzufügen oder löschen"
+export TEXT_GOSC2="Gastkonto hinzufügen"
+export TEXT_GOSC3="Gastkonto löschen"
+export TEXT_GOSC4="Nach der Eingabe des Passwords wird die Gastsitzung erlöschen"
+export TEXT_GOSC5="Nach der Eingabe des Passwords wird die Gastsitzung aktiviert"
+export TEXT_INFO="\n\ABGESCHLOSSEN !!! - Enter-Taste drücken"
+}
+#########################################################################################################################################################################
+tlumaczenia_grub(){
+export TEXT_SKRYPTEXT_10="Dein aktueller Eintrag in GRUB:"
+export TEXT_SKRYPTEXT_11="Was willst du machen?"
+export TEXT_GRUB4A="Backup der GRUB-Konfigurationsdatei erstellen"
+export TEXT_GRUB5A="Backup der GRUB-Konfigurationsdatei wiederherstellen"
+export TEXT_GRUB6A="Ausgewählte Einträge in GRUB mithilfe des Kreators eintragen"
+export TEXT_GRUB7A="Einträge in GRUB manuell eintragen"
+export TEXT_GRUB8="Datei-Backup"
+export TEXT_GRUB9="Du hast Backup-Prozess abgebrochen."
+export TEXT_GRUB10="Wiederherstellung der Datei /etc/default/grub aus dem Backup"
+export TEXT_GRUB11="Du hast Wiederherstellung des GRUBs aus der Backup-Datei abgebrochen."
+export TEXT_GRUB12="Keine Backup-Datei vorhanden."
+export TEXT_GRUB13="Das Backup der GRUB-Datei war nicht vorhanden. Die Datei grub.backup wird automatisch im Katalog erstellt."
+export TEXT_GRUB14="Nenne Deine Plattform.\n"
+#export TEXT_GRUB15="Optimale Einstellungen für die meisten Computer"
+#export TEXT_GRUB16="Sandy und ivy bridge /i3-i7/ mit integrierter Intel-Grafik"
+export TEXT_GRUB17="Einstellung der Matrixbeleuchtung.\n"
+export TEXT_GRUB18="Einstellungen, die im Falle der Probleme mit Standardeinstellungen verwendet werden"
+export TEXT_GRUB19="Korrigiert"
+export TEXT_GRUB21="Endannahme der Änderungen.\n"
+export TEXT_GRUB21A="Führt Änderungen gemäß den früheren Richtlinien ein"
+export TEXT_GRUB21B="Erweiterter Modus"
+export TEXT_GRUB21C="Ermöglicht die Bearbeitung des Eintrages"
+export TEXT_GRUB22="Änderungen ausführen oder den ausgewählten Eintrag akzeptieren:"
+export TEXT_GRUB23="Modus ausschließlich für Fortgeschrittene.\nÄnderungen ausführen oder zu vorigem Menü zurückkehren"
+export TEXT_NETBIT_MENU18="Zeit einstellen, nach der GRUB-Menü verschwindet:"
+export TEXT_NETBIT_MENU19="Nach der Angabe des Passwords wird die Änderung der Zeit des Anzeigens von GRUB-Manü eingetragen. Schließen dieses Fensters wird den Änderungsprozess abbrechen."
+export TEXT_POWROT="Zurück"
+export TEXT_INFO3="\n\nABGESCHLOSSEN !!! - Enter-Taste drücken"
+export TEXT_UWAGA="ACHTUNG"
+export TEXT_ZAZNACZ="Markieren"
+export TEXT_MENU="Menü"
+export TEXT_OPIS="Beschreibung"
+export TEXT_ZAMKNIJ="Schließen"
+}
+#########################################################################################################################################################################
+tlumaczenia_kernele(){
+export TEXT_INSTLATOR1="<b>ACHTUNG !!</b> - für fehlerfreies Funktionieren des Computers\nist die Installation des Kernels und aller Skripts e X t 7 3 erforderlich"
+export TEXT_MENU_INSTALATOR3="Lokal"
+export TEXT_MENU_INSTALATOR4="Nur Überschriften"
+export TEXT_MENU_INSTALATOR5="ppa mainline"
+export TEXT_PPA_1="Besessene Systemversion auswählen. Es wird geraten:"
+export TEXT_RODZAJ_SYSTEMU="Systemversion"
+export TEXT_LISTA_KERNELI="Kernelliste für Ubuntu"
+export TEXT_ZAZNACZ_KERNEL="Kernel markieren, der auf die Festplatte heruntergeladen werden soll."
+export TEXT_STEROWNIKI1="Kein Kernel für deine Systemversion vorhanden"
+export TEXT_INSTALOWAC="INSTALLIEREN"
+export TEXT_INSTALOWAC_KERNEL="wurde heruntergeladen. \n\nWenn du ihn automatisch installieren willst, klicke:\n\nJA\n"
+export TEST_INSTALOWAC_KERNEL2="Das Programm hat den Installationsbefehl behalten. Du kannst ihn im Terminal einfügen, indem du die Tastenkombination:\n\nSHIFT+INSERT oder CTRL+SHIFT+V\n verwendest"
+export TEST_INSTALOWAC_KERNEL3="Gleich wird die Kernel-Installation ausgeführt"
+export TEST_INSTALOWAC_KERNEL4="anhand der heruntergeladenen Dateien:"
+export TEST_INSTALOWAC_KERNEL5="Das Programm hat den Pfad zu den heruntergeladenen Dateien behalten. Du kannst sie im Terminal einfügen, indem du die Tastenkombination:\n\nSHIFT+INSERT oder CTRL+SHIFT+V\n verwendest"
+export TEXT_INSTALOWAC_KERNEL6="Das Herunterladen der Installationsdateien war nicht erfolgreich. Erneut versuchen."
+export TEXT_INSTALOWAC_KERNEL7="Dieser Kernel wurde schon installiert.\nVor der Neuinstallation muss dieser Kernel entfernt werden." 
+export TEXT_SUMA_KONTROLNA="Achtung ! Man Versuchte die Datei herunterzuladen - die Kontrollsummen stimmen mit den angenommenen nicht überein."
+export TEXT_POWROT="Zurück"
+export TEXT_UWAGA="ACHTUNG"
+export TEXT_K8="K8 - von Intel C2D, AMD K8"
+}
+#########################################################################################################################################################################
+tlumaczenia_kontakt(){
+export TEXT_KONTAKT_Z_AUTORAMI="Kontakt mit den Autoren:"
+export TEXT_NETBIT="NetBit73 - Bearbeitung des graphischen Installationsskripts"
+export TEXT_EXT="e X t 7 3 - Vorbereitung der Kernels und APM-Skript"
+export TEXT_FADEMIND="FadeMind - Übersetzung ins Englische Texte und Beta-Tests"
+export TEXT_KAROLINA="Karolina Franieczek - Übersetzung ins Deutsche Texte"
+export TEXT_ENEDIL="enedil - Übersetzung ins Französisch Texte"
+}
+#########################################################################################################################################################################
+tlumaczenia_logi(){
+export TEXT_LOGI0="Aktuelle Kernel-Version:"
+export TEXT_LOGI1="Installierte Kernel-Versionen:"
+export TEXT_LOGI2="Hardware-Information:"
+export TEXT_LOGI6="Installierte Optimierungsskripts:"
+export TEXT_LOGI7="JA, ältere Version, es wird empfohlen, eine neue Version zu installieren"
+export TEXT_LOGI8="Dateirechte"
+export TEXT_LOGI9="Zusätzlicher Eintrag in der GRUB-Sektion:"
+export TEXT_LOGI10="Dateienversionen:"
+export TEXT_LOGI12="System-Information"
+export TEXT_SKRYPT="Skript"
+export TEXT_POWROT="Zurück"
+export TEXT_WYGENERUJ="Logs generieren"
+}
+#########################################################################################################################################################################
+tlumaczenia_microcode(){
+export TEXT_TAK="JA"
+export TEXT_NIE="NEIN"
+export TEXT_MICROCODE1="Du hast den neusten Mikrocode und Firmware für CPU und GPU schon installiert.\nEs ist kein Aktualisieren notwendig."
+export TEXT_MICROCODE2="Du hast keinen Mikrocode installiert. Gleich wird der Code installiert."
+}
+#########################################################################################################################################################################
+tlumaczenia_monitor(){
+export TEXT_MONITOR1="Programme auswählen, die gestartet werden sollen:"
+export TEXT_ZAZNACZ="Markieren"
+export TEXT_POWROT="Zurück"
+export TEXT_INST1="Installation der Zusammenhänge, die zu richtiger Arbeit des Programms notwendig sind."
+}
+#########################################################################################################################################################################
+tlumaczenia_netext73(){
+export TEXT_ZAMKNIJ="Programm schließen"
+export TEXT_WERSJA="Aktualisation des Programms NeteXt'73 zu der Version verfügbar"
+export TEXT_UWAGA="ACHTUNG !"
+export TEXT_INST1="Installation der Zusammenhänge, die zu richtiger Arbeit des Programms notwendig sind."
+export TEXT_LICENCJA="Lizenz"
+export TEXT_BUG="Fehler melden"
+export TEXT_CHANGELOG="Liste der Änderungen"
+}
+#########################################################################################################################################################################
+tlumaczenia_nvidia(){
+export TEXT_STEROWNIK="Treiber auswählen"
+export TEXT_STEROWNIKI1="Kein Treiber für deine Systemversion vorhanden"
+export TEXT_STEROWNIKI2="Treiber-Installator für Grafikkarten:"
+export TEXT_STEROWNIKI3="Der Installator hat die bediente Grafikkarte nicht gefunden."
+export TEXT_POWROT="Zurück"
+export TEXT_SUMA_KONTROLNA="Achtung ! Man Versuchte die Datei herunterzuladen - die Kontrollsummen stimmen mit den angenommenen nicht überein."
+export TEXT_UWAGA="ACHTUNG"
+}
+#########################################################################################################################################################################
+tlumaczenia_radeon(){
+export TEXT_STEROWNIK="Treiber auswählen"
+export TEXT_STEROWNIKI1="Kein Treiber für deine Systemversion vorhanden"
+export TEXT_STEROWNIKI2="Treiber-Installator für Grafikkarten:"
+export TEXT_STEROWNIKI3="Der Installator hat die bediente Grafikkarte nicht gefunden."
+export TEXT_POWROT="Zurück"
+export TEXT_SUMA_KONTROLNA="Achtung ! Man Versuchte die Datei herunterzuladen - die Kontrollsummen stimmen mit den angenommenen nicht überein."
+export TEXT_UWAGA="ACHTUNG"
+}
+#########################################################################################################################################################################
+tlumaczenia_ram(){
+export TEXT_NETBIT_RAM1="Cache-Speicher sofort leeren"
+export TEXT_NETBIT_RAM2="Prozentuale RAM-Auslastung nennen, nach derer Überschreiten Cache-Speicher geleert werden soll"
+export TEXT_POWROT="Zurück"
+export TEXT_RAM6="Gleich wird der Cache-Speicher geleert. Wenn du das nicht willst, schließe dieses Fenster"
+export TEXT_RAM7="'Stand vor:"
+export TEXT_RAM8="Stand danach:"
+export TEXT_INFO3="\n\nABGESCHLOSSEN !!! - Enter-Taste drücken"
+}
+#########################################################################################################################################################################
+tlumaczenia_tasksel(){
+export TEXT_TASKSEL1="Gleich können Serverdienste installiert werden. Wenn dieses Fenster geschlossen wird, wird die Installation abgebrochen."
+export TEXT_INFO3="\n\nABGESCHLOSSEN !!! - Enter-Taste drücken"
+}
+#########################################################################################################################################################################
+tlumaczenia_update(){
+export TEXT_UPDATE1="Aktualisieren"
+export TEXT_UPDATE1a="Was willst du aktualisieren?"
+export TEXT_UPDATE2="System aktualisieren"
+export TEXT_UPDATE3="NeteXt'73 aktualisieren"
+export TEXT_UPDATE4="Keine Aktualisierungen vorhanden"
+export TEXT_UPDATE5="Aktualisierung zur Version möglich"
+export TEXT_UPDATE6="Soll die vorhandene Aktualisierung des Programms NeteXt73 installiert werden?"
+export TEXT_INSTALACJA_NOWEJ="Instalation der neuen Version von NeteXt73"
+export TEXT_POWROT="Zurück"
+export TEXT_INFO3="\n\nABGESCHLOSSEN !!! - Enter-Taste drücken"
+export TEXT_SUMA_KONTROLNA="Achtung ! Man Versuchte die Datei herunterzuladen - die Kontrollsummen stimmen mit den angenommenen nicht überein."
+export TEXT_STABLE="Letzte stabile Kernel-Version"
+export TEXT_MICROCODE1="Du hast den neusten Mikrocode und Firmware für CPU und GPU schon installiert.\nEs ist kein Aktualisieren notwendig."
+export TEXT_ZAINSTALOWANY="Der Programm Netext73 wurde installiert.\nProgramm ausführen: WERKZEUGE/ZUBEHÖR."
+export TEXT_BRAK_DANYCH="Keine Angaben; Während die Informationen vom Server heruntergeladen worden waren, wurde die Verbindung unterbrochen"
+}
+#########################################################################################################################################################################
+tlumaczenia_uslugi(){
+export TEXT_POWROT="Zurück"
+export TEXT_ZAZNACZ="Markieren"
+export TEXT_MENU="Menü"
+export TEXT_OPIS="Beschreibung"
+export TEXT_INFORMACJA="INFORMATION"
+export TEXT_MENU_USLUGI="Wähle die Sektion aus, in der du Änderungen machen willst:"
+export TEXT_MENU_USLUGI1="SysV-Dienste verwalten"
+export TEXT_MENU_USLUGI1A="Upstart-Dienste verwalten"
+export TEXT_MENU_USLUGI1B="SysV-Dienste verwalten - Expert-Modus"
+export TEXT_MENU_USLUGI1C="Upstart-Dienste verwalten - Expert-Modus"
+export TEXT_MENU_USLUGI1D="Liste von Diensten mit Status anzeigen"
+export TEXT_MENU_USLUGI2="Dienste auswählen, die ein- oder ausgeschaltet werden sollen."
+export TEXT_MENU_USLUGI3="Bezeichnung des Dienstes"
+export TEXT_MENU_USLUGI4="Eingeschaltet"
+export TEXT_MENU_USLUGI5="Ausgeschaltet"
+export TEXT_MENU_USLUGI6="Dienste auswählen, die gestartet oder angehalten werden sollen."
+export TEXT_MENU_USLUGI7="Starten"
+export TEXT_MENU_USLUGI8="Dienste wählen, die gestartet oder angehalten, aus dem Autostart gelöscht oder dem Autostart hinzugefügt werden sollen."
+export TEXT_MENU_USLUGI9="Dienst"
+export TEXT_MENU_USLUGI10="Status"
+export TEXT_MENU_USLUGI11="Prozessnummer"
+export TEXT_MENU_USLUGI12="Du verwaltest den Dienst:"
+export TEXT_MENU_USLUGI22A="Startet den Dienst"
+export TEXT_MENU_USLUGI22B="Hält den Dienst an"
+export TEXT_MENU_USLUGI22C="Schaltet den Dienst beim Autostart ein"
+export TEXT_MENU_USLUGI22D="Schaltet den Dienst aus dem Autostart aus"
+export TEXT_MENU_USLUGI30="Dienst wird eingeschaltet"
+export TEXT_MENU_USLUGI31="Schließen dieses Fensters wird den Änderungsprozess abbrechen.\nPassword eingeben."
+export TEXT_MENU_USLUGI32="Dienst \$a1 wird zum Autostart hinzugefügt."
+export TEXT_MENU_USLUGI33="Dienst wird ausgeschaltet"
+export TEXT_MENU_USLUGI34="Dienst ist ausgeschaltet."
+export TEXT_MENU_USLUGI35="Dienst ist schon aktiv"
+export TEXT_MENU_USLUGI36="Dienst \$a1 wird aus dem Autostart ausgeschaltet."
+export TEXT_MENU_USLUGI37="Dienst ist schon inaktiv."
+export TEXT_MENU_USLUGI38="Liste der Prozesse mit Status:"
+export TEXT_MENU_USLUGI39="Bezeichnung"
+export TEXT_BRAK="Keine Angaben"
+}
+#########################################################################################################################################################################
+tlumaczenia_procedury(){
+export BRAKNETA="<span color=\"$kolor_textu\">Keine Verbindung mit dem Internet oder Server des Programms NeteXt'73. Später versuchen.</span>"  
+export TEXT_INST1="Installation der Zusammenhänge, die zu richtiger Arbeit des Programms notwendig sind."
+export TEXT_PROCEDURA_4="Willst du linux-firmware-nonfree installieren?"
+export TEXT_POBIERANIE="<span color=\"$kolor_textu\">Die Informationen werden vom Server heruntergeladen. Bitte warten!</span>"
+export TEXT_NETEXT2="System-Optimierer"
+export TEXT_POB1="s/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Download-Geschwindigkeit: \2\/s, verbleiben \3/"
+export TEXT_POB2="Die Datei wird heruntergeladen:"
+export TEXT_INFO1="<br>Kernels und APM-Skripts - e X t 7 3<br>Skript NeteXt'73 - NetBit73<br>Englisch-Übersetzung: Tomasz Przybył /FadeMind/<br>Deutsch-Übersetzung: Karolina Franieczek"
+export TEXT_PROCEDURA_1="Installation des Kernels e X t 7 3"
+export TEXT_SUMA_KONTROLNA="Achtung ! Man Versuchte die Datei herunterzuladen - die Kontrollsummen stimmen mit den angenommenen nicht überein."
+export TEXT_PROCEDURA_2="Mikrocode-Installation für die Plattform $komputerek"
+export TEXT_PROCEDURA_3="Mikrocode-Entfernen für die Plattform $komputerek"
+export TEXT_PROCEDURA_6="Installation der APM-Skripts"
+export TEXT_PROCEDURA_8_1="Änderung der APM-Skripts-Einstellungen auf "
+export TEXT_PROCEDURA_9="Entfernen der APM-Skripts"
+export TEXT_PROCEDURA_13="Hinzufügen der Änderungen in der Konfigurationsdatei GRUB"
+export TEXT_PROCEDURA_14="Treiber-Installation für die Grafikkarten Radeon"
+export TEXT_PROCEDURA_15="Treiber-Installation für die Grafikkarten Nvidia"
+export TEXT_KERNEL1="Folgende Kernel-Versionen werden entfernt:"
+export TEXT_KERNEL2="Der Kernel wurde installiert.\n\nNach dem Klicken auf OK\nwerden die heruntergeladene Dateien entfernt.\n\nDie Änderungen erfordern den System-Neustart.\n\nOK klicken"
+export TEXT_INSTALACJA1="Die ausgewählten Änderungen werden gleich ausgeführt. Schließen des Fensters wird den Prozess abbrechen."
+export TEXT_INSTALACJA2="\n\nABGESCHLOSSEN !!! - Enter-Taste drücken"
+export TEXT_PLATFORMA1="Die Plattform wurde ausgewählt"
+export TEXT_PLATFORMA2=".\nACHTUNG !!\nEs wird nicht empfohlen, erneute Installation der installierten Kernels durchzuführen, ohne sie früher entfernt zu haben."
+export TEXT_ZAZNACZ="Markieren"
+export TEXT_WYBIERZ_KERNEL="Kernel-Version zur Installation aus der Liste auswählen:"
+export TEXT_ZNITY1="installiert?"
+export TEXT_GRUB1="Unnötige Linien in der Datei werden entfernt"
+export TEXT_GRUB2="Änderungen in der Datei werden durchgeführt"
+export TEXT_GRUB3="Installation wurde abgebrochen. Von vorne beginnen, denn die Fortführung kann Systemschäden verursachen! Nochmals Änderungen in der GRUB-Sektion durchführen."
+export TEXT_INFORMACJA="INFORMATION"
+export TEXT_WYMAGANY_RESTART="Änderungen werden nach dem Neustart übernommen."
+export TEXT_UWAGA="ACHTUNG"
+export TEXT_INFO2="Du hast die Installation abgebrochen. Die Installationsdateien sind im Katalog geblieben:"
+export TEXT_ZAMKNIJ_PROGRAM="Du hast den Download der Datei abgebrochen! \n\n\nWeitere Arbeit des Programms kann eine Havarie verursachen\ndeshalb in 25 Sekunden wird der Programm automatisch geschlossen."
+export TEXT_RESTART="Bist du sicher, dass du den Computer neustarten willst?"
+}
+#########################################################################################################################################################################
+
+tlumaczenia_skrypty(){
+echo "brak"
+}
+
+
+
+
+
+
+
+

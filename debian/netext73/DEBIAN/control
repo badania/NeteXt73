@@ -1,0 +1,12 @@
+Package: netext73
+Version: 0.7.40
+Architecture: amd64
+Maintainer: eloaders <eloaders@linux.pl>
+Installed-Size: 1209
+Depends: libc6 (>= 2.7), libcairo2 (>= 1.2.4), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.24.0), libgtk2.0-0 (>= 2.24.0), libpango-1.0-0 (>= 1.18.0), libpangocairo-1.0-0 (>= 1.14.0), xterm, htop, saidar, dkms, ppa-purge, tasksel, xclip, coreutils, curl, pastebinit, powertop, build-essential, libncurses5, pm-utils, initramfs-tools, lm-sensors, perl, gcc
+Replaces: netext73
+Section: contrib/admin
+Priority: extra
+Homepage: http://www.netext73.pl
+Description: NeteXt'73 - optymalizator systemu
+  NeteXt'73 to rozbudowane narzedzie do wprowadzania optymalizacji systemow opartych o Ubuntu. Modyfikacje maja na celu podwyzszenie responsywnosci systemu przy jednoczesnym obnizeniu zuzycia energii.
