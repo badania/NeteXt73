@@ -1,3 +1,9 @@
+netext73 (0.7.41) stable; urgency=medium
+
+  * naprawa trybu root
+
+ -- eloaders <eloaders@linux.pl>  Thu, 10 Apr 2014 19:04:01 +0200
+
 netext73 (0.7.40) stable; urgency=medium
 
   * zmiany w instalatorze NV i w monitorze

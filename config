@@ -112,7 +112,7 @@ if [ $klawisz = 0 ]; then
 		echo $konfiguracja | cut -d "|" -f 6 > ~/.netext73/kernel_automat
 		echo $konfiguracja | cut -d "|" -f 7 > ~/.netext73/archiwum_deb
 		echo $konfiguracja | cut -d "|" -f 8 > ~/.netext73/https_link
-		echo $konfiguracja | cut -d "|" -f 10 > ~/.netext73/root_mode
+		echo $konfiguracja | cut -d "|" -f 9 > ~/.netext73/root_mode
 		if [ "$root_mode" != "$(cat ~/.netext73/root_mode)" ]; then
 		    killall -9 yad-netext
 		fi    
