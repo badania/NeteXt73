@@ -39,8 +39,13 @@ source /opt/NeteXt73/procedury
 #instalator sterowników do grafik Nvidia
 cd /tmp
 
-rm *.txt -f; rm *.sh -f; rm *.html -f
+usun(){
+rm *.txt* -f; rm *.sh -f; rm *.html -f
+rm *.deb -f
+rm nvidia-settings -f
+}
 
+usun
 if  [ "$bit2" = "i386" ]; then
 	dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI1"
 else
@@ -123,3 +128,4 @@ else
 		fi
 	fi
 fi
+usun

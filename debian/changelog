@@ -1,3 +1,9 @@
+netext73 (0.7.42) stable; urgency=medium
+
+  * poprawki instalatora grafik
+
+ -- eloaders <eloaders@linux.pl>  Thu, 10 Apr 2014 19:09:44 +0200
+
 netext73 (0.7.41) stable; urgency=medium
 
   * naprawa trybu root
