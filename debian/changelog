@@ -1,5 +1,11 @@
 netext73 (0.7.42) stable; urgency=medium
 
+  * przepięcie na bug.netext73.pl
+
+ -- eloaders <eloaders@linux.pl>  Mon, 14 Apr 2014 09:12:19 +0200
+
+netext73 (0.7.42) stable; urgency=medium
+
   * poprawki instalatora grafik
 
  -- eloaders <eloaders@linux.pl>  Thu, 10 Apr 2014 19:09:44 +0200

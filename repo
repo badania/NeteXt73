@@ -145,6 +145,10 @@ baza=(
 	"Stellarium - is a free open source planetarium"
 	"Stellarium"
 	
+	"ppa:me-davidsansome/clementine"
+	"Clementine - nowoczesny odtwarzacz muzyki i program do zarządzania kolekcją utworów"
+	"Clementine - modern music player and library organizer"
+	"clementine"
 	"ppa:videolan/stable-daily"
 	"VLC - to darmowy i otwarty, wieloplatformowy odtwarzacz multimedialny"
 	"VLC - is a free and open, cross-platform media player"
