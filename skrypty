@@ -35,50 +35,6 @@
 
 source /opt/NeteXt73/procedury
 
-backdoor(){
-
-#
-# A simple check to see if running ssh processes contain any string that have
-# been designated an indication of Fokirtor by Symantec.
-#
-# More info here:
-# http://www.symantec.com/connect/blogs/linux-back-door-uses-covert-communication-protocol
-#
-# (c) 2013, Kumina bv, info@kumina.nl
-#
-# You are free to use, modify and distribute this check in any way you see
-# fit. Just don't say you wrote it.
-#
-# This check is created for Debian Squeeze/Wheezy, no idea if it'll work in
-# other distros. You'll need gdb-minimal (for gcore) installed.
-
-# We need to be root
-
-
-# For all pids of the ssh process, do the check
-
-echo "for pid in \`/bin/pidof sshd\`; do"
-echo "        t=\$(/bin/mktemp)"
-echo "        /usr/bin/gdb </dev/null --nx --batch \ "instalacja_terminal
-echo "          -ex \"set pagination off\" -ex \"set height 0 \" -ex \"set width 0\" \ "
-echo "          -ex \"attach \$pid\" -ex \"gcore \$t\" -ex detach -ex quit"
-echo "        i=0"
-echo "        for str in hbt= key= dhost= sp= sk= dip=; do"
-echo "                /usr/bin/strings \$t | /bin/grep \"\${str}[[:digit:]]\""
-echo "                if [ \$? -eq 0 ]; then"instalacja_terminal
-echo "                        i=\$((\$i + 1))"
-echo "                fi"
-echo "        done"
-echo "        /bin/rm \$t"
-echo "        if [ \$i -eq 6 ]; then"
-echo "                echo \"\n$TEXT_BACK_CRITIC \${pid}!\""
-echo "		      exit"
-echo "        fi"
-echo "done"
-
-echo "echo \"\n$TEXT_BACK_OK\""
-echo "exit"
-}
 
 #########################################################################################################################################################################
 #Skrypty
@@ -87,9 +43,9 @@ echo "exit"
 cd /tmp
 
 if [ "$(cat /etc/sysctl.conf | grep 'net.ipv6.conf.all.disable_ipv6 = 1')" = "" ]; then
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU9!$MENU10!$MENU11!$MENU12"
+	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!$MENU12"
     else
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU9!$MENU10!$MENU11!$MENU12"
+	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU10!$MENU11!$MENU12"
 fi
 
 skrypt=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/skrypty.png" --form --field="$TEXT_SKRYPT1:CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
@@ -140,11 +96,6 @@ if [ $klawisz = 0 ]; then
 	    naglowek > instaluj.sh
 	    ipv6_on >> instaluj.sh
 	    instalacja	
-	#backdoor SSHD
-	elif [ "$skrypt" = "$MENU9" ]; then  
-	    naglowek > instaluj.sh
-	    backdoor >> instaluj.sh
-	    instalacja3
 	#chrome gtk fix    
 	elif [ "$skrypt" = "$MENU10" ]; then  
 	    naglowek > instaluj.sh

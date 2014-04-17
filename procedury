@@ -494,9 +494,6 @@ echo "rm /tmp/*.txt -f; rm /tmp/*.sh -f"
 instalacja(){
 xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
 }
-instalacja_terminal(){
-x-terminal-emulator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent"
-}
 
 #instalacja bez pytań
 instalacja2(){
