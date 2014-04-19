@@ -572,10 +572,10 @@ fi
 
 sysv2(){
 rm *.txt -f
-perl /opt/NeteXt73/chkconfig --list > sysv.txt
+sudo rcconf --list | sort > sysv.txt
 cat sysv.txt | awk '{print $1}' > nazwy_uslug.txt
-sed -i 's/[0-6].on/X/g' sysv.txt
-sed -i 's/[0-6].off/-/g' sysv.txt
+sed -i 's/ on/X/g' sysv.txt
+sed -i 's/ off/-/g' sysv.txt
 }
 klucze(){
 echo "sudo apt-get update 2> /tmp/keymissing"

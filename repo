@@ -251,7 +251,8 @@ if [ "$klawisz" = "0" ]; then
     elif [ "$backup" = "$a4" ]; then
 	x-terminal-emulator -e bash -c "echo -e \"$a4\n\"; sudo apt-get clean; sudo mv /var/lib/apt/lists /tmp; sudo mkdir /var/lib/apt/lists; sudo apt-get update; echo -e \"$TEXT_INSTALACJA\"; read ent"
 #########################################################################################################################################################################
-    elif [ "$backup" = "$a5" ]; then
+#Moduł usuwania zbędnych kluczy
+  elif [ "$backup" = "$a5" ]; then
 	rm *.txt -f
 	sprawdz_klucze
 	if [ "$(cat klucze1.txt)" != "" ]; then

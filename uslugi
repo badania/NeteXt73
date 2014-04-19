@@ -43,14 +43,14 @@ petla_duza="tak"
 while [ $petla_duza = "tak" ]; do
 	echo "nie" > /tmp/ok.txt
 	
-	uslugi=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --text="<span color=\"$kolor_textu\">$TEXT_MENU_USLUGI</span>" --form --field=" :CB" "$TEXT_MENU_USLUGI1!$TEXT_MENU_USLUGI1A!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C!$TEXT_MENU_USLUGI1D"  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
+	uslugi=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --text="<span color=\"$kolor_textu\">$TEXT_MENU_USLUGI</span>" --form --field=" :CB" "$TEXT_MENU_USLUGI1!$TEXT_MENU_USLUGI1A!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C"  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
 	klawisz=$?; uslugi=$(echo $uslugi | cut -d "|" -f 1)
 	#SysV - automat
 	if [ $klawisz = 0 ]; then 
 	if [ "$uslugi" = "$TEXT_MENU_USLUGI1" ] ; then
 		petla="tak"
 		while [ $petla = "tak" ]; do
-		      sysv2 2>&1 | pobieranie2
+		      sysv2 #
 		      for i in $(seq 1 $(wc -l sysv.txt | awk '{print $1}')); do 
 		      head sysv.txt -n$i | tail -n1 > 10.txt
 			  if  [ "$(grep "X" 10.txt | head -n1)" != "" ]
@@ -59,14 +59,14 @@ while [ $petla_duza = "tak" ]; do
 			  else
 			      echo -e "-\toff" >> stan_uslug.txt
 			  fi
-		      done
+		      done  2>&1 | pobieranie2
 		      
 		      paste -d " " nazwy_uslug.txt stan_uslug.txt > 4.txt
 		      
 		      #usunięcie usług upstart z sysV
 		      ls /etc/init/*.conf* | sed 's/\.conf.*//g' | cut -d "/" -f 4 | tr '\n' ' ' > 1.txt
 		      for i in $(cat 1.txt) ; do
-		      sed -i "/$i/d" 4.txt 
+			  sed -i "/$i/d" 4.txt 
 		      done
 		      
 		      echo $(sed -e '/^[^#]/s:^:FALSE :' 4.txt) > sysv.txt
@@ -81,12 +81,15 @@ while [ $petla_duza = "tak" ]; do
 				do
 					export a1=$a
 					    if [ "$(grep $a1 sysv1.txt | awk '{print $3}' | grep "on")" != "" ]; then
-						sudo update-rc.d -f $a1 remove
+						#sudo update-rc.d -f $a1 remove
+						sudo rcconf --off $a1
+						sudo service $a1 stop
 					    else
-						sudo update-rc.d -f $a1 defaults
+						#sudo update-rc.d -f $a1 defaults
+						sudo rcconf --on $a1 
+						sudo service $a1 start
 					    fi
 				done
-				#instalacja2
 			  fi
 			    rm *.txt -f; rm *.sh -f
 		      fi
@@ -209,17 +212,6 @@ while [ $petla_duza = "tak" ]; do
 			    rm *.txt -f
 			fi
 		  done
-	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1D" ] ; then
-	#sysv lista usług
-	sysv2  2>&1 | pobieranie2
-	#przestawianie kolum zgodnie ze standardem  sysv-rc-conf
-	cat sysv.txt | awk '{print $2}' > 0.txt
-	cat sysv.txt | awk '{print $3" "$4" "$5" "$6" "$7}' > 1.txt
-	cat sysv.txt | awk '{print $8}' > 3.txt
-	paste -d " " nazwy_uslug.txt 1.txt 0.txt 3.txt > sysv1.txt
-	a=$(yad-netext --center --height=560 --width=460 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>SysV - list</b></span>\n$TEXT_MENU_USLUGI38" --column="$TEXT_MENU_USLUGI39"   --column="1" --column="2" --column="3" --column="4" --column="5" --column="0" --column="6" --list --list $(cat sysv1.txt))
-	rm *.txt -f
-
 	fi
 	fi
 	if [ -z "$uslugi" ]; then
