@@ -1,6 +1,9 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.44
+-	zmiana '_' na spacje w moduje usuwania kluczy GPG
+-	naprawa ikony w kernelach, teraz w premium pokazuje się ikona premium, a w zwykłych zwykła
 v0.7.43
 -	przepisanie sysv na rcconf
 v0.7.42

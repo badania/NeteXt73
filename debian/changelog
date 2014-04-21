@@ -1,3 +1,9 @@
+netext73 (0.7.44) stable; urgency=medium
+
+  * zmiana podkreślników na spacje w module usuwania kluczy GPG
+
+ -- eloaders <eloaders@linux.pl>  Mon, 21 Apr 2014 08:40:54 +0200
+
 netext73 (0.7.43) stable; urgency=medium
 
   * przepisanie SysV na rcconf

@@ -264,17 +264,20 @@ if [ "$klawisz" = "0" ]; then
 		    a=$(($i + 1))
 		    head -n $a klucze1.txt | tail -n 1 | sed 's/uid//' | sed 's/^[[:space:]]*//' | tr ' ' '_' >> nazwa.txt
 		done
-
-		paste -d " " klucz.txt nazwa.txt > lista.txt
-		echo $(sed -e '/^[^#]/s:^:FALSE :' lista.txt) > lista.txt
+		paste -d "]" klucz.txt nazwa.txt  > lista.txt
+		sed -i 's/_/ /g' lista.txt
+		echo $(sed -e '/^[^#]/s:^:FALSE]:' lista.txt) > lista.txt
+		sed -i 's/FALSE/]FALSE/g' lista.txt
+		sed -i 's/]//' lista.txt
 		petla="tak"
 		while [ $petla = "tak" ]; do
-		wybor=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/klucze.png" --height=420 --width=690  --column="" --column="$TEXT_KLUCZ" --column="$TEXT_DOSTAWCA_KLUCZA" --text="<span color=\"$kolor_textu\">$TEXT_ZAZNACZ_KLUCZE</span>" --list --checklist $(cat lista.txt))
+		IFS=]
+		wybor=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/klucze.png" --height=420 --width=690  --column="" --column="$TEXT_KLUCZ" --column="$TEXT_DOSTAWCA_KLUCZA" --text="<span color=\"$kolor_textu\">$TEXT_ZAZNACZ_KLUCZE</span>" --list --checklist $(cat lista.txt)  --separator="]" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		klawisz=$?
 		if [ "$klawisz" = "0" ]; then 
 			if [ "$(echo $wybor)" != "" ]; then
 			    petla="nie"
-			    echo $wybor | sed -e 's/TRUE|/\n/g' | cut -d '|' -f 1 | sed -e '/^\ *$/d' > usun.txt
+			    echo $wybor | sed -e 's/TRUE|/\n/g' | cut -d '|' -f 1 | sed -e '/^\ *$/d' | awk '{print $2}' > usun.txt
 			    usun_klucze
 			else
 			    yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_NIC_NIE_ZAZNACZYLES"
@@ -282,7 +285,7 @@ if [ "$klawisz" = "0" ]; then
 		elif [ "$klawisz" = "1" ]; then 
 			petla="nie"
 		fi
-		done
+		done | tr '\n' ']'
 	else
 		yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_NIE_POBRALES_KLUCZY"
 	fi

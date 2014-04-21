@@ -66,15 +66,16 @@ else
     fi
     if [ "$1" = "premium" ]; then
 	pliki="/opt/NeteXt73/kernel-premium"
+	ikona="linux-premium.png"
     else
 	pliki="/opt/NeteXt73/kernel"
+	ikona="linux.png"
     fi
     if [ "$kern" = "" ]; then
-	    yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/linux.png" \
+	    yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/$ikona" \
 	    --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="260" --read-dir="$pliki" --width="560" --height="470" \
 	    --title="$nazwa_skryptu " --button="$TEXT_MENU_INSTALATOR3:2" --button="$TEXT_MENU_INSTALATOR4:3" --button="$TEXT_MENU_INSTALATOR5:4" --button="$TEXT_POWROT:1" --single-click
-	    klawisz=$?
-	   
+	    klawisz=$?   
     fi
 fi
 
@@ -85,14 +86,15 @@ elif [ "$klawisz" = "3" ]; then
 elif [ "$klawisz" = "4" ]; then
       kern="$TEXT_MENU_INSTALATOR5"
 fi
+
 rodzaj=$(echo $kern | cut -d " " -f 1)
 
 if [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] || [ "$(echo $kern | grep 'Intel C2D, AMD K8')" != "" ]; then
       echo $kern > ~/.netext73/instalator_kerneli
 fi
-#if [ "$rodzaj" = "Brazos" ] || [ "$rodzaj" = "K8" ] || [ "$rodzaj" = "Atom" ]; then
-    rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
-#fi
+
+rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
+
 	if [ "$(echo $kern | grep i7)" != "" ] || [ "$(echo $kern | grep Brazos)" != "" ]; then
 		if [ -e ~/.netext73/kernel_premium ] && [ "$(cat  ~/.netext73/kernel_premium)" != "" ]; then
 		    str="$(cat ~/.netext73/kernel_premium)"
