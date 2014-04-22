@@ -1,3 +1,9 @@
+netext73 (0.7.45) stable; urgency=medium
+
+  * włączanie i wyłączanie wifi N
+
+ -- eloaders <eloaders@linux.pl>  Tue, 22 Apr 2014 12:08:25 +0200
+
 netext73 (0.7.44) stable; urgency=medium
 
   * zmiana podkreślników na spacje w module usuwania kluczy GPG

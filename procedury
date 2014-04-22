@@ -396,6 +396,13 @@ echo "sudo sed -i 's/echo 0 > \$bt/echo 1 > \$bt/g' \$i"
 echo "done"
 echo "fi"
 
+echo "if [ \"\$wifin\" = \"FALSE\" ];then"
+echo "sudo rm -f /etc/modprobe.d/wifin.conf"
+echo "else"
+echo "echo 'options iwlwifi 11n_disable=1' | sudo tee -a /etc/modprobe.d/wifin.conf"
+echo "echo 'options ath9k nohwcrypt=1'  | sudo tee -a /etc/modprobe.d/wifin.conf"
+echo "fi"
+
 echo "if [ \"\$wifionoff\" = \"FALSE\" ];then"
 echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
 echo "do"
