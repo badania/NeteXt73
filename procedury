@@ -396,7 +396,7 @@ echo "sudo sed -i 's/echo 0 > \$bt/echo 1 > \$bt/g' \$i"
 echo "done"
 echo "fi"
 
-echo "if [ \"\$wifin\" = \"FALSE\" ];then"
+echo "if [ \"\$wifin\" = \"TRUE\" ];then"
 echo "sudo rm -f /etc/modprobe.d/wifin.conf"
 echo "else"
 echo "echo 'options iwlwifi 11n_disable=1' | sudo tee -a /etc/modprobe.d/wifin.conf"
