@@ -4,6 +4,7 @@
 v0.7.45
 -	APM - czek do włączania i wyłączania wifi N na Atheros i Intelu
 -	wprowadzenie dodatkowej walidacji dla grafik Radeon
+-	poprawki tłumaczeń
 v0.7.44
 -	zmiana '_' na spacje w moduje usuwania kluczy GPG
 -	naprawa ikony w kernelach, teraz w premium pokazuje się ikona premium, a w zwykłych zwykła

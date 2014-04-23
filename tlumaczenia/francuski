@@ -45,6 +45,7 @@ export TEXT_FIX1="APM marche/arrêt pour économiser la batterie sur WiFi"
 export TEXT_FIX2="APM marche/arrêt le WiFi sur la batterie"
 export TEXT_FIX3="APM marche/arrêt le Bluetooth sur la batterie"
 export TEXT_FIX4="APM marche/arrêt le module rts5139"
+export TEXT_FIX5="APM On/Off WiFi b/g/[N]"
 
 #########################################################################################################################################################################
 #tlumaczenia_backuprepo

@@ -87,7 +87,7 @@ else
 		done
 	    fi
 	elif [ "$1" = "radeon" ]; then
-		if [ "$(lspci | grep VGA | awk '{print tolower($0)}' | grep radeon)" = "" ] || [ "$glxinfo | grep 'AMD Radeon HD' | sed 's/.*HD //g' | sed 's/ .*//g')" -le 5000 ]; then
+		if [ "$(lspci | grep VGA | awk '{print tolower($0)}' | grep radeon)" = "" ] || [ "$(glxinfo | grep 'AMD Radeon HD' | sed 's/.*HD //g' | sed 's/ .*//g')" -le 5000 ]; then
 		  dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI3"
 		else
 		    wget $adres_sterownikow/index.html  2>&1 | pobieranie2 

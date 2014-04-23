@@ -45,6 +45,7 @@ export TEXT_FIX1="APM on/off WiFi power saving on the battery"
 export TEXT_FIX2="APM on/off WiFi on the battery"
 export TEXT_FIX3="APM on/off Bluetooth on the battery"
 export TEXT_FIX4="APM on/off module rts5139"
+export TEXT_FIX5="APM On/Off WiFi b/g/[N]"
 
 #########################################################################################################################################################################
 #tlumaczenia_backuprepo

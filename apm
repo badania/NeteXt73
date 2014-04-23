@@ -121,7 +121,7 @@ while [ $petla_duza = "tak" ]; do
 		--field="$TEXT_FIX2:CHK" "$wifionoff" \
 		--field="$TEXT_FIX3:CHK" "$btfix" \
 		--field="$TEXT_FIX4:CHK" "$rts5139fix" \
-		--field="WifiN:CHK" "$wifin" \
+		--field="$TEXT_FIX5:CHK" "$wifin" \
 		--button="gtk-ok:0" --button="$TEXT_POWROT:1" )
 		 
 		klawisz=$?; a=$(echo $aa | cut -d "|" -f 3); export wififix=$(echo $aa | cut -d "|" -f 4);export wifionoff=$(echo $aa | cut -d "|" -f 5); export btfix=$(echo $aa | cut -d "|" -f 6); export rts5139fix=$(echo $aa | cut -d "|" -f 7); export wifin=$(echo $aa | cut -d "|" -f 8)
