@@ -70,6 +70,11 @@ baza=(
 	"i-nex - tool to inform about the hardware and system"
 	"i-nex"
 	
+	"ppa:x2go/stable"
+	"X2Go - klient zdalnego dostępu"
+	"X2Go - everywhere@home"
+	"x2goclient"
+	
 	"ppa:irie/blender"
 	"Blender - darmowym/open source pakiet animacji 3D"
 	"Blender - free and open source 3D animation suite"
