@@ -1,3 +1,9 @@
+netext73 (0.7.47) stable; urgency=medium
+
+  * zmiana natywnego serwera
+
+ -- eloaders <eloaders@linux.pl>  Thu, 24 Apr 2014 11:35:01 +0200
+
 netext73 (0.7.46) stable; urgency=medium
 
   * dodanie kolejnego serwera do wyboru

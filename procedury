@@ -103,6 +103,8 @@ if [ -e ~/.netext73/server_no ]; then
     else
 	konto="3999827"
     fi
+else
+    konto="3999827"
 fi
 #zmiana adresu w premium
 if [ -e ~/.netext73/kernel_premium ] && [ "$(cat  ~/.netext73/kernel_premium | grep $konto)" = "" ];then
