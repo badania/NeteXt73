@@ -3,6 +3,8 @@
 
 v0.7.47
 -	poprawka w natywnym serwerze
+-	ustawienie zapamiętywania w konfigu aktualnego serwera
+-	zmiany w pliku log, dodatkowe informacje o ustawieniach programu
 v0.7.46
 -	dodanie kolejnego serwera z danymi, adres przełącza się w konfigu
 -	dodanie trzeciego serwera i ustawienie działającego jako default

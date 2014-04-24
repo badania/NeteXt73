@@ -139,6 +139,29 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     lspci >> system$losowa.log
     echo -e "\n\n#################################  lsusb ################################################################" >> system$losowa.log
     lsusb >> system$losowa.log
+    echo -e "\n\n#################################  apm_status ############################################################" >> system$losowa.log
+    cat ~/.netext73/apm_status >> system$losowa.log
+    echo -e "\n\n#################################  archiwum_deb ##########################################################" >> system$losowa.log
+    cat ~/.netext73/archiwum_deb >> system$losowa.log
+    echo -e "\n\n#################################  https_link ############################################################" >> system$losowa.log
+    cat ~/.netext73/https_link >> system$losowa.log
+    echo -e "\n\n#################################  instalator_kerneli ####################################################" >> system$losowa.log
+    cat ~/.netext73/instalator_kerneli >> system$losowa.log
+    echo -e "\n\n#################################  jezyk #################################################################" >> system$losowa.log
+    cat ~/.netext73/jezyk >> system$losowa.log
+    echo -e "\n\n#################################  kernel_automat ########################################################" >> system$losowa.log
+    cat ~/.netext73/kernel_automat >> system$losowa.log
+    
+    echo -e "\n\n#################################  monitor ###############################################################" >> system$losowa.log
+    cat ~/.netext73/monitor >> system$losowa.log
+    echo -e "\n\n#################################  root_mode #############################################################" >> system$losowa.log
+    cat ~/.netext73/root_mode >> system$losowa.log
+    echo -e "\n\n#################################  server_no #############################################################" >> system$losowa.log
+    cat ~/.netext73/server_no >> system$losowa.log
+    echo -e "\n\n#################################  soft ##################################################################" >> system$losowa.log
+    cat ~/.netext73/soft >> system$losowa.log
+    echo -e "\n\n#################################  stan tmp ##############################################################" >> system$losowa.log
+    ls -la /tmp >> system$losowa.log
     
     
     
@@ -159,3 +182,4 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
 	    fi
     fi
 fi
+rm system*log dmeseg_$USER -f
