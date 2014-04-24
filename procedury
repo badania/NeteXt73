@@ -94,21 +94,31 @@ export warning1="dialog-warning"
 export adres_opisu="http://www.netext73.pl/search/label/opis_netext73"
 
 
+#adres serwera
+if [ -e ~/.netext73/server_no ]; then
+    if [ "$(cat ~/.netext73/server_no)" = "server2" ];then
+	konto="3999827"
+    else
+	konto="72313101"
+    fi
+fi
+#zmiana adresu w premium
+if [ -e ~/.netext73/kernel_premium ] && [ "$(cat  ~/.netext73/kernel_premium | grep $konto)" = "" ];then
+    sed -i "s/u.*kernele/u\/$konto\/kernele/g" ~/.netext73/kernel_premium
+fi
 #przełącznik http/https
 if [ -e ~/.netext73/https_link ] && [ "$(cat ~/.netext73/https_link)" = "FALSE" ]; then
       echo "FALSE" > ~/.netext73/https_link
-      export adres_glowny="http://dl.dropbox.com/u/72313101"
+      export adres_glowny="http://dl.dropbox.com/u/$konto"
       export adres_skryptow="$adres_glowny/skrypty"
       export adres_firmware="$adres_glowny/linux-firmware"
       export adres_sterownikow="$adres_glowny/sterowniki2"
-      export polozenie_skryptu="http://dl.dropboxusercontent.com/u/2552069/ext73"
 else
       echo "TRUE" > ~/.netext73/https_link
-      export adres_glowny="https://dl.dropbox.com/u/72313101"
+      export adres_glowny="https://dl.dropbox.com/u/$konto"
       export adres_skryptow="$adres_glowny/skrypty"
       export adres_firmware="$adres_glowny/linux-firmware"
       export adres_sterownikow="$adres_glowny/sterowniki2"
-      export polozenie_skryptu="https://dl.dropboxusercontent.com/u/2552069/ext73"
 fi
 
 #kolor textu
