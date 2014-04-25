@@ -1,3 +1,9 @@
+netext73 (0.7.48) stable; urgency=medium
+
+  * zmiany w module logów
+
+ -- eloaders <eloaders@linux.pl>  Fri, 25 Apr 2014 09:26:52 +0200
+
 netext73 (0.7.47) stable; urgency=medium
 
   * zmiana natywnego serwera

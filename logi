@@ -97,14 +97,15 @@ echo "$TEXT_LOGI8 GRUB: <b>$(ls -al /etc/default/grub | cut -d " " -f 3)</b>" >>
 echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI9</b></span>" >> system$losowa.log
 grep "GRUB_CMDLINE_LINUX=" /etc/default/grub >> system$losowa.log
 echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI10</b></span>" >> system$losowa.log
-
 echo "GCC - $(gcc --version | head -n 1)" >> system$losowa.log
-
-
 echo "Powertop - $(dpkg -l | grep powertop | awk '{print $3}' | head -n 1)" >> system$losowa.log
+echo -e "\n<span color=\"$kolor_textu\"><b>OpenGL</b></span>" >> system$losowa.log
+glxinfo | grep OpenGL | sed 's/OpenGL ext.*//g' | sed 's/OpenGL core profile extensions://g' | sed '/^[ \t]*$/ d' >> system$losowa.log
 
-yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="pastebin:3"
+
+yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="pastebin:3" --button="Firewall status:4"
 klawisz=$?
+echo $klawisz
 if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     echo -e "\n$TEXT_LOGI1\n$(dpkg -l | grep 'linux-image*'| grep -v -E 'linux-image-extra*|linux-image-generic' | sed -e 's/linux-image-//g' | awk '{print $2}'| sort -r | column -n)" > system$losowa.log
     echo -e "\n\n#################################  microcode  ##########################################################" >> system$losowa.log
@@ -139,6 +140,8 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     lspci >> system$losowa.log
     echo -e "\n\n#################################  lsusb ################################################################" >> system$losowa.log
     lsusb >> system$losowa.log
+    echo -e "\n\n#################################  glxinfo ##############################################################" >> system$losowa.log
+    glxinfo >> system$losowa.log
     echo -e "\n\n#################################  apm_status ############################################################" >> system$losowa.log
     cat ~/.netext73/apm_status >> system$losowa.log
     echo -e "\n\n#################################  archiwum_deb ##########################################################" >> system$losowa.log
@@ -151,7 +154,6 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     cat ~/.netext73/jezyk >> system$losowa.log
     echo -e "\n\n#################################  kernel_automat ########################################################" >> system$losowa.log
     cat ~/.netext73/kernel_automat >> system$losowa.log
-    
     echo -e "\n\n#################################  monitor ###############################################################" >> system$losowa.log
     cat ~/.netext73/monitor >> system$losowa.log
     echo -e "\n\n#################################  root_mode #############################################################" >> system$losowa.log
@@ -181,5 +183,7 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
 		  xdg-open $(cat dmesg_$USER | pastebinit) |  xdg-open $(cat system$losowa.log | pastebinit)
 	    fi
     fi
+elif  [ "$klawisz" = "4" ] ; then
+    x-terminal-emulator -e bash -c "sudo ufw status verbose; read ent"
 fi
-rm system*log dmeseg_$USER -f
+rm losowa system*log dmesg_$USER -f

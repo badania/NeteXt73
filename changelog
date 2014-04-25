@@ -1,6 +1,9 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.48
+-	zmiany w module logów
+-	doszło repo pipeline-silverlight
 v0.7.47
 -	poprawka w natywnym serwerze
 -	ustawienie zapamiętywania w konfigu aktualnego serwera
