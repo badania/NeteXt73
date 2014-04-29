@@ -124,7 +124,7 @@ if [ "$(cat microcode.txt)" = "" ]; then
       firm=$TEXT_BRAK_DANYCH
       a1="TRUE"
 else
-      if [ "$(( $(echo $twoj_firmware | sed 's/\./,/g')*1000 )) " -ge "$(( $(echo $nowy_firmware | sed 's/\./,/g')*1000 ))" ]; then
+      if [ "$(( $(echo $twoj_firmware | sed 's/\.//g') )) " -ge "$(( $(echo $nowy_firmware | sed 's/\.//g')  ))" ]; then
 	  firm="$TEXT_UPDATE4"
 	  a1="FALSE"
       else
