@@ -41,7 +41,10 @@ source /opt/NeteXt73/procedury
 cd /tmp
 rm *.html -f; wget $adres_firmware/index.html 2>&1 | pobieranie2 
 if [ -e index.html ]; then
-	wersja_firmware=$(cat index.html | grep "href=.*linux" | cut -d '"' -f 2 | cut -d '_' -f 2)
+	nowy_firmware=$(cat index.html | grep "href=.*linux" | cut -d '"' -f 2 | cut -d '_' -f 2)
+	twoj_firmware=$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1)
+	t1=$(( $(echo $twoj_firmware | sed 's/\.//' | sed 's/\./,/')*100 ))
+	n1=$(( $(echo $nowy_firmware | sed 's/\.//' | sed 's/\./,/')*100 ))
 	rm *.html -f
 	rm /tmp/*.txt -f; rm /tmp/*.sh -f
 	if [ "$(cat /proc/cpuinfo | grep Intel)" != "" ]; then
@@ -58,18 +61,16 @@ if [ -e index.html ]; then
 	      fi
 	fi
 	#sprawdzenie czy jest nowsza wersja
-	if [ "$stan_microcode" != "-" ]; then
-	      if [ "$wersja_firmware" != "$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1)" ]; then
+	if [ "$stan_microcode" != "-" ] && [ "$t1" -lt "$n1" ]; then
 	        yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_MICROCODE2"
 		if [ $? = 0 ]; then
 		  naglowek > instaluj.sh
 		  microcode_inst >> instaluj.sh
 		  microcode_firmware  
 		fi
-	      fi
 	fi
 	naglowek > instaluj.sh
-	if [ "$stan_microcode" != "-" ] && [ "$wersja_firmware" = "$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1)" ]; then
+	if [ "$stan_microcode" != "-" ] && [ "$t1" -ge "$n1" ]; then
 		dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_MICROCODE1"
 	elif [ "$stan_microcode" = "-" ]; then
 		yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_MICROCODE2"
