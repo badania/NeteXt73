@@ -242,6 +242,23 @@ echo "fi"
 echo "echo 'tak' > /tmp/ok.txt"
 }
 
+stan_firmware(){
+twoj_firmware=$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1 | sed 's/~.*//')
+if [ "$(cat /proc/cpuinfo | grep Intel)" != "" ]; then
+      if [ "$(dpkg -l intel-microcode | grep "ii" | awk '{print $1}'| head -n1)" = "ii" ]; then
+	    stan_microcode=$TEXT_TAK
+      else
+	    stan_microcode="-"
+      fi
+elif [ "$(cat /proc/cpuinfo | grep AMD)" != "" ]; then
+      if [ -e /lib/firmware/amd-ucode/microcode_amd.bin ]; then
+	    stan_microcode=$TEXT_TAK
+      else
+	    stan_microcode="-"
+      fi
+fi
+}
+
 microcode_firmware(){
 #nonfree
 if [ "$(dpkg -l | grep linux-firmware-nonfree | grep ii )" = "" ]; then
@@ -254,6 +271,7 @@ if [ "$(dpkg -l | grep linux-firmware-nonfree | grep ii )" = "" ]; then
 else
       echo "nie" > /tmp/ok.txt
 fi
+instalacja
 }
 
 microcode_inst(){
@@ -267,7 +285,6 @@ echo "if [ \"\$(lsb_release -c | awk '{print \$2}' | grep 'precise' )\" != \"\" 
 echo "sudo /usr/sbin/update-intel-microcode && sudo microcode_ctl -u"
 echo "fi"
 echo "fi"
-echo "rm *.*deb -f"
 
 }
 

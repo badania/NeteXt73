@@ -39,23 +39,8 @@ source /opt/NeteXt73/procedury
 #instalator microcode i firmware
 
 cd /tmp
-twoj_firmware=$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1 | sed 's/~.*//')
-t1=$(( $(echo $twoj_firmware | sed 's/\.//' | sed 's/\./,/')*100 ))
-n1=$(( $(echo $nowy_firmware | sed 's/\.//' | sed 's/\./,/')*100 ))
-rm /tmp/*.txt -f; rm /tmp/*.sh -f
-if [ "$(cat /proc/cpuinfo | grep Intel)" != "" ]; then
-      if [ "$(dpkg -l intel-microcode | grep "ii" | awk '{print $1}'| head -n1)" = "ii" ]; then
-	    stan_microcode=$TEXT_TAK
-      else
-	    stan_microcode="-"
-      fi
-elif [ "$(cat /proc/cpuinfo | grep AMD)" != "" ]; then
-      if [ -e /lib/firmware/amd-ucode/microcode_amd.bin ]; then
-	    stan_microcode=$TEXT_TAK
-      else
-	    stan_microcode="-"
-      fi
-fi
+stan_firmware
+
 #sprawdzenie czy jest nowsza wersja
 if [ "$stan_microcode" != "-" ] && [ "$twoj_firmware" = "" ]; then
 	yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_MICROCODE2"

@@ -117,10 +117,16 @@ else
       a2="TRUE"
       ((ilosc_aktualizacji++))
 fi
+stan_firmware
 #microcode
-if [ "$twoj_firmware" = "" ]; then
-      firm=$TEXT_BRAK_DANYCH
+if [ "$stan_microcode" != "-" ] && [ "$twoj_firmware" = "" ]; then
+      firm=$TEXT_UPDATE5
       a1="TRUE"
+      menu="$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 APM!$TEXT_UPDATE2!$TEXT_UPDATE8"
+elif [ "$stan_microcode" = "-" ]; then
+      firm=$TEXT_UPDATE5 
+      a1="TRUE"
+      menu="$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 APM!$TEXT_UPDATE2!$TEXT_UPDATE8"
 else
       firm=v$twoj_firmware
       a1="FALSE"
