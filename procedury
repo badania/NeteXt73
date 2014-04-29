@@ -119,13 +119,11 @@ if [ -e ~/.netext73/https_link ] && [ "$(cat ~/.netext73/https_link)" = "FALSE" 
       echo "FALSE" > ~/.netext73/https_link
       export adres_glowny="http://dl.dropbox.com/u/$konto"
       export adres_skryptow="$adres_glowny/skrypty"
-      export adres_firmware="$adres_glowny/linux-firmware"
       export adres_sterownikow="$adres_glowny/sterowniki2"
 else
       echo "TRUE" > ~/.netext73/https_link
       export adres_glowny="https://dl.dropbox.com/u/$konto"
       export adres_skryptow="$adres_glowny/skrypty"
-      export adres_firmware="$adres_glowny/linux-firmware"
       export adres_sterownikow="$adres_glowny/sterowniki2"
 fi
 
@@ -256,35 +254,11 @@ if [ "$(dpkg -l | grep linux-firmware-nonfree | grep ii )" = "" ]; then
 else
       echo "nie" > /tmp/ok.txt
 fi
-rm *.*deb -f
-inst="tak"
-if [ "$(dpkg -l | grep linux-firmware | head -n 1 | awk '{print $3}')" != "$wersja_firmware" ]; then
-    a="linux-firmware_"$wersja_firmware"_all.deb"
-    dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $adres_firmware/$a 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
-    wget $adres_firmware/$a 2>&1 | pobieranie  
-    zamknij_program
-    rm 1.txt; wget $adres_firmware/1.txt 2>&1 | pobieranie  
-    if [ "$(grep $(md5sum linux-firmware*) 1.txt)" != "" ]; then
-	  inst="tak"
-    else
-	  yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
-	  rm 1.txt -f
-	  rm *.deb -f
-	  inst="nie"
-    fi
-fi
-if [ "$inst" = "tak" ]; then
-  instalacja
-  rm *.html -f
-  rm 1.txt -f
-fi
 }
 
 microcode_inst(){
 echo "echo \"$TEXT_PROCEDURA_2\""
-echo "if [ -e linux-firmware* ]; then"
-echo "/usr/bin/yes | sudo dpkg -i linux-firmware*"
-echo "fi"
+echo "sudo apt-get install linux-firmware"
 echo "if [ \"\$(cat /tmp/ok.txt)\" = \"tak\" ]; then"
 echo "sudo apt-get install linux-firmware-nonfree -y"
 echo "fi"
