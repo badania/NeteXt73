@@ -84,16 +84,13 @@ if [ "$1" = "first" ]; then
 	exit 0
 fi
 
-
-
 menu=""
 ilosc_aktualizacji=0
-
-twoj_netext=$(cat /opt/NeteXt73/procedury | grep wersja | head -n 1 | sed 's/wersja=//')
 
 wget $adres_glowny/kernele/index.html -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie2 
 
 twoj_firmware=$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1 | sed 's/~.*//')
+nowy_kernel=$(grep 'href='   ./kernel.txt | grep 'href="v'| cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/' | sort -r | head -n 1 | sed 's/v...._//')
 
 if [ "$(uname -r | grep ext | grep pro )" != "" ];then
     twoj_kernel="e X t 7 3 - pro v$(uname -r| cut -d "-" -f 4)_$(uname -r | cut -d '-' -f 1)"
@@ -102,11 +99,9 @@ elif [ "$(uname -r | grep ext )" != "" ];then
 else
     twoj_kernel=$(uname -r)
 fi
-nowy_kernel=$(grep 'href='   ./kernel.txt | grep 'href="v'| cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/' | sort -r | head -n 1 | sed 's/v...._//')
 
 twoj_apm=$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)
 wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
-
 
 #GRUB
 if [ "$(grep 'acpi_osi=' /etc/default/grub)" != "" ]; then
@@ -115,7 +110,9 @@ else
       a2="TRUE"
       ((ilosc_aktualizacji++))
 fi
+
 stan_firmware
+
 #microcode
 if [ "$stan_microcode" != "-" ] && [ "$twoj_firmware" = "" ]; then
       firm=$TEXT_UPDATE5a
@@ -149,6 +146,7 @@ else
       stable=$(cat stable.txt | grep tar.xz | head -n 1 | cut -d '-' -f 2 | sed 's/.tar.*//')
       nr=$stable
 fi
+
 #kernel zainstalowany
 if [ "$(cat kernel.txt)" = "" ]; then
       kern=$TEXT_BRAK_DANYCH
