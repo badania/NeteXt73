@@ -26,6 +26,7 @@ make: nothing_to_make
 nothing_to_make:
 	
 	@echo -e '\033[1;32mNie będę budował NeteXt73 :)...\033[0m'
+		
 make_yad_netext:
 	
 	@echo -e '\033[1;32mBuild Yad-netext...\033[0m'
