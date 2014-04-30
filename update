@@ -91,9 +91,7 @@ ilosc_aktualizacji=0
 
 twoj_netext=$(cat /opt/NeteXt73/procedury | grep wersja | head -n 1 | sed 's/wersja=//')
 
-wget $adres_glowny/kernele/index.html -O kernel.txt | \
-wget https://www.kernel.org/ -O stable.txt | \
-wget $adres_skryptow/APM2/index.html -O apm.txt  2>&1 | pobieranie2 
+wget $adres_glowny/kernele/index.html -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie2 
 
 twoj_firmware=$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1 | sed 's/~.*//')
 
@@ -107,7 +105,7 @@ fi
 nowy_kernel=$(grep 'href='   ./kernel.txt | grep 'href="v'| cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/' | sort -r | head -n 1 | sed 's/v...._//')
 
 twoj_apm=$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)
-wersja_apm=$(cat apm.txt | grep "href=.*advanced" | cut -d '"' -f 2 | cut -d '_' -f 6 | head -n 1 | sed 's/.tar.gz//')
+wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 
 
 #GRUB
@@ -131,21 +129,18 @@ else
       firm=v$twoj_firmware
       a1="FALSE"
 fi
+
 #APM
-if [ "$(cat apm.txt)" = "" ]; then
-      apm=$TEXT_BRAK_DANYCH
-      a3="TRUE"
+if [ "$twoj_apm" = "$wersja_apm" ]  ; then
+    apm="$TEXT_UPDATE4"
+    a3="FALSE"
 else
-      if [ "$twoj_apm" = "$wersja_apm" ]  ; then
-	  apm="$TEXT_UPDATE4"
-	  a3="FALSE"
-      else
-	  apm="$TEXT_UPDATE5 $wersja_apm"
-	  menu="$TEXT_UPDATE1 APM!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE2!$TEXT_UPDATE8"
-	  a3="TRUE"
-	  ((ilosc_aktualizacji++))
-      fi
+    apm="$TEXT_UPDATE5 $wersja_apm"
+    menu="$TEXT_UPDATE1 APM!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE2!$TEXT_UPDATE8"
+    a3="TRUE"
+    ((ilosc_aktualizacji++))
 fi
+
 #kernele stable
 if  [ "$(cat stable.txt)" = "" ]; then
       stable=$TEXT_BRAK_DANYCH

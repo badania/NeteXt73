@@ -7,6 +7,9 @@ datarootdir = $(PREFIX)/share
 MOVE_COMMAND = mv
 MKDIR = mkdir
 INSTALL = install -m
+DELDIR	= rm -rf
+APM_DIR = APM
+APM_FILES = $(wildcard $(APM_DIR)/*)
 DESKTOPFILES_DIR = desktopfiles
 DESKTOPFILES_FILES=$(wildcard $(DESKTOPFILES_DIR)/*.desktop)
 GRAPHIC_KERNEL_DIR = kernel
@@ -38,6 +41,7 @@ install: create_directories \
 	 install_translations_files \
 	 install_bash_files \
 	 install_yad_netext \
+	 install_APM \
 	 install_launcher
 clean:
 	
@@ -49,6 +53,7 @@ install_yad_netext:
 	
 create_directories:
 	
+	$(DELDIR) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(DESKTOPFILES_DIR)/
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_BASE_DIR)/
@@ -57,6 +62,7 @@ create_directories:
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(CONTACTS_DIR)/
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(TRANSLATIONS_DIR)/
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(MENU_DIR)/
+	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(APM_DIR)/
 	$(MKDIR) -p ${DESTDIR}${datarootdir}/pixmaps
 	$(MKDIR) -p $(DESTDIR)$(datarootdir)/applications/
 	$(MKDIR) -p $(DESTDIR)$(PREFIX)$(BINDIR)
@@ -68,6 +74,10 @@ install_desktopfiles:
 install_desktopicons:
 	
 	$(INSTALL) 0755 $(GRAPHIC_BASE_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_BASE_DIR)
+	
+install_APM:
+	
+	$(INSTALL) 0755 $(APM_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(APM_DIR)
 	
 install_desktopfiles_kernel:
 	

@@ -1,3 +1,9 @@
+netext73 (0.7.51) stable; urgency=medium
+
+  * integracja APM z NeteXt
+
+ -- eloaders <eloaders@linux.pl>  Wed, 30 Apr 2014 13:04:06 +0200
+
 netext73 (0.7.50) stable; urgency=medium
 
   * firmware w repo

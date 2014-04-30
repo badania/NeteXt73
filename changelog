@@ -3,6 +3,7 @@
 
 v0.7.51
 -	poprawka komunikatów przy mozliwej aktualizacji firmware
+-	integracja APM z Netext'73
 v0.7.50
 -	dodanie linux-firmware do repozytorium
 -	zmiany w procedurach,update i microcode pozwalające na instalację z repozytorium
