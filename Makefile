@@ -7,7 +7,6 @@ datarootdir = $(PREFIX)/share
 MOVE_COMMAND = mv
 MKDIR = mkdir
 INSTALL = install -m
-DELDIR	= rm -rf
 APM_DIR = APM
 APM_FILES = $(wildcard $(APM_DIR)/*)
 DESKTOPFILES_DIR = desktopfiles
@@ -54,7 +53,6 @@ install_yad_netext:
 	
 create_directories:
 	
-	$(DELDIR) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(DESKTOPFILES_DIR)/
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_BASE_DIR)/

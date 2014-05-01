@@ -36,7 +36,7 @@
 source /opt/NeteXt73/procedury
 
 #########################################################################################################################################################################
-$monitor
+#monitor
 
 cd /tmp
 if [ -e ~/.netext73/monitor ]; then
@@ -80,7 +80,7 @@ if [ -e /sys/class/power_supply/BAT*/uevent ];then
       "$a2" "powertop" \
       "$a3" "HTOP" \
       "$a4" "saidar" \
-      "$a5" "battery" 
+      "$a5" "battery" \
       --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
       klawisz=$?
 else
