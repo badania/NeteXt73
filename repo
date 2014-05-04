@@ -75,6 +75,11 @@ baza=(
 	"X2Go - everywhere@home"
 	"x2goclient"
 	
+	"ownCloud"
+	"owncloud-client"
+	"owncloud-client"
+	"owncloud-client"
+	
 	"ppa:irie/blender"
 	"Blender - darmowym/open source pakiet animacji 3D"
 	"Blender - free and open source 3D animation suite"
@@ -167,7 +172,7 @@ baza=(
 	"ppa:ubuntu-wine/ppa"
 	"WINE - Uruchamianie aplikacji Windows na Linuksie"
 	"WINE - running Windows applications on Linux"
-	"wine"
+	"wine1.7"
 	
 	"deb http://repository.spotify.com stable non-free"
 	"Spotify - to serwis muzyki cyfrowej"
@@ -373,6 +378,9 @@ if [ "$klawisz" = "0" ]; then
 			  echo "sudo sed -i '/virtualbox/d' /etc/apt/sources.list"  >> instaluj.sh
 			  echo "sudo sed -i '/virtualbox/d' /etc/apt/sources.list.d/*"  >> instaluj.sh
 			  echo "sudo apt-get purge -y ${paczka[$i]}" >> instaluj.txt
+			elif [ "${repo[$i]}" = "ownCloud" ]; then
+			  echo "sudo sed -i '/download.opensuse.org\/repositories\/isv:\/ownCloud/d' /etc/apt/sources.list.d/*"  >> instaluj.sh
+			  echo "sudo apt-get purge -y ${paczka[$i]}" >> instaluj.txt
 			elif [ "${repo[$i]}" = "deb http://dl.google.com/linux/chrome/deb/ stable main" ]; then
 			  echo "sudo sed -i '/deb.*dl.google.com\/linux\/chrome\/deb\/ stable main/ d' /etc/apt/sources.list"  >> instaluj.sh
 			  echo "sudo sed -i '/deb.*dl.google.com\/linux\/chrome\/deb\/ stable main/ d' /etc/apt/sources.list.d/*"  >> instaluj.sh
@@ -397,6 +405,11 @@ if [ "$klawisz" = "0" ]; then
 			  echo "sudo apt-get install --install-recommends pipelight-multi" >> instaluj.txt
 			  echo "sudo pipelight-plugin --update" >> instaluj.txt
 			  echo "sudo pipelight-plugin --enable silverlight" >> instaluj.txt
+			elif [ "${repo[$i]}" = "ownCloud" ]; then
+			  echo "sudo sh -c \"echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/xUbuntu_$(lsb_release -rs)/ /' >> /etc/apt/sources.list.d/owncloud-client.list\"" >> instaluj.sh
+			  echo "wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/xUbuntu_$(lsb_release -rs)/Release.key" >> instaluj.txt
+			  echo "sudo apt-key add - < Release.key" >> instaluj.txt
+			  echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
 			elif [ "${repo[$i]}" = "ppa:leolik/leolik" ]; then
 			  if [ -e ~/.notify-osd ]; then
 				echo "ok" > /dev/null
