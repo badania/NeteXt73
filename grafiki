@@ -67,7 +67,7 @@ else
 				      a="nvidia-settings_331.xx_amd64.deb"; a1=$a
 				      dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $adres_sterownikow/$a 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
 				      wget $adres_sterownikow/$a 2>&1 | pobieranie 
-				  elif  [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" = "337" ] || [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -gt "337" ]; then
+				  elif  [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -ge "337" ]; then
 				      a="nvidia-settings_337.xx_amd64.deb"; a1=$a
 				      dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $adres_sterownikow/$a 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
 				      wget $adres_sterownikow/$a 2>&1 | pobieranie   
