@@ -1,6 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.54
+-	zmiana na YAD 0.26.9
+-	zmiana w paczce deb, usuwanie źródeł starych wersji APM podczas instalacji nowej wersji
+-	zmiana w paczce deb, preinst
 v0.7.53
 -	doszło repozytorium owncloud
 -	repo wine - instalacja wine1.7 zamiast wine

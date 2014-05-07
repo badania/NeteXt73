@@ -36,6 +36,8 @@
 
 G_BEGIN_DECLS
 
+#define YAD_SETTINGS_FILE "yad.conf"
+
 #define YAD_RESPONSE_OK         0
 #define YAD_RESPONSE_CANCEL     1
 #define YAD_RESPONSE_TIMEOUT   	70
@@ -95,7 +97,6 @@ typedef enum {
   YAD_COLUMN_CHECK,
   YAD_COLUMN_RADIO,
   YAD_COLUMN_IMAGE,
-  YAD_COLUMN_TOOLTIP,
   YAD_COLUMN_HIDDEN,
   YAD_COLUMN_ATTR_FORE,
   YAD_COLUMN_ATTR_BACK,
@@ -250,6 +251,7 @@ typedef struct {
   gint hide_column;
   gint expand_column;
   gint search_column;
+  gint tooltip_column;
   guint limit;
   PangoEllipsizeMode ellipsize;
   gchar *dclick_action;
@@ -270,6 +272,7 @@ typedef struct {
 
 typedef struct {
   gboolean middle;
+  gboolean hidden;
   gchar *menu;
 } YadNotificationData;
 
@@ -389,6 +392,10 @@ typedef struct {
   GdkPixbuf *small_fallback_image;
   gchar *term;
   guint max_tab;
+
+  GtkPrintSettings *print_settings;
+  GtkPageSetup *page_setup;
+
 } YadSettings;
 
 extern YadSettings settings;
@@ -458,13 +465,11 @@ inline void strip_new_line (gchar * str);
 
 gchar **split_arg (const gchar * str);
 
-char *escape_markup (char *str);
-char *unescape_markup (char *str);
-char *escape_str (char *str);
-
 YadNTabs *get_tabs (key_t key, gboolean create);
 
 GtkWidget *get_label (gchar *str, guint border);
+
+char *escape_str (char *str);
 
 G_END_DECLS
 

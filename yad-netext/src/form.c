@@ -119,7 +119,7 @@ expand_action (gchar * cmd)
                     tb = gtk_text_view_get_buffer (GTK_TEXT_VIEW (g_slist_nth_data (fields, num)));
                     gtk_text_buffer_get_bounds (tb, &b, &e);
                     buf = gtk_text_buffer_get_text (tb, &b, &e, FALSE);
-                    txt = g_strescape (buf, NULL);
+                    txt = escape_str (buf);
                     g_string_append (xcmd, txt);
                     g_free (txt);
                     g_free (buf);

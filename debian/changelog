@@ -1,3 +1,9 @@
+netext73 (0.7.54) stable; urgency=medium
+
+  * przejście na YAD 0.26.9
+
+ -- eloaders <eloaders@linux.pl>  Tue, 06 May 2014 18:31:06 +0200
+
 netext73 (0.7.53) stable; urgency=medium
 
   * poprawki w repo
