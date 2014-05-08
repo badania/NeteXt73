@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.55
+-	naprawa 2xNV-settings
 v0.7.54
 -	zmiana na YAD 0.26.9
 -	zmiana w paczce deb, usuwanie źródeł starych wersji APM podczas instalacji nowej wersji
