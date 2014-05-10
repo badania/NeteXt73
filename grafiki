@@ -63,7 +63,7 @@ else
 		if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 			  rm *.deb -f
 			  wget $adres_sterownikow/1.txt 2>&1 | pobieranie
-				  if [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -gt "331" ]
+				  if [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -gt "331" ];then
 				      a="nvidia-settings_331.20-0ubuntu8_amd64.deb"; a1=$a
 				      dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $adres_sterownikow/$a 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
 				      wget $adres_sterownikow/$a 2>&1 | pobieranie 
