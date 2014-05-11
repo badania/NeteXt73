@@ -1,3 +1,9 @@
+netext73 (0.7.56) stable; urgency=medium
+
+  * poprawki w nvidia instalatorze
+
+ -- eloaders <eloaders@linux.pl>  Sun, 11 May 2014 14:39:38 +0200
+
 netext73 (0.7.55) stable; urgency=medium
 
   * naprawa 2xnv settings
