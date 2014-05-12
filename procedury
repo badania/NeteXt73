@@ -96,19 +96,19 @@ export adres_opisu="http://www.netext73.pl/search/label/opis_netext73"
 
 #adres serwera
 if [ -e ~/.netext73/server_no ]; then
+    #if [ "$(cat ~/.netext73/server_no)" = "server2" ];then
+	#konto="3999827"
+	#wybor_serwera="server2!server1!server3"
     if [ "$(cat ~/.netext73/server_no)" = "server2" ];then
-	konto="3999827"
-	wybor_serwera="server2!server1!server3"
-    elif [ "$(cat ~/.netext73/server_no)" = "server3" ];then
 	konto="2936246"
-	wybor_serwera="server3!server1!server2"
+	wybor_serwera="server2!server1"
     else
 	konto="72313101"
-	wybor_serwera="server1!server2!server3"
+	wybor_serwera="server1!server2"
     fi
 else
     konto="72313101"
-    wybor_serwera="server1!server2!server3"
+    wybor_serwera="server1!server2"
 fi
 #zmiana adresu w premium
 if [ -e ~/.netext73/kernel_premium ] && [ "$(cat  ~/.netext73/kernel_premium | grep $konto)" = "" ];then
@@ -637,6 +637,7 @@ echo "sudo apt-get install libpango-1.0-0 -y"
 echo "if [ \"\$(ls | grep '304')\" != \"\" ]; then"
 echo "sudo apt-get install nvidia-settings nvidia-common"
 echo "fi"
+echo "sudo apt-get -f install pkg-config screen-resolution-extra"
 echo "/usr/bin/yes | sudo dpkg -i *.deb"
 echo "if [ -e ~/.netext73/archiwum_deb ] && [ \"\$(cat ~/.netext73/archiwum_deb)\" = \"TRUE\" ]; then"
 echo "sudo cp *.deb /var/cache/apt/archives/ -f"
