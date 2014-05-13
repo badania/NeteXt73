@@ -1,6 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.57
+-	dadanie utopic do ppamainline
+-	poprawki w logach dla kerneli generic
+-	poprawki w instalatorze lokalnych kerneli, wyłączenie wsparcia dla innych niż ext
 v0.7.56
 -	poprawki w instalatorze Nvidia
 v0.7.55

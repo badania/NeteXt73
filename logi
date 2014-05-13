@@ -51,9 +51,9 @@ fi
 
 #informacje o systemie
 if [ "$(dmesg | grep gcc)" != "" ]; then
-    echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI0</b></span>\n$(dmesg | grep gcc)" > system$losowa.log	
+    echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI0</b></span>\n$(dmesg | grep gcc  | sed 's/.*Linux/Linux/g' )" > system$losowa.log	
 else
-    echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI0</b></span>\n$(uname -a)" > system$losowa.log	
+    echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI0</b></span>\n$(uname -a  | sed 's/.*Linux/Linux/g' )" > system$losowa.log	
 fi
 echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI2</b></span>" >> system$losowa.log
 echo -e "$(grep 'model name' /proc/cpuinfo | head -n1 | sed -e 's/model name'[[:space:]]:'//g' | sed -e 's/ //')" >>system$losowa.log

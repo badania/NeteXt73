@@ -121,13 +121,14 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 		fi
 	elif [ "$(echo $kern | grep K8)" != "" ] || [ "$(echo $kern | grep Atom)" != "" ]; then
 		strona="$adres_glowny/kernele/"
+	#lokalne
 	elif [ "$kern" = "$TEXT_MENU_INSTALATOR3" ]; then
 		a=$(yad-netext --center --file-selection --filename="$download/" --title="$TEXT_DEB1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		if [ $? = 0 ]; then
-			if [ "$(echo $a | grep 'linux-image' | grep '.deb')" != "" ]; then
+			if [ "$(echo $a | grep 'linux-image' | grep 'ext' | grep '.deb')" != "" ]; then
 				cd $(echo $a | sed -e 's/linux.*//g');     b=$(echo $a | sed -e 's/linux-image/linux-headers/g')
 				echo "tak" > /tmp/ok.txt
-			elif [ "$(echo $a | grep 'linux-headers' | grep '.deb')" != "" ]; then
+			elif [ "$(echo $a | grep 'linux-headers' | grep 'ext' | grep '.deb')" != "" ]; then
 				cd $(echo $a | sed -e 's/linux.*//g');     b=$(echo $a | sed -e 's/linux-headers/linux-image/g')
 				echo "tak" > /tmp/ok.txt
 			else
@@ -144,16 +145,17 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 				restart
 			fi
 		fi
+	#tylko nagłówki
 	elif [ "$kern" = "$TEXT_MENU_INSTALATOR4" ]; then
 		a=$(yad-netext --center --file-selection --filename="$download/" --title="$TEXT_DEB1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		if [ $? = 0 ]; then
-		if [ "$(echo $a | grep 'linux-image' | grep '.deb')" != "" ]; then
+		if [ "$(echo $a | grep 'linux-image' | grep 'ext' | grep '.deb')" != "" ]; then
 			cd $(echo $a | sed -e 's/linux.*//g');	b=$(echo $a | sed -e 's/linux-image/linux-headers/g')
 			rm /tmp/kernel -fr; 	mkdir /tmp/kernel
 			cd /tmp/kernel;    		cp $b /tmp/kernel/
 			xterm -T instalator -e bash -c "/usr/bin/yes | sudo dpkg -i linux-headers*"
 		        restart
-		elif [ "$(echo $a | grep 'linux-headers' | grep '.deb')" != "" ]; then
+		elif [ "$(echo $a | grep 'linux-headers' | grep 'ext' | grep '.deb')" != "" ]; then
 			cd $(echo $a | sed -e 's/linux.*//g')
 			rm /tmp/kernel -fr; 	mkdir /tmp/kernel
 			cd /tmp/kernel;		cp $a /tmp/kernel/
@@ -167,7 +169,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 	elif [ "$kern" = "$TEXT_MENU_INSTALATOR5" ]; then
 		cd /tmp; rm *.html -f
 		strona="http://kernel.ubuntu.com/~kernel-ppa/mainline/"
-		WERSJA_DISTRO=$(yad-netext --center --title="$nazwa_skryptu" --width=420 --window-icon="/opt/NeteXt73/ikony/linux.png" --text="$TEXT_PPA_1 <span color=\"$kolor_textu\">$(lsb_release -cs)</span>" --form --field="$TEXT_RODZAJ_SYSTEMU:CB"  "trusty!saucy!raring!!quantal!precise" )
+		WERSJA_DISTRO=$(yad-netext --center --title="$nazwa_skryptu" --width=420 --window-icon="/opt/NeteXt73/ikony/linux.png" --text="$TEXT_PPA_1 <span color=\"$kolor_textu\">$(lsb_release -cs)</span>" --form --field="$TEXT_RODZAJ_SYSTEMU:CB"  "utopic!trusty!saucy!raring!quantal!precise" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		klawisz=$?; export WERSJA_DISTRO=$(echo $WERSJA_DISTRO | cut -d "|" -f 1)
 		if [ "$klawisz" = 0 ];then
 			wget $strona  2>&1 | pobieranie2 
