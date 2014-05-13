@@ -499,6 +499,7 @@ echo "sudo update-grub"
 echo "if [ \"$(dpkg -l | grep '^rc' | awk '{print $2}' | head -n1)\" != \"\" ]; then sudo dpkg -l | grep '^rc' | awk '{print \$2}' | xargs sudo dpkg --purge; fi"
 echo "rm /tmp/*.txt -f; rm /tmp/*.sh -f"
 }
+
 #instalacja za chwile nastąpi wprowadzenie zmian
 instalacja(){
 xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
