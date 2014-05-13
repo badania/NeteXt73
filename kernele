@@ -132,7 +132,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 				cd $(echo $a | sed -e 's/linux.*//g');     b=$(echo $a | sed -e 's/linux-headers/linux-image/g')
 				echo "tak" > /tmp/ok.txt
 			else
-				yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=15 
+				yad-netext --center --error --title="$nazwa_skryptu" --text="$(echo $TEXT_DEB1 | sed 's/:/!/' | sed 's/headers/headers ext73 /' | sed 's/image/image ext73 /')" --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=15 
 				echo "nie" > /tmp/ok.txt
 			fi
 			if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
@@ -162,7 +162,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 			xterm -T instalator -e bash -c "/usr/bin/yes | sudo dpkg -i linux-headers*"
 			restart
 		else
-			yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=15
+			yad-netext --center --error --title="$nazwa_skryptu"  --text="$(echo $TEXT_DEB1 | sed 's/:/!/' | sed 's/lub linux-image//' | sed 's/headers/headers ext73 /')" --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=15
 		fi
 		fi
 	    
