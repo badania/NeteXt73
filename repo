@@ -130,6 +130,11 @@ baza=(
 	"Kubuntu Backports - backports of new versions of KDE and major KDE apps for Kubuntu"
 	"kubuntu-desktop"
 	
+	"ppa:kubuntu-ppa/ppa"
+	"Kubuntu PPA"
+	"Kubuntu PPA"
+	"kubuntu-desktop"
+	
 	"ppa:libreoffice/ppa"
 	"LibreOffice - repozytorium najnowszych wersji pakietu biurowego LibreOffice"
 	"LibreOffice - repository of latest version of the office suite LibreOffice"
