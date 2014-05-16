@@ -152,6 +152,7 @@ export TEXT_GRUB22="Apporte des modifications ou accepte l'entrée sélectionné
 export TEXT_GRUB23="Pour les utilisateurs avancés seulement. Soyez prudent!\nApporte des modifications ou reviens au menu précédent"
 export TEXT_NETBIT_MENU18="Réglez le temps au bout duquel menu GRUB disparaît:"
 export TEXT_NETBIT_MENU19="Entre le mot de passe de compte root ou ferme cette fenêtre."
+export TEXT_ROZDZIELCZOSC="Résolution"
 
 #########################################################################################################################################################################
 #tlumaczenia_kernele

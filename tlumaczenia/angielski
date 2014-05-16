@@ -152,7 +152,7 @@ export TEXT_GRUB22="Customize entries or accept present:"
 export TEXT_GRUB23="For advanced users only. Be careful!\nMake changes or return to the previous menu"
 export TEXT_NETBIT_MENU18="Display time GRUB menu:"
 export TEXT_NETBIT_MENU19="Enter root password or close this window."
-
+export TEXT_ROZDZIELCZOSC="Resolution"
 
 #########################################################################################################################################################################
 #tlumaczenia_kernele

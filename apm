@@ -97,22 +97,9 @@ while [ $petla_duza = "tak" ]; do
 	rts5139fix_przed=$rts5139fix
 	
 	aktualny_apm=$(echo $stan_apm | awk '{print $1}')
-	if [ "$aktualny_apm" = "conservative-conservative" ];then
-	    menu="conservative-conservative!ondemand-ondemand!intel-performance!intel-powersave!performance-conservative!performance-ondemand"
-	elif [ "$aktualny_apm" = "ondemand-ondemand" ];then
-	    menu="ondemand-ondemand!conservative-conservative!intel-performance!intel-powersave!performance-conservative!performance-ondemand"
-	elif [ "$aktualny_apm" = "intel-performance" ];then
-	    menu="intel-performance!conservative-conservative!ondemand-ondemand!intel-powersave!performance-conservative!performance-ondemand"
-	elif [ "$aktualny_apm" = "intel-powersave" ];then
-	    menu="intel-powersave!intel-performance!conservative-conservative!ondemand-ondemand!performance-conservative!performance-ondemand"
-	elif [ "$aktualny_apm" = "performance-conservative" ];then
-	    menu="performance-conservative!intel-powersave!intel-performance!conservative-conservative!ondemand-ondemand!performance-ondemand"
-	elif [ "$aktualny_apm" = "performance-ondemand" ];then
-	    menu="performance-ondemand!intel-powersave!intel-performance!conservative-conservative!ondemand-ondemand!performance-conservative"
-	else
-	    menu="conservative-conservative!ondemand-ondemand!intel-performance!intel-powersave!performance-conservative!performance-ondemand"
-	fi
-
+	menu_apm=$(echo "!conservative-conservative!ondemand-ondemand!intel-performance!intel-powersave!performance-conservative!performance-ondemand" | sed  "s/$aktualny_apm//" | sed 's/!!/!/')
+	menu=$(echo "$aktualny_apm$menu_apm" | sed 's/!!/!/')
+	
 	if [ "$stan_apm" != "-" ]; then
 		aa=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png" --form \
 		--field="$TEXT_WERSJA_APM:RO" --field="$TEXT_AKTUALNY_PROFIL_APM:RO" --field="$TEXT_ZMIEN_PROFIL_APM:CB" \

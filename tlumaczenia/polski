@@ -152,6 +152,7 @@ export TEXT_GRUB22="Dokonaj zmian lub zaakceptuj wybrany wpis:"
 export TEXT_GRUB23="Tryb tylko i wyłącznie dla osób zaawansowanych.\nDokonaj zmian lub wróć do poprzedniego menu"
 export TEXT_NETBIT_MENU18="Ustaw czas po jakim zniknie menu GRUB:"
 export TEXT_NETBIT_MENU19="Po podaniu hasła zmiana czasu pokazywania menu GRUB zostanie wprowadzona. Zamknięcie tego okna anuluje proces dokonywania zmiany."
+export TEXT_ROZDZIELCZOSC="Rozdzielczość"
 
 #########################################################################################################################################################################
 #tlumaczenia_kernele
