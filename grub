@@ -110,7 +110,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			menu3="standard@$TEXT_GRUB19"
 		    fi
 		    #rozdzielczość
-		    aktualna=$(cat /etc/default/grub | grep 'GRUB_GFXPAYLOAD_LINUX' | head -n 1 | sed 's/.*GRUB_GFXPAYLOAD_LINUX=//')
+		    aktualna=$(cat /etc/default/grub | grep 'GRUB_GFXMODE' | head -n 1 | sed 's/.*GRUB_GFXMODE=//')
 		    if [ "$(echo $aktualna | grep 'x')" = "" ]; then
 			aktualna="640x480"
 		    fi
@@ -119,23 +119,35 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 		    @1400x1050@1024x600@1680x1050@1600x1200@1600x900@1920x1080@1920x1200" | sed "s/$aktualna//" | sed 's/@@/@/')
 		    menu4=$(echo "$aktualna$menu_rozdz" | sed 's/@@/@/')
 		    
+		    aktualna=$(cat /etc/default/grub | grep 'GRUB_GFXPAYLOAD_LINUX' | head -n 1 | sed 's/.*GRUB_GFXPAYLOAD_LINUX=//')
+		    if [ "$(echo $aktualna | grep 'x')" = "" ]; then
+			aktualna="640x480"
+		    fi
+		    
+		    menu_rozdz=$( echo "@640x480@1024x768@1280x720@1366x768@1280x800@1440x900@1280x1024@1600x1024 \
+		    @1400x1050@1024x600@1680x1050@1600x1200@1600x900@1920x1080@1920x1200" | sed "s/$aktualna//" | sed 's/@@/@/')
+		    menu5=$(echo "$aktualna$menu_rozdz" | sed 's/@@/@/')
+		    
 		    acpi_wpis=$( yad-netext --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --form  --item-separator="@" \
 		    --field="$TEXT_SKRYPTEXT_10:TXT" \
 		    --field="ACPI:CB" --field="$TEXT_GRUB14:CB" --field="$TEXT_GRUB17:CB" \
 		    --field="$TEXT_NETBIT_MENU18:NUM" \
-		    --field="$TEXT_ROZDZIELCZOSC:CB" \
+		    --field="$TEXT_ROZDZIELCZOSC GRUB:CB" \
+		    --field="$TEXT_ROZDZIELCZOSC Plymouth:CB" \
 		    "$wpis_grub" \
 		    "$menu1" \
 		    "$menu2" \
 		    "$menu3" \
 		    "$czas[@-1..10[@1]]" \
-		    "$menu4" )
+		    "$menu4" \
+		    "$menu5" )
 		    if [ $? = 0 ]; then
 			  w0=$(echo $acpi_wpis  | cut -d "|" -f 2)				#acpi Linux/Windows pcie_aspm=force
 			  w1=$(echo $acpi_wpis  | cut -d "|" -f 3)				#
 			  w2=$(echo $acpi_wpis  | cut -d "|" -f 4)				#podświetlenie
 			  export w3=$(echo $acpi_wpis  | cut -d "|" -f 5 | sed 's/,.*//g' ) 	#grub timeout
-			  export w4=$(echo $acpi_wpis  | cut -d "|" -f 6)			#rozdzielczość
+			  export w4=$(echo $acpi_wpis  | cut -d "|" -f 6)			#rozdzielczość GRUB
+			  export w5=$(echo $acpi_wpis  | cut -d "|" -f 7)			#rozdzielczość Plymouth
 			  if [ "$w0" = "acpi_osi='!Windows 2012' acpi_osi=Linux" ]; then w0="acpi_osi='!Windows 2012' acpi_osi=Linux pcie_aspm=force"
 			  else 
 			      w0="acpi_osi=Linux pcie_aspm=force"
@@ -147,8 +159,9 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  if [ "$w2" = "standard" ]; then      		w2=""
 			  elif [ "$w2" = "$TEXT_GRUB19" ]; then  	w2=" acpi_backlight=vendor"
 			  fi
-			  wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2" --field="$TEXT_ROZDZIELCZOSC:RO" "$w4" )
-				    wpis_grub=$(echo $wpis_grub | sed 's/|//g')
+			  wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_ROZDZIELCZOSC Plymouth:RO" "$w4" "$w5" )
+				    wpis_grub=$(echo $wpis_grub | sed 's/|//g' | sed "s/$w4//" | sed "s/$w5//" )
+				    echo $wpis_grub
 				    if [ "$wpis_grub" != "" ];then
 					instaluj_grub
 				    fi
