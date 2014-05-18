@@ -5,6 +5,7 @@ v0.7.58
 -	dodane kubuntu ppa
 -	dodanie możliwości wyboru rozdzielczości GRUB
 -	poprawki kodu w APM
+-	ustawienie min rozdzielczości GRUB na 1024x600
 v0.7.57
 -	dadanie utopic do ppamainline
 -	poprawki w logach dla kerneli generic
