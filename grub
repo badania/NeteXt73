@@ -134,6 +134,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  "$menu4" )
 		    else
 			  menu_rozdz=$(echo $menu_rozdzielczosci | sed "s/$aktualna//" | sed 's/@@/@/')
+			  menu5=$(echo "$aktualna$menu_rozdz" | sed 's/@@/@/')
 			  acpi_wpis=$( yad-netext --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --form  --item-separator="@" \
 			  --field="$TEXT_SKRYPTEXT_10:TXT" \
 			  --field="ACPI:CB" --field="$TEXT_GRUB14:CB" --field="$TEXT_GRUB17:CB" \
