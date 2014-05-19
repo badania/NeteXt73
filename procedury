@@ -555,6 +555,8 @@ echo "sudo sed -i -e \"s/.*GRUB_GFXMODE=.*/GRUB_GFXMODE=$w4/\" /etc/default/grub
 if [ "$w5" != "" ];then
 echo "sudo sed -i -e \"s/.*GRUB_GFXPAYLOAD_LINUX=.*/GRUB_GFXPAYLOAD_LINUX=$w5/\" /etc/default/grub"
 fi
+echo "sudo sed -i '/GRUB_BACKGROUND/ d'  /etc/default/grub"
+echo "echo 'GRUB_BACKGROUND=/opt/NeteXt73/menu/grub_background.jpg' | sudo tee -a /etc/default/grub"
 echo "sudo chown root:root /etc/default/grub"
 echo "sudo update-grub"  
 echo "echo 'tak' > /tmp/ok.txt"

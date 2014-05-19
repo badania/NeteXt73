@@ -20,6 +20,7 @@ GRAPHIC_BASE_FILES = $(wildcard $(GRAPHIC_BASE_DIR)/*.png)
 CONTACTS_DIR = kontakty
 CONTACTS_FILES = $(wildcard $(CONTACTS_DIR)/*.desktop)
 MENU_DIR = menu
+MENU_FILES = $(wildcard $(MENU_DIR)/*)
 TRANSLATIONS_DIR = tlumaczenia
 make: nothing_to_make
 nothing_to_make:
@@ -90,13 +91,10 @@ install_contacts:
 	
 	$(INSTALL) 0755 $(CONTACTS_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(CONTACTS_DIR)
 	
-install_menu: install_desktop_menu_file
+install_menu:
 	
+	$(INSTALL) 0755 $(MENU_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(MENU_DIR)
 	$(INSTALL) 0644 $(MENU_DIR)/NeteXt73.png $(DESTDIR)$(datarootdir)/pixmaps
-	
-install_desktop_menu_file:
-	
-	
 	$(INSTALL) 0755 $(MENU_DIR)/NeteXt73.desktop $(DESTDIR)$(datarootdir)/applications
 	
 install_translations_files:

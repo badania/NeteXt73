@@ -1,6 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.59
+-	dodanie grafiki do GRUB'a
+-	poprawka makefile
+-	zmiana kolejności rozdzielczości GRUB'a
 v0.7.58
 -	dodane kubuntu ppa
 -	dodanie możliwości wyboru rozdzielczości GRUB
