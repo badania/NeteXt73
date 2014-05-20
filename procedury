@@ -186,7 +186,7 @@ done
 #pobieranie plików do instalacji kerneli
 pobieranie_kerneli(){
 if [ "$kern" = "ppa mainline" ];then
-	wget $strona/$a 2>&1  | pobieranie 
+	wget $strona/$a #2>&1  | pobieranie 
 	if [ "$(grep extra $a)" != "" ]; then
 	    yad_wget $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep "all" | grep "linux-headers" | grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-headers"| grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image-[0-9]"| grep -v -E "latency")  $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image-extra" | grep "linux-image"| grep -v -E "latency")
 	else
@@ -194,7 +194,12 @@ if [ "$kern" = "ppa mainline" ];then
 	fi
 else
 #pobieranie kerneli e X t 7 3
-	yad_wget $strona/$a/1.txt $strona/$a/$(grep "href=" ./index.html   | cut -d '"' -f 2 | grep  $rodzaj | grep $bit2 | grep "linux-headers" ) $strona/$a/$(grep "href=" ./index.html   | cut -d '"' -f 2 | grep  $rodzaj | grep $bit2 | grep "linux-image")
+	if [ "$rodzaj" = "atom" ] || [ "$rodzaj" = "k8" ]; then
+	    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/ags-cfs.*/$rodzaj-ags-cfs_$bit2.deb/")
+	else
+	    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/ags-cfs.*/ags-cfs_$bit2.deb/")
+	fi
+	yad_wget $strona/$a/1.txt $strona/$a/linux-headers-$nazwa_paczki $strona/$a/linux-image-$nazwa_paczki
 fi
 rm ./index.html -f
 }

@@ -214,7 +214,6 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 				if [ "$(cat /tmp/ok.txt)" = "nie" ]; then
 					rm ./index.html -f; rm $a -rf
 					mkdir $a; cd $a
-					wget $strona$a/index.html 2>&1 | pobieranie 
 					#wywołanie funkcji pobierania odpowiednich wersji kerneli
 					pobieranie_kerneli
 					if [ "$(grep $(md5sum linux-image*) 1.txt)" != "" ] && [ "$(grep $(md5sum linux-headers*) 1.txt)" != "" ]; then
@@ -224,7 +223,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 								naglowek > instaluj.sh
 								naglowek2 >> instaluj.sh
 								instalacja
-								wywalenie plików po instalacji
+								#wywalenie plików po instalacji
 								wywal_pobrane_pliki_kernela
 								restart
 							else
