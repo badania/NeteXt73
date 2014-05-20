@@ -2,12 +2,12 @@
 -------------------------------------
 
 v0.7.60
--	wprowadzenie yad_wget opratego na multiprogresie
+-	wprowadzenie yad_wget opartego na multiprogresie
 -	dostosowanie pobierania kerneli do yad_wget
 -	dostosowanie pobierania sterowników nvidia do yad_wget
 -	dostosowanie pobierania sterowników radeon do 
 -	poprawki w pobieraniu kerneli z ppamainline
--	zmiana ikony pobieranych plików na systemową
+-	zmiany ikon
 v0.7.59
 -	dodanie grafiki do GRUB'a
 -	poprawka makefile
@@ -18,11 +18,11 @@ v0.7.58
 -	poprawki kodu w APM
 -	ustawienie min rozdzielczości GRUB na 1024x600
 v0.7.57
--	dadanie utopic do ppamainline
+-	dodanie utopic do ppamainline
 -	poprawki w logach dla kerneli generic
 -	poprawki w instalatorze lokalnych kerneli, wyłączenie wsparcia dla innych niż ext
 -	dodanie komunikatów o błędach przy wskazaniu złego pliku przy instalacji lokalnej
--	dostosowanie wielkości okna wybóru rodzaju kernela
+-	dostosowanie wielkości okna wyboru rodzaju kernela
 v0.7.56
 -	poprawki w instalatorze Nvidia
 v0.7.55
@@ -39,7 +39,7 @@ v0.7.53
 v0.7.52
 -	poprawka monitora systemu
 v0.7.51
--	poprawka komunikatów przy mozliwej aktualizacji firmware
+-	poprawka komunikatów przy możliwej aktualizacji firmware
 -	integracja APM z Netext'73
 v0.7.50
 -	dodanie linux-firmware do repozytorium
@@ -76,7 +76,7 @@ v0.7.41
 v0.7.40
 -	zmiany w sekcji monitor
 -	zmiany w instalatorze Nvidia
-- 	zmiany w instalatorze storowników kart graficznych
+- 	zmiany w instalatorze sterowników kart graficznych
 v0.7.39
 -	przeniesienie deinstalatorów z xterm do natywnej konsoli
 -	przepisanie instalatora sterowników kart graficznych z xterm na natywną konsolę

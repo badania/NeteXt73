@@ -168,7 +168,7 @@ fi
 
 #pasek postępu pobierania pulsujący gdy coś długo trwa
 pobieranie(){
-yad-netext --center --width=560 --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="emblem-downloads" --button="$TEXT_POWROT:1"
+yad-netext --center --width=560 --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
 }
 
 #ubijanie wget jak się zawiesi yad-netext
@@ -914,6 +914,6 @@ for URI in $URILIST; do
     fi
     COUNTER="$[$COUNTER+1]"                 # increment counter
 done | yad-netext --center --multi-progress --auto-kill --auto-close $YADBARS --title "$nazwa_skryptu" \
---text "<b>$TEXT_POB2</b>" --window-icon "emblem-downloads" --image "browser-download" --button="$TEXT_ZAMKNIJ:1"
+--text "<b>$TEXT_POB2</b>" --window-icon="/opt/NeteXt73/ikony/download.png" --image="/opt/NeteXt73/ikony/download.png" --button="$TEXT_ZAMKNIJ:1"
 # ↑ launch yad multi progress-bar window 
 }
