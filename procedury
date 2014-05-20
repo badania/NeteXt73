@@ -168,7 +168,7 @@ fi
 
 #pasek postępu pobierania pulsujący gdy coś długo trwa
 pobieranie2(){
-yad-netext --center --width=560 --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
+yad-netext --center --width=560 --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="emblem-downloads" --button="$TEXT_POWROT:1"
 }
 
 #ubijanie wget jak się zawiesi yad-netext
