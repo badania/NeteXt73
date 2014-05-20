@@ -63,9 +63,9 @@ else
 		if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 			  rm *.deb -f
 				  if [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -gt "331" ];then
-				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb $adres_sterownikow/nvidia-settings_331.20-0ubuntu8_amd64.deb
+				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/nvidia-settings_331.20-0ubuntu8_amd64.deb $adres_sterownikow/$ster.deb
 				  elif  [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -ge "337" ]; then
-				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb $adres_sterownikow/nvidia-settings
+				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/nvidia-settings $adres_sterownikow/$ster.deb
 				  else
 				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb
 				  fi  
