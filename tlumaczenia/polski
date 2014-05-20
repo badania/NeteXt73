@@ -338,6 +338,9 @@ export TEXT_UWAGA="UWAGA !"
 export TEXT_ZAMKNIJ="Zamknij"
 export TEXT_ZAZNACZ="zaznacz"
 export TEXT_STEROWNIK="Wybierz sterownik"
+export TEXT_BLAD_POBIERANIA="Błąd pobierania."
+export TEXT_POBIERANIE_GOTOWE="Pobieranie zakończone."
+export TEXT_SUMY_KONTROLNE="sumy_kontrolne"
 
 #########################################################################################################################################################################
 

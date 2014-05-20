@@ -343,6 +343,9 @@ export TEXT_UWAGA="WARNING"
 export TEXT_ZAMKNIJ="Close"
 export TEXT_ZAZNACZ="select"
 export TEXT_STEROWNIK="Select a driver"
+export TEXT_BLAD_POBIERANIA="Download error."
+export TEXT_POBIERANIE_GOTOWE="Download completed."
+export TEXT_SUMY_KONTROLNE="checksums"
 
 #########################################################################################################################################################################
 

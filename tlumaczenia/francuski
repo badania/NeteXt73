@@ -339,6 +339,9 @@ export TEXT_TAK="Oui"
 export TEXT_UWAGA="ATTENTION"
 export TEXT_ZAMKNIJ="Ferme"
 export TEXT_ZAZNACZ="marque"
+export TEXT_BLAD_POBIERANIA="Téléchargez erreur."
+export TEXT_POBIERANIE_GOTOWE="Télécharger terminée."
+export TEXT_SUMY_KONTROLNE="checksums"
 
 #########################################################################################################################################################################
 

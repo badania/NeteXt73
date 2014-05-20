@@ -62,23 +62,15 @@ else
 		klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
 		if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 			  rm *.deb -f
-			  wget $adres_sterownikow/1.txt 2>&1 | pobieranie
 				  if [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -gt "331" ];then
-				      a="nvidia-settings_331.20-0ubuntu8_amd64.deb"; a1=$a
-				      dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $adres_sterownikow/$a 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
-				      wget $adres_sterownikow/$a 2>&1 | pobieranie 
-				  fi
-				  if  [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -ge "337" ]; then
-				      a="nvidia-settings"; a1=$a
-				      dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $adres_sterownikow/$a 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
-				      wget $adres_sterownikow/$a 2>&1 | pobieranie   
-				  fi
-				  a=$ster.deb; a1=$a
-				  dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $adres_sterownikow/$a 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
-				  wget $adres_sterownikow/$a 2>&1 | pobieranie   
+				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb $adres_sterownikow/nvidia-settings_331.20-0ubuntu8_amd64.deb
+				  elif  [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -ge "337" ]; then
+				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb $adres_sterownikow/nvidia-settings
+				  else
+				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb
+				  fi  
 				  if [ -e $a* ] && [ -e $a1* ] && [ "$(grep $(md5sum $a) 1.txt)" != "" ] && [ "$(grep $(md5sum $a1) 1.txt)" != "" ]; then
 					  echo "nie" > /tmp/ok.txt
-					  zamknij_program
 					  naglowek > instaluj.sh
 					  nvidia >> instaluj.sh
 					  instalacja
@@ -107,17 +99,9 @@ else
 				klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
 				if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 				  rm *.deb -f
-				  wget $adres_sterownikow/1.txt 2>&1 | pobieranie 
-				  
-					  a=$ster.deb; a1=$a
-					  dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $adres_sterownikow/$a 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
-					  wget $adres_sterownikow/$a 2>&1 | pobieranie 
-						a=$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")
-						dziala=0; MB1=$(echo "scale=2;$(wget --server-response --spider $adres_sterownikow/$a 2>&1 | grep "ontent.*ength" | awk '{print $2}')/1024/1024"|bc); MB="- $MB1 MB"
-						wget $adres_sterownikow/$a 2>&1 | pobieranie 
+				  	  yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb $adres_sterownikow/$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")
 					  if [ -e $a* ] && [ -e $a1* ] && [ "$(grep $(md5sum $a) 1.txt)" != "" ] && [ "$(grep $(md5sum $a1) 1.txt)" != "" ]; then
 						  echo "nie" > /tmp/ok.txt
-						  zamknij_program
 						  naglowek > instaluj.sh
 						  radeon >> instaluj.sh
 						  instalacja
