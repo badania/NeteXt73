@@ -771,7 +771,7 @@ if [ "$(echo $LANG | grep pl)" != "" ]; then
       sed -i 's/YES/TAK/' bateria2.txt
 fi
 cat bateria2.txt | tr '=' ' ' | tr '\n' ' ' > bateria.txt
-yad-netext --center --list --title="$nazwa_skryptu" --width="395" --height="460" --window-icon="/opt/NeteXt73/ikony/battery.png" --text="<span color=\"$kolor_textu\">$Stan_baterii:</span>" --column="" --column="" $(cat bateria.txt) --button="gtk-ok:0"
+yad-netext --center --list --title="$nazwa_skryptu" --width="395" --height="460" --window-icon="/opt/NeteXt73/ikony/apm.png" --text="<span color=\"$kolor_textu\">$Stan_baterii:</span>" --column="" --column="" $(cat bateria.txt) --button="gtk-ok:0"
 rm *.txt -f
 }
 
