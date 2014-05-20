@@ -59,7 +59,7 @@ while [ $petla_duza = "tak" ]; do
 			  else
 			      echo -e "-\toff" >> stan_uslug.txt
 			  fi
-		      done  2>&1 | pobieranie2
+		      done  2>&1 | pobieranie
 		      
 		      paste -d " " nazwy_uslug.txt stan_uslug.txt > 4.txt
 		      
@@ -110,7 +110,7 @@ while [ $petla_duza = "tak" ]; do
 			for SOFT in $(ls /etc/init/*.conf-disabled | sed 's/\.conf-disabled//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state")
 			do
 			    echo "$SOFT wył" >> 4.txt
-			done  2>&1 | pobieranie2
+			done  2>&1 | pobieranie
 			sed  4.txt -i -e 's/wł/on -/g'
 			sed  4.txt -i -e 's/wył/- off/g'
 			echo $(sed -e '/^[^#]/s:^:FALSE :' 4.txt) > 1.txt
@@ -163,7 +163,7 @@ while [ $petla_duza = "tak" ]; do
 			do
 			#do sprawdzenia
 			    echo "$SOFT off $TEXT_BRAK" >> 4.txt
-			done  2>&1 | pobieranie2
+			done  2>&1 | pobieranie
 			a=$(yad-netext --center --height=540 --width=400 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Upstart - expert</b></span>\n$TEXT_MENU_USLUGI8" --column="$TEXT_MENU_USLUGI9" --column="$TEXT_MENU_USLUGI10" --column="$TEXT_MENU_USLUGI11" --list --list $(cat 4.txt))
 			if [ $? = "0" ]; then
 			    a=$(echo $a | cut -d '|' -f 1)

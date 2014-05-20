@@ -517,7 +517,7 @@ if [ "$klawisz" = "0" ]; then
 		echo ${r[$i]} >> 1.txt
 		echo ${soft[$i]} >> 2.txt
 
-	done   2>&1 | pobieranie2
+	done   2>&1 | pobieranie
 	paste -d " " 1.txt 2.txt > lista_softu.txt
 	grep TRUE lista_softu.txt | awk '{print $2}' > lista_przed.txt
 

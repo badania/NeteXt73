@@ -167,7 +167,7 @@ fi
 #procedury
 
 #pasek postępu pobierania pulsujący gdy coś długo trwa
-pobieranie2(){
+pobieranie(){
 yad-netext --center --width=560 --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="emblem-downloads" --button="$TEXT_POWROT:1"
 }
 
@@ -186,7 +186,7 @@ done
 #pobieranie plików do instalacji kerneli
 pobieranie_kerneli(){
 if [ "$kern" = "ppa mainline" ];then
-	wget $strona/$a 2>&1  | pobieranie2 
+	wget $strona/$a 2>&1  | pobieranie 
 	if [ "$(grep extra $a)" != "" ]; then
 	    yad_wget $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep "all" | grep "linux-headers" | grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-headers"| grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image-[0-9]"| grep -v -E "latency")  $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image-extra" | grep "linux-image"| grep -v -E "latency")
 	else
@@ -859,13 +859,6 @@ MAXDLS="5" # set maximum number of simultaneous downloads
 URILIST="$@" # gets list of URIs from stdin
 USAGE="$0 <space-delimited URLs>"
 
-# Set GUI variables up
-TITLE="$nazwa_skryptu -YAD_wget"                 # dialog title
-TEXT="<b>$TEXT_POB2</b>"        # dialog text
-ICON="emblem-downloads"                     # window icon (appears in launcher)
-IMAGE="browser-download"                    # window image (appears in dialog)
-
-#URILIST="http://proof.ovh.net/files/100Mb.dat http://speedtest.wdc01.softlayer.com/downloads/test10.zip http://cachefly.cachefly.net/100mb.test"
 
 # Usage checks
 
@@ -920,7 +913,7 @@ for URI in $URILIST; do
           DYNAMIC_COUNTER="$[$DYNAMIC_COUNTER+1]"
     fi
     COUNTER="$[$COUNTER+1]"                 # increment counter
-done | yad-netext --center --multi-progress --auto-kill --auto-close $YADBARS --title "$TITLE" \
---text "$TEXT" --window-icon "$ICON" --image "$IMAGE" --button="$TEXT_ZAMKNIJ:1"
+done | yad-netext --center --multi-progress --auto-kill --auto-close $YADBARS --title "$nazwa_skryptu" \
+--text "<b>$TEXT_POB2</b>" --window-icon "emblem-downloads" --image "browser-download" --button="$TEXT_ZAMKNIJ:1"
 # ↑ launch yad multi progress-bar window 
 }

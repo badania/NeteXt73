@@ -41,7 +41,7 @@ source /opt/NeteXt73/procedury
 	rm *.html -f
 	rm /tmp/*.txt -f; rm /tmp/*.sh -f
 	stan_apm=""
-	#wget $adres_skryptow/APM2/index.html -O apm.txt  2>&1 | pobieranie2 
+	#wget $adres_skryptow/APM2/index.html -O apm.txt  2>&1 | pobieranie 
 	export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 petla_duza="tak"
 while [ $petla_duza = "tak" ]; do

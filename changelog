@@ -5,7 +5,9 @@ v0.7.60
 -	wprowadzenie yad_wget opratego na multiprogresie
 -	dostosowanie pobierania kerneli do yad_wget
 -	dostosowanie pobierania sterowników nvidia do yad_wget
--	dostosowanie pobierania sterowników radeon do yad_wget
+-	dostosowanie pobierania sterowników radeon do 
+-	poprawki w pobieraniu kerneli z ppamainline
+-	zmiana ikony pobieranych plików na systemową
 v0.7.59
 -	dodanie grafiki do GRUB'a
 -	poprawka makefile

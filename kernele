@@ -172,7 +172,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 		WERSJA_DISTRO=$(yad-netext --center --title="$nazwa_skryptu" --width=420 --window-icon="/opt/NeteXt73/ikony/linux.png" --text="$TEXT_PPA_1 <span color=\"$kolor_textu\">$(lsb_release -cs)</span>" --form --field="$TEXT_RODZAJ_SYSTEMU:CB"  "utopic!trusty!saucy!raring!quantal!precise" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		klawisz=$?; export WERSJA_DISTRO=$(echo $WERSJA_DISTRO | cut -d "|" -f 1)
 		if [ "$klawisz" = 0 ];then
-			wget $strona  2>&1 | pobieranie2 
+			wget $strona  2>&1 | pobieranie 
 			a=$(yad-netext --center --height=630 --width=410 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --window-icon="/opt/NeteXt73/ikony/linux.png" --list $(grep 'href=' ./index.html | cut -d '"' -f 8 | grep $WERSJA_DISTRO | sed -e "s/-$WERSJA_DISTRO//g"   | sed -e 's/v//g' | sed 's/\(.*\)./\1/' | sort -r  | awk 'ORS=NR%3?"\t\t\t":"\n"') --column="" --text="$TEXT_LISTA_KERNELI <b><span color=\"$kolor_textu\">$WERSJA_DISTRO</span></b> \n\n$TEXT_ZAZNACZ_KERNEL" --title="Kernel instalator")
 			klawisz=$?
 			if [ "$klawisz" = 0 ] && [ "$a" != "" ];then
@@ -201,7 +201,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 		if  [ "$bit2" = "i386" ]; then
 			yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_STEROWNIKI1"
 		else
-			rm index.html -f; wget $strona/index.html 2>&1 | pobieranie2 
+			rm index.html -f; wget $strona/index.html 2>&1 | pobieranie 
 			lista_kerneli
 			if [ "$klawisz" = "0" ] && [ "$blad" != "1" ] ; then
 				echo "nie" > /tmp/ok.txt
@@ -214,7 +214,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 				if [ "$(cat /tmp/ok.txt)" = "nie" ]; then
 					rm ./index.html -f; rm $a -rf
 					mkdir $a; cd $a
-					wget $strona$a/index.html 2>&1 | pobieranie2 
+					wget $strona$a/index.html 2>&1 | pobieranie 
 					#wywołanie funkcji pobierania odpowiednich wersji kerneli
 					pobieranie_kerneli
 					if [ "$(grep $(md5sum linux-image*) 1.txt)" != "" ] && [ "$(grep $(md5sum linux-headers*) 1.txt)" != "" ]; then
