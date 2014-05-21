@@ -63,17 +63,24 @@ else
 		if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 			  rm *.deb -f
 				  if [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -gt "331" ];then
-				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/nvidia-settings_331.20-0ubuntu8_amd64.deb $adres_sterownikow/$ster.deb
+				      nv_set="nvidia-settings_331.20-0ubuntu8_amd64.deb"
+				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$nv_set $adres_sterownikow/$ster.deb
 				  elif  [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -ge "337" ]; then
-				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/nvidia-settings $adres_sterownikow/$ster.deb
+				      nv_set="nvidia-settings"
+				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$nv_set $adres_sterownikow/$ster.deb
 				  else
 				      yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb
 				  fi  
-				  if [ -e $a* ] && [ -e $a1* ] && [ "$(grep $(md5sum $a) 1.txt)" != "" ] && [ "$(grep $(md5sum $a1) 1.txt)" != "" ]; then
+				  if [ -e $ster.deb ] && [ -e $nv_set ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ] && [ "$(grep $(md5sum $nv_set) 1.txt)" != "" ]; then
 					  echo "nie" > /tmp/ok.txt
 					  naglowek > instaluj.sh
 					  nvidia >> instaluj.sh
 					  instalacja
+				  elif [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ]; then
+					  echo "nie" > /tmp/ok.txt
+					  naglowek > instaluj.sh
+					  nvidia >> instaluj.sh
+					  instalacja 
 				  else
 					  yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
 				  fi
