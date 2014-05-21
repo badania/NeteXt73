@@ -416,6 +416,17 @@ echo "do"
 echo "sudo sed -i '/sudo modprobe rts5139/ s/sudo modprobe rts5139/sudo rmmod rts5139/' \$i"
 echo "done"
 echo "fi"
+echo "if [ \"\$bfqfix\" = \"TRUE\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/cfq/bfq/g' \$i"
+echo "done"
+echo "else"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/bfq/cfq/g' \$i"
+echo "done"
+echo "fi"
 }
 
 apm_usun(){
