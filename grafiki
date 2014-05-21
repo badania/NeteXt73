@@ -57,7 +57,6 @@ else
 		lista=$(cat 2a.txt | tr '\n' '!' | sed -e '$s/!$//g' )
 		ster=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/nvidia.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Nvidia</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
-		echo $ster
 		if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 				  if [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -gt "331" ];then
 					  nv_set="nvidia-settings_331.20-0ubuntu8_amd64.deb"
