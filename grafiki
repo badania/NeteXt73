@@ -40,7 +40,7 @@ source /opt/NeteXt73/procedury
 cd /tmp
 
 usun(){
-rm *.txt* -f; rm *.sh -f; rm *.html -f
+rm *.txt* -f; rm *.sh -f; rm *.html* -f
 rm *.deb -f
 rm nvidia-settings -f
 }
@@ -86,7 +86,7 @@ else
 				  fi
 		elif [ "$klawisz" = "1" ]; then
 		      petla_duza="nie"
-		      rm ./index.html *txt -f
+		      rm index.html* *.txt -f
 		fi
 		done
 	    fi
@@ -117,7 +117,7 @@ else
 					  fi
 				elif [ "$klawisz" = "1" ]; then
 				      petla_duza="nie"
-				      rm ./index.html *txt -f
+				      rm index.html* *.txt* -f
 				fi
 				done
 		    fi
