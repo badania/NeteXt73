@@ -96,7 +96,7 @@ else
 				klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
 				if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 				  	  yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb $adres_sterownikow/$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")
-					  if [ -e $a* ] && [ -e $a1* ] && [ "$(grep $(md5sum $a) 1.txt)" != "" ] && [ "$(grep $(md5sum $a1) 1.txt)" != "" ]; then
+					  if [ -e $ster.deb ] && [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ]; then
 						  echo "nie" > /tmp/ok.txt
 						  naglowek > instaluj.sh
 						  radeon >> instaluj.sh
