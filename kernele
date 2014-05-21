@@ -63,6 +63,10 @@ else
 	    kern="i7-PRO Haswell"
     elif [ "$1" = "atom" ]; then
 	    kern="Atom - Intel Atom 64bit"
+    elif [ "$1" = "naglowki" ]; then
+	    kern="$TEXT_MENU_INSTALATOR4"
+    elif [ "$1" = "lokalne" ]; then
+	    kern="$TEXT_MENU_INSTALATOR3"
     fi
     if [ "$1" = "premium" ]; then
 	pliki="/opt/NeteXt73/kernel-premium"
@@ -74,16 +78,12 @@ else
     if [ "$kern" = "" ]; then
 	    yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/$ikona" \
 	    --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="260" --read-dir="$pliki" --width="560" --height="330" \
-	    --title="$nazwa_skryptu " --button="$TEXT_MENU_INSTALATOR3:2" --button="$TEXT_MENU_INSTALATOR4:3" --button="$TEXT_MENU_INSTALATOR5:4" --button="$TEXT_POWROT:1" --single-click
+	    --title="$nazwa_skryptu " --button="$TEXT_MENU_INSTALATOR5:4"  --button="$TEXT_POWROT:1" --single-click
 	    klawisz=$?   
     fi
 fi
-
-if [ "$klawisz" = "2" ]; then
-      kern="$TEXT_MENU_INSTALATOR3"
-elif [ "$klawisz" = "3" ]; then
-      kern="$TEXT_MENU_INSTALATOR4"
-elif [ "$klawisz" = "4" ]; then
+#--button="$TEXT_MENU_INSTALATOR4:3" --button="$TEXT_MENU_INSTALATOR3:2" [ "$klawisz" = "2" ]; then kern="$TEXT_MENU_INSTALATOR3" elif [ "$klawisz" = "3" ]; then       kern="$TEXT_MENU_INSTALATOR4"
+if [ "$klawisz" = "4" ]; then
       kern="$TEXT_MENU_INSTALATOR5"
 fi
 
@@ -123,7 +123,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 		strona="$adres_glowny/kernele/"
 	#lokalne
 	elif [ "$kern" = "$TEXT_MENU_INSTALATOR3" ]; then
-		a=$(yad-netext --center --file-selection --filename="$download/" --title="$TEXT_DEB1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		a=$(yad-netext --center --file-selection --filename="$download/" --title="$(echo $TEXT_DEB1 | sed 's/headers/headers ext73 /' | sed 's/image/image ext73 /')" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		if [ $? = 0 ]; then
 			if [ "$(echo $a | grep 'linux-image' | grep 'ext' | grep '.deb')" != "" ]; then
 				cd $(echo $a | sed -e 's/linux.*//g');     b=$(echo $a | sed -e 's/linux-image/linux-headers/g')
@@ -147,7 +147,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 		fi
 	#tylko nagłówki
 	elif [ "$kern" = "$TEXT_MENU_INSTALATOR4" ]; then
-		a=$(yad-netext --center --file-selection --filename="$download/" --title="$TEXT_DEB1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		a=$(yad-netext --center --file-selection --filename="$download/" --title="$(echo $TEXT_DEB1 | sed 's/lub linux-image//' | sed 's/headers/headers ext73/')" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		if [ $? = 0 ]; then
 		if [ "$(echo $a | grep 'linux-image' | grep 'ext' | grep '.deb')" != "" ]; then
 			cd $(echo $a | sed -e 's/linux.*//g');	b=$(echo $a | sed -e 's/linux-image/linux-headers/g')
