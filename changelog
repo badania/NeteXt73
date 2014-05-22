@@ -14,6 +14,7 @@ v0.7.60
 -	dodanie przełącznika CFQ/BFQ do apm
 -	dodanie zapamiętywania czeków APM
 -	poprawki w instalatorze NV
+-	dodanie zswap.enabled=1 do GRUB
 v0.7.59
 -	dodanie grafiki do GRUB'a
 -	poprawka makefile
