@@ -302,7 +302,7 @@ echo "sudo mv $wersja_apm1*$wersja_apm $wersja_apm2*$wersja_apm $wersja_apm3*$we
 echo "sudo mv readahead /usr/lib/pm-utils/power.d/"
 echo "rm *tar.gz"
 echo "sudo chmod a-x /etc/pm/power.d/*"
-
+echo "if [ -e ~/.netext73/apm_status ]; then"
 echo "if [ \"\$(cat ~/.netext73/apm_status | grep 'conservative-conservative')\" != \"\" ] ; then "
 echo "sudo chmod a+x /etc/pm/power.d/$wersja_apm1*$wersja_apm /usr/lib/pm-utils/power.d/readahead"
 
@@ -320,6 +320,7 @@ echo "sudo chmod a+x /etc/pm/power.d/$wersja_apm5*$wersja_apm /usr/lib/pm-utils/
 
 echo "elif [ \"\$(cat ~/.netext73/apm_status | grep 'performance-ondemand')\" != \"\" ] ; then "
 echo "sudo chmod a+x /etc/pm/power.d/$wersja_apm6*$wersja_apm /usr/lib/pm-utils/power.d/readahead"
+echo "fi"
 echo "else"
 echo "sudo chmod a+x /etc/pm/power.d/$wersja_apm1*$wersja_apm /usr/lib/pm-utils/power.d/readahead"
 echo "fi"
@@ -329,7 +330,6 @@ echo "sudo chown root:root /etc/pm/power.d/*"
 echo "sudo apt-get install ethtool"
 echo "sudo /etc/init.d/ondemand stop"
 echo "sudo update-rc.d -f ondemand remove"
-echo "ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//' > ~/.netext73/apm_status"
 #naprawa powerbtn
 echo "if [ \"\$(uname -m)\" = \"x86_64\" ]; then "
 echo "if [ \"\$(cat /etc/acpi/powerbtn.sh | grep '/usr/.../qdbus')\" != \"\" ]; then"
@@ -340,7 +340,6 @@ echo "sudo sed -i '/Power button pressed/ s/\/sbin/#\/sbin/' /etc/acpi/powerbtn.
 echo "fi"
 echo "fi"
 echo "fi"
-echo "echo \"$TEXT_MENU_USLUGI31\""
 echo "sudo sed -i '/apm_status_fix/d' /etc/rc.local"
 echo "sudo sed -i '/exit 0/d' /etc/rc.local"
 echo "echo 'bash /opt/NeteXt73/menu/apm_status_fix' | sudo tee -a /etc/rc.local"
@@ -355,11 +354,10 @@ echo "echo 'exit 0' | sudo tee -a /etc/rc.local"
 #6 performance-ondemand
 
 apm_zmiana(){
-echo "echo \"$TEXT_PROCEDURA_8_1 $1\""
+echo "echo \"$TEXT_PROCEDURA_8_1 $1 \""
 echo "sudo chmod a-x /etc/pm/power.d/*"
 echo "sudo chmod a+x /etc/pm/power.d/$2 /usr/lib/pm-utils/power.d/readahead"
 echo "sudo chown root:root /etc/pm/power.d/* /usr/lib/pm-utils/power.d/readahead"
-echo "ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//' > ~/.netext73/apm_status"
 
 echo "if [ \"\$wififix\" = \"FALSE\" ];then"
 echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
@@ -403,7 +401,6 @@ echo "do"
 echo "sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' \$i"
 echo "done"
 echo "fi"
-
 echo "if [ \"\$rts5139fix\" = \"TRUE\" ];then"
 echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
 echo "do"
@@ -429,8 +426,77 @@ echo "done"
 echo "fi"
 }
 
+apm_zmiana_config(){
+
+echo "if [ \"\$(grep wififix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"FALSE\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/echo auto > \$ii/echo on > \$ii/g' \$i"
+echo "done"
+echo "else"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/echo on > \$ii/echo auto > \$ii/g' \$i"
+echo "done"
+echo "fi"
+
+echo "if [ \"\$(grep btfix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"FALSE\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/echo 1 > \$bt/echo 0 > \$bt/g' \$i"
+echo "done"
+echo "else"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/echo 0 > \$bt/echo 1 > \$bt/g' \$i"
+echo "done"
+echo "fi"
+
+echo "if [ \"\$(grep wifin ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"TRUE\" ];then"
+echo "sudo rm -f /etc/modprobe.d/wifin.conf"
+echo "else"
+echo "echo 'options iwlwifi 11n_disable=1' | sudo tee -a /etc/modprobe.d/wifin.conf"
+echo "echo 'options ath9k nohwcrypt=1'  | sudo tee -a /etc/modprobe.d/wifin.conf"
+echo "fi"
+
+echo "if [ \"\$(grep wifionoff ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"FALSE\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/echo 1 > \$wifi/echo 0 > \$wifi/g' \$i"
+echo "done"
+echo "else"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' \$i"
+echo "done"
+echo "fi"
+
+echo "if [ \"\$(grep rts5139fix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"TRUE\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i '/sudo rmmod rts5139/ s/sudo rmmod rts5139/sudo modprobe rts5139/' \$i"
+echo "sudo sed -i '1,/sudo modprobe rts5139/ s/sudo modprobe rts5139/sudo rmmod rts5139/' \$i"
+echo "done"
+echo "else"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i '/sudo modprobe rts5139/ s/sudo modprobe rts5139/sudo rmmod rts5139/' \$i"
+echo "done"
+echo "fi"
+echo "if [ \"\$(grep bfqfix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"TRUE\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/cfq/bfq/g' \$i"
+echo "done"
+echo "else"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i 's/bfq/cfq/g' \$i"
+echo "done"
+echo "fi"
+}
+
 apm_usun(){
-echo "ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//' > ~/.netext73/apm_status"
 echo "echo \"$TEXT_PROCEDURA_9\""
 echo "sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/pm-utils/power.d/readahead"
 echo "if [ -e /usr/lib/pm-utils/power.d/laptop-mode ];then"
@@ -484,6 +550,61 @@ if [ "$(grep apm_status_fix /etc/rc.local)" = "" ]; then
 fi
 }
 
+stan_apm_config(){
+	#sprawdzenie stanu APM wifi FIX
+	if [ "$(grep 'echo auto > $ii' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
+	    export wififix="FALSE"
+	else
+	    export wififix="TRUE"
+	fi
+	#włączenie wyłączenie wifi
+	if [ "$(grep 'echo 1 > $wifi' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
+	    export wifionoff="FALSE"
+	else
+	    export wifionoff="TRUE"
+	fi
+
+	#sprawdzenie stanu bt FIX
+	if [ "$(grep 'echo 1 > $bt' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
+	    export btfix="FALSE"
+	else
+	    export btfix="TRUE"
+	fi
+
+	#sprawdzenie stanu APM rts5139 FIX
+	if [ "$(grep 'sudo modprobe rts5139' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
+	    export rts5139fix="FALSE"
+	else
+	    export rts5139fix="TRUE"
+	fi
+	#sprawdzenie wifi N
+	if [ -e /etc/modprobe.d/wifin.conf ] ;then
+	    export wifin="FALSE"
+	else 
+	    export wifin="TRUE"
+	fi
+	#sprawdzenie BFQ/CFQ
+	if [ "$(grep 'bfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ] ;then
+	    export bfqfix="TRUE"
+	else 
+	    export bfqfix="FALSE"
+	fi
+	
+	export wifin_przed=$wifin
+	export wififix_przed=$wififix
+	export wifionoff_przed=$wifionoff
+	export btfix_przed=$btfix
+	export rts5139fix_przed=$rts5139fix
+	export bfqfix_przed=$bfqfix
+	#wysłanie danych do configu 
+	ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//' > ~/.netext73/apm_status
+	echo "wififix $wififix" >> ~/.netext73/apm_status
+	echo "wifionoff $wifionoff" >> ~/.netext73/apm_status
+	echo "btfix $btfix">> ~/.netext73/apm_status
+	echo "rts5139fix $rts5139fix" >> ~/.netext73/apm_status
+	echo "wifin $wifin" >> ~/.netext73/apm_status
+	echo "bfqfix $bfqfix" >> ~/.netext73/apm_status
+}
 
 usun_kernel(){
 echo "echo \"$TEXT_KERNEL1 $(cat /tmp/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ' )\""
@@ -538,16 +659,16 @@ echo "echo \"$TEXT_PROCEDURA_13\""
 echo "echo \"$TEXT_GRUB1 /etc/default/grub\"; sudo sed -i '/GRUB_CMDLINE_LINUX=/d' $sciezka/grub"
 echo "echo \"$TEXT_GRUB2 /etc/default/grub\"; sudo sed \"/GRUB_CMDLINE_LINUX_DEFAULT/a\GRUB_CMDLINE_LINUX=\\\"$wpis_grub\\\"\" $sciezka/grub > /tmp/grub1"
 echo "sudo mv /tmp/grub1 $sciezka/grub -f"
-if [ "$(cat /etc/default/grub | grep '#GRUB_HIDDEN_TIMEOUT=')" = "" ]; then
+echo "if [ \"\$(cat /etc/default/grub | grep '#GRUB_HIDDEN_TIMEOUT=')\" = \"\" ]; then"
 echo "sudo sed -i 's/GRUB_HIDDEN_TIMEOUT=/#GRUB_HIDDEN_TIMEOUT=/g' /etc/default/grub"
-fi
-if [ "$w3" != "" ]; then
+echo "fi"
+echo "if [ \"\$w3\" != \"\" ]; then"
 echo "sudo sed /etc/default/grub -i -e \"s/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=$w3/\""
-fi
+echo "fi"
 echo "sudo sed -i -e \"s/.*GRUB_GFXMODE=.*/GRUB_GFXMODE=$w4/\" /etc/default/grub"
-if [ "$w5" != "" ];then
+echo "if [ \"\$w5\" != \"\" ];then"
 echo "sudo sed -i -e \"s/.*GRUB_GFXPAYLOAD_LINUX=.*/GRUB_GFXPAYLOAD_LINUX=$w5/\" /etc/default/grub"
-fi
+echo "fi"
 echo "sudo sed -i '/GRUB_BACKGROUND/ d'  /etc/default/grub"
 echo "echo 'GRUB_BACKGROUND=/opt/NeteXt73/menu/grub_background.jpg' | sudo tee -a /etc/default/grub"
 echo "sudo chown root:root /etc/default/grub"
@@ -647,11 +768,11 @@ echo "sudo cp nvidia-settings /usr/bin/ -f"
 echo "rm  nvidia-settings -f"
 echo "fi"
 echo "rm *.deb -f"
-echo "if [ \"\$(grep 'GRUB_GFXMOD' /etc/default/grub)\" != \"\" ] && [ \"\$(grep '#GRUB_GFXMODE' /etc/default/grub)\" = \"\" ]; then"
-echo "sudo sed -i 's/GRUB_GFXMODE.*/#GRUB_GFXMODE=1280x1024/' /etc/default/grub"
+echo "if [ \"\$(grep '#GRUB_GFXMODE' /etc/default/grub)\" != \"\" ]; then"
+echo "sudo sed -i 's/#GRUB_GFXMODE.*/GRUB_GFXMODE=1024x768/' /etc/default/grub"
 echo "fi"
 echo "if [ \"\$(grep 'GRUB_GFXPAYLOAD_LINUX' /etc/default/grub)\" = \"\" ]; then"
-echo "sudo sed -i \"s/#GRUB_GFXMODE.*/#GRUB_GFXMODE=1280x1024\nGRUB_GFXPAYLOAD_LINUX=1024x768x32/\" /etc/default/grub"
+echo "sudo sed -i \"s/GRUB_GFXMODE.*/GRUB_GFXMODE=1280x1024\nGRUB_GFXPAYLOAD_LINUX=1024x768/\" /etc/default/grub"
 echo "fi"
 echo "sudo update-initramfs -u -k all"
 echo "sudo update-grub"

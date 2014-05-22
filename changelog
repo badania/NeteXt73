@@ -12,6 +12,8 @@ v0.7.60
 -	zmiana błędnej nazwy okna konfiguratora
 -	przeniesienie instalatora nagłówków i kerneli lokalnych do okna kerneli K8/Atom
 -	dodanie przełącznika CFQ/BFQ do apm
+-	dodanie zapamiętywania czeków APM
+-	poprawki w instalatorze NV
 v0.7.59
 -	dodanie grafiki do GRUB'a
 -	poprawka makefile

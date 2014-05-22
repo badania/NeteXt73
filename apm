@@ -37,71 +37,36 @@ source /opt/NeteXt73/procedury
 
 #########################################################################################################################################################################
 #APM
-	cd /tmp
-	rm *.html -f
-	rm /tmp/*.txt -f; rm /tmp/*.sh -f
-	stan_apm=""
-	#wget $adres_skryptow/APM2/index.html -O apm.txt  2>&1 | pobieranie 
-	export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
+
+cd /tmp
+rm *.html -f
+rm /tmp/*.txt -f; rm /tmp/*.sh -f
+stan_apm=""
+export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
+#zapamiętanie configu jeżeli był niepełen config
+if [ -e  ~/.netext73/apm_status ] && [ "$(cat ~/.netext73/apm_status | wc | awk '{print $1}')" != "7" ]; then
+    #sprawdzenie stanu czeków
+    stan_apm_config
+fi
 petla_duza="tak"
 while [ $petla_duza = "tak" ]; do
-	stan_apm
+	stan_apm #sprawdzenie stanu instalacji
 	if [ "$stan_apm" = "-" ]; then
 		#instalacja APM
 		yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1" --text="$TEXT_APM1"
 		if [ $? = 0 ]; then
 		      naglowek > instaluj.sh
 		      apm_inst >> instaluj.sh
+		      if [ -e ~/.netext73/apm_status ]; then
+			  apm_zmiana_config >> instaluj.sh
+		      fi
 		      instalacja
-		      stan_apm
+		      stan_apm #sprawdzenie stanu instalacji
 		fi
 	fi
-
-	#sprawdzenie stanu APM wifi FIX
-	if [ "$(grep 'echo auto > $ii' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
-	    wififix="FALSE"
-	else
-	    wififix="TRUE"
-	fi
-	#włączenie wyłączenie wifi
-	if [ "$(grep 'echo 1 > $wifi' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
-	    wifionoff="FALSE"
-	else
-	    wifionoff="TRUE"
-	fi
-
-	#sprawdzenie stanu bt FIX
-	if [ "$(grep 'echo 1 > $bt' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
-	    btfix="FALSE"
-	else
-	    btfix="TRUE"
-	fi
-
-	#sprawdzenie stanu APM rts5139 FIX
-	if [ "$(grep 'sudo modprobe rts5139' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
-	    rts5139fix="FALSE"
-	else
-	    rts5139fix="TRUE"
-	fi
-	#sprawdzenie wifi N
-	if [ -e /etc/modprobe.d/wifin.conf ] ;then
-	    wifin="FALSE"
-	else 
-	    wifin="TRUE"
-	fi
 	
-	if [ "$(grep 'bfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ] ;then
-	    bfqfix="TRUE"
-	else 
-	    bfqfix="FALSE"
-	fi
-	
-	wifin_przed=$wifin
-	wififix_przed=$wififix
-	wifionoff_przed=$wifionoff
-	btfix_przed=$btfix
-	rts5139fix_przed=$rts5139fix
-	bfqfix_przed=$bfqfix
+	#sprawdzenie stanu czeków
+	stan_apm_config
 	
 	aktualny_apm=$(echo $stan_apm | awk '{print $1}')
 	menu_apm=$(echo "!conservative-conservative!ondemand-ondemand!intel-performance!intel-powersave!performance-conservative!performance-ondemand" | sed  "s/$aktualny_apm//" | sed 's/!!/!/')
@@ -119,42 +84,40 @@ while [ $petla_duza = "tak" ]; do
 		--field="BFQ on/off:CHK" "$bfqfix" \
 		--button="gtk-ok:0" --button="$TEXT_POWROT:1" )
 		 
-		klawisz=$?; a=$(echo $aa | cut -d "|" -f 3); export wififix=$(echo $aa | cut -d "|" -f 4);export wifionoff=$(echo $aa | cut -d "|" -f 5); export btfix=$(echo $aa | cut -d "|" -f 6); export rts5139fix=$(echo $aa | cut -d "|" -f 7); export wifin=$(echo $aa | cut -d "|" -f 8) ;export bfqfix=$(echo $aa | cut -d "|" -f 9)
+		klawisz=$?
+		if [ $klawisz = 0 ]; then 
+		a=$(echo $aa | cut -d "|" -f 3); export wififix=$(echo $aa | cut -d "|" -f 4);export wifionoff=$(echo $aa | cut -d "|" -f 5); export btfix=$(echo $aa | cut -d "|" -f 6); export rts5139fix=$(echo $aa | cut -d "|" -f 7); export wifin=$(echo $aa | cut -d "|" -f 8) ;export bfqfix=$(echo $aa | cut -d "|" -f 9)
+		
 		#uruchomienie aktualizacji gdy zaszła jakś zmiana
 		if [ "$a" = "$aktualny_apm" ] && [ "$wififix_przed" = "$wififix" ] && [ "$wifionoff_przed" = "$wifionoff" ] && [ "$btfix_przed" = "$btfix" ] && [ "$rts5139fix_przed" = "$rts5139fix" ] && [ "$wifin_przed" = "$wifin" ] && [ "$bfqfix_przed" = "$bfqfix" ]; then
 		    petla_duza="nie"
 		    rm *.txt -f *.sh
 		else
+			naglowek > instaluj.sh
 			if [ "$a" = "conservative-conservative" ]; then
-				naglowek > instaluj.sh
-				apm_zmiana $a "$wersja_apm1*$wersja_apm" >> instaluj.sh
-				instalacja2
+				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
 			elif [ "$a" = "ondemand-ondemand" ]; then
-				naglowek > instaluj.sh
-				apm_zmiana $a "$wersja_apm2*$wersja_apm" >> instaluj.sh
-				instalacja2
+				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
 			elif [ "$a" = "intel-performance" ]; then
-				naglowek > instaluj.sh
-				apm_zmiana $a "$wersja_apm3*$wersja_apm" >> instaluj.sh
-				instalacja2
+				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
 			elif [ "$a" = "intel-powersave" ]; then
-				naglowek > instaluj.sh
-				apm_zmiana $a "$wersja_apm4*$wersja_apm" >> instaluj.sh
-				instalacja2
+				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
 			elif [ "$a" = "performance-conservative" ]; then
-				naglowek > instaluj.sh
-				apm_zmiana $a "$wersja_apm5*$wersja_apm" >> instaluj.sh
-				instalacja2
+				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
 			elif [ "$a" = "performance-ondemand" ]; then
-				naglowek > instaluj.sh
-				apm_zmiana $a "$wersja_apm6*$wersja_apm" >> instaluj.sh
-				instalacja2
+				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
 			elif [ "$a" = "-" ]; then
 				yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
 				naglowek > instaluj.sh
 				apm_inst >> instaluj.sh
-				instalacja2
+				if [ -e ~/.netext73/apm_status ]; then
+				    apm_zmiana_config >> instaluj.sh
+				fi
 			fi
+			instalacja2
+			#zapisanie stanu apm po zmianie
+			stan_apm_config
+		fi
 		fi
 	fi
 	if [ -z "$aa" ]; then
