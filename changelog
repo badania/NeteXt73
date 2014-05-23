@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.61
+-	testy przed nowym wydaniem
 v0.7.60
 -	wprowadzenie yad_wget opartego na multiprogresie
 -	dostosowanie pobierania kerneli do yad_wget
@@ -15,6 +17,7 @@ v0.7.60
 -	dodanie zapamiętywania czeków APM
 -	poprawki w instalatorze NV
 -	dodanie zswap.enabled=1 do GRUB
+-	dodanie zmiana grafiki GRUB background
 v0.7.59
 -	dodanie grafiki do GRUB'a
 -	poprawka makefile
