@@ -3,6 +3,7 @@
 
 v0.7.61
 -	testy przed nowym wydaniem
+-	zmiana background GRUB na png
 v0.7.60
 -	wprowadzenie yad_wget opartego na multiprogresie
 -	dostosowanie pobierania kerneli do yad_wget
