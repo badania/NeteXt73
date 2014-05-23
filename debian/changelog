@@ -1,3 +1,9 @@
+netext73 (0.7.61) stable; urgency=medium
+
+  * zmiana GRUB background z jpg na png
+
+ -- eloaders <eloaders@linux.pl>  Fri, 23 May 2014 11:37:50 +0200
+
 netext73 (0.7.60) stable; urgency=medium
 
   * yad_wget multiprogress
