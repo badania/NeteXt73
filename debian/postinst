@@ -1,4 +1,12 @@
 #!/bin/bash
+#sprawdzenie sensorów jeżeli nie były włączone
 if [ "$(cat /etc/modules | grep sensors-detect)" = "" ]; then
     /usr/bin/yes| sudo sensors-detect; sudo /etc/init.d/lm-sensors stop;sudo update-rc.d -f lm-sensors remove	
+fi
+#dodanie tła do GRUB'a
+if [ "$(grep 'grub_background.png' /etc/default/grub )" = "" ]; then
+  sudo sed -i '/GRUB_BACKGROUND/ d'  /etc/default/grub
+  echo 'GRUB_BACKGROUND=/opt/NeteXt73/menu/grub_background.png' | sudo tee -a /etc/default/grub
+  sudo chown root:root /etc/default/grub
+  sudo update-grub
 fi

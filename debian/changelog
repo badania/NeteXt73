@@ -1,3 +1,9 @@
+netext73 (0.7.62) stable; urgency=medium
+
+  * stabilizowanie wersji
+
+ -- eloaders <eloaders@linux.pl>  Fri, 23 May 2014 14:13:53 +0200
+
 netext73 (0.7.61) stable; urgency=medium
 
   * zmiana GRUB background z jpg na png
