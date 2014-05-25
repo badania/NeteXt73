@@ -40,7 +40,7 @@ source /opt/NeteXt73/procedury
 
 adres_kerneli_premium
 if [ -e ~/.netext73/apm_status ]; then
-    apm_stat=$(cat ~/.netext73/apm_status | sed 's/.* //')
+    apm_stat=$(cat ~/.netext73/apm_status | sed 's/.* //' | head -n 1)
 else
     apm_stat=""
 fi

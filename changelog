@@ -1,6 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.63
+-	usunięcie automatycznygo dodawania grub background podczas instalacji programu z repo
+-	dodanie możliwości wyczączenia grub background z poziomu ustawień GRUB'a
+-	poprawa widoku okna config po zmianach w pliku zapamiętującym APM
 v0.7.62
 -	stabilizowanie wersji
 v0.7.61
