@@ -3,6 +3,7 @@
 
 v0.7.64
 -	dodanie do zależności sysv-rc-conf
+-	dodanie scheduler do logów
 v0.7.63
 -	usunięcie automatycznygo dodawania grub background podczas instalacji programu z repo
 -	dodanie możliwości wyczączenia grub background z poziomu ustawień GRUB'a
