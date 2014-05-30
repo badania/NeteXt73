@@ -751,6 +751,7 @@ nvidia(){
 echo "echo \"$TEXT_PROCEDURA_15\""
 echo "dpkg -l | grep nvidia-current | awk '{print \$2}' > nv.txt"
 echo "dpkg -l | grep nvidia-experimental | awk '{print \$2}' >> nv.txt"
+echo "dpkg -l | grep nvidia-updates | awk '{print \$2}' >> nv.txt"
 echo "dpkg -l | grep nvidia-common | awk '{print \$2}' >> nv.txt"
 echo "sudo dpkg -P \$(cat nv.txt | tr '\\n' ' ')"
 echo "dpkg -l | grep nvidia-settings | awk '{print \$2}' > nv.txt"

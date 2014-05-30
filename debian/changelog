@@ -1,3 +1,9 @@
+netext73 (0.8.65) stable; urgency=medium
+
+  * zmiany w instalatorze NVidia - dostosowanie do nowych nazw paczek
+
+ -- eloaders <eloaders@linux.pl>  Fri, 30 May 2014 20:21:56 +0200
+
 netext73 (0.7.64) stable; urgency=medium
 
   * dodanie do zależności sysv-rc-conf
