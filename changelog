@@ -4,6 +4,7 @@
 v0.7.66
 -	zmiana instalatora Radeon
 -	zmiana monitora baterii
+-	dodanie monitora freq cpu core
 v0.7.65
 -	dostosowanie instalatora Nvidia do nowych nazw
 v0.7.64
