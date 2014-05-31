@@ -854,7 +854,7 @@ sed -i 's/POWER_SUPPLY_ENERGY_FULL_DESIGN/POWER_SUPPLY_ENERGY_DESIGN_FULL/g' bat
 sed -i 's/POWER_SUPPLY_CHARGE_FULL_DESIGN/POWER_SUPPLY_CHARGE_DESIGN_FULL/g' bateria.txt
 sed -i '/POWER_SUPPLY_PRESENT/ s/0/NO/' bateria.txt
 sed -i '/POWER_SUPPLY_PRESENT/ s/1/YES/' bateria.txt
-sed -i '/POWER_SUPPLY_CAPACITY/ s/$/%/' bateria.txt
+#sed -i '/POWER_SUPPLY_CAPACITY/ s/$/%/' bateria.txt
 cp bateria.txt bateria2.txt
 v=$(grep 'POWER_SUPPLY_ENERGY_DESIGN_FULL' bateria.txt | awk '{print $2}')
 v1=$(grep 'POWER_SUPPLY_ENERGY_FULL' bateria.txt | awk '{print $2}')
