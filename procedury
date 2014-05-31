@@ -930,7 +930,7 @@ echo "3:#$(cat bateria.txt | cut -d ' ' -f 22)"
 echo "4:#$(cat bateria.txt | cut -d ' ' -f 24)"
 echo "5:#$prad_max mAh"; echo "6:#$prad_ostatni1 mAh"; echo "7:#$prad_teraz1 mAh"; echo "8:#$max_poziom %"; echo "9:#$poziom_teraz %"; echo "10:#$napiecie_1 V"; echo "11:#$napiecie_2 V"
 
-done | yad-netext --center --multi-progress  --bar="$(cat bateria.txt | cut -d ' ' -f 1)" --bar="$(cat bateria.txt | cut -d ' ' -f 3)"  --bar="$(cat bateria.txt | cut -d ' ' -f 21)"  --bar="$(cat bateria.txt | cut -d ' ' -f 23)" --bar="$(cat bateria.txt | cut -d ' ' -f 13)" --bar="$(cat bateria.txt | cut -d ' ' -f 15)" --bar="$(cat bateria.txt | cut -d ' ' -f 17)" --bar="$(cat bateria.txt | cut -d ' ' -f 19)" --bar="$(cat bateria.txt | cut -d ' ' -f 25)" --bar="$(cat bateria.txt | cut -d ' ' -f 9)" --bar="$(cat bateria.txt | cut -d ' ' -f 11)" --auto-kill --window-icon="/opt/NeteXt73/ikony/apm.png" --image="/opt/NeteXt73/ikony/apm.png" --text="$Stan_baterii:\n" --button="gtk-ok:0"
+done | yad-netext --center --multi-progress  --title="$nazwa_skryptu" --bar="$(cat bateria.txt | cut -d ' ' -f 1)" --bar="$(cat bateria.txt | cut -d ' ' -f 3)"  --bar="$(cat bateria.txt | cut -d ' ' -f 21)"  --bar="$(cat bateria.txt | cut -d ' ' -f 23)" --bar="$(cat bateria.txt | cut -d ' ' -f 13)" --bar="$(cat bateria.txt | cut -d ' ' -f 15)" --bar="$(cat bateria.txt | cut -d ' ' -f 17)" --bar="$(cat bateria.txt | cut -d ' ' -f 19)" --bar="$(cat bateria.txt | cut -d ' ' -f 25)" --bar="$(cat bateria.txt | cut -d ' ' -f 9)" --bar="$(cat bateria.txt | cut -d ' ' -f 11)" --auto-kill --window-icon="/opt/NeteXt73/ikony/apm.png" --image="/opt/NeteXt73/ikony/apm.png" --text="$Stan_baterii:\n" --button="gtk-ok:0"
 rm *.txt -f
 }
 
