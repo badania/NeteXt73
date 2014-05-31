@@ -1,3 +1,9 @@
+netext73 (0.7.66) stable; urgency=medium
+
+  * zmiana instalatora Radeon i monitora baterii
+
+ -- eloaders <eloaders@linux.pl>  Sat, 31 May 2014 22:22:39 +0200
+
 netext73 (0.7.65) stable; urgency=medium
 
   * zmiany w instalatorze NVidia - dostosowanie do nowych nazw paczek

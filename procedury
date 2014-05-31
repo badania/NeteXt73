@@ -735,16 +735,16 @@ echo "if [ -e ~/.netext73/archiwum_deb ] && [ \"\$(cat ~/.netext73/archiwum_deb)
 echo "sudo cp *.deb /var/cache/apt/archives/ -f"
 echo "fi"
 echo "rm *.deb -f"
-echo "DRIVER=/usr/lib/fglrx/xorg/modules/drivers/fglrx_drv.so"
-echo "for x in \$(objdump -d \$DRIVER|awk '/call/&&/EnableLogo/{print \"\\\x\"\$2\"\\\x\"\$3\"\\\x\"\$4\"\\\x\"\$5\"\\\x\"\$6}'); do"
-echo "sudo sed -i \"s/\$x/\\x90\\x90\\x90\\x90\\x90/g\" \$DRIVER"
-echo "done"
-echo "if [ -e /usr/X11R6/lib64/modules/dri ]; then"
-echo "echo 'ok' > /dev/null"
-echo "else"
-echo "sudo mkdir -p /usr/X11R6/lib64/modules/"
-echo "sudo ln -s /usr/lib/dri/ /usr/X11R6/lib64/modules/"
-echo "fi"
+#echo "DRIVER=/usr/lib/fglrx/xorg/modules/drivers/fglrx_drv.so"
+#echo "for x in \$(objdump -d \$DRIVER|awk '/call/&&/EnableLogo/{print \"\\\x\"\$2\"\\\x\"\$3\"\\\x\"\$4\"\\\x\"\$5\"\\\x\"\$6}'); do"
+#echo "sudo sed -i \"s/\$x/\\x90\\x90\\x90\\x90\\x90/g\" \$DRIVER"
+#echo "done"
+#echo "if [ -e /usr/X11R6/lib64/modules/dri ]; then"
+#echo "echo 'ok' > /dev/null"
+#echo "else"
+#echo "sudo mkdir -p /usr/X11R6/lib64/modules/"
+#echo "sudo ln -s /usr/lib/dri/ /usr/X11R6/lib64/modules/"
+#echo "fi"
 }
 
 nvidia(){
@@ -844,6 +844,7 @@ xterm -T GPG-KEY -e bash -c "echo 'Podaj hasło aby usunąć zaznaczone klucze';
 }
 
 stan_baterii(){
+
 cat /sys/class/power_supply/BAT*/uevent > bateria.txt
 sed -i 's/=/ /g' bateria.txt
 sed -i '/POWER_SUPPLY_POWER_NOW/ d' bateria.txt
@@ -862,19 +863,19 @@ va=$(grep 'POWER_SUPPLY_CHARGE_DESIGN_FULL' bateria.txt | awk '{print $2}')
 va1=$(grep 'POWER_SUPPLY_CHARGE_FULL' bateria.txt | awk '{print $2}')
 
 if [ "$v" = "" ]; then
-	echo "POWER_SUPPLY_MAX_CAPACITY $((100*$va1/$va))%" >> bateria2.txt
+	echo "POWER_SUPPLY_MAX_CAPACITY $((100*$va1/$va))" >> bateria2.txt
 	for i in POWER_SUPPLY_CHARGE_DESIGN_FULL POWER_SUPPLY_CHARGE_FULL POWER_SUPPLY_CHARGE_NOW
 	do
 	      v=$(grep "$i" bateria.txt | awk '{print $2}')
-	      v1=$(echo "scale=2;$v/1000" | bc -q | sed 's/$/mAh/')
+	      v1=$(echo "scale=2;$v/1000" | bc -q | sed 's/\..*//' ) #| sed 's/$/mAh/')
 	      sed -i "/$v/ s/$v/$v1/" bateria2.txt
 	done
 else
-	echo "POWER_SUPPLY_MAX_CAPACITY $((100*$v1/$v))%" >> bateria2.txt
+	echo "POWER_SUPPLY_MAX_CAPACITY $((100*$v1/$v))" >> bateria2.txt
 	for i in POWER_SUPPLY_ENERGY_DESIGN_FULL POWER_SUPPLY_ENERGY_FULL POWER_SUPPLY_ENERGY_NOW
 	do
 	      v=$(grep "$i" bateria.txt | awk '{print $2}')
-	      v1=$(echo "scale=2;$v/10000" | bc -q | sed 's/$/mAh/')
+	      v1=$(echo "scale=2;$v/10000" | bc -q | sed 's/\..*//' ) #| sed 's/$/mAh/')
 	      sed -i "/$v/ s/$v/$v1/" bateria2.txt
 	done
 
@@ -882,12 +883,13 @@ fi
 for i in POWER_SUPPLY_VOLTAGE_MIN_DESIGN POWER_SUPPLY_VOLTAGE_NOW
 do
       v=$(grep "$i" bateria.txt | awk '{print $2}')
-      v1=$(echo "scale=2;$v/1000000" | bc -q | sed 's/$/V/')
+      v1=$(echo "scale=2;$v/1000000" | bc -q ) #) %| sed 's/$/V/')
       sed -i "/$i/ s/$v/$v1/" bateria2.txt
 done
 Stan_baterii="Battery status"
 sed -i '/POWER_SUPPLY_MANUFACTURER / s/ /_/g' bateria2.txt
 sed -i 's/POWER_SUPPLY_MANUFACTURER_/POWER_SUPPLY_MANUFACTURER /' bateria2.txt
+
 if [ "$(echo $LANG | grep pl)" != "" ]; then
       Stan_baterii="Stan baterii"
       sed -i 's/POWER_SUPPLY_NAME/Nazwa_baterii/' bateria2.txt 
@@ -911,9 +913,27 @@ if [ "$(echo $LANG | grep pl)" != "" ]; then
       sed -i 's/YES/TAK/' bateria2.txt
 fi
 cat bateria2.txt | tr '=' ' ' | tr '\n' ' ' > bateria.txt
-yad-netext --center --list --title="$nazwa_skryptu" --width="395" --height="460" --window-icon="/opt/NeteXt73/ikony/apm.png" --text="<span color=\"$kolor_textu\">$Stan_baterii:</span>" --column="" --column="" $(cat bateria.txt) --button="gtk-ok:0"
+napiecie_1="$(cat bateria.txt | cut -d ' ' -f 10)"
+napiecie_2="$(cat bateria.txt | cut -d ' ' -f 12)"
+prad_max="$(cat bateria.txt | cut -d ' ' -f 14)"
+prad_ostatni="$((100*$(cat bateria.txt | cut -d ' ' -f 16)/$prad_max))"
+prad_ostatni1="$(cat bateria.txt | cut -d ' ' -f 16)"
+prad_teraz="$((100*$(cat bateria.txt | cut -d ' ' -f 18)/$prad_max))"
+prad_teraz1="$(cat bateria.txt | cut -d ' ' -f 18)"
+max_poziom="$(cat bateria.txt | cut -d ' ' -f 20)"
+poziom_teraz="$(cat bateria.txt | cut -d ' ' -f 26)"
+for i in $(seq 1 2); do
+echo "5:$prad_max"; echo "6:$prad_ostatni"; echo "7:$prad_teraz"; echo "8:$max_poziom"; echo "9:$poziom_teraz"; echo "10:$napiecie_1"; echo "11:$napiecie_2"
+echo "1:#$(cat bateria.txt | cut -d ' ' -f 2)"
+echo "2:#$(cat bateria.txt | cut -d ' ' -f 4)"
+echo "3:#$(cat bateria.txt | cut -d ' ' -f 22)"
+echo "4:#$(cat bateria.txt | cut -d ' ' -f 24)"
+echo "5:#$prad_max mAh"; echo "6:#$prad_ostatni1 mAh"; echo "7:#$prad_teraz1 mAh"; echo "8:#$max_poziom %"; echo "9:#$poziom_teraz %"; echo "10:#$napiecie_1 V"; echo "11:#$napiecie_2 V"
+
+done | yad-netext --center --multi-progress  --bar="$(cat bateria.txt | cut -d ' ' -f 1)" --bar="$(cat bateria.txt | cut -d ' ' -f 3)"  --bar="$(cat bateria.txt | cut -d ' ' -f 21)"  --bar="$(cat bateria.txt | cut -d ' ' -f 23)" --bar="$(cat bateria.txt | cut -d ' ' -f 13)" --bar="$(cat bateria.txt | cut -d ' ' -f 15)" --bar="$(cat bateria.txt | cut -d ' ' -f 17)" --bar="$(cat bateria.txt | cut -d ' ' -f 19)" --bar="$(cat bateria.txt | cut -d ' ' -f 25)" --bar="$(cat bateria.txt | cut -d ' ' -f 9)" --bar="$(cat bateria.txt | cut -d ' ' -f 11)" --auto-kill --window-icon="/opt/NeteXt73/ikony/apm.png" --image="/opt/NeteXt73/ikony/apm.png" --text="$Stan_baterii:\n" --button="gtk-ok:0"
 rm *.txt -f
 }
+
 
 ipv6_off(){
 echo "sudo apt-get autoremove miredo -y && dpkg -l | awk '/^rc/{ print \$2}' | sudo xargs dpkg --purge"
