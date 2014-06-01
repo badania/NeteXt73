@@ -1082,7 +1082,7 @@ done | yad-netext --center --multi-progress --auto-kill --auto-close $YADBARS --
 procesor_monitor(){
 
 for i in $(seq 1 $(grep 'model name' /proc/cpuinfo | wc -l )); do
-    barek="$barek --bar=$(cat /proc/cpuinfo | grep 'model name' | head -n 1 | sed 's/.*: //' | sed 's/ /_/g'; echo "core_$i"):NORM"
+    barek="$barek --bar=$(echo "core"$i"")" # --bar=$(cat /proc/cpuinfo | grep 'model name' | head -n 1 | sed 's/.*: //' | sed 's/ /_/g'):NORM"
 done
 petla_duza="tak"
 while [ $petla_duza = "tak" ]; do
@@ -1090,7 +1090,7 @@ for i in $(seq 1 $(grep 'model name' /proc/cpuinfo | wc -l )); do
     echo "$i:$((100*$(cat /proc/cpuinfo | grep MHz | cut -d ' ' -f 3 | sed -n $i'p' | sed 's/\..*//' )/$(cat /proc/cpuinfo | grep 'model name' | head -n 1 | sed 's/.*@ //' | sed 's/GHz//' | sed 's/\.//')/10))"
     echo "$i:#$(cat /proc/cpuinfo | grep MHz | cut -d ' ' -f 3 | sed -n $i'p' | sed 's/\..*//' )"
 done 
-done| yad-netext --title "$nazwa_skryptu" --center --multi-progress $barek --text="Cpu Core Frequency:\n" --auto-kill  --button="$TEXT_ZAMKNIJ:1"
+done| yad-netext --title "$nazwa_skryptu" --center --multi-progress $barek --text="$(cat /proc/cpuinfo | grep 'model name' | head -n 1 | sed 's/.*: //' | sed 's/ /_/g')\nCpu Core Frequency:\n" --auto-kill  --button="$TEXT_ZAMKNIJ:1"
 if [ "$?" != "" ]; then
     petla_duza="nie"  
 fi
