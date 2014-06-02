@@ -65,6 +65,11 @@ if [ -e ~/.netext73/monitor ]; then
     else
 	a5=FALSE
     fi
+    if [ "$(cat ~/.netext73/monitor | grep CPU)" != "" ]; then
+	a6=TRUE
+    else
+	a6=FALSE
+    fi
 else
 
     a1=TRUE
@@ -72,6 +77,7 @@ else
     a3=FALSE
     a4=FALSE
     a5=FALSE
+    a6=FALSE
 fi
 
 if [ -e /sys/class/power_supply/BAT*/uevent ];then
@@ -81,6 +87,7 @@ if [ -e /sys/class/power_supply/BAT*/uevent ];then
       "$a3" "HTOP" \
       "$a4" "saidar" \
       "$a5" "battery" \
+      "$a6" "CPU/Memory" \
       --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
       klawisz=$?
 else
@@ -89,6 +96,7 @@ else
       "$a2" "powertop" \
       "$a3" "HTOP" \
       "$a4" "saidar" \
+      "$a6" "CPU/Memory" \
       --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
       klawisz=$?
 fi
@@ -97,7 +105,7 @@ if [ "$klawisz" = "0" ]; then
 	echo $konfiguracja > ~/.netext73/monitor
     fi
     if [ "$(echo $konfiguracja | grep system)" != "" ]; then
-	    procesor_monitor # x-terminal-emulator -e bash -c "watch -t 'uptime; echo  -n \"\nScaling governor : \"; cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;echo -n \"CPU driver       : \";cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_driver | head -n 1; echo -n \"\nCpu Core Frequency\n\";cat /proc/cpuinfo | grep MHz;echo -n \"\nMemory :\n\";free -m;echo -n \"\nSensors:\n\";sensors'" &
+	    x-terminal-emulator -e bash -c "watch -t 'uptime; echo  -n \"\nScaling governor : \"; cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;echo -n \"CPU driver       : \";cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_driver | head -n 1; echo -n \"\nCpu Core Frequency\n\";cat /proc/cpuinfo | grep MHz;echo -n \"\nMemory :\n\";free -m;echo -n \"\nSensors:\n\";sensors'" &
     fi
     if [ "$(echo $konfiguracja | grep powertop)" != "" ]; then
 	    x-terminal-emulator -e bash -c "sudo powertop" &
@@ -108,7 +116,10 @@ if [ "$klawisz" = "0" ]; then
     if [ "$(echo $konfiguracja | grep saidar)" != "" ]; then
 	    x-terminal-emulator -e bash -c "saidar -c" &
     fi
-        if [ "$(echo $konfiguracja | grep battery)" != "" ]; then
-	    stan_baterii
+    if [ "$(echo $konfiguracja | grep battery)" != "" ]; then
+	    stan_baterii &
+    fi
+    if [ "$(echo $konfiguracja | grep CPU)" != "" ]; then
+	    procesor_monitor &
     fi
 fi
