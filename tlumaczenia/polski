@@ -46,6 +46,7 @@ export TEXT_FIX2="APM wł/wył WiFi na baterii"
 export TEXT_FIX3="APM wł/wył Bluetooth na baterii"
 export TEXT_FIX4="APM wł/wył moduł rts5139"
 export TEXT_FIX5="APM Wł/Wył WiFi b/g/[N]"
+export TEXT_PLANISTA="Planista I/O [HDD]"
 
 #########################################################################################################################################################################
 #tlumaczenia_backuprepo

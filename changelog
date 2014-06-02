@@ -3,6 +3,7 @@
 
 v0.7.67
 -	ustawienie sztywnej skali do 6GHz dla core freq
+-	dodany wybór planisty I/O w AMP
 
 v0.7.66
 -	zmiana instalatora Radeon

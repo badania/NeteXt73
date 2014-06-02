@@ -81,7 +81,7 @@ while [ $petla_duza = "tak" ]; do
 		--field="$TEXT_FIX3:CHK" "$btfix" \
 		--field="$TEXT_FIX4:CHK" "$rts5139fix" \
 		--field="$TEXT_FIX5:CHK" "$wifin" \
-		--field="BFQ on/off:CHK" "$bfqfix" \
+		--field="$TEXT_PLANISTA:CB" "$bfqfix_menu" \
 		--button="gtk-ok:0" --button="$TEXT_POWROT:1" )
 		 
 		klawisz=$?
