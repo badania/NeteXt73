@@ -1,6 +1,9 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.67
+-	ustawienie sztywnej skali do 6GHz dla core freq
+
 v0.7.66
 -	zmiana instalatora Radeon
 -	zmiana monitora baterii
