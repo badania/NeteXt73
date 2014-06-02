@@ -1,3 +1,9 @@
+netext73 (0.7.68) stable; urgency=medium
+
+  * dodanie graficznego monitora RAM
+
+ -- eloaders <eloaders@linux.pl>  Mon, 02 Jun 2014 14:02:33 +0200
+
 netext73 (0.7.67) stable; urgency=medium
 
   * ustawienie sztywnej skali do 6GHz dla core freq
