@@ -233,7 +233,7 @@ if [ "$(cat /etc/apt/sources.list | grep 'deb' | grep 'partner' | grep '#')" = "
 else
     menu="$a1!$a2!$a3!$a4!$a5!$a6!$a7!$a8!$MENU1"
 fi
-backup=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --text="<span color=\"$kolor_textu\">$TEXT_BACKUP1</span>" --form --field=" :CB" \
+backup=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --text="<span color=\"$kolor_textu\">$TEXT_BACKUP1</span>" --form --field=" :CB" \
 "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 klawisz=$?
 backup=$(echo $backup | cut -d "|" -f 1)
@@ -243,7 +243,7 @@ if [ "$klawisz" = "0" ]; then
 #Przywróć repozytorium z kopii zapasowej
 
     if [ "$backup" = "$a2" ]; then
-	a=$(yad-netext --center --file-selection --filename="$download/" --title="$TEXT_BACKUP2" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=550 --height=450)
+	a=$(yad-netext --center --file-selection --filename="$download/" --title="$TEXT_BACKUP2" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --width=550 --height=450)
 	if [ "$(echo $a | grep source.list.backu | grep tar.gz)" != "" ]; then
 		echo "nie" > /tmp/ok.txt
 		xterm -T backup_repo -e bash -c "echo \"$TEXT_BACKUP3\";sudo mv -f /etc/apt /etc/apt~; sudo tar -xvzf $a -C /etc/; echo "tak" > /tmp/ok.txt; echo -e \"$TEXT_INSTALACJA\"; read ent"
@@ -292,7 +292,7 @@ if [ "$klawisz" = "0" ]; then
 		petla="tak"
 		while [ $petla = "tak" ]; do
 		IFS=]
-		wybor=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/klucze.png" --height=420 --width=690  --column="" --column="$TEXT_KLUCZ" --column="$TEXT_DOSTAWCA_KLUCZA" --text="<span color=\"$kolor_textu\">$TEXT_ZAZNACZ_KLUCZE</span>" --list --checklist $(cat lista.txt)  --separator="]" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		wybor=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/klucze.png" --image="/opt/NeteXt73/ikony/klucze.png" --height=420 --width=690  --column="" --column="$TEXT_KLUCZ" --column="$TEXT_DOSTAWCA_KLUCZA" --text="<span color=\"$kolor_textu\">$TEXT_ZAZNACZ_KLUCZE</span>" --list --checklist $(cat lista.txt)  --separator="]" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		klawisz=$?
 		if [ "$klawisz" = "0" ]; then 
 			if [ "$(echo $wybor)" != "" ]; then
