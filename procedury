@@ -771,8 +771,7 @@ echo "dpkg -l | grep nvidia-current | awk '{print \$2}' > nv.txt"
 echo "dpkg -l | grep nvidia-experimental | awk '{print \$2}' >> nv.txt"
 echo "dpkg -l | grep nvidia-updates | awk '{print \$2}' >> nv.txt"
 echo "dpkg -l | grep nvidia-common | awk '{print \$2}' >> nv.txt"
-echo "sudo dpkg -P \$(cat nv.txt | tr '\\n' ' ')"
-echo "dpkg -l | grep nvidia-settings | awk '{print \$2}' > nv.txt"
+echo "dpkg -l | grep nvidia-settings | awk '{print \$2}' >> nv.txt"
 echo "sudo dpkg -r \$(cat nv.txt | tr '\\n' ' ')"
 echo "rm -f nv.txt"
 echo "sudo apt-get install libpango-1.0-0 -y"
@@ -863,93 +862,79 @@ xterm -T GPG-KEY -e bash -c "echo 'Podaj hasło aby usunąć zaznaczone klucze';
 
 stan_baterii(){
 
-cat /sys/class/power_supply/BAT*/uevent > bateria.txt
-sed -i 's/=/ /g' bateria.txt
-sed -i '/POWER_SUPPLY_POWER_NOW/ d' bateria.txt
-sed -i '/SERIAL_NUMBER/ d' bateria.txt
-sed -i '/POWER_SUPPLY_CYCLE_COUNT/ d' bateria.txt
-sed -i 's/POWER_SUPPLY_ENERGY_FULL_DESIGN/POWER_SUPPLY_ENERGY_DESIGN_FULL/g' bateria.txt
-sed -i 's/POWER_SUPPLY_CHARGE_FULL_DESIGN/POWER_SUPPLY_CHARGE_DESIGN_FULL/g' bateria.txt
-sed -i '/POWER_SUPPLY_PRESENT/ s/0/NO/' bateria.txt
-sed -i '/POWER_SUPPLY_PRESENT/ s/1/YES/' bateria.txt
-#sed -i '/POWER_SUPPLY_CAPACITY/ s/$/%/' bateria.txt
-cp bateria.txt bateria2.txt
-v=$(grep 'POWER_SUPPLY_ENERGY_DESIGN_FULL' bateria.txt | awk '{print $2}')
-v1=$(grep 'POWER_SUPPLY_ENERGY_FULL' bateria.txt | awk '{print $2}')
+info_o_baterii=$(cat /sys/class/power_supply/BAT*/uevent )
+Stan_baterii="Battery status"; licznik=1
 
-va=$(grep 'POWER_SUPPLY_CHARGE_DESIGN_FULL' bateria.txt | awk '{print $2}')
-va1=$(grep 'POWER_SUPPLY_CHARGE_FULL' bateria.txt | awk '{print $2}')
-
-if [ "$v" = "" ]; then
-	echo "POWER_SUPPLY_MAX_CAPACITY $((100*$va1/$va))" >> bateria2.txt
-	for i in POWER_SUPPLY_CHARGE_DESIGN_FULL POWER_SUPPLY_CHARGE_FULL POWER_SUPPLY_CHARGE_NOW
-	do
-	      v=$(grep "$i" bateria.txt | awk '{print $2}')
-	      v1=$(echo "scale=2;$v/1000" | bc -q | sed 's/\..*//' ) #| sed 's/$/mAh/')
-	      sed -i "/$v/ s/$v/$v1/" bateria2.txt
-	done
-else
-	echo "POWER_SUPPLY_MAX_CAPACITY $((100*$v1/$v))" >> bateria2.txt
-	for i in POWER_SUPPLY_ENERGY_DESIGN_FULL POWER_SUPPLY_ENERGY_FULL POWER_SUPPLY_ENERGY_NOW
-	do
-	      v=$(grep "$i" bateria.txt | awk '{print $2}')
-	      v1=$(echo "scale=2;$v/10000" | bc -q | sed 's/\..*//' ) #| sed 's/$/mAh/')
-	      sed -i "/$v/ s/$v/$v1/" bateria2.txt
-	done
-
-fi
-for i in POWER_SUPPLY_VOLTAGE_MIN_DESIGN POWER_SUPPLY_VOLTAGE_NOW
-do
-      v=$(grep "$i" bateria.txt | awk '{print $2}')
-      v1=$(echo "scale=2;$v/1000000" | bc -q ) #) %| sed 's/$/V/')
-      sed -i "/$i/ s/$v/$v1/" bateria2.txt
+for a in "POWER_SUPPLY_NAME" "POWER_SUPPLY_STATUS" "POWER_SUPPLY_TECHNOLOGY" "POWER_SUPPLY_MODEL_NAME" "POWER_SUPPLY_MANUFACTURER" "POWER_SUPPLY_SERIAL_NUMBER" "POWER_SUPPLY_VOLTAGE_MIN_DESIGN" "POWER_SUPPLY_VOLTAGE_NOW" "POWER_SUPPLY_CAPACITY"; do
+      if [ "$(echo $LANG | grep pl)" = "" ]; then
+	  bar[$licznik]="$(echo $info_o_baterii | tr ' ' '\n' | grep $a | cut -d '=' -f 1)"
+	  bar[10]="POWER_SUPPLY_FULL_CAPACITY"
+      fi
+      stan[$licznik]="$(echo $info_o_baterii | tr ' ' '\n' | grep $a | cut -d '=' -f 2)"
+      ((licznik++))
 done
-Stan_baterii="Battery status"
-sed -i '/POWER_SUPPLY_MANUFACTURER / s/ /_/g' bateria2.txt
-sed -i 's/POWER_SUPPLY_MANUFACTURER_/POWER_SUPPLY_MANUFACTURER /' bateria2.txt
 
+#zmiana języka
 if [ "$(echo $LANG | grep pl)" != "" ]; then
       Stan_baterii="Stan baterii"
-      sed -i 's/POWER_SUPPLY_NAME/Nazwa_baterii/' bateria2.txt 
-      sed -i 's/POWER_SUPPLY_STATUS/Tryb_pracy_baterii/' bateria2.txt
-      sed -i 's/Discharging/Rozładowywanie/' bateria2.txt
-      sed -i 's/Charging/Ładowywanie/' bateria2.txt
-      sed -i 's/Unknown/Nieznany/' bateria2.txt
-      sed -i 's/Full/Pełna/' bateria2.txt
-      sed -i 's/POWER_SUPPLY_PRESENT/Zainstalowana_bateria/' bateria2.txt
-      sed -i 's/POWER_SUPPLY_TECHNOLOGY/Rodzaj_baterii/' bateria2.txt
-      sed -i 's/POWER_SUPPLY_VOLTAGE_MIN_DESIGN/Konstrukcyjne_napięcie_baterii/' bateria2.txt
-      sed -i 's/POWER_SUPPLY_VOLTAGE_NOW/Aktualne_napięcie_baterii/' bateria2.txt
-      sed -i 's/POWER_SUPPLY_.*_DESIGN_FULL/Konstrukcyjna_pojemność_baterii/' bateria2.txt
-      sed -i 's/POWER_SUPPLY_.*_FULL/Pojemność_ostatniego_naładowania/' bateria2.txt
-      sed -i 's/POWER_SUPPLY_.*_NOW/Aktualna_pojemność_baterii/' bateria2.txt
-      sed -i 's/POWER_SUPPLY_CAPACITY/Stan_naładowania_baterii/' bateria2.txt
-      sed -i 's/POWER_SUPPLY_MODEL_NAME/Model_baterii/' bateria2.txt
-      sed -i 's/POWER_SUPPLY_MANUFACTURER/Producent_baterii/' bateria2.txt
-      sed -i 's/POWER_SUPPLY_MAX_CAPACITY/Maksymalny_poziom_naładowania_baterii/' bateria2.txt
-      sed -i 's/NO/NIE/' bateria2.txt
-      sed -i 's/YES/TAK/' bateria2.txt
-fi
-cat bateria2.txt | tr '=' ' ' | tr '\n' ' ' > bateria.txt
-napiecie_1="$(cat bateria.txt | cut -d ' ' -f 10)"
-napiecie_2="$(cat bateria.txt | cut -d ' ' -f 12)"
-prad_max="$(cat bateria.txt | cut -d ' ' -f 14)"
-prad_ostatni="$((100*$(cat bateria.txt | cut -d ' ' -f 16)/$prad_max))"
-prad_ostatni1="$(cat bateria.txt | cut -d ' ' -f 16)"
-prad_teraz="$((100*$(cat bateria.txt | cut -d ' ' -f 18)/$prad_max))"
-prad_teraz1="$(cat bateria.txt | cut -d ' ' -f 18)"
-max_poziom="$(cat bateria.txt | cut -d ' ' -f 20)"
-poziom_teraz="$(cat bateria.txt | cut -d ' ' -f 26)"
-for i in $(seq 1 2); do
-echo "5:$prad_max"; echo "6:$prad_ostatni"; echo "7:$prad_teraz"; echo "8:$max_poziom"; echo "9:$poziom_teraz"; echo "10:$napiecie_1"; echo "11:$napiecie_2"
-echo "1:#$(cat bateria.txt | cut -d ' ' -f 2)"
-echo "2:#$(cat bateria.txt | cut -d ' ' -f 4)"
-echo "3:#$(cat bateria.txt | cut -d ' ' -f 22)"
-echo "4:#$(cat bateria.txt | cut -d ' ' -f 24)"
-echo "5:#$prad_max mAh"; echo "6:#$prad_ostatni1 mAh"; echo "7:#$prad_teraz1 mAh"; echo "8:#$max_poziom %"; echo "9:#$poziom_teraz %"; echo "10:#$napiecie_1 V"; echo "11:#$napiecie_2 V"
+      bar[1]="Nazwa_baterii"
+      bar[2]="Tryb_pracy_baterii"
+      bar[3]="Rodzaj_baterii"
+      bar[4]="Model_baterii"
+      bar[5]="Producent_baterii"
+      bar[6]="Nr seryjny baterii"
+      bar[7]="Konstrukcyjne_napięcie_baterii"
+      bar[8]="Aktualne_napięcie_baterii"
+      bar[9]="Aktualna_pojemność_baterii"
+      bar[10]="Maksymalny_poziom_naładowania_baterii"
+      if [ "$(echo ${stan[2]})" = "Discharging" ];then	
+	  stan[2]="Rozładowywanie"
+      elif [ "$(echo ${stan[2]})" = "Charging" ];then	
+	  stan[2]="Ładowywanie"
+      elif [ "$(echo ${stan[2]})" = "Full" ];then	
+	  stan[2]="Pełna"
+      else
+	  stan[2]="Nieznany"
+      fi
+      if [ "$(echo ${stan[3]})" = "Unknown" ];then
+	  stan[3]="Nieznany"
+      fi
 
-done | yad-netext --center --multi-progress  --title="$nazwa_skryptu" --bar="$(cat bateria.txt | cut -d ' ' -f 1)" --bar="$(cat bateria.txt | cut -d ' ' -f 3)"  --bar="$(cat bateria.txt | cut -d ' ' -f 21)"  --bar="$(cat bateria.txt | cut -d ' ' -f 23)" --bar="$(cat bateria.txt | cut -d ' ' -f 13)" --bar="$(cat bateria.txt | cut -d ' ' -f 15)" --bar="$(cat bateria.txt | cut -d ' ' -f 17)" --bar="$(cat bateria.txt | cut -d ' ' -f 19)" --bar="$(cat bateria.txt | cut -d ' ' -f 25)" --bar="$(cat bateria.txt | cut -d ' ' -f 9)" --bar="$(cat bateria.txt | cut -d ' ' -f 11)" --auto-kill --window-icon="/opt/NeteXt73/ikony/apm.png" --image="/opt/NeteXt73/ikony/apm.png" --text="$Stan_baterii:\n" --button="gtk-ok:0"
-rm *.txt -f
+fi
+#przeliczanie napięcia na V
+stan[7]=$(echo "scale=2; ${stan[7]}/1000000" | bc -q)
+stan[8]=$(echo "scale=2; ${stan[8]}/1000000" | bc -q)
+
+if [ "$(echo $info_o_baterii | grep POWER_SUPPLY_ENERGY_FULL_DESIGN)" != "" ]; then
+    poj_produkcyjna=$(echo "scale=0; $(echo $info_o_baterii | tr ' ' '\n' | grep POWER_SUPPLY_ENERGY_FULL_DESIGN= | cut -d '=' -f 2)/10000" | bc -q)
+    poj_teraz=$(echo "scale=0; $(echo $info_o_baterii | tr ' ' '\n' | grep POWER_SUPPLY_ENERGY_FULL= | cut -d '=' -f 2)/10000" | bc -q)
+    if [ "$poj_produkcyjna" != "0" ] || [ "$poj_produkcyjna" != "" ]; then
+	  stan[10]=$(echo "scale=0; 100*$poj_teraz/$poj_produkcyjna" | bc -q)
+    else
+	  stan[10]=0
+    fi
+else
+    poj_produkcyjna=$(echo "scale=0; $(echo $info_o_baterii | tr ' ' '\n' | grep POWER_SUPPLY_CHARGE_FULL_DESIGN= | cut -d '=' -f 2)/10000" | bc -q)
+    poj_teraz=$(echo "scale=0; $(echo $info_o_baterii | tr ' ' '\n' | grep POWER_SUPPLY_CHARGE_FULL= | cut -d '=' -f 2)/10000" | bc -q)
+    if [ "$poj_produkcyjna" != "0" ] || [ "$poj_produkcyjna" != "" ]; then
+	  stan[10]=$(echo "scale=0; 100*$poj_teraz/$poj_produkcyjna" | bc -q)
+    else
+	  stan[10]=0
+    fi
+fi
+for i in $(seq 1 2); do
+for a in $(seq 1 $(($licznik-3))); do
+echo "$a:#${stan[$a]}"
+done
+
+echo "7:#${stan[7]} V"; echo "7:${stan[7]}" # V baterii
+echo "8:#${stan[8]} V"; echo "8:${stan[8]}" # V baterii
+echo "9:#${stan[9]} %"; echo "9:${stan[9]}" # % baterii
+echo "10:#${stan[10]} %"; echo "10:${stan[10]}" # % baterii
+
+
+done | yad-netext --center --multi-progress  --title="$nazwa_skryptu" --bar="$(echo ${bar[1]})" --bar="$(echo ${bar[2]})" --bar="$(echo ${bar[3]})" --bar="$(echo ${bar[4]})" --bar="$(echo ${bar[5]})" --bar="$(echo ${bar[6]})" --bar="$(echo ${bar[7]})" --bar="$(echo ${bar[8]})" --bar="$(echo ${bar[9]})"  --bar="$(echo ${bar[10]})" --auto-kill --window-icon="/opt/NeteXt73/ikony/apm.png" --image="/opt/NeteXt73/ikony/apm.png" --text="$Stan_baterii:\n" --button="gtk-ok:0"
+
 }
 
 

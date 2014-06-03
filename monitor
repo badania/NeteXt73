@@ -81,7 +81,7 @@ else
 fi
 
 if [ -e /sys/class/power_supply/BAT*/uevent ];then
-      konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_MONITOR1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
+      konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_MONITOR1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="280" --checklist --list \
       "$a1" "system monitor" \
       "$a2" "powertop" \
       "$a3" "HTOP" \
@@ -91,7 +91,7 @@ if [ -e /sys/class/power_supply/BAT*/uevent ];then
       --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
       klawisz=$?
 else
-      konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_MONITOR1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
+      konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_MONITOR1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="250" --checklist --list \
       "$a1" "system monitor" \
       "$a2" "powertop" \
       "$a3" "HTOP" \
