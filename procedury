@@ -866,7 +866,7 @@ info_o_baterii=$(cat /sys/class/power_supply/BAT*/uevent )
 Stan_baterii="Battery status"; licznik=1
 
 for a in "POWER_SUPPLY_NAME" "POWER_SUPPLY_STATUS" "POWER_SUPPLY_TECHNOLOGY" "POWER_SUPPLY_MODEL_NAME" "POWER_SUPPLY_MANUFACTURER" "POWER_SUPPLY_SERIAL_NUMBER" "POWER_SUPPLY_VOLTAGE_MIN_DESIGN" "POWER_SUPPLY_VOLTAGE_NOW" "POWER_SUPPLY_CAPACITY"; do
-      if [ "$(echo $LANG | grep pl)" = "" ]; then
+      if [ "$(grep pol ~/.netext73/jezyk)" = "" ]; then
 	  bar[$licznik]="$(echo $info_o_baterii | tr ' ' '\n' | grep $a | cut -d '=' -f 1)"
 	  bar[10]="POWER_SUPPLY_FULL_CAPACITY"
       fi
@@ -875,8 +875,8 @@ for a in "POWER_SUPPLY_NAME" "POWER_SUPPLY_STATUS" "POWER_SUPPLY_TECHNOLOGY" "PO
 done
 
 #zmiana języka
-if [ "$(echo $jezyk | grep pl)" != "" ]; then
-#jezyczek; case $jezyk in pol*)
+#jezyczek
+if [ "$(grep pol ~/.netext73/jezyk)" != "" ]; then
       Stan_baterii="Stan baterii"
       bar[1]="Nazwa_baterii"
       bar[2]="Tryb_pracy_baterii"
