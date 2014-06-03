@@ -1,7 +1,7 @@
 [Desktop Entry]
 Categories=Utility;
 Comment[pl]=Pierwsza instalacja
-Comment=Pierwsza instalacja
+Comment=The first installation
 Comment[ar]=The first installation
 Comment[ast]=The first installation
 Comment[be]=The first installation
@@ -53,7 +53,7 @@ Comment[zh_TW]=The first installation
 Encoding=UTF-8
 Exec=/opt/NeteXt73/./update first
 GenericName[pl]=Pierwsza instalacja
-GenericName=Pierwsza instalacja
+GenericName=The first installation
 GenericName[ar]=The first installation
 GenericName[ast]=The first installation
 GenericName[be]=The first installation
@@ -106,7 +106,7 @@ GenericName[zh_TW]=The first installation
 Icon=/opt/NeteXt73/ikony/start.png
 MimeType=
 Name[pl]=Pierwsza instalacja
-Name=Pierwsza instalacja
+Name=The first installation
 Name[ar]=The first installation
 Name[ast]=The first installation
 Name[be]=The first installation

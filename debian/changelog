@@ -1,3 +1,9 @@
+netext73 (0.7.69) stable; urgency=medium
+
+  * poprawki tłumaczeń
+
+ -- eloaders <eloaders@linux.pl>  Tue, 03 Jun 2014 12:30:48 +0200
+
 netext73 (0.7.68) stable; urgency=medium
 
   * dodanie graficznego monitora RAM

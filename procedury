@@ -874,6 +874,14 @@ for a in "POWER_SUPPLY_NAME" "POWER_SUPPLY_STATUS" "POWER_SUPPLY_TECHNOLOGY" "PO
       ((licznik++))
 done
 
+#pojemność
+if [ "$(echo $info_o_baterii | grep POWER_SUPPLY_CHARGE_FULL_DESIGN)" != "" ]; then
+    bateria_full="$(echo "scale=0; $(echo $info_o_baterii | tr ' ' '\n' | grep POWER_SUPPLY_CHARGE_FULL= | cut -d '=' -f 2)/1000" | bc -q) mAh"
+    bateria_teraz="$(echo "scale=0; $(echo $info_o_baterii | tr ' ' '\n' | grep POWER_SUPPLY_CHARGE_NOW= | cut -d '=' -f 2)/1000" | bc -q) mAh"
+else
+    bateria_full="$(echo "scale=0; $(echo $info_o_baterii | tr ' ' '\n' | grep POWER_SUPPLY_ENERGY_FULL= | cut -d '=' -f 2)/10000" | bc -q) mWh"
+    bateria_teraz="$(echo "scale=0; $(echo $info_o_baterii | tr ' ' '\n' | grep POWER_SUPPLY_ENERGY_NOW= | cut -d '=' -f 2)/10000" | bc -q) mWh"
+fi
 #zmiana języka
 #jezyczek
 if [ "$(grep pol ~/.netext73/jezyk)" != "" ]; then
@@ -929,13 +937,14 @@ done
 
 echo "7:#${stan[7]} V"; echo "7:${stan[7]}" # V baterii
 echo "8:#${stan[8]} V"; echo "8:${stan[8]}" # V baterii
-echo "9:#${stan[9]} %"; echo "9:${stan[9]}" # % baterii
-echo "10:#${stan[10]} %"; echo "10:${stan[10]}" # % baterii
+echo "9:#${stan[9]} %        $bateria_teraz"; echo "9:${stan[9]}" # % baterii
+echo "10:#${stan[10]} %        $bateria_full"; echo "10:${stan[10]}" # % baterii
 
 
 done | yad-netext --center --multi-progress  --title="$nazwa_skryptu" --bar="$(echo ${bar[1]})" --bar="$(echo ${bar[2]})" --bar="$(echo ${bar[3]})" --bar="$(echo ${bar[4]})" --bar="$(echo ${bar[5]})" --bar="$(echo ${bar[6]})" --bar="$(echo ${bar[7]})" --bar="$(echo ${bar[8]})" --bar="$(echo ${bar[9]})"  --bar="$(echo ${bar[10]})" --auto-kill --window-icon="/opt/NeteXt73/ikony/apm.png" --image="/opt/NeteXt73/ikony/apm.png" --text="$Stan_baterii:\n" --button="gtk-ok:0"
 
 }
+
 
 
 ipv6_off(){

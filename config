@@ -89,12 +89,12 @@ else
     root_mode="FALSE"
 fi
 
-konfiguracja=$(yad-netext --center --title="$nazwa_skryptu" --width="155" --height="320" --window-icon="/opt/NeteXt73/ikony/config.png" --text="<span color=\"$kolor_textu\">$TEXT_CONFIG2</span>" --form \
+konfiguracja=$(yad-netext --center --title="$nazwa_skryptu" --width="155" --height="320" --window-icon="/opt/NeteXt73/ikony/config.png" --image="/opt/NeteXt73/ikony/config.png" --text="<span color=\"$kolor_textu\">$TEXT_CONFIG2</span>" --form \
 --field="$TEXT_CONFIG7:CB" --field="$TEXT_CONFIG4" --field="$TEXT_CONFIG6:CB" --field="$TEXT_CONFIG9:RO" --field="$TEXT_CONFIG10:RO" --field="$TEXT_CONFIG11:CHK" --field="$TEXT_CONFIG12:CHK" --field="HTTPS On/Off:CHK" --field="NeteXt'73 -root mode:CHK" --field="Server No:CB" "$TEXT_NIE!$TEXT_TAK" "$adres_premium" "$lang1" "$apm_stat" "$ik" "$automatyczna_instalacja" "$archiwum_deb" "$https_link" "$root_mode" "$wybor_serwera" \
 --button="$TEXT_CONFIG3:2" --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
 klawisz=$?
 if [ $klawisz = 2 ]; then
-	kolor=$(yad-netext --center --color --window-icon="/opt/NeteXt73/ikony/config.png" --text="$TEXT_CONFIG2" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+	kolor=$(yad-netext --center --color --window-icon="/opt/NeteXt73/ikony/config.png" --image="/opt/NeteXt73/ikony/config.png" --text="$TEXT_CONFIG2" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 	klawisz=$?
 	if [ "$klawisz" = "0" ];then
 	      echo $kolor > ~/.netext73/kolor_textu

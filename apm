@@ -73,7 +73,7 @@ while [ $petla_duza = "tak" ]; do
 	menu=$(echo "$aktualny_apm$menu_apm" | sed 's/!!/!/')
 	
 	if [ "$stan_apm" != "-" ]; then
-		aa=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png" --form \
+		aa=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png"  --image="/opt/NeteXt73/ikony/apm.png" --form \
 		--field="$TEXT_WERSJA_APM:RO" --field="$TEXT_AKTUALNY_PROFIL_APM:RO" --field="$TEXT_ZMIEN_PROFIL_APM:CB" \
 		"$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)" "$aktualny_apm" "$menu" \
 		--field="$TEXT_FIX1:CHK" "$wififix" \
