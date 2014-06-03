@@ -875,7 +875,7 @@ for a in "POWER_SUPPLY_NAME" "POWER_SUPPLY_STATUS" "POWER_SUPPLY_TECHNOLOGY" "PO
 done
 
 #zmiana języka
-if [ "$(echo $LANG | grep pl)" != "" ]; then
+jezyczek; case $jezyk in pol*)
       Stan_baterii="Stan baterii"
       bar[1]="Nazwa_baterii"
       bar[2]="Tryb_pracy_baterii"
@@ -899,8 +899,8 @@ if [ "$(echo $LANG | grep pl)" != "" ]; then
       if [ "$(echo ${stan[3]})" = "Unknown" ];then
 	  stan[3]="Nieznany"
       fi
-
-fi
+;;
+esac
 #przeliczanie napięcia na V
 stan[7]=$(echo "scale=2; ${stan[7]}/1000000" | bc -q)
 stan[8]=$(echo "scale=2; ${stan[8]}/1000000" | bc -q)
