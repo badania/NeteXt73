@@ -4,6 +4,7 @@
 v0.7.70
 -	poprawki kodu
 -	dostosowanie szerokości okien w miejscach gdzie pojawiły się ikony
+-	wyłączenie moduły sesji gościa przez zmiany w dystrybucjach i brak jednolitego rozwiązania
 v0.7.69
 -	poprawki tłumaczeń
 -	dodanie info. o pojemności baterii

@@ -43,27 +43,24 @@ source /opt/NeteXt73/procedury
 cd /tmp
 
 if [ "$(cat /etc/sysctl.conf | grep 'net.ipv6.conf.all.disable_ipv6 = 1')" = "" ]; then
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!$MENU12!BurnTest"
+	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!BurnTest"
     else
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU10!$MENU11!$MENU12!BurnTest"
+	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU10!$MENU11!BurnTest"
 fi
 
 skrypt=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/skrypty.png" --image="/opt/NeteXt73/ikony/skrypty.png" --form --field="$TEXT_SKRYPT1:CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
 klawisz=$?; skrypt=$(echo $skrypt | cut -d "|" -f 1)
-if [ $klawisz = 0 ]; then 
-	
+if [ $klawisz = 0 ]; then
 	#kasujem dane po konfigach
 	if [ "$skrypt" = "$MENU3" ]; then
-	    if [ "$(dpkg -l | grep '^rc' | awk '{print $2}' | head -n1)" != "" ]; then 
+	    if [ "$(dpkg -l | grep '^rc' | awk '{print $2}' | head -n1)" != "" ]; then
 		  xterm -T configi -e bash -c "echo \"$TEXT_INSTALACJA1\"; sudo dpkg -l | grep '^rc' | awk '{print \$2}' | xargs sudo dpkg --purge; echo -e \"$TEXT_INSTALACJA2\" ;read ent"
 	    else 
 		  yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_CONFIG1" 
 	    fi
 	#zabijamy procesy zombie
 	elif [ "$skrypt" = "$MENU4" ]; then
-	    
 	    ps axo stat,ppid,pid,comm | grep -w defunct > procesy.txt
-	      
 	    if [ "$(cat procesy.txt)" = "" ]; then
 		  yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_ZOMBIE2"
 	    else
@@ -83,53 +80,31 @@ if [ $klawisz = 0 ]; then
 	    cd /tmp
 	    x-terminal-emulator -e bash -c "echo -e \"$TEXT_TASKSEL1\"; sudo tasksel; echo -e \"$TEXT_INSTALACJA2\"; read ent"
 	#synchronizuj czas z internetu
-	elif [ "$skrypt" = "$MENU6" ]; then    
+	elif [ "$skrypt" = "$MENU6" ]; then
 	    xterm -T time -e bash -c "echo \"$TEXT_INSTALACJA1\"; sudo ntpdate tempus1.gum.gov.pl; echo -e \"$TEXT_INSTALACJA2\" ;read ent"
-	
 	#ipv6 off
-	elif [ "$skrypt" = "$MENU7" ]; then  
+	elif [ "$skrypt" = "$MENU7" ]; then
 	    naglowek > instaluj.sh
 	    ipv6_off >> instaluj.sh
 	    instalacja
 	#ipv6 on
-	elif [ "$skrypt" = "$MENU8" ]; then  
+	elif [ "$skrypt" = "$MENU8" ]; then
 	    naglowek > instaluj.sh
 	    ipv6_on >> instaluj.sh
-	    instalacja	
-	#chrome gtk fix    
-	elif [ "$skrypt" = "$MENU10" ]; then  
+	    instalacja
+	#chrome gtk fix
+	elif [ "$skrypt" = "$MENU10" ]; then
 	    naglowek > instaluj.sh
 	    echo "sudo mv /usr/bin/google-chrome-stable /usr/bin/google-chrome" >> instaluj.sh
 	    echo "sudo sed -i 's/google-chrome-stable/google-chrome/' /usr/share/applications/google-chrome.desktop" >> instaluj.sh
 	    instalacja3
 	#modem usb fix
-	elif [ "$skrypt" = "$MENU11" ]; then  
-	    naglowek > instaluj.sh 
+	elif [ "$skrypt" = "$MENU11" ]; then
+	    naglowek > instaluj.sh
 	    echo "sudo mv /lib/udev/rules.d/40-usb_modeswitch.rules /lib/udev/rules.d/61-usb_modeswitch.rules" >> instaluj.sh
 	    instalacja3
-	#dodanie usunięcie konta gościa    
-	elif [ "$skrypt" = "$MENU12" ]; then    
-	      if [ "$(grep 'allow-guest=false' /etc/lightdm/lightdm.conf)" = "" ]; then
-		      while ! yad-netext --center --title="$nazwa_skryptu1" --entry --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --hide-text --text="$TEXT_GOSC4" --button="gtk-ok:0" | sudo -S /usr/lib/lightdm/lightdm-set-defaults -l false; do
-			  if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png"  --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
-			      exit 0
-			  fi
-		      done
-	      else
-		      while ! yad-netext --center --title="$nazwa_skryptu1" --entry --hide-text --text="$TEXT_GOSC5" | sudo -S /usr/lib/lightdm/lightdm-set-defaults -l true; do
-			  if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png"  --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
-			      exit 0
-			  fi
-		      done
-	      fi
-	      restart
-	elif [ "$skrypt" = "BurnTest" ]; then    
+	elif [ "$skrypt" = "BurnTest" ]; then
 	burntest
 	fi
-	
 fi
-	
-	
-	
-	
-	
+
