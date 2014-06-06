@@ -1,6 +1,11 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.71
+-	zmiana ikony repo
+-	pobieranie kluczy w oknie natwnym zamiast xterm
+-	kosmetyczne zmiany w logach APM
+-	dodanie aktywacji APM w momencie jak żaden tryb nie jest aktywny
 v0.7.70
 -	poprawki kodu
 -	dostosowanie szerokości okien w miejscach gdzie pojawiły się ikony

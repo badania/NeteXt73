@@ -1,3 +1,9 @@
+netext73 (0.7.71) stable; urgency=medium
+
+  * zmiana ikony repo
+
+ -- eloaders <eloaders@linux.pl>  Thu, 05 Jun 2014 09:35:38 +0200
+
 netext73 (0.7.70) stable; urgency=medium
 
   * poprawki kodu, szerokości okien

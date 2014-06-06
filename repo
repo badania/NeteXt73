@@ -266,7 +266,7 @@ if [ "$klawisz" = "0" ]; then
 	rm /tmp/*.txt -f; rm /tmp/*.sh -f
 	naglowek > instaluj.sh
 	klucze >> instaluj.sh
-	instalacja	
+	instalacja_nativ
 #########################################################################################################################################################################
     elif [ "$backup" = "$a4" ]; then
 	x-terminal-emulator -e bash -c "echo -e \"$a4\n\"; sudo apt-get clean; sudo mv /var/lib/apt/lists /tmp; sudo mkdir /var/lib/apt/lists; sudo apt-get update; echo -e \"$TEXT_INSTALACJA\"; read ent"

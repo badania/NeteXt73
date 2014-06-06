@@ -130,6 +130,8 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' >> system$losowa.log
     echo -e "\n" >> system$losowa.log
     ls /usr/lib/pm-utils/power.d/ -la | grep rwxr >> system$losowa.log
+    echo -e "\n\n"
+    ls /etc/pm/power.d/ -la >> system$losowa.log
     echo -e "\n\n#################################  scheduler  ###########################################################" >> system$losowa.log
     cat /sys/block/sda/queue/scheduler >> system$losowa.log
     echo -e "\n\n#################################  readahead  ###########################################################" >> system$losowa.log
@@ -188,4 +190,5 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
 elif  [ "$klawisz" = "4" ] ; then
     x-terminal-emulator -e bash -c "sudo ufw status verbose; read ent"
 fi
+sleep 100
 rm losowa system*log dmesg_$USER -f
