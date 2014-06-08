@@ -1,3 +1,9 @@
+netext73 (0.7.72) stable; urgency=medium
+
+  * dostosowanie instalatora do nowych nazw paczek
+
+ -- eloaders <eloaders@linux.pl>  Sun, 08 Jun 2014 15:19:14 +0200
+
 netext73 (0.7.71) stable; urgency=medium
 
   * zmiana ikony repo

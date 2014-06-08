@@ -194,10 +194,21 @@ if [ "$kern" = "ppa mainline" ];then
 	fi
 else
 #pobieranie kerneli e X t 7 3
-	if [ "$rodzaj" = "atom" ] || [ "$rodzaj" = "k8" ]; then
-	    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/ags-cfs.*/$rodzaj-ags-cfs_$bit2.deb/")
+	#nazwy paczek dla v29.x
+	if [ "$(echo $a | grep 'ags-cfs')" != "" ];then
+		if [ "$rodzaj" = "atom" ] || [ "$rodzaj" = "k8" ]; then
+		    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/ags-cfs.*/$rodzaj-ags-cfs_$bit2.deb/")
+		else
+		    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/ags-cfs.*/ags-cfs_$bit2.deb/")
+		fi
 	else
-	    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/ags-cfs.*/ags-cfs_$bit2.deb/")
+	#nazwy paczke dla v30.x
+		if [ "$rodzaj" = "atom" ] || [ "$rodzaj" = "k8" ]; then
+		    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/_testowy*/-$rodzaj_$bit2.deb/" | sed "s/_stabilny*/-$rodzaj_$bit2.deb/")
+		else
+		    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/_testowy*/-$bit2.deb/" | sed "s/_testowy*/_$bit2.deb/"  )
+		fi
+		
 	fi
 	yad_wget $strona/$a/1.txt $strona/$a/linux-headers-$nazwa_paczki $strona/$a/linux-image-$nazwa_paczki
 fi
