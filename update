@@ -92,14 +92,25 @@ wget $adres_glowny/kernele/index.html -O kernel.txt | wget https://www.kernel.or
 twoj_firmware=$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1 | sed 's/~.*//')
 nowy_kernel=$(grep 'href='   ./kernel.txt | grep 'href="v'| cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/' | sort -r | head -n 1 | sed 's/v...._//')
 
-if [ "$(uname -r | grep ext | grep pro )" != "" ];then
-    twoj_kernel="e X t 7 3 - pro v$(uname -r| cut -d "-" -f 4)_$(uname -r | cut -d '-' -f 1)"
-elif [ "$(uname -r | grep ext )" != "" ];then
-    twoj_kernel="e X t 7 3 v$(uname -r| cut -d "-" -f 4)_$(uname -r | cut -d '-' -f 1)"
+#sprawdzanie kerneli do wersji v29.x
+if [ "$(uname -r | grep ags)" != "" ];then
+      if [ "$(uname -r | grep ext | grep pro )" != "" ];then
+	  twoj_kernel="e X t 7 3 - pro v$(uname -r| cut -d "-" -f 4)_$(uname -r | cut -d '-' -f 1)"
+      elif [ "$(uname -r | grep ext )" != "" ];then
+	  twoj_kernel="e X t 7 3 v$(uname -r| cut -d "-" -f 4)_$(uname -r | cut -d '-' -f 1)"
+      else
+	  twoj_kernel=$(uname -r)
+      fi
 else
-    twoj_kernel=$(uname -r)
+#sprawdzanie kerneli od wersji v30.x
+      if [ "$(uname -r | grep ext | grep pro )" != "" ];then
+	  twoj_kernel="e X t 7 3 - pro v$(uname -r | cut -d "-" -f 3)_$(uname -r | cut -d '-' -f 1)"
+      elif [ "$(uname -r | grep ext )" != "" ];then
+	  twoj_kernel="e X t 7 3 v$(uname -r| cut -d "-" -f 3)_$(uname -r | cut -d '-' -f 1)"
+      else
+	  twoj_kernel=$(uname -r)
+      fi
 fi
-
 twoj_apm=$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)
 wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 
