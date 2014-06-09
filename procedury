@@ -100,6 +100,7 @@ if [ -e ~/.netext73/server_no ]; then
 	#konto="3999827"
 	#wybor_serwera="server2!server1!server3"
     if [ "$(cat ~/.netext73/server_no)" = "server2" ];then
+	#konto="3999827"
 	konto="2936246"
 	wybor_serwera="server2!server1"
     else
@@ -202,11 +203,11 @@ else
 		    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/ags-cfs.*/ags-cfs_$bit2.deb/")
 		fi
 	else
-	#nazwy paczke dla v30.x
+	#nazwy paczek dla v30.x
 		if [ "$rodzaj" = "atom" ] || [ "$rodzaj" = "k8" ]; then
-		    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/_testowy*/-$rodzaj_$bit2.deb/" | sed "s/_stabilny*/-$rodzaj_$bit2.deb/")
+		    nazwa_paczki="$(echo $a | cut -d "_" -f 2)$(echo -$rodzaj'_'$bit2.deb)"
 		else
-		    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/_testowy*/-$bit2.deb/" | sed "s/_testowy*/_$bit2.deb/"  )
+		    nazwa_paczki="$(echo $a | cut -d "_" -f 2)$(echo _$bit2.deb)"
 		fi
 		
 	fi
