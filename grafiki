@@ -46,6 +46,7 @@ rm nvidia-settings -f
 }
 
 usun
+export sprawdzamy="nie"
 if  [ "$bit2" = "i386" ]; then
 	dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI1"
 else
@@ -68,12 +69,10 @@ else
 					  yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb
 				  fi  
 				  if [ -e $ster.deb ] && [ -e $nv_set ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ] && [ "$(grep $(md5sum $nv_set) 1.txt)" != "" ]; then
-					  echo "nie" > /tmp/ok.txt
 					  naglowek > instaluj.sh
 					  nvidia >> instaluj.sh
 					  instalacja
 				  elif [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ]; then
-					  echo "nie" > /tmp/ok.txt
 					  naglowek > instaluj.sh
 					  nvidia >> instaluj.sh
 					  instalacja 
@@ -95,7 +94,6 @@ else
 				if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 				  	  yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb $adres_sterownikow/$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")
 					  if [ -e $ster.deb ] && [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ]; then
-						  echo "nie" > /tmp/ok.txt
 						  naglowek > instaluj.sh
 						  radeon >> instaluj.sh
 						  instalacja

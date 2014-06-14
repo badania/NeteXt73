@@ -41,7 +41,7 @@ source /opt/NeteXt73/procedury
 cd /tmp
 petla_duza="tak"
 while [ $petla_duza = "tak" ]; do
-	echo "nie" > /tmp/ok.txt
+	export sprawdzamy="nie"
 	
 	uslugi=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --text="<span color=\"$kolor_textu\">$TEXT_MENU_USLUGI</span>" --form --field=" :CB" "$TEXT_MENU_USLUGI1!$TEXT_MENU_USLUGI1A!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C"  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
 	klawisz=$?; uslugi=$(echo $uslugi | cut -d "|" -f 1)
@@ -179,27 +179,27 @@ while [ $petla_duza = "tak" ]; do
 					export usl1=$usl; export a1=$a
 					if [ "$usl" = "start" ]; then
 					    if [ -e /etc/init/$a1.conf ]; then
-					      sudo service $a1 $usl1; echo 'tak' > /tmp/ok.txt
+					      sudo service $a1 $usl1;export sprawdzamy='tak'
 					    else
-					      sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start; echo 'tak' > /tmp/ok.txt
+					      sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start;export sprawdzamy='tak'
 					    fi
 					elif [ "$usl" = "stop" ]; then
 					    if [ -e /etc/init/$a1.conf ]; then
-					      sudo service $a1 $usl1; echo 'tak' > /tmp/ok.txt
+					      sudo service $a1 $usl1;export sprawdzamy='tak'
 					    else
 					      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI34"
 					    fi
 					elif [ "$usl" = "enable" ]; then
 					      echo /etc/int/$a1.conf
 					    if [ -e /etc/init/$a1.conf-disabled ]; then
-					      sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start; echo 'tak' > /tmp/ok.txt
+					      sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start;export sprawdzamy='tak'
 					    else
 					      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI35"
 					    fi
 					    echo /etc/int/$a1.conf-disabed
 					elif [ "$usl" = "disable" ]; then
 					    if [ -e /etc/init/$a1.conf ]; then
-					      sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled ; echo 'tak' > /tmp/ok.txt
+					      sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled ;export sprawdzamy='tak'
 					    else
 					      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI37"
 					    fi

@@ -222,7 +222,7 @@ echo "sudo update-initramfs -u -k \$(ls linux-head* | sed 's/linux-headers-//g' 
 echo "if [ -e ~/.netext73/archiwum_deb ] && [ \"\$(cat ~/.netext73/archiwum_deb)\" = \"TRUE\" ]; then"
 echo "sudo cp *.deb /var/cache/apt/archives/ -f"
 echo "fi"
-echo "echo 'tak' > /tmp/ok.txt"
+echo "export sprawdzamy='tak'"
 }
 
 stan_firmware(){
@@ -247,12 +247,12 @@ microcode_firmware(){
 if [ "$(dpkg -l | grep linux-firmware-nonfree | grep ii )" = "" ]; then
       yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_PROCEDURA_4"
       if [ $? = 0 ]; then
-	    echo "tak" > /tmp/ok.txt
+	    export sprawdzamy="tak"
       else
-	    echo "nie" > /tmp/ok.txt
+	    export sprawdzamy="nie"
       fi
 else
-      echo "nie" > /tmp/ok.txt
+      export sprawdzamy="nie"
 fi
 instalacja
 }
@@ -260,7 +260,7 @@ instalacja
 microcode_inst(){
 echo "echo \"$TEXT_PROCEDURA_2\""
 echo "sudo apt-get install linux-firmware"
-echo "if [ \"\$(cat /tmp/ok.txt)\" = \"tak\" ]; then"
+echo "if [ \"\$sprawdzamy\" = \"tak\" ]; then"
 echo "sudo apt-get install linux-firmware-nonfree -y"
 echo "fi"
 echo "if [ \"\$(cat /proc/cpuinfo | grep Intel)\" != \"\" ]; then sudo apt-get install intel-microcode -y"
@@ -635,11 +635,11 @@ echo "rm /tmp/*.txt -f; rm /tmp/*.sh -f"
 
 #instalacja za chwile nastąpi wprowadzenie zmian
 instalacja(){
-xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
+xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; export sprawdzamy='tak'"
 }
 
 instalacja_nativ(){
-x-terminal-emulator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
+x-terminal-emulator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; export sprawdzamy='tak'"
 }
 
 #instalacja bez pytań
@@ -648,7 +648,7 @@ xterm -T instalator -e bash -c "sh instaluj.sh && rm instaluj.sh -f"
 }
 #instalacja wciśnij enter
 instalacja3(){
-xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
+xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; export sprawdzamy='tak'"
 }
 
 lista_kerneli(){
@@ -698,17 +698,17 @@ echo "echo 'GRUB_BACKGROUND=/opt/NeteXt73/menu/grub_background.png' | sudo tee -
 echo "sudo chown root:root /etc/default/grub"
 echo "fi"
 echo "sudo update-grub"  
-echo "echo 'tak' > /tmp/ok.txt"
+echo "export sprawdzamy='tak'"
 
 }
 
 instaluj_grub(){
 echo "echo \"$TEXT_PROCEDURA_13\"'"
-echo "nie" > /tmp/ok.txt
+export sprawdzamy="nie"
 naglowek > /tmp/instaluj.sh
 grub >> /tmp/instaluj.sh
 instalacja2
-if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
+if [ "$sprawdzamy" = "tak" ]; then
       dymek -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_GRUB2 $sciezka/grub. $TEXT_WYMAGANY_RESTART"
 else
       dymek i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB3"
@@ -716,10 +716,10 @@ fi
 }
 
 wywal_pobrane_pliki_kernela(){
-if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
+if [ "$sprawdzamy" = "tak" ]; then
     yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_KERNEL2"
     rm -rf $PWD
-elif  [ "$(cat /tmp/ok.txt)" = "nie" ]; then
+elif  [ "$sprawdzamy" = "nie" ]; then
     dymek -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_INFO2<br>/tmp/$a"
 fi
 }
@@ -856,7 +856,7 @@ sprawdz_klucze(){
 xterm -T GPG-KEY -e bash -c "echo 'sudo apt-key list';sudo apt-key list > klucze1.txt ; echo -e \"$TEXT_INSTALACJA2\""
 }
 usun_klucze(){
-xterm -T GPG-KEY -e bash -c "echo 'Podaj hasło aby usunąć zaznaczone klucze'; for i in \$(cat usun.txt); do sudo apt-key del \$i; done; read ent; echo 'tak' > /tmp/ok.txt"
+xterm -T GPG-KEY -e bash -c "echo 'Podaj hasło aby usunąć zaznaczone klucze'; for i in \$(cat usun.txt); do sudo apt-key del \$i; done; read ent; export sprawdzamy='tak'"
 }
 
 stan_baterii(){

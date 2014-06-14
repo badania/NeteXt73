@@ -101,13 +101,8 @@ if [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINSTA
 			#proces kasowania kerneli
 			naglowek > instaluj.sh
 			usun_kernel >> instaluj.sh
-			#echo "nie" > /tmp/ok.txt
 			instalacja
-			#if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
-			#	dymek -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_DEINSTALATOR7"
-			#else
-			#	dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_DEINSTALATOR8"
-			#fi
+
 		fi
 	else
 		rm /tmp/*.txt -f; rm /tmp/*.sh -f

@@ -127,15 +127,15 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 		if [ $? = 0 ]; then
 			if [ "$(echo $a | grep 'linux-image' | grep 'ext' | grep '.deb')" != "" ]; then
 				cd $(echo $a | sed -e 's/linux.*//g');     b=$(echo $a | sed -e 's/linux-image/linux-headers/g')
-				echo "tak" > /tmp/ok.txt
+				export sprawdzamy="tak"
 			elif [ "$(echo $a | grep 'linux-headers' | grep 'ext' | grep '.deb')" != "" ]; then
 				cd $(echo $a | sed -e 's/linux.*//g');     b=$(echo $a | sed -e 's/linux-headers/linux-image/g')
-				echo "tak" > /tmp/ok.txt
+				export sprawdzamy="tak"
 			else
 				yad-netext --center --error --title="$nazwa_skryptu" --text="$(echo $TEXT_DEB1 | sed 's/:/!/' | sed 's/headers/headers ext73 /' | sed 's/image/image ext73 /')" --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=15 
-				echo "nie" > /tmp/ok.txt
+				export sprawdzamy="nie"
 			fi
-			if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
+			if [ "$sprawdzamy" = "tak" ]; then
 				rm /tmp/kernel -fr; 	mkdir /tmp/kernel
 				cd /tmp/kernel; 	cp $a $b /tmp/kernel/
 				naglowek > instaluj.sh
@@ -204,20 +204,20 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 			rm index.html -f; wget $strona/index.html 2>&1 | pobieranie 
 			lista_kerneli
 			if [ "$klawisz" = "0" ] && [ "$blad" != "1" ] ; then
-				echo "nie" > /tmp/ok.txt
+				export sprawdzamy="nie"
 				dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj-ags-cfs//g" > 1.txt
 				for kernel in $(cat 1.txt); do
 					if [ "$(echo $a | grep $(echo $kernel))" != "" ]; then
-					      echo "tak" > /tmp/ok.txt
+					      export sprawdzamy="tak"
 					fi
 				done
-				if [ "$(cat /tmp/ok.txt)" = "nie" ]; then
+				if [ "$sprawdzamy" = "nie" ]; then
 					rm ./index.html -f; rm $a -rf
 					mkdir $a; cd $a
 					#wywołanie funkcji pobierania odpowiednich wersji kerneli
 					pobieranie_kerneli
 					if [ "$(grep $(md5sum linux-image*) 1.txt)" != "" ] && [ "$(grep $(md5sum linux-headers*) 1.txt)" != "" ]; then
-						echo "nie" > /tmp/ok.txt
+						export sprawdzamy="nie"
 						if [ -e linux-headers* ] && [ -e linux-image* ]; then
 							if yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --height=280 --width=590 --text="$TEST_INSTALOWAC_KERNEL3 $rodzaj $TEST_INSTALOWAC_KERNEL4\n\n$(ls *.deb)\n\n$TEXT_INSTALOWAC ?\n\n" ; then
 								naglowek > instaluj.sh
@@ -236,7 +236,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 					else
 						yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
 					fi
-				elif [ "$(cat /tmp/ok.txt)" = "tak" ]; then
+				elif [ "$sprawdzamy" = "tak" ]; then
 				      yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_INSTALOWAC_KERNEL7"
 				fi
 			fi
