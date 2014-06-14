@@ -50,11 +50,11 @@ if  [ "$bit2" = "i386" ]; then
 	dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI1"
 else
 	if [ "$1" = "nvidia" ]; then
-	    wget $adres_sterownikow/index.html  2>&1 | pobieranie 
-	    if [ -e index.html ]; then
-		cat index.html | grep "href=" ./index.html   | cut -d '"' -f 2 | grep 'nvidia-' | grep $bit2 | sed 's/.deb//' | grep -v -E "nvidia-settings.*"> 1a.txt
-		cat 1a.txt | sort -r > 2a.txt
-		lista=$(cat 2a.txt | tr '\n' '!' | sed -e '$s/!$//g' )
+	    #wget $adres_sterownikow/index.html  2>&1 | pobieranie 
+	    lista=''
+	    lista="$(curl $adres_sterownikow/index.html | grep "href=" | cut -d '"' -f 2 | grep 'nvidia-' | sed 's/.deb//' | grep -v -E "nvidia-settings.*" | sort -r)"
+	    if [ "$lista" != "" ]; then
+		lista=$(echo $lista | tr ' ' '!' | sed -e '$s/!$//g' )
 		ster=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/nvidia.png" --image="/opt/NeteXt73/ikony/nvidia.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Nvidia</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
 		if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
@@ -86,11 +86,10 @@ else
 		if [ "$(lspci | grep VGA | awk '{print tolower($0)}' | grep radeon)" = "" ] || [ "$(glxinfo | grep 'AMD Radeon HD' | sed 's/.*HD //g' | sed 's/ .*//g')" -le 5000 ]; then
 		  dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI3"
 		else
-		    wget $adres_sterownikow/index.html  2>&1 | pobieranie 
-		    if [ -e index.html ]; then
-			cat index.html | grep "href=" ./index.html   | cut -d '"' -f 2 | grep 'fglrx_' | grep $bit2 | sed 's/.deb//' >> 1a.txt
-			cat 1a.txt | sort -r > 2a.txt
-			lista=$(cat 2a.txt | tr '\n' '!' | sed -e '$s/!$//g' )
+		    lista=''
+		    lista="$(curl $adres_sterownikow/index.html | grep "href=" | cut -d '"' -f 2 | grep 'fglrx_' | sed 's/.deb//' | sort -r)"
+		    if [ "$lista" != "" ]; then
+			lista=$(echo $lista | tr ' ' '!' | sed -e '$s/!$//g' )
 			ster=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/radeon.png" --image="/opt/NeteXt73/ikony/radeon.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Radeon</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 				klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
 				if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then

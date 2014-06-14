@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.73
+-	poprawa kodu instalatora kart graficznych - zmiana plików tymczasowych na zmienne
 v0.7.72
 -	dostosowanie instalatora kerneli e X t 7 3, do nowego nazewnictwa paczek
 -	zmiany w sekcji update potrzebne do kerneli v3x.x

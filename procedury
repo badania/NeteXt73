@@ -118,12 +118,13 @@ fi
 #przełącznik http/https
 if [ -e ~/.netext73/https_link ] && [ "$(cat ~/.netext73/https_link)" = "FALSE" ]; then
       echo "FALSE" > ~/.netext73/https_link
-      export adres_glowny="http://dl.dropbox.com/u/$konto"
+      https://dl.dropboxusercontent.com/
+      export adres_glowny="http://dl.dropboxusercontent.com/u/$konto"
       export adres_skryptow="$adres_glowny/skrypty"
       export adres_sterownikow="$adres_glowny/sterowniki2"
 else
       echo "TRUE" > ~/.netext73/https_link
-      export adres_glowny="https://dl.dropbox.com/u/$konto"
+      export adres_glowny="https://dl.dropboxusercontent.com/u/$konto"
       export adres_skryptow="$adres_glowny/skrypty"
       export adres_sterownikow="$adres_glowny/sterowniki2"
 fi
