@@ -78,9 +78,9 @@ elif [ "$klawisz" = "3" ]; then
 elif [ "$klawisz" = "4" ]; then
       if [ "$USER" = "root" ]; then
 	    userek=$(cat /tmp/userek)
-	    su $userek -c "xdg-open \"http://bug.netext73.pl\""
+	    su $userek -c "xdg-open \"http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html\""
       else
-	    xdg-open "http://bug.netext73.pl"
+	    xdg-open "http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html"
       fi
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "5" ]; then

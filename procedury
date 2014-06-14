@@ -172,18 +172,6 @@ pobieranie(){
 yad-netext --center --width=560 --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
 }
 
-#ubijanie wget jak się zawiesi yad-netext
-kill_wget(){
-dziala=0
-while [ $dziala -eq 0 ]
-do
-  if [ -z "$(pidof yad-netext)" ]; then
-      pkill wget
-      dziala=1
-  fi
-done
-}
-
 #pobieranie plików do instalacji kerneli
 pobieranie_kerneli(){
 if [ "$kern" = "ppa mainline" ];then
