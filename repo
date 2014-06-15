@@ -245,9 +245,9 @@ if [ "$klawisz" = "0" ]; then
     if [ "$backup" = "$a2" ]; then
 	a=$(yad-netext --center --file-selection --filename="$download/" --title="$TEXT_BACKUP2" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --width=550 --height=450)
 	if [ "$(echo $a | grep source.list.backu | grep tar.gz)" != "" ]; then
-		export sprawdzamy="nie"
-		xterm -T backup_repo -e bash -c "echo \"$TEXT_BACKUP3\";sudo mv -f /etc/apt /etc/apt~; sudo tar -xvzf $a -C /etc/; export sprawdzamy="tak"; echo -e \"$TEXT_INSTALACJA\"; read ent"
-		if [ "$sprawdzamy" = "tak" ]; then
+		echo "nie" > /tmp/ok.txt
+		xterm -T backup_repo -e bash -c "echo \"$TEXT_BACKUP3\";sudo mv -f /etc/apt /etc/apt~; sudo tar -xvzf $a -C /etc/; echo "tak" > /tmp/ok.txt; echo -e \"$TEXT_INSTALACJA\"; read ent"
+		if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
 		      dymek "$TEXT_INFORMACJA" "$TEXT_BACKUP4"
 		else
 		      dymek "$TEXT_INFORMACJA" "$TEXT_BACKUP5"

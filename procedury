@@ -118,13 +118,12 @@ fi
 #przełącznik http/https
 if [ -e ~/.netext73/https_link ] && [ "$(cat ~/.netext73/https_link)" = "FALSE" ]; then
       echo "FALSE" > ~/.netext73/https_link
-      https://dl.dropboxusercontent.com/
-      export adres_glowny="http://dl.dropboxusercontent.com/u/$konto"
+      export adres_glowny="http://dl.dropbox.com/u/$konto"
       export adres_skryptow="$adres_glowny/skrypty"
       export adres_sterownikow="$adres_glowny/sterowniki2"
 else
       echo "TRUE" > ~/.netext73/https_link
-      export adres_glowny="https://dl.dropboxusercontent.com/u/$konto"
+      export adres_glowny="https://dl.dropbox.com/u/$konto"
       export adres_skryptow="$adres_glowny/skrypty"
       export adres_sterownikow="$adres_glowny/sterowniki2"
 fi
@@ -222,7 +221,7 @@ echo "sudo update-initramfs -u -k \$(ls linux-head* | sed 's/linux-headers-//g' 
 echo "if [ -e ~/.netext73/archiwum_deb ] && [ \"\$(cat ~/.netext73/archiwum_deb)\" = \"TRUE\" ]; then"
 echo "sudo cp *.deb /var/cache/apt/archives/ -f"
 echo "fi"
-echo "export sprawdzamy='tak'"
+echo "echo 'tak' > /tmp/ok.txt"
 }
 
 stan_firmware(){
@@ -247,12 +246,12 @@ microcode_firmware(){
 if [ "$(dpkg -l | grep linux-firmware-nonfree | grep ii )" = "" ]; then
       yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_PROCEDURA_4"
       if [ $? = 0 ]; then
-	    export sprawdzamy="tak"
+	    echo "tak" > /tmp/ok.txt
       else
-	    export sprawdzamy="nie"
+	    echo "nie" > /tmp/ok.txt
       fi
 else
-      export sprawdzamy="nie"
+      echo "nie" > /tmp/ok.txt
 fi
 instalacja
 }
@@ -260,7 +259,7 @@ instalacja
 microcode_inst(){
 echo "echo \"$TEXT_PROCEDURA_2\""
 echo "sudo apt-get install linux-firmware"
-echo "if [ \"\$sprawdzamy\" = \"tak\" ]; then"
+echo "if [ \"\$(cat /tmp/ok.txt)\" = \"tak\" ]; then"
 echo "sudo apt-get install linux-firmware-nonfree -y"
 echo "fi"
 echo "if [ \"\$(cat /proc/cpuinfo | grep Intel)\" != \"\" ]; then sudo apt-get install intel-microcode -y"
@@ -635,11 +634,11 @@ echo "rm /tmp/*.txt -f; rm /tmp/*.sh -f"
 
 #instalacja za chwile nastąpi wprowadzenie zmian
 instalacja(){
-xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; export sprawdzamy='tak'"
+xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
 }
 
 instalacja_nativ(){
-x-terminal-emulator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; export sprawdzamy='tak'"
+x-terminal-emulator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
 }
 
 #instalacja bez pytań
@@ -648,7 +647,7 @@ xterm -T instalator -e bash -c "sh instaluj.sh && rm instaluj.sh -f"
 }
 #instalacja wciśnij enter
 instalacja3(){
-xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; export sprawdzamy='tak'"
+xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
 }
 
 lista_kerneli(){
@@ -698,17 +697,17 @@ echo "echo 'GRUB_BACKGROUND=/opt/NeteXt73/menu/grub_background.png' | sudo tee -
 echo "sudo chown root:root /etc/default/grub"
 echo "fi"
 echo "sudo update-grub"  
-echo "export sprawdzamy='tak'"
+echo "echo 'tak' > /tmp/ok.txt"
 
 }
 
 instaluj_grub(){
 echo "echo \"$TEXT_PROCEDURA_13\"'"
-export sprawdzamy="nie"
+echo "nie" > /tmp/ok.txt
 naglowek > /tmp/instaluj.sh
 grub >> /tmp/instaluj.sh
 instalacja2
-if [ "$sprawdzamy" = "tak" ]; then
+if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
       dymek -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_GRUB2 $sciezka/grub. $TEXT_WYMAGANY_RESTART"
 else
       dymek i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB3"
@@ -716,10 +715,10 @@ fi
 }
 
 wywal_pobrane_pliki_kernela(){
-if [ "$sprawdzamy" = "tak" ]; then
+if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
     yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_KERNEL2"
     rm -rf $PWD
-elif  [ "$sprawdzamy" = "nie" ]; then
+elif  [ "$(cat /tmp/ok.txt)" = "nie" ]; then
     dymek -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_INFO2<br>/tmp/$a"
 fi
 }
@@ -856,7 +855,7 @@ sprawdz_klucze(){
 xterm -T GPG-KEY -e bash -c "echo 'sudo apt-key list';sudo apt-key list > klucze1.txt ; echo -e \"$TEXT_INSTALACJA2\""
 }
 usun_klucze(){
-xterm -T GPG-KEY -e bash -c "echo 'Podaj hasło aby usunąć zaznaczone klucze'; for i in \$(cat usun.txt); do sudo apt-key del \$i; done; read ent; export sprawdzamy='tak'"
+xterm -T GPG-KEY -e bash -c "echo 'Podaj hasło aby usunąć zaznaczone klucze'; for i in \$(cat usun.txt); do sudo apt-key del \$i; done; read ent; echo 'tak' > /tmp/ok.txt"
 }
 
 stan_baterii(){
