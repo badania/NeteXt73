@@ -95,18 +95,18 @@ nowy_kernel=$(grep 'href='   ./kernel.txt | grep 'href="v'| cut -d '"' -f 2 | se
 #sprawdzanie kerneli do wersji v29.x
 if [ "$(uname -r | grep ags)" != "" ];then
       if [ "$(uname -r | grep ext | grep pro )" != "" ];then
-	  twoj_kernel="e X t 7 3 - pro v$(uname -r| cut -d "-" -f 4)_$(uname -r | cut -d '-' -f 1)"
+	  twoj_kernel="e X t 7 3 - pro v$(uname -r| cut -d "-" -f 4)-$(uname -r | cut -d '-' -f 1)"
       elif [ "$(uname -r | grep ext )" != "" ];then
-	  twoj_kernel="e X t 7 3 v$(uname -r| cut -d "-" -f 4)_$(uname -r | cut -d '-' -f 1)"
+	  twoj_kernel="e X t 7 3 v$(uname -r| cut -d "-" -f 4)-$(uname -r | cut -d '-' -f 1)"
       else
 	  twoj_kernel=$(uname -r)
       fi
 else
 #sprawdzanie kerneli od wersji v30.x
       if [ "$(uname -r | grep ext | grep pro )" != "" ];then
-	  twoj_kernel="e X t 7 3 - pro v$(uname -r | cut -d "-" -f 3)_$(uname -r | cut -d '-' -f 1)"
+	  twoj_kernel="e X t 7 3 - pro v$(uname -r | cut -d "-" -f 3)-$(uname -r | cut -d '-' -f 1)"
       elif [ "$(uname -r | grep ext )" != "" ];then
-	  twoj_kernel="e X t 7 3 v$(uname -r| cut -d "-" -f 3)_$(uname -r | cut -d '-' -f 1)"
+	  twoj_kernel="e X t 7 3 v$(uname -r| cut -d "-" -f 3)-$(uname -r | cut -d '-' -f 1)"
       else
 	  twoj_kernel=$(uname -r)
       fi
@@ -167,13 +167,7 @@ else
 	  kern="$TEXT_UPDATE4"
 	  a4="FALSE"
       else
-	  #sprawdzanie kerneli do wersji v29.x
-	  if [ "$(uname -r | grep ags)" != "" ];then
-		kern="$TEXT_UPDATE5  v$(echo $nowy_kernel | cut -d "-" -f 4)_$(echo  $nowy_kernel | cut -d "-" -f 1)"
-	  else
-	  #sprawdzanie kerneli od wersji v30.x
-		kern="$TEXT_UPDATE5  v$(echo $nowy_kernel | cut -d "-" -f 3)_$(echo  $nowy_kernel | cut -d "-" -f 1)"
-	  fi
+	  kern="$TEXT_UPDATE5  v$(echo $nowy_kernel | sed 's/_testowy.*//g' | sed 's/_stabilny.*//g' | cut -d "-" -f 3)-$(echo  $nowy_kernel | cut -d "-" -f 1 )"
 	  menu="$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE1 APM!$TEXT_UPDATE2!$TEXT_UPDATE8"
 	  a4="TRUE"
 	  ((ilosc_aktualizacji++))
