@@ -38,7 +38,7 @@ source /opt/NeteXt73/procedury
 #########################################################################################################################################################################
 #instalator microcode i firmware
 
-cd /tmp
+cd /tmp/netext73
 stan_firmware
 
 #sprawdzenie czy jest nowsza wersja

@@ -38,7 +38,7 @@ source /opt/NeteXt73/procedury
 #########################################################################################################################################################################
 #monitor
 
-cd /tmp
+cd /tmp/netext73
 if [ -e ~/.netext73/monitor ]; then
     if [ "$(cat ~/.netext73/monitor | grep system)" != "" ]; then
 	a1=TRUE

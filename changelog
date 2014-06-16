@@ -3,6 +3,7 @@
 
 v0.7.74
 -	poprawka sekcji update-dostosowanie do nowego nazewnictwa kerneli
+-	zmiana katalogu tymczasowego z /tmp na /tmp/netext73
 v0.7.73
 -	cofnięcie niektórych zmian
 v0.7.72

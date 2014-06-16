@@ -227,7 +227,7 @@ baza=(
 #########################################################################################################################################################################
 #backuprepo
 
-cd /tmp
+cd /tmp/netext73
 if [ "$(cat /etc/apt/sources.list | grep 'deb' | grep 'partner' | grep '#')" = "" ];then
     menu="$a1!$a2!$a3!$a4!$a5!$a6!$a7!$a8!$MENU2"
 else
@@ -245,9 +245,9 @@ if [ "$klawisz" = "0" ]; then
     if [ "$backup" = "$a2" ]; then
 	a=$(yad-netext --center --file-selection --filename="$download/" --title="$TEXT_BACKUP2" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --width=550 --height=450)
 	if [ "$(echo $a | grep source.list.backu | grep tar.gz)" != "" ]; then
-		echo "nie" > /tmp/ok.txt
-		xterm -T backup_repo -e bash -c "echo \"$TEXT_BACKUP3\";sudo mv -f /etc/apt /etc/apt~; sudo tar -xvzf $a -C /etc/; echo "tak" > /tmp/ok.txt; echo -e \"$TEXT_INSTALACJA\"; read ent"
-		if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
+		echo "nie" > /tmp/netext73/ok.txt
+		xterm -T backup_repo -e bash -c "echo \"$TEXT_BACKUP3\";sudo mv -f /etc/apt /etc/apt~; sudo tar -xvzf $a -C /etc/; echo "tak" > /tmp/netext73/ok.txt; echo -e \"$TEXT_INSTALACJA\"; read ent"
+		if [ "$(cat /tmp/netext73/ok.txt)" = "tak" ]; then
 		      dymek "$TEXT_INFORMACJA" "$TEXT_BACKUP4"
 		else
 		      dymek "$TEXT_INFORMACJA" "$TEXT_BACKUP5"
@@ -263,13 +263,13 @@ if [ "$klawisz" = "0" ]; then
 #########################################################################################################################################################################
 #Pobieranie brakujących kluczy GPG
     elif [ "$backup" = "$a3" ]; then
-	rm /tmp/*.txt -f; rm /tmp/*.sh -f
+	rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f
 	naglowek > instaluj.sh
 	klucze >> instaluj.sh
 	instalacja_nativ
 #########################################################################################################################################################################
     elif [ "$backup" = "$a4" ]; then
-	x-terminal-emulator -e bash -c "echo -e \"$a4\n\"; sudo apt-get clean; sudo mv /var/lib/apt/lists /tmp; sudo mkdir /var/lib/apt/lists; sudo apt-get update; echo -e \"$TEXT_INSTALACJA\"; read ent"
+	x-terminal-emulator -e bash -c "echo -e \"$a4\n\"; sudo apt-get clean; sudo mv /var/lib/apt/lists /tmp/netext73; sudo mkdir /var/lib/apt/lists; sudo apt-get update; echo -e \"$TEXT_INSTALACJA\"; read ent"
 #########################################################################################################################################################################
 #Moduł usuwania zbędnych kluczy
   elif [ "$backup" = "$a5" ]; then
@@ -451,7 +451,7 @@ if [ "$klawisz" = "0" ]; then
 			  echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
 			elif [ "${repo[$i]}" = "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free" ]; then
 			  echo "sudo sh -c 'wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | apt-key add -' && sudo sh -c 'echo \"deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free\" >> /etc/apt/sources.list.d/virtualbox.list' " >> instaluj.sh
-			  echo "sudo apt-get install -y ${paczka[$i]} && sudo usermod -aG vboxusers $(cat /tmp/userek)" >> instaluj.txt
+			  echo "sudo apt-get install -y ${paczka[$i]} && sudo usermod -aG vboxusers $(cat /tmp/netext73/userek)" >> instaluj.txt
 			    jezyczek;case $jezyk in pol*)
 				#dodanie języka polskiego
 				echo "wget http://admc.ubuntu-pomoc.org/files/vbox-langpack-pl/qt_pl.qm && wget http://admc.ubuntu-pomoc.org/files/vbox-langpack-pl/VirtualBox_pl.qm && sudo mv qt_pl.qm /usr/share/virtualbox/nls/ && sudo mv VirtualBox_pl.qm /usr/share/virtualbox/nls/" >> instaluj.txt

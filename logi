@@ -38,7 +38,7 @@ source /opt/NeteXt73/procedury
 #########################################################################################################################################################################
 #Logi systemowe
 
-cd /tmp
+cd /tmp/netext73
 
 if [ -e losowa ];then
     losowa=$(cat losowa)
@@ -167,21 +167,21 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     echo -e "\n\n#################################  soft ##################################################################" >> system$losowa.log
     cat ~/.netext73/soft >> system$losowa.log
     echo -e "\n\n#################################  stan tmp ##############################################################" >> system$losowa.log
-    ls -la /tmp >> system$losowa.log
+    ls -la /tmp/netext73 >> system$losowa.log
     
     
     
     dmesg > dmesg_$USER
     if [ "$klawisz" = "2" ]; then
 	    if [ "$USER" = "root" ]; then
-		    userek=$(cat /tmp/userek)
+		    userek=$(cat /tmp/netext73/userek)
 		    su $userek -c "xdg-open \"system$losowa.log\"" | su $userek -c "xdg-open \"dmesg_$USER\""
 	    else
 		    xdg-open "system$losowa.log" | xdg-open "dmesg_$USER"
 	    fi
     elif [ "$klawisz" = "3" ]; then
 	    if [ "$USER" = "root" ]; then
-		  userek=$(cat /tmp/userek)
+		  userek=$(cat /tmp/netext73/userek)
 		  su $userek -c "xdg-open $(cat dmesg_$USER | pastebinit)" | su $userek -c "xdg-open $(cat system$losowa.log | pastebinit)"
 	    else
 		  xdg-open $(cat dmesg_$USER | pastebinit) |  xdg-open $(cat system$losowa.log | pastebinit)

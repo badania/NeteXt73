@@ -36,7 +36,7 @@
 
 if [ "$USER" = "root" ]; then
 	if [ -e ~/.netext73/jezyk ]; then
-		userek=$(cat /tmp/userek)
+		userek=$(cat /tmp/netext73/userek)
 		if [ "$(cat ~/.netext73/jezyk)" = "polski" ];then
 			su $userek -c "xdg-open $adres_opisu"
 		else

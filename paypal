@@ -38,9 +38,9 @@ source /opt/NeteXt73/procedury
 #########################################################################################################################################################################
 #tasksel
 
-cd /tmp
+cd /tmp/netext73
       if [ "$USER" = "root" ]; then
-	    userek=$(cat /tmp/userek)
+	    userek=$(cat /tmp/netext73/userek)
 	    su $userek -c "xdg-open \"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J6MV2T7WKPEAY\""
       else
 	    xdg-open "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J6MV2T7WKPEAY"

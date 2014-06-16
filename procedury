@@ -221,7 +221,7 @@ echo "sudo update-initramfs -u -k \$(ls linux-head* | sed 's/linux-headers-//g' 
 echo "if [ -e ~/.netext73/archiwum_deb ] && [ \"\$(cat ~/.netext73/archiwum_deb)\" = \"TRUE\" ]; then"
 echo "sudo cp *.deb /var/cache/apt/archives/ -f"
 echo "fi"
-echo "echo 'tak' > /tmp/ok.txt"
+echo "echo 'tak' > /tmp/netext73/ok.txt"
 }
 
 stan_firmware(){
@@ -246,12 +246,12 @@ microcode_firmware(){
 if [ "$(dpkg -l | grep linux-firmware-nonfree | grep ii )" = "" ]; then
       yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_PROCEDURA_4"
       if [ $? = 0 ]; then
-	    echo "tak" > /tmp/ok.txt
+	    echo "tak" > /tmp/netext73/ok.txt
       else
-	    echo "nie" > /tmp/ok.txt
+	    echo "nie" > /tmp/netext73/ok.txt
       fi
 else
-      echo "nie" > /tmp/ok.txt
+      echo "nie" > /tmp/netext73/ok.txt
 fi
 instalacja
 }
@@ -259,7 +259,7 @@ instalacja
 microcode_inst(){
 echo "echo \"$TEXT_PROCEDURA_2\""
 echo "sudo apt-get install linux-firmware"
-echo "if [ \"\$(cat /tmp/ok.txt)\" = \"tak\" ]; then"
+echo "if [ \"\$(cat /tmp/netext73/ok.txt)\" = \"tak\" ]; then"
 echo "sudo apt-get install linux-firmware-nonfree -y"
 echo "fi"
 echo "if [ \"\$(cat /proc/cpuinfo | grep Intel)\" != \"\" ]; then sudo apt-get install intel-microcode -y"
@@ -296,7 +296,7 @@ echo "fi"
 echo "sudo sh -c 'echo \"options rts5139 ss_en=0\" > /etc/modprobe.d/rts5139.conf'"
 echo "sudo sh -c 'echo \"options ums_realtek ss_en=0\" > /etc/modprobe.d/ums-realtek.conf'"
 echo "sudo chmod a-x /usr/lib/pm-utils/power.d/*"
-echo "cp /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz /tmp/"
+echo "cp /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz /tmp/netext73/"
 echo "tar -xvzf advanced_power_management_by_ext73_$wersja_apm.tar.gz"
 echo "sudo mv $wersja_apm1*$wersja_apm $wersja_apm2*$wersja_apm $wersja_apm3*$wersja_apm $wersja_apm4*$wersja_apm $wersja_apm5*$wersja_apm $wersja_apm6*$wersja_apm /etc/pm/power.d/"
 echo "sudo mv readahead /usr/lib/pm-utils/power.d/"
@@ -625,20 +625,20 @@ stan_apm_config(){
 }
 
 usun_kernel(){
-echo "echo \"$TEXT_KERNEL1 $(cat /tmp/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ' )\""
-echo "sudo apt-get purge $(cat /tmp/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ')"
+echo "echo \"$TEXT_KERNEL1 $(cat /tmp/netext73/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ' )\""
+echo "sudo apt-get purge $(cat /tmp/netext73/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ')"
 echo "sudo update-grub"
 echo "if [ \"$(dpkg -l | grep '^rc' | awk '{print $2}' | head -n1)\" != \"\" ]; then sudo dpkg -l | grep '^rc' | awk '{print \$2}' | xargs sudo dpkg --purge; fi"
-echo "rm /tmp/*.txt -f; rm /tmp/*.sh -f"
+echo "rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f"
 }
 
 #instalacja za chwile nastąpi wprowadzenie zmian
 instalacja(){
-xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
+xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
 }
 
 instalacja_nativ(){
-x-terminal-emulator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
+x-terminal-emulator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
 }
 
 #instalacja bez pytań
@@ -647,7 +647,7 @@ xterm -T instalator -e bash -c "sh instaluj.sh && rm instaluj.sh -f"
 }
 #instalacja wciśnij enter
 instalacja3(){
-xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/ok.txt"
+xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
 }
 
 lista_kerneli(){
@@ -679,8 +679,8 @@ fi
 grub(){
 echo "echo \"$TEXT_PROCEDURA_13\""
 echo "echo \"$TEXT_GRUB1 /etc/default/grub\"; sudo sed -i '/GRUB_CMDLINE_LINUX=/d' $sciezka/grub"
-echo "echo \"$TEXT_GRUB2 /etc/default/grub\"; sudo sed \"/GRUB_CMDLINE_LINUX_DEFAULT/a\GRUB_CMDLINE_LINUX=\\\"$wpis_grub\\\"\" $sciezka/grub > /tmp/grub1"
-echo "sudo mv /tmp/grub1 $sciezka/grub -f"
+echo "echo \"$TEXT_GRUB2 /etc/default/grub\"; sudo sed \"/GRUB_CMDLINE_LINUX_DEFAULT/a\GRUB_CMDLINE_LINUX=\\\"$wpis_grub\\\"\" $sciezka/grub > /tmp/netext73/grub1"
+echo "sudo mv /tmp/netext73/grub1 $sciezka/grub -f"
 echo "if [ \"\$(cat /etc/default/grub | grep '#GRUB_HIDDEN_TIMEOUT=')\" = \"\" ]; then"
 echo "sudo sed -i 's/GRUB_HIDDEN_TIMEOUT=/#GRUB_HIDDEN_TIMEOUT=/g' /etc/default/grub"
 echo "fi"
@@ -697,17 +697,17 @@ echo "echo 'GRUB_BACKGROUND=/opt/NeteXt73/menu/grub_background.png' | sudo tee -
 echo "sudo chown root:root /etc/default/grub"
 echo "fi"
 echo "sudo update-grub"  
-echo "echo 'tak' > /tmp/ok.txt"
+echo "echo 'tak' > /tmp/netext73/ok.txt"
 
 }
 
 instaluj_grub(){
 echo "echo \"$TEXT_PROCEDURA_13\"'"
-echo "nie" > /tmp/ok.txt
-naglowek > /tmp/instaluj.sh
-grub >> /tmp/instaluj.sh
+echo "nie" > /tmp/netext73/ok.txt
+naglowek > /tmp/netext73/instaluj.sh
+grub >> /tmp/netext73/instaluj.sh
 instalacja2
-if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
+if [ "$(cat /tmp/netext73/ok.txt)" = "tak" ]; then
       dymek -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_GRUB2 $sciezka/grub. $TEXT_WYMAGANY_RESTART"
 else
       dymek i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB3"
@@ -715,11 +715,11 @@ fi
 }
 
 wywal_pobrane_pliki_kernela(){
-if [ "$(cat /tmp/ok.txt)" = "tak" ]; then
+if [ "$(cat /tmp/netext73/ok.txt)" = "tak" ]; then
     yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_KERNEL2"
     rm -rf $PWD
-elif  [ "$(cat /tmp/ok.txt)" = "nie" ]; then
-    dymek -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_INFO2<br>/tmp/$a"
+elif  [ "$(cat /tmp/netext73/ok.txt)" = "nie" ]; then
+    dymek -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_INFO2<br>/tmp/netext73/$a"
 fi
 }
 
@@ -732,19 +732,19 @@ sed -i 's/ off/-/g' sysv.txt
 }
 
 klucze(){
-echo "sudo apt-get update 2> /tmp/keymissing"
-echo "for key in \$(grep 'NO_PUBKEY' /tmp/keymissing |sed \"s/.*NO_PUBKEY //\"); do"
+echo "sudo apt-get update 2> /tmp/netext73/keymissing"
+echo "for key in \$(grep 'NO_PUBKEY' /tmp/netext73/keymissing |sed \"s/.*NO_PUBKEY //\"); do"
 echo "gpg --recv-keys \"\$key\""
 echo "gpg --armor --export \"\$key\" | sudo apt-key add -"
 echo "done"
-echo "sudo apt-get update 2> /tmp/keymissing"
-echo "cat /tmp/keymissing |sed \"s/.*publicznego://\" > 1.txt"
-echo "sed -e \"/^$/d\" 1.txt > /tmp/keymissing"
-echo "for key in \$(cat /tmp/keymissing); do"
+echo "sudo apt-get update 2> /tmp/netext73/keymissing"
+echo "cat /tmp/netext73/keymissing |sed \"s/.*publicznego://\" > 1.txt"
+echo "sed -e \"/^$/d\" 1.txt > /tmp/netext73/keymissing"
+echo "for key in \$(cat /tmp/netext73/keymissing); do"
 echo "gpg --keyserver keyserver.ubuntu.com --recv-keys \$key"
 echo "gpg --export -a \$key | sudo apt-key add -"
 echo "done"
-echo "rm -f /tmp/keymissing 1.txt"
+echo "rm -f /tmp/netext73/keymissing 1.txt"
 }
 
 radeon(){
@@ -834,7 +834,7 @@ yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/Nete
       if [ $? = 0 ]; then
       while ! yad-netext --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S reboot; do
 	  if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
-	      rm /tmp/stan_netext
+	      rm /tmp/netext73/stan_netext
 	      exit 0
 	  fi
       done
@@ -855,7 +855,7 @@ sprawdz_klucze(){
 xterm -T GPG-KEY -e bash -c "echo 'sudo apt-key list';sudo apt-key list > klucze1.txt ; echo -e \"$TEXT_INSTALACJA2\""
 }
 usun_klucze(){
-xterm -T GPG-KEY -e bash -c "echo 'Podaj hasło aby usunąć zaznaczone klucze'; for i in \$(cat usun.txt); do sudo apt-key del \$i; done; read ent; echo 'tak' > /tmp/ok.txt"
+xterm -T GPG-KEY -e bash -c "echo 'Podaj hasło aby usunąć zaznaczone klucze'; for i in \$(cat usun.txt); do sudo apt-key del \$i; done; read ent; echo 'tak' > /tmp/netext73/ok.txt"
 }
 
 stan_baterii(){

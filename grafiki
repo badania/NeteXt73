@@ -37,7 +37,7 @@ source /opt/NeteXt73/procedury
 
 #########################################################################################################################################################################
 #instalator sterowników do grafik Nvidia
-cd /tmp
+cd /tmp/netext73
 
 usun(){
 rm *.txt* -f; rm *.sh -f; rm *.html* -f
@@ -67,12 +67,12 @@ else
 					  yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb
 				  fi  
 				  if [ -e $ster.deb ] && [ -e $nv_set ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ] && [ "$(grep $(md5sum $nv_set) 1.txt)" != "" ]; then
-					  echo "nie" > /tmp/ok.txt
+					  echo "nie" > /tmp/netext73/ok.txt
 					  naglowek > instaluj.sh
 					  nvidia >> instaluj.sh
 					  instalacja
 				  elif [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ]; then
-					  echo "nie" > /tmp/ok.txt
+					  echo "nie" > /tmp/netext73/ok.txt
 					  naglowek > instaluj.sh
 					  nvidia >> instaluj.sh
 					  instalacja 
@@ -94,7 +94,7 @@ else
 				if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 				  	  yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb $adres_sterownikow/$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")
 					  if [ -e $ster.deb ] && [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ]; then
-						  echo "nie" > /tmp/ok.txt
+						  echo "nie" > /tmp/netext73/ok.txt
 						  naglowek > instaluj.sh
 						  radeon >> instaluj.sh
 						  instalacja

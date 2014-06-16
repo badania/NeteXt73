@@ -40,7 +40,7 @@ source /opt/NeteXt73/procedury
 #Skrypty
 
 
-cd /tmp
+cd /tmp/netext73
 
 if [ "$(cat /etc/sysctl.conf | grep 'net.ipv6.conf.all.disable_ipv6 = 1')" = "" ]; then
 	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!BurnTest"
@@ -77,7 +77,7 @@ if [ $klawisz = 0 ]; then
 	    rm *.txt -f
 	#odpalamy tasksel
 	elif [ "$skrypt" = "$MENU5" ]; then
-	    cd /tmp
+	    cd /tmp/netext73
 	    x-terminal-emulator -e bash -c "echo -e \"$TEXT_TASKSEL1\"; sudo tasksel; echo -e \"$TEXT_INSTALACJA2\"; read ent"
 	#synchronizuj czas z internetu
 	elif [ "$skrypt" = "$MENU6" ]; then

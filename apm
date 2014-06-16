@@ -38,9 +38,9 @@ source /opt/NeteXt73/procedury
 #########################################################################################################################################################################
 #APM
 
-cd /tmp
+cd /tmp/netext73
 rm *.html -f
-rm /tmp/*.txt -f; rm /tmp/*.sh -f
+rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f
 stan_apm=""
 export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 #zapamiętanie configu jeżeli był niepełen config

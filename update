@@ -37,11 +37,11 @@ source /opt/NeteXt73/procedury
 
 #########################################################################################################################################################################
 #Update
-cd /tmp
+cd /tmp/netext73
 
 usun(){
 rm *.html* -f
-rm -f /tmp/*.txt 
+rm -f /tmp/netext73/*.txt 
 }
 
 
@@ -230,7 +230,7 @@ elif [ $klawisz = "2" ]; then
 elif [ $klawisz = "3" ]; then
     if [ "$stable" != "$TEXT_BRAK_DANYCH" ]; then
 	  if [ "$USER" = "root" ]; then
-	      userek=$(cat /tmp/userek)
+	      userek=$(cat /tmp/netext73/userek)
 	      su $userek -c "xdg-open \"https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable\""
 	  else
 	      xdg-open "https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable"

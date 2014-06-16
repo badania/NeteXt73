@@ -38,10 +38,10 @@ source /opt/NeteXt73/procedury
 #########################################################################################################################################################################
 #Kontakt
 
-cd /tmp
+cd /tmp/netext73
 
 if [ "$USER" = "root" ]; then
-	userek=$(cat /tmp/userek)
+	userek=$(cat /tmp/netext73/userek)
 	su $userek -c "yad-netext --center --icons --title=\"$nazwa_skryptu\" --window-icon=\"/opt/NeteXt73/ikony/mail.png\" --image-on-top --item-width=\"150\" --read-dir=\"/opt/NeteXt73/kontakty\" \
 	--button=\"gtk-ok:0\" --width=490 --height=400"
 else

@@ -33,6 +33,7 @@
 #########################################################################################################################################################################
 #procedury
 
+mkdir -p /tmp/netext73
 source /opt/NeteXt73/procedury
 
 aktualizacja(){
@@ -49,14 +50,14 @@ fi
 #########################################################################################################################################################################
 
 
-if [ -e /tmp/userek ]; then
+if [ -e /tmp/netext73/userek ]; then
     echo "ok" > /dev/null
 else
-    echo $USER > /tmp/userek
+    echo $USER > /tmp/netext73/userek
 fi
 
 if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ]; then
-      if [ -e /tmp/stan_netext ] && [ $(cat /tmp/stan_netext) = "root" ]; then
+      if [ -e /tmp/netext73/stan_netext ] && [ $(cat /tmp/netext73/stan_netext) = "root" ]; then
 	  echo "tryb normalny" > /dev/null
       else
 	  cd /opt/NeteXt73 && ./NeteXt73_root ./NeteXt73
@@ -77,7 +78,7 @@ elif [ "$klawisz" = "3" ]; then
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "4" ]; then
       if [ "$USER" = "root" ]; then
-	    userek=$(cat /tmp/userek)
+	    userek=$(cat /tmp/netext73/userek)
 	    su $userek -c "xdg-open \"http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html\""
       else
 	    xdg-open "http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html"
