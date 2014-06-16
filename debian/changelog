@@ -1,3 +1,9 @@
+netext73 (0.7.74) stable; urgency=medium
+
+  * poprawka sekcji update-dostosowanie do nowego nazewnictwa kerneli
+
+ -- eloaders <eloaders@linux.pl>  Mon, 16 Jun 2014 19:44:37 +0200
+
 netext73 (0.7.73) stable; urgency=medium
 
   * poprawa kodu instalatora grafik

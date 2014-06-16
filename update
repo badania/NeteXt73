@@ -163,11 +163,17 @@ if [ "$(cat kernel.txt)" = "" ]; then
       kern=$TEXT_BRAK_DANYCH
       a4="TRUE"
 else
-      if [ "$(dpkg -l | grep $(echo $nowy_kernel | sed 's/-ags.*//g'))" != "" ]; then
+      if [ "$(dpkg -l | grep $(echo $nowy_kernel | sed 's/-ags.*//g' | sed 's/_testowy.*//g' | sed 's/_stabilny.*//g' ))" != "" ]; then
 	  kern="$TEXT_UPDATE4"
 	  a4="FALSE"
       else
-	  kern="$TEXT_UPDATE5  v$(echo $nowy_kernel | cut -d "-" -f 4)_$(echo  $nowy_kernel | cut -d "-" -f 1)"
+	  #sprawdzanie kerneli do wersji v29.x
+	  if [ "$(uname -r | grep ags)" != "" ];then
+		kern="$TEXT_UPDATE5  v$(echo $nowy_kernel | cut -d "-" -f 4)_$(echo  $nowy_kernel | cut -d "-" -f 1)"
+	  else
+	  #sprawdzanie kerneli od wersji v30.x
+		kern="$TEXT_UPDATE5  v$(echo $nowy_kernel | cut -d "-" -f 3)_$(echo  $nowy_kernel | cut -d "-" -f 1)"
+	  fi
 	  menu="$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE1 APM!$TEXT_UPDATE2!$TEXT_UPDATE8"
 	  a4="TRUE"
 	  ((ilosc_aktualizacji++))
