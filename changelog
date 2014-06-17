@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.75
+-	wyłączenie update-initramfs po instalacji kerneli (testowo)
 v0.7.74
 -	poprawka sekcji update-dostosowanie do nowego nazewnictwa kerneli
 -	zmiana katalogu tymczasowego z /tmp na /tmp/netext73
