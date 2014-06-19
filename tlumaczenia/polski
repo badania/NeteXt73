@@ -361,6 +361,7 @@ export TEXT_ZOMBIE2="Brak procesów zombie."
 export TEXT_CONFIG1="Brak pozostałości po plikach konfiguracyjnych do usunięcia."
 export TEXT_BACK_CRITIC="UWAGA: Znaleziono ciągi Fokirtor w procesie SSHD:"
 export TEXT_BACK_OK="OK: Brak zagrożenia w procesach SSHD."
+export TEXT_SYSBENCH_PROGRESS="Trwa test Sysbench,\npo jego zakończeniu \npojawi się tabela z wynikiem."
 
 
 

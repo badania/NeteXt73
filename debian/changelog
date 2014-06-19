@@ -1,3 +1,9 @@
+netext73 (0.7.76) stable; urgency=medium
+
+  * dodanie sysbench
+
+ -- eloaders <eloaders@linux.pl>  Thu, 19 Jun 2014 13:35:33 +0200
+
 netext73 (0.7.75) stable; urgency=medium
 
   * wyłączenie update-initramfs z instalatora kerneli

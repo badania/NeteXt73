@@ -31,7 +31,8 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
   mesa-utils, 
   initramfs-tools, 
   lm-sensors, 
-  perl,  
+  perl, 
+  sysbench, 
   gcc  
 Replaces: netext73
 Recommends:

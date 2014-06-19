@@ -43,6 +43,14 @@ if [ -e ~/.netext73 ]; then
 else
     mkdir ~/.netext73
 fi
+#katalog dla sysbench
+if [ -e ~/.netext73/sysbench ]; then
+    echo "nic nie robię bo jest" 1 > /dev/null
+else
+    mkdir ~/.netext73/sysbench
+fi
+
+
 if [ -e ~/.netext73/jezyk ] && [ "$(cat ~/.netext73/jezyk)" = "niemiecki" ]; then
     export jezyk="angielski"
     echo 'angielski' >  ~/.netext73/jezyk

@@ -1,6 +1,12 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.76
+-	dodanie sysbench do zależności
+-	dodanie do sekcji skrpyty testera sysbench
+-	stworzenie skryptów wywołujących sysbench cpu i momory
+-	zapisywanie wyników sysbench w katalogu ~/.netext73/sysbench, nazwy zawierają rodzaj testu, kernel i datę wraz z godziną
+-	stworzenie skryptu pokazjącego tabelę wyników dla  sysbench cpu i momory
 v0.7.75
 -	wyłączenie update-initramfs po instalacji kerneli (testowo)
 v0.7.74
