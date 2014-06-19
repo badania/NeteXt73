@@ -368,6 +368,7 @@ export TEXT_CONFIG1="Not found unnecessary configuration files."
 export TEXT_BACK_CRITIC="CRITICAL: Fokirtor strings found in sshd process"
 export TEXT_BACK_OK="OK: No indication of Fokirtor found."
 export TEXT_SYSBENCH_PROGRESS="Sysbench test in progress."
+export TEXT_USUN_WYNIK="Remove result"
 
 #########################################################################################################################################################################
 

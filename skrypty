@@ -183,8 +183,16 @@ if [ $klawisz = 0 ]; then
 		      grep "$a10" $i | sed 's/.*: *//' >> pliki
 		  fi
 	    done
-	    yad-netext --center --title="$nazwa_skryptu" --text="$1 sysbench" --width=1024 --height=450 --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" \
-	    --column="uname -r" --column="test dates:" --column="$(echo $a1 | sed 's/ of/\nof/')" --column="$a2" --column="$(echo $a3 | sed 's/ of/\nof/')" --column="$(echo $a4 | sed 's/ event/\nevent/' | sed 's/ taken/\ntaken/' )" --column="$a5"  --column="$a6" --column="$a7" --column="$(echo $a8 | sed 's/ 95/\n95/')" --column="$(echo $a9 | sed 's/(/\n(/')" --column="$(echo $a10 | sed 's/(/\n(/')" --list $(cat pliki) --button="gtk-ok:0" 
+	    pliczek=$(yad-netext --center --title="$nazwa_skryptu" --text="$1 sysbench" --width=1024 --height=450 --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" \
+	    --column="uname -r" --column="test dates:" --column="$(echo $a1 | sed 's/ of/\nof/')" --column="$a2" --column="$(echo $a3 | sed 's/ of/\nof/')" --column="$(echo $a4 | sed 's/ event/\nevent/' | sed 's/ taken/\ntaken/' )" --column="$a5"  --column="$a6" --column="$a7" --column="$(echo $a8 | sed 's/ 95/\n95/')" --column="$(echo $a9 | sed 's/(/\n(/')" --column="$(echo $a10 | sed 's/(/\n(/')" --list $(cat pliki) --button="$TEXT_USUN_WYNIK:0"  --button="$TEXT_ZAMKNIJ:1" )
+	    klawisz=$?; pliczek=$(echo $pliczek | cut -d "|" -f 2)
+	    if [ "$klawisz" = "0" ]; then
+		if [ "$1" = "cpu" ]; then
+		    rm $(ls | grep $pliczek | grep cpu)
+		else
+		    rm $(ls | grep $pliczek | grep memory)
+		fi
+	    fi
 	    rm pliki -f
 	    }
 

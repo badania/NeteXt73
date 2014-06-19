@@ -362,7 +362,7 @@ export TEXT_CONFIG1="Brak pozostałości po plikach konfiguracyjnych do usunięc
 export TEXT_BACK_CRITIC="UWAGA: Znaleziono ciągi Fokirtor w procesie SSHD:"
 export TEXT_BACK_OK="OK: Brak zagrożenia w procesach SSHD."
 export TEXT_SYSBENCH_PROGRESS="Trwa test Sysbench,\npo jego zakończeniu \npojawi się tabela z wynikiem."
-
+export TEXT_USUN_WYNIK="Usuń wynik"
 
 
 #########################################################################################################################################################################
