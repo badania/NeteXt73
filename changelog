@@ -3,6 +3,7 @@
 
 v0.7.78
 -	dodadnie do GRUB zswap.compressor lz4,lzo,deflate
+-	dodanie opcji ustawiania aktualnej wartości zswap na poziomie posiadanego wpisu
 v0.7.77
 -	poprawka grub expert
 -	zwiększenie czasu dla sysbench memory

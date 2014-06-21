@@ -120,6 +120,15 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 		    else
 			grub_back="TRUE"
 		    fi
+		    if [ "$(echo $wpis_grub | grep 'lz4')" != "" ] ; then
+			zswap_compressor="lz4@lzo@deflate"
+		    elif [ "$(echo $wpis_grub | grep 'lzo')" != "" ] ; then
+			zswap_compressor="lzo@lz4@deflate"
+		    elif [ "$(echo $wpis_grub | grep 'deflate')" != "" ] ; then
+			zswap_compressor="deflate@lz4@lzo"
+		    else
+			zswap_compressor="lz4@lzo@deflate"
+		    fi
 		    
 		    menu_rozdzielczosci="@1024x600@1024x768@1280x720@1280x800@1280x1024@1366x768@1400x1050@1440x900@1600x900@1600x1024@1600x1200@1680x1050@1920x1080@1920x1200"
 		    menu_rozdz=$(echo $menu_rozdzielczosci | sed "s/$aktualna//" | sed 's/@@/@/')
@@ -142,7 +151,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  "$czas[@-1..10[@1]]" \
 			  "$menu4" \
 			  "$grub_back" \
-			  "lz4@lzo@deflate" )
+			  "$zswap_compressor" )
 		    else
 			  menu_rozdz=$(echo $menu_rozdzielczosci | sed "s/$aktualna//" | sed 's/@@/@/')
 			  menu5=$(echo "$aktualna$menu_rozdz" | sed 's/@@/@/')
@@ -162,7 +171,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  "$menu4" \
 			  "$menu5" \
 			  "$grub_back" \
-			  "lz4@lzo@deflate" )
+			  "$zswap_compressor" )
 		    fi
 		    if [ $? = 0 ]; then
 			  w0=$(echo $acpi_wpis  | cut -d "|" -f 2)				#acpi Linux/Windows pcie_aspm=force
