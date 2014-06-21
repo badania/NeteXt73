@@ -206,7 +206,7 @@ if [ $klawisz = 0 ]; then
 				zrob_test $(grep 'model name' /proc/cpuinfo | wc -l ) cpu 
 				wynik_testu cpu_$(uname -r)_$DATE-sysbench.log 
 			    elif [ "$skrypt" = "$MENU2" ]; then
-				info_test 15 MEMORY &
+				info_test 25 MEMORY &
 				zrob_test $(grep 'model name' /proc/cpuinfo | wc -l ) memory
 				wynik_testu memory_$(uname -r)_$DATE-sysbench.log
 			    elif [ "$skrypt" = "$MENU3" ]; then

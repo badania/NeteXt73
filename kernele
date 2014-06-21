@@ -205,7 +205,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 			lista_kerneli
 			if [ "$klawisz" = "0" ] && [ "$blad" != "1" ] ; then
 				echo "nie" > /tmp/netext73/ok.txt
-				dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj-ags-cfs//g" > 1.txt
+				dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj.*" > 1.txt
 				for kernel in $(cat 1.txt); do
 					if [ "$(echo $a | grep $(echo $kernel))" != "" ]; then
 					      echo "tak" > /tmp/netext73/ok.txt

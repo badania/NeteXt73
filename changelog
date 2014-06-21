@@ -1,6 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.77
+-	poprawka grub expert
+-	zwiększenie czasu dla sysbench memory
+-	poprawka sprawdznia zainstalowanych kerneli
 v0.7.76
 -	dodanie sysbench do zależności
 -	dodanie do sekcji skrpyty testera sysbench
