@@ -134,13 +134,15 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  --field="$TEXT_NETBIT_MENU18:NUM" \
 			  --field="$TEXT_ROZDZIELCZOSC GRUB:CB" \
 			  --field="Grub Background on/off:CHK" \
+			  --field="zswap.compressor:CB" \
 			  "$wpis_grub" \
 			  "$menu1" \
 			  "$menu2" \
 			  "$menu3" \
 			  "$czas[@-1..10[@1]]" \
 			  "$menu4" \
-			  "$grub_back")
+			  "$grub_back" \
+			  "lz4@lzo@deflate" )
 		    else
 			  menu_rozdz=$(echo $menu_rozdzielczosci | sed "s/$aktualna//" | sed 's/@@/@/')
 			  menu5=$(echo "$aktualna$menu_rozdz" | sed 's/@@/@/')
@@ -151,6 +153,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  --field="$TEXT_ROZDZIELCZOSC GRUB:CB" \
 			  --field="$TEXT_ROZDZIELCZOSC Plymouth:CB" \
 			  --field="Grub Background on/off:CHK" \
+			  --field="zswap.compressor:CB" \
 			  "$wpis_grub" \
 			  "$menu1" \
 			  "$menu2" \
@@ -158,7 +161,8 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  "$czas[@-1..10[@1]]" \
 			  "$menu4" \
 			  "$menu5" \
-			  "$grub_back" )
+			  "$grub_back" \
+			  "lz4@lzo@deflate" )
 		    fi
 		    if [ $? = 0 ]; then
 			  w0=$(echo $acpi_wpis  | cut -d "|" -f 2)				#acpi Linux/Windows pcie_aspm=force
@@ -166,10 +170,13 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  w2=$(echo $acpi_wpis  | cut -d "|" -f 4)				#podświetlenie
 			  export w3=$(echo $acpi_wpis  | cut -d "|" -f 5 | sed 's/,.*//g' ) 	#grub timeout
 			  export w4=$(echo $acpi_wpis  | cut -d "|" -f 6)			#rozdzielczość GRUB
-			  export grub_back=$(echo $acpi_wpis  | cut -d "|" -f 7)
+			  export grub_back=$(echo $acpi_wpis  | cut -d "|" -f 7)		#tło
+			  export zswap=$(echo $acpi_wpis  | cut -d "|" -f 8)			#zwswap
+			  
 			  if [ "$menu5" != "" ];then
 			      export w5=$(echo $acpi_wpis  | cut -d "|" -f 7)			#rozdzielczość Plymouth
 			      export grub_back=$(echo $acpi_wpis  | cut -d "|" -f 8)
+			      export zswap=$(echo $acpi_wpis  | cut -d "|" -f 9)		#zwswap
 			  fi
 			  if [ "$w0" = "acpi_osi='!Windows 2012' acpi_osi=Linux" ]; then w0="acpi_osi='!Windows 2012' acpi_osi=Linux pcie_aspm=force"
 			  else 
@@ -182,7 +189,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  if [ "$w2" = "standard" ]; then      		w2=""
 			  elif [ "$w2" = "$TEXT_GRUB19" ]; then  	w2=" acpi_backlight=vendor"
 			  fi
-			  w6=" zswap.enabled=1"
+			  w6=" zswap.enabled=1 zswap.compressor=$zswap"
 			  if [ "$w5" != "" ];then
 				wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_ROZDZIELCZOSC Plymouth:RO" "$w4" "$w5" )
 				wpis_grub=$(echo $wpis_grub | sed 's/|//g' | sed "s/$w4//" | sed "s/$w5//" )

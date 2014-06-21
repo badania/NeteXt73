@@ -1,3 +1,9 @@
+netext73 (0.7.78) stable; urgency=medium
+
+  * dodadnie do GRUB zswap.compressor lz4,lzo,deflate
+
+ -- eloaders <eloaders@linux.pl>  Sat, 21 Jun 2014 20:50:12 +0200
+
 netext73 (0.7.77) stable; urgency=medium
 
   * poprawka sprawdzania zainstoalowanych kerneli
