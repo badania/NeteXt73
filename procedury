@@ -661,12 +661,20 @@ xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo 
 lista_kerneli(){
 echo $(grep 'href='   ./index.html | grep 'href="v'| cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/') > 1.txt
 cat 1.txt | tr ' ' '\n' > 2.txt
-dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj.*//g" > 3.txt
+if [ "$rodzaj" = "k8" ] || [ "$rodzaj" = "atom" ];then
+    dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj.*//g" > 3.txt
+else
+    dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g'  > 3.txt
+fi
 for kernel in $(cat 2.txt); do
     echo "$kernel" >> 4.txt
 	for kernel1 in $(cat 3.txt); 	    do
 	      if [ "$(echo $kernel | grep $(echo $kernel1))" != "" ]; then
-		  sed 4.txt -i -e "s/$kernel/$kernel tak/g"
+		  if [ "$(echo $kernel1 | grep pro )" != "" ] && [ "$(echo $rodzaj | grep pro)" = "" ]; then
+		      echo "nic" > /dev/null
+		  else
+		      sed 4.txt -i -e "s/$kernel/$kernel tak/g"
+		  fi
 	      fi
 	done
 done
