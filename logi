@@ -132,6 +132,8 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     ls /usr/lib/pm-utils/power.d/ -la | grep rwxr >> system$losowa.log
     echo -e "\n\n"
     ls /etc/pm/power.d/ -la >> system$losowa.log
+    echo -e "\n\n#################################  zswap ################################################################" >> system$losowa.log
+    dmesg | grep zswap: >> system$losowa.log
     echo -e "\n\n#################################  scheduler  ###########################################################" >> system$losowa.log
     cat /sys/block/sda/queue/scheduler >> system$losowa.log
     echo -e "\n\n#################################  readahead  ###########################################################" >> system$losowa.log
