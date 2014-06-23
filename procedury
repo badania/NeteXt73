@@ -50,6 +50,14 @@ else
     mkdir ~/.netext73/sysbench
 fi
 
+#katalog dla glmark2
+if [ -e ~/.netext73/glmark2 ]; then
+    echo "nic nie robię bo jest" 1 > /dev/null
+else
+    mkdir ~/.netext73/glmark2
+fi
+
+
 
 if [ -e ~/.netext73/jezyk ] && [ "$(cat ~/.netext73/jezyk)" = "niemiecki" ]; then
     export jezyk="angielski"

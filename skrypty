@@ -43,9 +43,9 @@ source /opt/NeteXt73/procedury
 cd /tmp/netext73
 
 if [ "$(cat /etc/sysctl.conf | grep 'net.ipv6.conf.all.disable_ipv6 = 1')" = "" ]; then
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!BurnTest!Sysbench"
+	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!BurnTest!Sysbench!glmark2"
     else
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU10!$MENU11!BurnTest!Sysbench"
+	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU10!$MENU11!BurnTest!Sysbench!glmark2"
 fi
 
 skrypt=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/skrypty.png" --image="/opt/NeteXt73/ikony/skrypty.png" --form --field="$TEXT_SKRYPT1:CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
@@ -219,6 +219,74 @@ if [ $klawisz = 0 ]; then
 			  petla="nie"
 		    fi
 	    done
+	elif [ "$skrypt" = "glmark2" ]; then        
+	    #zmienne
+	    MENU1="glmark2 test"
+	    MENU2="glmark2 table tests"
+	    menu="$MENU1!$MENU2"
+	    #katalog roboczy skryptu
+	    cd ~/.netext73/glmark2
+
+	    #procedury
+
+	    zrob_test(){
+	    DATE=$(date +"%Y-%m-%d@%H:%M")
+	    echo "uname $(uname -r)" > $(uname -r)_$DATE-glmark2.log 
+	    glmark2 >> $(uname -r)_$DATE-glmark2.log 
+	    echo "test_time: " $DATE >> $(uname -r)_$DATE-glmark2.log 
+	    }
+
+	    wynik_testu(){
+	    rm *.txt -f
+	    cat $1 | tr -d "\015" | grep '\[' | sed 's/FPS:/$/g' | cut -d '$' -f 1 | sed 's/ //g' > kolumna1.txt
+	    cat $1 | tr -d "\015" | grep '\[' | sed 's/.*FPS://g' | awk '{print $1}' > kolumna2.txt
+	    cat $1 | tr -d "\015" | grep '\[' | sed 's/.*FrameTime://g' | sed 's/ //g' |awk '{print $1}' > kolumna3.txt
+	    paste -d " " kolumna1.txt kolumna2.txt kolumna3.txt > kolumny.txt
+	    wynik="$(grep "glmark2 Score:" $1 | sed "s/glmark2 Score:[[:space:]]*//g" | sed "s/[[:space:]]//g")"
+	    yad-netext --center --title="$nazwa_skryptu" --text="glmark2 score: $wynik" --width=880 --height=780 --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" --button="gtk-ok:0" --list $(cat kolumny.txt) \
+	    --column="Name" --column="FPS:" --column="FrameTime:"
+	    rm *.txt -f
+	    }
+
+	    porownanie(){
+	    rm tymczasowy.txt -f
+	    for i in $(ls *glmark2.log ); do
+		  if [ "$(grep test_time $i)" = "" ]; then
+		      rm $i
+		  else
+		      grep "uname" $i | cut -d " " -f 2 >> tymczasowy.txt
+		      echo -e "\n" >> tymczasowy.txt
+		      for a in $(echo test_time: GL_VENDOR: GL_RENDERER: GL_VERSION:); do
+			  grep "$a" $i | sed "s/$a[[:space:]]*//g" | sed 's/^[ \t]*//' | sed 's/ $//' >> tymczasowy.txt
+			  echo -e "\n" >> tymczasowy.txt
+		      done
+		      grep "glmark2 Score:" $i | sed "s/glmark2 Score:[[:space:]]*//g" | sed "s/[[:space:]]//g" >> tymczasowy.txt
+		      echo -e "\n" >> tymczasowy.txt
+		  fi
+	    done
+	    sed -i '/^[ \t]*$/ d' tymczasowy.txt
+	    IFS=$'\n'
+	    pliczek=$(yad-netext --center --title="$nazwa_skryptu" --text="glmark2 tests" --width=1024 --height=450 --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" \
+	    --column="uname -r" --column="test dates:" --column="GL_VENDOR:" --column="GL_RENDERER:" --column="GL_VERSION:" --column="Total score:" --separator=$'\n' --list $(cat tymczasowy.txt) --button="$TEXT_USUN_WYNIK:0"  --button="$TEXT_ZAMKNIJ:1" )
+	    klawisz=$?; pliczek=$(echo $pliczek | cut -d "|" -f 2)
+	    if [ "$klawisz" = "0" ]; then
+		    rm $(ls | grep $pliczek)
+	    fi
+	    rm tymczasowy.txt -f
+	    }
+
+
+	    skrypt=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/skrypty.png" --image="/opt/NeteXt73/ikony/skrypty.png" --form --field="$TEXT_SKRYPT1:CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
+	    klawisz=$?; skrypt=$(echo $skrypt | cut -d "|" -f 1)
+	    if [ $klawisz = 0 ]; then
+		    if [ "$skrypt" = "$MENU1" ]; then
+			zrob_test
+			wynik_testu $(uname -r)_$DATE-glmark2.log
+		    elif [ "$skrypt" = "$MENU2" ]; then
+			porownanie
+		    fi
+	    fi
+ 
 	fi
 fi
 

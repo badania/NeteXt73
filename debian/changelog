@@ -1,3 +1,9 @@
+netext73 (0.7.79) stable; urgency=medium
+
+  * dodanie glmark2
+
+ -- eloaders <eloaders@linux.pl>  Mon, 23 Jun 2014 21:54:42 +0200
+
 netext73 (0.7.78) stable; urgency=medium
 
   * dodadnie do GRUB zswap.compressor lz4,lzo,deflate

@@ -33,6 +33,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
   lm-sensors, 
   perl, 
   sysbench, 
+  glmark2, 
   gcc  
 Replaces: netext73
 Recommends:
