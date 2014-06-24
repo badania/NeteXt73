@@ -106,7 +106,7 @@ glxinfo | grep OpenGL | sed 's/OpenGL ext.*//g' | sed 's/OpenGL core profile ext
 yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="pastebin:3" --button="Firewall status:4"
 klawisz=$?
 if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
-    echo -e "\n\n#################################  NeteXt73 i kernel  #################################################" > system$losowa.log
+    echo -e "\n\n#################################  NeteXt73 i kernel  #################################################" >> system$losowa.log
     echo -e "\n$nazwa_skryptu"  >> system$losowa.log
     echo -e "\n$TEXT_LOGI1\n$(dpkg -l | grep 'linux-image*'| grep -v -E 'linux-image-extra*|linux-image-generic' | sed -e 's/linux-image-//g' | awk '{print $2}'| sort -r | column -n)" >> system$losowa.log
     echo -e "\n\n#################################  microcode  ##########################################################" >> system$losowa.log
@@ -172,8 +172,10 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     echo -e "\n\n#################################  stan tmp ##############################################################" >> system$losowa.log
     ls -la /tmp/netext73 >> system$losowa.log
     
-    
-    
+    sed -i 's/<\/span>//g' system$losowa.log
+    sed -i 's/<span.*">//g' system$losowa.log
+    sed -i 's/<\/b>//g' system$losowa.log
+    sed -i 's/<b>//g' system$losowa.log
     dmesg > dmesg_$USER
     if [ "$klawisz" = "2" ]; then
 	    if [ "$USER" = "root" ]; then
