@@ -127,7 +127,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 		    elif [ "$(echo $wpis_grub | grep 'deflate')" != "" ] ; then
 			zswap_compressor="deflate@lz4@lzo"
 		    else
-			zswap_compressor="lz4@lzo@deflate"
+			zswap_compressor="lzo@lz4@deflate"
 		    fi
 		    
 		    menu_rozdzielczosci="@1024x600@1024x768@1280x720@1280x800@1280x1024@1366x768@1400x1050@1440x900@1600x900@1600x1024@1600x1200@1680x1050@1920x1080@1920x1200"
