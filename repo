@@ -209,11 +209,6 @@ baza=(
 	"notifyOSD Patch - fixed OSD notify version"
 	"notify-osd"
 
-	"ppa:t-tujikawa/ppa"
-	"Aria2 - narzędzie pobierania plików"
-	"Aria2 - command line download utility"
-	"aria2"
-
 	"ppa:mozillateam/firefox-next"
 	"Oficjalne repozytorium Firefox Beta"
 	"The official repository of Firefox Beta"

@@ -4,6 +4,8 @@
 v0.7.79
 -	dodanie glmark2 w skryptach
 -	zmiana kompresji z lz4 na lzo (GRUB)
+-	poprawki w module baterii
+-	poprawki w pliku logów
 v0.7.78
 -	dodadnie do GRUB zswap.compressor lz4,lzo,deflate
 -	dodanie opcji ustawiania aktualnej wartości zswap na poziomie posiadanego wpisu

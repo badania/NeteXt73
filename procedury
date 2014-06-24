@@ -910,16 +910,16 @@ fi
 #jezyczek
 if [ "$(grep pol ~/.netext73/jezyk)" != "" ]; then
       Stan_baterii="Stan baterii"
-      bar[1]="Nazwa_baterii"
-      bar[2]="Tryb_pracy_baterii"
-      bar[3]="Rodzaj_baterii"
-      bar[4]="Model_baterii"
-      bar[5]="Producent_baterii"
+      bar[1]="Nazwa baterii"
+      bar[2]="Tryb pracy baterii"
+      bar[3]="Rodzaj baterii"
+      bar[4]="Model baterii"
+      bar[5]="Producent baterii"
       bar[6]="Nr seryjny baterii"
-      bar[7]="Konstrukcyjne_napięcie_baterii"
-      bar[8]="Aktualne_napięcie_baterii"
-      bar[9]="Aktualna_pojemność_baterii"
-      bar[10]="Maksymalny_poziom_naładowania_baterii"
+      bar[7]="Konstrukcyjne napięcie baterii"
+      bar[8]="Aktualne napięcie baterii"
+      bar[9]="Aktualna pojemność baterii"
+      bar[10]="Maksymalny poziom naładowania baterii"
       if [ "$(echo ${stan[2]})" = "Discharging" ];then
 	  stan[2]="Rozładowywanie"
       elif [ "$(echo ${stan[2]})" = "Charging" ];then
