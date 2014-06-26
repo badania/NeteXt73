@@ -45,6 +45,12 @@ stan_apm=""
 export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 #zapamiętanie configu jeżeli był niepełen config
 if [ -e  ~/.netext73/apm_status ] && [ "$(cat ~/.netext73/apm_status | wc | awk '{print $1}')" != "8" ]; then
+    #sprawdzanie czy jest włączony jakiś APM
+    if [ "$(ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//')" = "" ];then
+      naglowek > instaluj.sh
+      echo "sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative*" >> instaluj.sh
+      instalacja
+    fi
     #sprawdzenie stanu czeków
     stan_apm_config
 fi
@@ -95,17 +101,7 @@ while [ $petla_duza = "tak" ]; do
 		    rm *.txt -f *.sh
 		else
 			naglowek > instaluj.sh
-			if [ "$a" = "conservative-conservative" ]; then
-				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
-			elif [ "$a" = "ondemand-ondemand" ]; then
-				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
-			elif [ "$a" = "intel-performance" ]; then
-				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
-			elif [ "$a" = "intel-powersave" ]; then
-				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
-			elif [ "$a" = "performance-conservative" ]; then
-				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
-			elif [ "$a" = "performance-ondemand" ]; then
+			if [ "$a" != "-" ]; then
 				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
 			elif [ "$a" = "-" ]; then
 				yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
