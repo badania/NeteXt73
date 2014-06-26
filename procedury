@@ -524,7 +524,7 @@ echo "fi"
 echo "if [ \"\$(grep ssdfix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"deadline\" ];then"
 echo "sudo sed -i '/#SSD/ s/noop/deadline/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 
-echo "if [ \"\$(grep ssdfix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"noop\" ];then"
+echo "elif [ \"\$(grep ssdfix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"noop\" ];then"
 echo "sudo sed -i '/#SSD/ s/deadline/noop/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 }
