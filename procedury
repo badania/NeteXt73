@@ -434,22 +434,36 @@ echo "fi"
 echo "if [ \"\$bfqfix\" = \"bfq\" ];then"
 echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
 echo "do"
-echo "sudo sed -i 's/cfq/bfq/g' \$i"
-echo "sudo sed -i 's/deadline/bfq/g' \$i"
+echo "sudo sed -i '/#HDD/ s/cfq/bfq/g' \$i"
+echo "sudo sed -i '/#HDD/ s/deadline/bfq/g' \$i"
 echo "done"
 echo "elif [ \"\$bfqfix\" = \"cfq\" ];then"
 echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
 echo "do"
-echo "sudo sed -i 's/bfq/cfq/g' \$i"
-echo "sudo sed -i 's/deadline/cfq/g' \$i"
+echo "sudo sed -i '/#HDD/ s/bfq/cfq/g' \$i"
+echo "sudo sed -i '/#HDD/ s/deadline/cfq/g' \$i"
 echo "done"
 echo "elif [ \"\$bfqfix\" = \"deadline\" ];then"
 echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
 echo "do"
-echo "sudo sed -i 's/bfq/deadline/g' \$i"
-echo "sudo sed -i 's/cfq/deadline/g' \$i"
+echo "sudo sed -i '/#HDD/ s/bfq/deadline/g' \$i"
+echo "sudo sed -i '/#HDD/ s/cfq/deadline/g' \$i"
 echo "done"
 echo "fi"
+
+echo "if [ \"\$ssdfix\" = \"deadline\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i '/#SSD/ s/noop/deadline/g' \$i"
+echo "done"
+echo "elif [ \"\$ssdfix\" = \"noop\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i '/#SSD/ s/deadline/noop/g' \$i"
+echo "done"
+echo "fi"
+
+
 }
 
 apm_zmiana_config(){
@@ -512,22 +526,36 @@ echo "fi"
 echo "if [ \"\$(grep bfqfix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"bfq\" ];then"
 echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
 echo "do"
-echo "sudo sed -i 's/cfq/bfq/g' \$i"
-echo "sudo sed -i 's/deadline/bfq/g' \$i"
+echo "sudo sed -i '/#HDD/ s/cfq/bfq/g' \$i"
+echo "sudo sed -i '/#HDD/ s/deadline/bfq/g' \$i"
 echo "done"
 echo "elif [ \"\$(grep bfqfix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"cfq\" ];then"
 echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
 echo "do"
-echo "sudo sed -i 's/bfq/cfq/g' \$i"
-echo "sudo sed -i 's/deadline/cfq/g' \$i"
+echo "sudo sed -i '/#HDD/ s/bfq/cfq/g' \$i"
+echo "sudo sed -i '/#HDD/ s/deadline/cfq/g' \$i"
 echo "done"
 echo "elif [ \"\$(grep bfqfix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"deadline\" ];then"
 echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
 echo "do"
-echo "sudo sed -i 's/bfq/deadline/g' \$i"
-echo "sudo sed -i 's/cfq/deadline/g' \$i"
+echo "sudo sed -i '/#HDD/ s/bfq/deadline/g' \$i"
+echo "sudo sed -i '/#HDD/ s/cfq/deadline/g' \$i"
 echo "done"
 echo "fi"
+
+echo "if [ \"\$ssdfix\" = \"deadline\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i '/#SSD/ s/noop/deadline/g' \$i"
+echo "done"
+echo "elif [ \"\$ssdfix\" = \"noop\" ];then"
+echo "for i in \$(ls /etc/pm/power.d/advanced_power_management_by_ext73_*)"
+echo "do"
+echo "sudo sed -i '/#SSD/ s/deadline/noop/g' \$i"
+echo "done"
+echo "fi"
+
+
 }
 
 apm_usun(){
@@ -617,7 +645,7 @@ stan_apm_config(){
 	else 
 	    export wifin="TRUE"
 	fi
-	#sprawdzenie BFQ/CFQ
+	#sprawdzenie BFQ/CFQ/deadline HDD
 	if [ "$(grep 'bfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ] ;then
 	    export bfqfix="bfq"; export bfqfix_menu="bfq!cfq!deadline"
 	elif [ "$(grep 'cfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ]; then
@@ -625,6 +653,12 @@ stan_apm_config(){
 	elif [ "$(grep 'deadline' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ]; then
 	    export bfqfix="deadline"; export bfqfix_menu="deadline!bfq!cfq"
 	fi
+	#sprawdzenie noop/deadline SSD
+	if [ "$(grep 'noop' /etc/pm/power.d/advanced_power_management_by_ext73_* | grep '#SSD' )" != "" ] ;then
+	    export ssdfix="noop"; export ssdfix_menu="noop!deadline"
+	elif [ "$(grep 'deadline' /etc/pm/power.d/advanced_power_management_by_ext73_* | grep '#SSD')" != "" ]; then
+	    export ssdfix="deadline"; export ssdfix_menu="deadline!noop"
+	fi	
 	
 	export wifin_przed=$wifin
 	export wififix_przed=$wififix
@@ -632,6 +666,7 @@ stan_apm_config(){
 	export btfix_przed=$btfix
 	export rts5139fix_przed=$rts5139fix
 	export bfqfix_przed=$bfqfix
+	export ssdfix_przed=$ssdfix
 	#wysłanie danych do configu 
 	ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//' > ~/.netext73/apm_status
 	echo "wififix $wififix" >> ~/.netext73/apm_status
@@ -640,6 +675,7 @@ stan_apm_config(){
 	echo "rts5139fix $rts5139fix" >> ~/.netext73/apm_status
 	echo "wifin $wifin" >> ~/.netext73/apm_status
 	echo "bfqfix $bfqfix" >> ~/.netext73/apm_status
+	echo "ssdfix $ssdfix" >> ~/.netext73/apm_status
 }
 
 usun_kernel(){

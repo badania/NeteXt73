@@ -1,3 +1,9 @@
+netext73 (0.7.81) stable; urgency=medium
+
+  * APM - osobny planista SSD i HDD
+
+ -- eloaders <eloaders@linux.pl>  Thu, 26 Jun 2014 19:14:51 +0200
+
 netext73 (0.7.80) stable; urgency=medium
 
   * zmiany dotyczące microcode dla AMD
