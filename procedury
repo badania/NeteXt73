@@ -282,6 +282,8 @@ echo "if [ \"\$(cat /proc/cpuinfo | grep Intel)\" != \"\" ]; then sudo apt-get i
 echo "if [ \"\$(lsb_release -c | awk '{print \$2}' | grep 'precise' )\" != \"\" ]; then"
 echo "sudo /usr/sbin/update-intel-microcode && sudo microcode_ctl -u"
 echo "fi"
+echo "else"
+echo "sudo apt-get install amd64-microcode -y"
 echo "fi"
 
 }

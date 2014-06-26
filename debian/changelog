@@ -1,3 +1,9 @@
+netext73 (0.7.80) stable; urgency=medium
+
+  * zmiany dotyczące microcode dla AMD
+
+ -- eloaders <eloaders@linux.pl>  Thu, 26 Jun 2014 11:56:37 +0200
+
 netext73 (0.7.79) stable; urgency=medium
 
   * dodanie glmark2
