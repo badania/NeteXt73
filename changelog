@@ -6,6 +6,7 @@ v0.7.81
 -	wprowadzenie modyfikacji umożliwiających zarządzanie planistą SSD i HDD z osobna
 -	naprawa buga - brak żadnego stanu APM
 -	uproszczenie kodu zmiany w APM
+-	drobne poprawki kodu
 v0.7.80
 -	zmiany dotyczące microcode dla AMD
 v0.7.79

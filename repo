@@ -411,9 +411,7 @@ if [ "$klawisz" = "0" ]; then
 			  echo "sudo apt-key add - < Release.key" >> instaluj.txt
 			  echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
 			elif [ "${repo[$i]}" = "ppa:leolik/leolik" ]; then
-			  if [ -e ~/.notify-osd ]; then
-				echo "ok" > /dev/null
-			  else
+			  if [ ! -e ~/.notify-osd ]; then
 				echo "slot-allocation = dynamic" > ~/.notify-osd
 				echo "bubble-expire-timeout = 10sec" >> ~/.notify-osd
 				echo "bubble-vertical-gap = 5px" >> ~/.notify-osd
@@ -545,9 +543,7 @@ if [ "$klawisz" = "0" ]; then
 #########################################################################################################################################################################
 #edytor instalatora pakietów
     elif [ "$backup" = "$a8" ]; then
-	if [ -e ~/.netext73/soft ]; then
-	    echo "ok" > /dev/null
-	else
+	if [ ! -e ~/.netext73/soft ]; then
 	    sofcik
 	fi
 	nowa_lista=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --width=400 --height=600 --form --field="$MENU_OPIS:TXT" "$(cat -e ~/.netext73/soft | tr ' ' '\n' | sed 's/\$//g' | sort)" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
