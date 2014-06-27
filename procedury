@@ -404,7 +404,7 @@ echo "fi"
 apm_zmiana_config(){
 
 echo "if [ \"\$(grep wififix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"FALSE\" ];then"
-echo "sudo sed -i 's/echo auto > \$ii/echo on > \$ii/g /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i 's/echo auto > \$ii/echo on > \$ii/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
 echo "sudo sed -i 's/echo on > \$ii/echo auto > \$ii/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
@@ -894,12 +894,8 @@ echo "8:#${stan[8]} V"; echo "8:${stan[8]}" # V baterii
 echo "9:#${stan[9]} %        $bateria_teraz"; echo "9:${stan[9]}" # % baterii
 echo "10:#${stan[10]} %        $bateria_full"; echo "10:${stan[10]}" # % baterii
 
-
 done | yad-netext --center --multi-progress  --title="$nazwa_skryptu" --bar="$(echo ${bar[1]})" --bar="$(echo ${bar[2]})" --bar="$(echo ${bar[3]})" --bar="$(echo ${bar[4]})" --bar="$(echo ${bar[5]})" --bar="$(echo ${bar[6]})" --bar="$(echo ${bar[7]})" --bar="$(echo ${bar[8]})" --bar="$(echo ${bar[9]})"  --bar="$(echo ${bar[10]})" --auto-kill --window-icon="/opt/NeteXt73/ikony/apm.png" --image="/opt/NeteXt73/ikony/apm.png" --text="$Stan_baterii:\n" --button="gtk-ok:0"
-
 }
-
-
 
 ipv6_off(){
 echo "sudo apt-get autoremove miredo -y && dpkg -l | awk '/^rc/{ print \$2}' | sudo xargs dpkg --purge"
@@ -985,7 +981,6 @@ MAXDLS="5" # set maximum number of simultaneous downloads
 URILIST="$@" # gets list of URIs from stdin
 USAGE="$0 <space-delimited URLs>"
 
-
 # Usage checks
 
 if [[ -z "$URILIST" ]]
@@ -994,7 +989,6 @@ if [[ -z "$URILIST" ]]
       echo "Usage: $USAGE"
       exit 1
 fi
-
 
 # download file and extract progress, speed and ETA from wget
 # we use sed regex for this
@@ -1012,7 +1006,6 @@ download(){
           echo "$2:#$TEXT_BLAD_POBIERANIA"
     fi
 }
-
 
 # compose list of bars for yad
 for URI in $URILIST; do                     # iterate through all URIs
@@ -1043,7 +1036,6 @@ done | yad-netext --center --multi-progress --auto-kill --auto-close $YADBARS --
 --text "<b>$TEXT_POB2</b>" --window-icon="/opt/NeteXt73/ikony/download.png" --image="/opt/NeteXt73/ikony/download.png" --button="$TEXT_ZAMKNIJ:1"
 # ↑ launch yad multi progress-bar window 
 }
-
 
 procesor_monitor(){
 barek="--bar=total --bar="used-buffers-cached" --bar="free+buffers+cached" --bar=reserver --bar="total-reserved" --bar=shared --bar=buffers --bar=cached --bar=swap"
