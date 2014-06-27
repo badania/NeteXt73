@@ -122,9 +122,4 @@ while [ $petla_duza = "tak" ]; do
 	      rm *.txt -f *.sh
 	fi
 done
-#1 conservative-conservative
-#2 ondemand-ondemand
-#3 intel-performance
-#4 intel-powersave
-#5 performance-conservative
-#6 performance-ondemand
+
