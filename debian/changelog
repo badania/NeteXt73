@@ -1,3 +1,9 @@
+netext73 (0.7.82) stable; urgency=medium
+
+  * zmiany w pliku makefile
+
+ -- eloaders <eloaders@linux.pl>  Wed, 02 Jul 2014 17:38:23 +0200
+
 netext73 (0.7.81) stable; urgency=medium
 
   * APM - osobny planista SSD i HDD
