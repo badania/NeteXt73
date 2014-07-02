@@ -39,7 +39,6 @@ install: install_desktopfiles \
 	 install_contacts \
 	 install_menu \
 	 install_translations_files \
-	 install_bash_files \
 	 install_yad_netext \
 	 install_APM \
 	 install_launcher \
