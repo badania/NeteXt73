@@ -89,7 +89,7 @@ while [ $petla_duza = "tak" ]; do
 		--field="$TEXT_FIX5:CHK" "$wifin" \
 		--field="$TEXT_PLANISTA:CB" "$bfqfix_menu" \
 		--field="$(echo $TEXT_PLANISTA | sed 's/HDD/SSD/'):CB" "$ssdfix_menu" \
-		--button="gtk-ok:0" --button="$TEXT_POWROT:1" )
+		--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" )
 		 
 		klawisz=$?
 		if [ $klawisz = 0 ]; then 

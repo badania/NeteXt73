@@ -78,7 +78,7 @@ else
     if [ "$kern" = "" ]; then
 	    yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/$ikona" \
 	    --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="260" --read-dir="$pliki" --width="560" --height="330" \
-	    --title="$nazwa_skryptu " --button="$TEXT_MENU_INSTALATOR5:4"  --button="$TEXT_POWROT:1" --single-click
+	    --title="$nazwa_skryptu " --button="$TEXT_MENU_INSTALATOR5:4"  --button="$TEXT_ZAMKNIJ:1" --single-click
 	    klawisz=$?   
     fi
 fi

@@ -3,6 +3,8 @@
 
 v0.7.82
 -	zmiana w pliku makefile
+-	poprawki językowe
+-	dodanie zswap on/off do sekcji grub
 v0.7.81
 -	zmiana APM 3.4 na 3.5
 -	wprowadzenie modyfikacji umożliwiających zarządzanie planistą SSD i HDD z osobna
