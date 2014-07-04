@@ -1,3 +1,9 @@
+netext73 (0.7.83) stable; urgency=medium
+
+  * zmiana w sekcji update - sprawdzanie dostępnych kerneli premium
+
+ -- eloaders <eloaders@linux.pl>  Fri, 04 Jul 2014 12:52:20 +0200
+
 netext73 (0.7.82) stable; urgency=medium
 
   * zmiany w pliku makefile
