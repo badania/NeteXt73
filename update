@@ -166,7 +166,8 @@ if [ "$(cat kernel.txt)" = "" ]; then
       kern=$TEXT_BRAK_DANYCH
       a4="TRUE"
 else
-      if [ "$(dpkg -l | grep $(echo $nowy_kernel | sed 's/-ags.*//g' | sed 's/_testowy.*//g' | sed 's/_stabilny.*//g' ))" != "" ]; then
+      kern1="$(echo $nowy_kernel | sed 's/_testowy.*//g' | sed 's/_stabilny.*//g' | cut -d "-" -f 3)-$(echo  $nowy_kernel | cut -d "-" -f 1 )"
+      if [ "$kern1" = "$(echo $twoj_kernel | sed 's/.*v//')" ]; then
 	  kern="$TEXT_UPDATE4"
 	  a4="FALSE"
       else
