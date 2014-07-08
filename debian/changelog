@@ -1,3 +1,9 @@
+netext73 (0.7.84) stable; urgency=medium
+
+  * naprawa błędu w sekcji update dla kerneli nie premium
+
+ -- eloaders <eloaders@linux.pl>  Tue, 08 Jul 2014 18:28:22 +0200
+
 netext73 (0.7.83) stable; urgency=medium
 
   * zmiana w sekcji update - sprawdzanie dostępnych kerneli premium
