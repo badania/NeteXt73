@@ -3,6 +3,7 @@
 
 v0.7.85
 -	przywrócenie wykonania initramfs po instalacji kernela
+-	modyfikacja modułu logów, możliwe wysyłanie pojedynczych logów na serwer
 v0.7.84
 -	naprawa błędu w sekcji update dla kerneli nie premium
 v0.7.83

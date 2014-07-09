@@ -178,12 +178,26 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     sed -i 's/<b>//g' system$losowa.log
     dmesg > dmesg_$USER
     if [ "$klawisz" = "2" ]; then
-	    if [ "$USER" = "root" ]; then
-		    userek=$(cat /tmp/netext73/userek)
-		    su $userek -c "xdg-open \"system$losowa.log\"" | su $userek -c "xdg-open \"dmesg_$USER\""
-	    else
-		    xdg-open "system$losowa.log" | xdg-open "dmesg_$USER"
-	    fi
+	    yad-netext --center --title="$nazwa_skryptu " --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=system$losowa.log --width=900 --height=700 --button="pastebin:2" --button="gtk-ok:1"
+	      co=$?
+	      if [ "$co" = "2" ]; then
+		    if [ "$USER" = "root" ]; then
+			userek=$(cat /tmp/netext73/userek)
+			su $userek -c "xdg-open $(cat system$losowa.log | pastebinit)"
+		    else
+			xdg-open $(cat system$losowa.log | pastebinit)
+		    fi  
+	      fi
+	    yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=dmesg_$USER --width=900 --height=700 --button="pastebin:2" --button="gtk-ok:1"
+	      co=$?
+	      if [ "$co" = "2" ]; then
+		    if [ "$USER" = "root" ]; then
+			userek=$(cat /tmp/netext73/userek)
+			su $userek -c "xdg-open $(cat dmesg_$USER | pastebinit)"
+		    else
+			xdg-open $(cat dmesg_$USER | pastebinit)
+		    fi  
+	      fi
     elif [ "$klawisz" = "3" ]; then
 	    if [ "$USER" = "root" ]; then
 		  userek=$(cat /tmp/netext73/userek)
