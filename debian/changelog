@@ -1,3 +1,9 @@
+netext73 (0.7.85) stable; urgency=medium
+
+  * przywrócenie wykonania initramfs po instalacji kernela
+
+ -- eloaders <eloaders@linux.pl>  Wed, 09 Jul 2014 21:33:43 +0200
+
 netext73 (0.7.84) stable; urgency=medium
 
   * naprawa błędu w sekcji update dla kerneli nie premium
