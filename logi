@@ -178,25 +178,27 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     sed -i 's/<b>//g' system$losowa.log
     dmesg > dmesg_$USER
     if [ "$klawisz" = "2" ]; then
-	    yad-netext --center --title="$nazwa_skryptu " --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=system$losowa.log --width=900 --height=700 --button="pastebin:2" --button="gtk-ok:1"
+	    #system logi
+	    yad-netext --center --title="$nazwa_skryptu1 - system$losowa.log" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=system$losowa.log --width=900 --height=700 --button="pastebin:2" --button="$TEXT_ZAMKNIJ:1"
 	      co=$?
 	      if [ "$co" = "2" ]; then
-		    if [ "$USER" = "root" ]; then
-			userek=$(cat /tmp/netext73/userek)
-			su $userek -c "xdg-open $(cat system$losowa.log | pastebinit)"
-		    else
-			xdg-open $(cat system$losowa.log | pastebinit)
-		    fi  
+		  if [ "$USER" = "root" ]; then
+		      userek=$(cat /tmp/netext73/userek)
+		      su $userek -c "xdg-open $(cat system$losowa.log | pastebinit)"
+		  else
+		      xdg-open $(cat system$losowa.log | pastebinit)
+		  fi  
 	      fi
-	    yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=dmesg_$USER --width=900 --height=700 --button="pastebin:2" --button="gtk-ok:1"
+	    #dmesg logi
+	    yad-netext --center --title="$nazwa_skryptu1 - dmesg_$USER" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=dmesg_$USER --width=900 --height=700 --button="pastebin:2" --button="$TEXT_ZAMKNIJ:1"
 	      co=$?
 	      if [ "$co" = "2" ]; then
-		    if [ "$USER" = "root" ]; then
-			userek=$(cat /tmp/netext73/userek)
-			su $userek -c "xdg-open $(cat dmesg_$USER | pastebinit)"
-		    else
-			xdg-open $(cat dmesg_$USER | pastebinit)
-		    fi  
+		  if [ "$USER" = "root" ]; then
+		      userek=$(cat /tmp/netext73/userek)
+		      su $userek -c "xdg-open $(cat dmesg_$USER | pastebinit)"
+		  else
+		      xdg-open $(cat dmesg_$USER | pastebinit)
+		  fi  
 	      fi
     elif [ "$klawisz" = "3" ]; then
 	    if [ "$USER" = "root" ]; then
@@ -209,5 +211,4 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
 elif  [ "$klawisz" = "4" ] ; then
     x-terminal-emulator -e bash -c "sudo ufw status verbose; read ent"
 fi
-sleep 100
 rm losowa system*log dmesg_$USER -f
