@@ -176,39 +176,31 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     sed -i 's/<span.*">//g' system$losowa.log
     sed -i 's/<\/b>//g' system$losowa.log
     sed -i 's/<b>//g' system$losowa.log
-    dmesg > dmesg_$USER
+    dmesg > dmesg.log
+    mv system$losowa.log netext.log
     if [ "$klawisz" = "2" ]; then
 	    #system logi
-	    yad-netext --center --title="$nazwa_skryptu1 - system$losowa.log" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=system$losowa.log --width=900 --height=700 --button="pastebin:2" --button="$TEXT_ZAMKNIJ:1"
+	    for i in $(echo netext.log dmesg.log /var/log/kern.log); do
+	    yad-netext --center --title="$nazwa_skryptu1 - $i" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=$i --width=900 --height=700 --button="pastebin:2" --button="$TEXT_ZAMKNIJ:1"
 	      co=$?
 	      if [ "$co" = "2" ]; then
 		  if [ "$USER" = "root" ]; then
 		      userek=$(cat /tmp/netext73/userek)
-		      su $userek -c "xdg-open $(cat system$losowa.log | pastebinit)"
+		      su $userek -c "xdg-open $(cat $i | pastebinit)"
 		  else
-		      xdg-open $(cat system$losowa.log | pastebinit)
+		      xdg-open $(cat $i | pastebinit)
 		  fi  
 	      fi
-	    #dmesg logi
-	    yad-netext --center --title="$nazwa_skryptu1 - dmesg_$USER" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=dmesg_$USER --width=900 --height=700 --button="pastebin:2" --button="$TEXT_ZAMKNIJ:1"
-	      co=$?
-	      if [ "$co" = "2" ]; then
-		  if [ "$USER" = "root" ]; then
-		      userek=$(cat /tmp/netext73/userek)
-		      su $userek -c "xdg-open $(cat dmesg_$USER | pastebinit)"
-		  else
-		      xdg-open $(cat dmesg_$USER | pastebinit)
-		  fi  
-	      fi
+	    done
     elif [ "$klawisz" = "3" ]; then
 	    if [ "$USER" = "root" ]; then
 		  userek=$(cat /tmp/netext73/userek)
-		  su $userek -c "xdg-open $(cat dmesg_$USER | pastebinit)" | su $userek -c "xdg-open $(cat system$losowa.log | pastebinit)"
+		  su $userek -c "xdg-open $(cat dmesg.log | pastebinit)" | su $userek -c "xdg-open $(cat netext.log | pastebinit)"
 	    else
-		  xdg-open $(cat dmesg_$USER | pastebinit) |  xdg-open $(cat system$losowa.log | pastebinit)
+		  xdg-open $(cat dmesg.log | pastebinit) |  xdg-open $(cat netext.log | pastebinit)
 	    fi
     fi
 elif  [ "$klawisz" = "4" ] ; then
     x-terminal-emulator -e bash -c "sudo ufw status verbose; read ent"
 fi
-rm losowa system*log dmesg_$USER -f
+rm netext.log dmesg.log -f
