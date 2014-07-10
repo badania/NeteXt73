@@ -210,4 +210,4 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
 elif  [ "$klawisz" = "4" ] ; then
     x-terminal-emulator -e bash -c "sudo ufw status verbose; read ent"
 fi
-rm *.log -f
+rm *.log losowa -f
