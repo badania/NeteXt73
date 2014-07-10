@@ -180,8 +180,8 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     mv system$losowa.log netext.log
     if [ "$klawisz" = "2" ]; then
 	    #system logi
-	    for i in $(echo netext.log dmesg.log /var/log/kern.log); do
-	    yad-netext --center --title="$nazwa_skryptu1 - $i" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=$i --width=900 --height=700 --button="pastebin:2" --button="$TEXT_ZAMKNIJ:1"
+	    for i in $(echo  netext.log dmesg.log /var/log/kern.log); do
+	      yad-netext --center --title="$nazwa_skryptu1 - $i" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=$i --width=900 --height=700 --button="pastebin:2" --button="$TEXT_ZAMKNIJ:1"
 	      co=$?
 	      if [ "$co" = "2" ]; then
 		  if [ "$USER" = "root" ]; then
