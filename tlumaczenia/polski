@@ -200,6 +200,7 @@ export TEXT_LOGI10="Wersje plików:"
 export TEXT_LOGI12="Informacje o systemie"
 export TEXT_SKRYPT="Skrypt"
 export TEXT_WYGENERUJ="wygeneruj logi"
+export TEXT_PASTE="Wciśnij CTRL+V, żeby wkleić wygenerowane logi"
 
 #########################################################################################################################################################################
 #tlumaczenia_microcode
