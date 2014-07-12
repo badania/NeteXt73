@@ -139,8 +139,6 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     cat /sys/block/sda/queue/scheduler >> system$losowa.log
     echo -e "\n\n#################################  readahead  ###########################################################" >> system$losowa.log
     cat /usr/lib/pm-utils/power.d/readahead >> system$losowa.log
-    echo -e "\n\n#################################  GRUB  ################################################################" >> system$losowa.log
-    grep GRUB_CMDLINE_LINUX= /etc/default/grub >> system$losowa.log
     echo -e "\n\n#################################  lsmod ################################################################" >> system$losowa.log
     lsmod >> system$losowa.log
     echo -e "\n\n#################################  lspci ################################################################" >> system$losowa.log
