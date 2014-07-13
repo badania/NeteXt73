@@ -1,3 +1,9 @@
+netext73 (0.7.86) stable; urgency=medium
+
+  * skrypt do aktualizacji dropboxa
+
+ -- eloaders <eloaders@linux.pl>  Sun, 13 Jul 2014 14:39:55 +0200
+
 netext73 (0.7.85) stable; urgency=medium
 
   * przywrócenie wykonania initramfs po instalacji kernela

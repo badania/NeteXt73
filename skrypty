@@ -43,9 +43,9 @@ source /opt/NeteXt73/procedury
 cd /tmp/netext73
 
 if [ "$(cat /etc/sysctl.conf | grep 'net.ipv6.conf.all.disable_ipv6 = 1')" = "" ]; then
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!BurnTest!Sysbench!glmark2"
+	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!BurnTest!Sysbench!glmark2!$MENU13"
     else
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU10!$MENU11!BurnTest!Sysbench!glmark2"
+	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU10!$MENU11!BurnTest!Sysbench!glmark2!$MENU13"
 fi
 
 skrypt=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/skrypty.png" --image="/opt/NeteXt73/ikony/skrypty.png" --form --field="$TEXT_SKRYPT1:CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
@@ -286,7 +286,22 @@ if [ $klawisz = 0 ]; then
 			porownanie
 		    fi
 	    fi
- 
+	elif [ "$skrypt" = "$MENU13" ]; then #aktualizacja dropboxa
+		  if [ "$bit "= "64bit" ]; then
+			  if [ "$USER" = "root" ]; then
+				userek=$(cat /tmp/netext73/userek)
+				su $userek -c "x-terminal-emulator -e bash -c \"killall dropbox;cd ~;rmdir --ignore-fail-on-non-empty .dropbox-dist && wget -O - 'http://www.dropbox.com/download?plat=lnx.x86_64' | tar xzf -\""
+			  else
+				x-terminal-emulator -e bash -c "killall dropbox;cd ~;rmdir --ignore-fail-on-non-empty .dropbox-dist && wget -O - 'http://www.dropbox.com/download?plat=lnx.x86_64' | tar xzf -"
+			  fi
+		  elif [ "$bit "= "32bit" ]; then
+			  if [ "$USER" = "root" ]; then
+				userek=$(cat /tmp/netext73/userek)
+				su $userek -c "x-terminal-emulator -e bash -c \"killall dropbox;cd ~;rmdir --ignore-fail-on-non-empty .dropbox-dist && wget -O - 'http://www.dropbox.com/download?plat=lnx.x86' | tar xzf -\""
+			  else
+				x-terminal-emulator -e bash -c "killall dropbox;cd ~;rmdir --ignore-fail-on-non-empty .dropbox-dist && wget -O - 'http://www.dropbox.com/download?plat=lnx.x86' | tar xzf -"
+			  fi
+		FI
 	fi
 fi
 

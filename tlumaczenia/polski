@@ -357,6 +357,7 @@ export MENU8="Włącz IPv6"
 export MENU10="Napraw GTK dla Chrome" ##
 export MENU11="Poprawka USB Modem Udev"
 export MENU12="Dodaj lub usuń konto gościa"
+export MENU13="Aktualizacja DropBoxa"
 export TEXT_ZOMBIE1="Lista procesów zombie"
 export TEXT_ZOMBIE2="Brak procesów zombie."
 export TEXT_CONFIG1="Brak pozostałości po plikach konfiguracyjnych do usunięcia."
