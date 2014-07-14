@@ -202,6 +202,8 @@ export TEXT_LOGI12="OS"
 export TEXT_SKRYPT="Script"
 export TEXT_WYGENERUJ="Create logs"
 export TEXT_PASTE="Press CTRL+V to paste the generated logs"
+export TEXT_PASTEBIN="Pastebin"
+export TEXT_CLIPBOARD="Copy to clipboard"
 
 #########################################################################################################################################################################
 #tlumaczenia_microcode

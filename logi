@@ -183,7 +183,7 @@ if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
 		  tac /var/log/kern.log | sed -n 1,1000p > kern.log
 		  i=$(echo kern.log)
 	      fi
-	      yad-netext --center --title="$nazwa_skryptu1 - $i" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=$i --width=900 --height=700 --button="copy clipboard:3" --button="pastebin:2" --button="$TEXT_ZAMKNIJ:1"
+	      yad-netext --center --title="$nazwa_skryptu1 - $i" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=$i --width=900 --height=700 --button="$TEXT_CLIPBOARD:3" --button="$TEXT_PASTEBIN:2" --button="$TEXT_ZAMKNIJ:1"
 	      co=$?
 	      if [ "$co" = "2" ]; then
 		  if [ "$USER" = "root" ]; then

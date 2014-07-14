@@ -201,6 +201,8 @@ export TEXT_LOGI12="Informacje o systemie"
 export TEXT_SKRYPT="Skrypt"
 export TEXT_WYGENERUJ="wygeneruj logi"
 export TEXT_PASTE="Wciśnij CTRL+V, żeby wkleić wygenerowane logi"
+export TEXT_PASTEBIN="wklej na serwer"
+export TEXT_CLIPBOARD="kopiuj do schowka"
 
 #########################################################################################################################################################################
 #tlumaczenia_microcode
