@@ -103,7 +103,7 @@ echo -e "\n<span color=\"$kolor_textu\"><b>OpenGL</b></span>" >> system$losowa.l
 glxinfo | grep OpenGL | sed 's/OpenGL ext.*//g' | sed 's/OpenGL core profile extensions://g' | sed '/^[ \t]*$/ d' >> system$losowa.log
 
 
-yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="pastebin:3" --button="Firewall status:4"
+yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="$TEXT_PASTEBIN:3" --button="Firewall status:4"
 klawisz=$?
 if [ "$klawisz" = "2" ] || [ "$klawisz" = "3" ] ; then
     echo -e "\n\n#################################  NeteXt73 i kernel  #################################################" >> system$losowa.log
