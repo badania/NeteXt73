@@ -1,3 +1,9 @@
+netext73 (0.7.87) stable; urgency=medium
+
+  * update - otwieranie okna premium zamiast std, gdy mamy adres
+
+ -- eloaders <eloaders@linux.pl>  Mon, 21 Jul 2014 21:04:41 +0200
+
 netext73 (0.7.86) stable; urgency=medium
 
   * skrypt do aktualizacji dropboxa
