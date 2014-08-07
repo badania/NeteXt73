@@ -206,7 +206,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			      w0="acpi_osi=Linux pcie_aspm=force"
 			  fi    
 			  if [ "$w1" = "$TEXT_GRUB_STD" ]; then		w1=" acpi_enforce_resources=lax"
-			  elif [ "$w1" = "$TEXT_GRUB_INTEL" ]; then 	w1=" acpi_enforce_resources=lax i915.i915_enable_rc6=1 i915.i915_enable_fbc=1 i915.lvds_downclock=1 i915.semaphores=1"
+			  elif [ "$w1" = "$TEXT_GRUB_INTEL" ]; then 	w1=" acpi_enforce_resources=lax i915_enable_rc6=1 i915_enable_fbc=1 i915.lvds_downclock=1 i915.semaphores=1"
 			  elif [ "$w1" = "$TEXT_GRUB_RADEON" ]; then	w1=" acpi_enforce_resources=lax radeon.dpm=1"
 			  fi
 			  if [ "$w2" = "standard" ]; then      		w2=""

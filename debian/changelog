@@ -1,3 +1,9 @@
+netext73 (0.7.88) stable; urgency=medium
+
+  * GRUB nowe wpisy dla icore
+
+ -- eloaders <eloaders@linux.pl>  Thu, 07 Aug 2014 20:32:55 +0200
+
 netext73 (0.7.87) stable; urgency=medium
 
   * update - otwieranie okna premium zamiast std, gdy mamy adres
