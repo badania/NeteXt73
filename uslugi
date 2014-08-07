@@ -82,15 +82,16 @@ while [ $petla_duza = "tak" ]; do
 					export a1=$a
 					    if [ "$(grep $a1 sysv1.txt | awk '{print $3}' | grep "on")" != "" ]; then
 						#sudo update-rc.d -f $a1 remove
-						sudo rcconf --off $a1
-						sudo service $a1 stop
+						echo "sudo rcconf --off $a1" >> /tmp/netext73/instaluj.sh
+						echo "sudo service $a1 stop" >> /tmp/netext73/instaluj.sh
 					    else
 						#sudo update-rc.d -f $a1 defaults
-						sudo rcconf --on $a1 
-						sudo service $a1 start
+						echo "sudo rcconf --on $a1" >> /tmp/netext73/instaluj.sh
+						echo "sudo service $a1 start" >> /tmp/netext73/instaluj.sh
 					    fi
 				done
 			  fi
+			    instalacja
 			    rm *.txt -f; rm *.sh -f
 		      fi
 		      if [ -z "$a" ]; then
