@@ -1,3 +1,9 @@
+netext73 (0.7.89) stable; urgency=medium
+
+  * wyłączenie wsparcia dla 32bit
+
+ -- eloaders <eloaders@linux.pl>  Thu, 21 Aug 2014 18:12:36 +0200
+
 netext73 (0.7.88) stable; urgency=medium
 
   * GRUB nowe wpisy dla icore
