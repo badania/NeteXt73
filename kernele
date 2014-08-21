@@ -198,9 +198,6 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
   
 	if [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] || [ "$(echo $kern | grep 'Intel C2D, AMD K8')" != "" ] && [ "$blad" != "1" ]; then
 		if [ "$rodzaj" != "" ]; then
-		if  [ "$bit2" = "i386" ]; then
-			yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_STEROWNIKI1"
-		else
 			rm index.html -f; wget $strona/index.html 2>&1 | pobieranie 
 			lista_kerneli
 			if [ "$klawisz" = "0" ] && [ "$blad" != "1" ] ; then
@@ -244,6 +241,5 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 				      yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_INSTALOWAC_KERNEL7"
 				fi
 			fi
-		fi
 		fi
 	fi
