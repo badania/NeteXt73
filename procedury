@@ -156,7 +156,7 @@ if [ "$(uname -m)" = "x86_64" ]; then
 else 
     bit="32bit"
     bit2="i386"
-    yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_STEROWNIKI1"
+    yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/netext.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_STEROWNIKI1"
     exit 1
 fi
 

@@ -3,6 +3,7 @@
 
 v0.7.89
 -	wyłączenie wsparcia dla 32bit
+-	poprawki tłumaczeń
 v0.7.88
 -	zmiana wpisów GRUB dla procesorów i3-i7 dostosowanie do nowych kerneli od 3.15 wzwyż
 -	poprawki w sysv
