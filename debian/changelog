@@ -1,3 +1,9 @@
+netext73 (0.7.91) stable; urgency=medium
+
+  * APM 3.7
+
+ -- eloaders <eloaders@linux.pl>  Fri, 29 Aug 2014 12:23:42 +0200
+
 netext73 (0.7.90) stable; urgency=medium
 
   * wdrożenie APM v3.6

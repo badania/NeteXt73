@@ -299,9 +299,9 @@ echo "fi"
 echo "if [ ! -e /usr/lib/pm-utils/power.d/laptop-mode ];then"
 echo "sudo cp /opt/NeteXt73/APM/laptop-mode /usr/lib/pm-utils/power.d/"
 echo "fi"
-
-echo "sudo sh -c 'echo \"options rts5139 ss_en=0\" > /etc/modprobe.d/rts5139.conf'"
-echo "sudo sh -c 'echo \"options ums_realtek ss_en=0\" > /etc/modprobe.d/ums-realtek.conf'"
+#usunięcie wcześniej tworzonych configów niepotrzebynych od APM 3.7
+echo "sudo rm -f /etc/modprobe.d/ums-realtek.conf"
+echo "sudo rm -f /etc/modprobe.d/rts5139.conf"
 echo "sudo chmod a-x /usr/lib/pm-utils/power.d/*"
 echo "cp /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz /tmp/netext73/"
 echo "tar -xvzf advanced_power_management_by_ext73_$wersja_apm.tar.gz"
@@ -379,10 +379,10 @@ echo "sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' /etc/pm/power.d/advanced
 echo "fi"
 
 echo "if [ \"\$rts5139fix\" = \"TRUE\" ];then"
-echo "sudo sed -i '/sudo rmmod rts5139/ s/sudo rmmod rts5139/sudo modprobe rts5139/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
-echo "sudo sed -i '1,/sudo modprobe rts5139/ s/sudo modprobe rts5139/sudo rmmod rts5139/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i '/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/ s/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i '1,/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/ s/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
-echo "sudo sed -i '/sudo modprobe rts5139/ s/sudo modprobe rts5139/sudo rmmod rts5139/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i '/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/ s/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 #HDD
 echo "if [ \"\$bfqfix\" = \"bfq\" ];then"
@@ -431,10 +431,10 @@ echo "sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' /etc/pm/power.d/advanced
 echo "fi"
 
 echo "if [ \"\$(grep rts5139fix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"TRUE\" ];then"
-echo "sudo sed -i '/sudo rmmod rts5139/ s/sudo rmmod rts5139/sudo modprobe rts5139/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
-echo "sudo sed -i '1,/sudo modprobe rts5139/ s/sudo modprobe rts5139/sudo rmmod rts5139/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i '/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/ s/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i '1,/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/ s/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
-echo "sudo sed -i '/sudo modprobe rts5139/ s/sudo modprobe rts5139/sudo rmmod rts5139/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i '/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/ s/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 #HDD
 echo "if [ \"\$(grep bfqfix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"bfq\" ];then"
@@ -496,9 +496,9 @@ else
 	    stan_apm="-"
       fi
 fi
-if [ ! -e /etc/modprobe.d/rts5139.conf ] && [ ! -e /etc/modprobe.d/ums-realtek.conf ]; then
-      stan_apm="-"
-fi
+#if [ ! -e /etc/modprobe.d/rts5139.conf ] && [ ! -e /etc/modprobe.d/ums-realtek.conf ]; then
+#      stan_apm="-"
+#fi
 
 if [ "$(ls /etc/pm/power.d/ | wc | awk '{print $1}')" = "6" ] && [ $( ls /usr/lib/pm-utils/power.d/ -la | grep rwxr | wc | awk '{print $1}') != "6" ]; then 
 	    stan_apm="-"
@@ -530,7 +530,7 @@ stan_apm_config(){
 	fi
 
 	#sprawdzenie stanu APM rts5139 FIX
-	if [ "$(grep 'sudo modprobe rts5139' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
+	if [ "$(grep 'sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
 	    export rts5139fix="FALSE"
 	else
 	    export rts5139fix="TRUE"

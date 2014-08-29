@@ -1,6 +1,9 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.91
+-	zmiany w APM, wydanie 3.7
+-	możliwość włączenia i wyłączenia modułu rts51xx
 v0.7.90
 -	wdrożenie APM v3.6
 v0.7.89
