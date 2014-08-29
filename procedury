@@ -379,10 +379,10 @@ echo "sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' /etc/pm/power.d/advanced
 echo "fi"
 
 echo "if [ \"\$rts5139fix\" = \"TRUE\" ];then"
-echo "sudo sed -i '/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/ s/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
-echo "sudo sed -i '1,/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/ s/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i '/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i '1,/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
-echo "sudo sed -i '/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/ s/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i '/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 #HDD
 echo "if [ \"\$bfqfix\" = \"bfq\" ];then"
@@ -431,10 +431,10 @@ echo "sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' /etc/pm/power.d/advanced
 echo "fi"
 
 echo "if [ \"\$(grep rts5139fix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"TRUE\" ];then"
-echo "sudo sed -i '/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/ s/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
-echo "sudo sed -i '1,/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/ s/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i '/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i '1,/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
-echo "sudo sed -i '/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/ s/sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/sudo rmmod rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i '/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 #HDD
 echo "if [ \"\$(grep bfqfix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"bfq\" ];then"
@@ -530,7 +530,7 @@ stan_apm_config(){
 	fi
 
 	#sprawdzenie stanu APM rts5139 FIX
-	if [ "$(grep 'sudo modprobe rtsx_usb rtsx_usb_sdmmc rtsx_usb_ms' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
+	if [ "$(grep 'sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
 	    export rts5139fix="FALSE"
 	else
 	    export rts5139fix="TRUE"
