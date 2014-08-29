@@ -1,3 +1,9 @@
+netext73 (0.7.92) stable; urgency=medium
+
+  * rtx51xx zmiany
+
+ -- eloaders <eloaders@linux.pl>  Fri, 29 Aug 2014 20:29:13 +0200
+
 netext73 (0.7.91) stable; urgency=medium
 
   * APM 3.7

@@ -380,7 +380,7 @@ echo "fi"
 
 echo "if [ \"\$rts5139fix\" = \"TRUE\" ];then"
 echo "sudo sed -i '/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
-echo "sudo sed -i '1,/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+#echo "sudo sed -i '1,/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
 echo "sudo sed -i '/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
