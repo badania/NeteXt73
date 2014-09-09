@@ -138,6 +138,8 @@ else
       export adres_sterownikow="$adres_glowny/sterowniki2"
 fi
 
+#adres ftp
+#adres_glowny="http://37.59.165.105"
 #kolor textu
 if [ -e ~/.netext73/kolor_textu ]; then
       kolor_textu=$(cat ~/.netext73/kolor_textu)
@@ -602,6 +604,7 @@ xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo 
 
 lista_kerneli(){
 echo $(grep 'href='   ./index.html | grep 'href="v'| cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/') | tr ' ' '\n' > 2.txt
+#echo $(grep 'href='   ./index.html | cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/') | tr ' ' '\n' > 2.txt
 #cat 1.txt | tr ' ' '\n' > 2.txt
 if [ "$rodzaj" = "k8" ] || [ "$rodzaj" = "atom" ];then
     dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj.*//g" > 3.txt
@@ -739,6 +742,7 @@ echo "dpkg -l | grep nvidia-settings | awk '{print \$2}' >> nv.txt"
 echo "sudo dpkg -r \$(cat nv.txt | tr '\\n' ' ')"
 echo "rm -f nv.txt"
 echo "sudo apt-get install libpango-1.0-0 -y"
+echo "sudo apt-get install libvdpau1 -y"
 echo "if [ \"\$(ls | grep '304')\" != \"\" ]; then"
 echo "sudo apt-get install nvidia-settings nvidia-common"
 echo "fi"

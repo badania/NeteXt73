@@ -43,9 +43,9 @@ source /opt/NeteXt73/procedury
 cd /tmp/netext73
 
 if [ "$(cat /etc/sysctl.conf | grep 'net.ipv6.conf.all.disable_ipv6 = 1')" = "" ]; then
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!BurnTest!Sysbench!glmark2!$MENU13!$TEXT_GOSC1"
+	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!BurnTest!Sysbench!glmark2!$MENU13"
     else
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU10!$MENU11!BurnTest!Sysbench!glmark2!$MENU13!$TEXT_GOSC1"
+	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU10!$MENU11!BurnTest!Sysbench!glmark2!$MENU13"
 fi
 
 skrypt=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/skrypty.png" --image="/opt/NeteXt73/ikony/skrypty.png" --form --field="$TEXT_SKRYPT1:CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
@@ -302,21 +302,6 @@ if [ $klawisz = 0 ]; then
 			      x-terminal-emulator -e bash -c "killall dropbox;cd ~;rmdir --ignore-fail-on-non-empty .dropbox-dist && wget -O - 'http://www.dropbox.com/download?plat=lnx.x86' | tar xzf - ; echo -e \"$TEXT_INSTALACJA2\"; read ent"
 			fi
 		fi
-	elif [ "$skrypt" = "$TEXT_GOSC1" ]; then #konto gościa
-		skrypt=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/skrypty.png" --image="/opt/NeteXt73/ikony/skrypty.png" --form --field="LightDM:CB" "$TEXT_GOSC2!$TEXT_GOSC3" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
-		klawisz=$?; skrypt=$(echo $skrypt | cut -d "|" -f 1)
-		if [ $klawisz = 0 ]; then
-			naglowek > instaluj.sh
-			echo "sudo mkdir -p /etc/lightdm/lightdm.conf.d" >> instaluj.sh
-			echo "echo '[SetDefaults]' | sudo tee -a /etc/lightdm/lightdm.conf.d/50-my-custom-config.conf"  >> instaluj.sh
-			if [ "$skrypt" = "$TEXT_GOSC2" ]; then
-			      echo "echo 'allow-guest=true' | sudo tee -a /etc/lightdm/lightdm.conf.d/50-my-custom-config.conf" >> instaluj.sh
-			elif [ "$skrypt" = "$TEXT_GOSC3" ]; then
-			      echo "echo 'allow-guest=false' | sudo tee -a /etc/lightdm/lightdm.conf.d/50-my-custom-config.conf" >> instaluj.sh
-			fi
-			echo "sudo service lightdm restart" >> instaluj.sh
-		fi
-		instalacja
 	fi
 fi
 

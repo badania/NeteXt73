@@ -2,7 +2,7 @@
 -------------------------------------
 
 v0.7.93
--	dodaj usuń konto gościa -LighDM
+-	dodanie do instalatora Nvidia brakujących zależności libvdpau1
 v0.7.92
 -	zmiany w APM w module rts51xx
 v0.7.91
