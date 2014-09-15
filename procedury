@@ -605,7 +605,7 @@ xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo 
 }
 
 lista_kerneli(){
-echo $(grep 'href='   ./index.html | grep 'href="v'| cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/') | tr ' ' '\n' > 2.txt
+echo $(grep 'href="ftp' index.html | cut -d '"' -f 2 | sed 's/.*kernele\///g' | sed 's/\///g') | tr ' ' '\n' > 2.txt
 #echo $(grep 'href='   ./index.html | cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/') | tr ' ' '\n' > 2.txt
 #cat 1.txt | tr ' ' '\n' > 2.txt
 if [ "$rodzaj" = "k8" ] || [ "$rodzaj" = "atom" ];then
