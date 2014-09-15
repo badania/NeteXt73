@@ -1,3 +1,9 @@
+netext73 (0.7.94) stable; urgency=medium
+
+  * przepisanie instalatora grafik na nowy serwer
+
+ -- eloaders <eloaders@linux.pl>  Mon, 15 Sep 2014 12:57:10 +0200
+
 netext73 (0.7.93) stable; urgency=medium
 
   * dodanie do instalatora Nvidia brakujących zależności libvdpau1

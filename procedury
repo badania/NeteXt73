@@ -139,7 +139,9 @@ else
 fi
 
 #adres ftp
-#adres_glowny="http://37.59.165.105"
+export adres_glowny="ftp://37.59.165.105"
+export adres_sterownikow="$adres_glowny/sterowniki2/"
+
 #kolor textu
 if [ -e ~/.netext73/kolor_textu ]; then
       kolor_textu=$(cat ~/.netext73/kolor_textu)
