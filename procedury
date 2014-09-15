@@ -213,7 +213,11 @@ else
 		fi
 		
 	fi
-	yad_wget $strona/$a/1.txt $strona/$a/linux-headers-$nazwa_paczki $strona/$a/linux-image-$nazwa_paczki
+	if [ "$rodzaj" = "atom" ] || [ "$rodzaj" = "k8" ]; then
+	      yad_wget $strona/$a/1.txt $strona/$a/linux-headers-$nazwa_paczki $strona/$a/linux-image-$nazwa_paczki
+	else
+	      yad_wget_passwd $strona/$a/1.txt $strona/$a/linux-headers-$nazwa_paczki $strona/$a/linux-image-$nazwa_paczki
+	fi
 fi
 rm ./index.html -f
 }
@@ -605,7 +609,8 @@ xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo 
 }
 
 lista_kerneli(){
-echo $(grep 'href="ftp' index.html | cut -d '"' -f 2 | sed 's/.*kernele\///g' | sed 's/\///g') | tr ' ' '\n' > 2.txt
+echo $(grep 'href="ftp' index.html | cut -d '"' -f 2 | sed 's/.*kernele\///g' \
+| sed 's/.*premium\/brazos-pro//g' | sed 's/.*premium\/brazos//g' | sed 's/.*premium\/i7-pro//g' | sed 's/.*premium\/i7//g' | sed 's/\///g') | tr ' ' '\n' > 2.txt
 #echo $(grep 'href='   ./index.html | cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/') | tr ' ' '\n' > 2.txt
 #cat 1.txt | tr ' ' '\n' > 2.txt
 if [ "$rodzaj" = "k8" ] || [ "$rodzaj" = "atom" ];then
@@ -1004,6 +1009,150 @@ fi
 # modified to work with different locales and decimal point conventions
 download(){
     wget  "$1" 2>&1 | sed -u \
+    "s/.* \([0-9]\+%\)\ \+\([0-9,.]\+.\) \(.*\)/$2:\1\n$2:#  \2\/s,  \3/"
+    RET_WGET="${PIPESTATUS[0]}"             # get return code of wget
+    if [[ "$RET_WGET" = 0 ]]                # check return code for errors
+      then
+          echo "$2:100%"
+          echo "$2:#$TEXT_POBIERANIE_GOTOWE"
+      else
+          echo "$2:#$TEXT_BLAD_POBIERANIA"
+    fi
+}
+
+# compose list of bars for yad
+for URI in $URILIST; do                     # iterate through all URIs
+    FILENAME="${URI##*/}"                   # extract last field of URI as filename
+    YADBARS="$YADBARS --bar=$(echo $FILENAME | sed "s/1.txt/$TEXT_SUMY_KONTROLNE/"):NORM" # add filename to the list of URIs
+done
+
+IFS=" "
+COUNTER="1"
+DYNAMIC_COUNTER="1"
+
+# main
+# iterate through all URIs, download them in the background and 
+# pipe all output simultaneously to yad
+# source: http://pastebin.com/yBL2wjaY
+
+for URI in $URILIST; do
+    if [[ "$DYNAMIC_COUNTER" = "$MAXDLS" ]] # only download n files at a time
+      then
+          download "$URI" "$COUNTER"        # if limit reached wait until wget complete
+          DYNAMIC_COUNTER="1"               # before proceeding (by not sending download() to bg)
+      else
+          download "$URI" "$COUNTER" &      # pass URI and URI number to download()
+          DYNAMIC_COUNTER="$[$DYNAMIC_COUNTER+1]"
+    fi
+    COUNTER="$[$COUNTER+1]"                 # increment counter
+done | yad-netext --center --multi-progress --auto-kill --auto-close $YADBARS --title "$nazwa_skryptu" \
+--text "<b>$TEXT_POB2</b>" --window-icon="/opt/NeteXt73/ikony/download.png" --image="/opt/NeteXt73/ikony/download.png" --button="$TEXT_ZAMKNIJ:1"
+# ↑ launch yad multi progress-bar window 
+}
+
+procesor_monitor(){
+barek="--bar=total --bar="used-buffers-cached" --bar="free+buffers+cached" --bar=reserver --bar="total-reserved" --bar=shared --bar=buffers --bar=cached --bar=swap"
+for i in $(seq 1 $(grep 'model name' /proc/cpuinfo | wc -l )); do
+    barek="$barek --bar=$(echo "core"$i"")" 
+done
+petla_duza="tak"
+
+while [ "$petla_duza" = "tak" ]; do
+      echo "1:$((100*$(free -m | grep Mem | awk '{print $2}')/$(free -m | grep Mem | awk '{print $2}')))"
+      echo "2:$(($(($(free -m | grep Mem | awk '{print $3}')-$(free -m | grep Mem | awk '{print $6}')-$(free -m | grep Mem | awk '{print $7}')))*100/$(free -m | grep Mem | awk '{print $2}')))"
+      echo "3:$(($(($(free -m | grep Mem | awk '{print $4}')+$(free -m | grep Mem | awk '{print $6}')+$(free -m | grep Mem | awk '{print $7}')))*100/$(free -m | grep Mem | awk '{print $2}')))"
+      echo "4:$(($(free -m | grep Mem | awk '{print $3}')*100/$(free -m | grep Mem | awk '{print $2}')))"
+      echo "5:$(($(free -m | grep Mem | awk '{print $4}')*100/$(free -m | grep Mem | awk '{print $2}')))"
+      echo "6:$((100*$(free -m | grep Mem | awk '{print $5}')/$(free -m | grep Mem | awk '{print $2}')))"
+      echo "7:$((100*$(free -m | grep Mem | awk '{print $6}')/$(free -m | grep Mem | awk '{print $2}')))"
+      echo "8:$((100*$(free -m | grep Mem | awk '{print $7}')/$(free -m | grep Mem | awk '{print $2}')))"
+      if [ "$(free -m | grep Swap | awk '{print $4}')" = "" ] || [ "$(free -m | grep Swap | awk '{print $4}')" = "0" ]; then
+	  echo "9:0"
+	  echo "9:#0 MB"
+      else
+	  echo "9:$((100*$(free -m | grep Swap | awk '{print $3}')/$(free -m | grep Swap | awk '{print $4}')))"
+	  echo "9:#$((100*$(free -m | grep Swap | awk '{print $3}')/$(free -m | grep Swap | awk '{print $4}'))) MB"
+      fi
+      echo "1:#$(free -m | grep Mem | awk '{print $2}') MB"
+      echo "2:#$(($(free -m | grep Mem | awk '{print $3}')-$(free -m | grep Mem | awk '{print $6}')-$(free -m | grep Mem | awk '{print $7}'))) MB"
+      echo "3:#$(($(free -m | grep Mem | awk '{print $4}')+$(free -m | grep Mem | awk '{print $6}')+$(free -m | grep Mem | awk '{print $7}'))) MB"
+      echo "4:#$(free -m | grep Mem | awk '{print $3}') MB"
+      echo "5:#$(free -m | grep Mem | awk '{print $4}') MB"
+      echo "6:#$(free -m | grep Mem | awk '{print $5}') MB"
+      echo "7:#$(free -m | grep Mem | awk '{print $6}') MB"
+      echo "8:#$(free -m | grep Mem | awk '{print $7}') MB"
+      sleep 1
+      for i in $(seq 10 $(($(grep 'model name' /proc/cpuinfo | wc -l )+9))); do
+	  echo "$i:$(($(cat /proc/cpuinfo | grep MHz | cut -d ' ' -f 3 | sed -n $(($i-9))'p' | sed 's/\..*//' )/60))" # * 6000MHZ/100 
+	  echo "$i:#$(cat /proc/cpuinfo | grep MHz | cut -d ' ' -f 3 | sed -n $(($i-9))'p' | sed 's/\..*//' ) MHz"
+      done 
+done | yad-netext --title "$nazwa_skryptu" --center --multi-progress $barek --text="$(cat /proc/cpuinfo | grep 'model name' | head -n 1 | sed 's/.*: //')\nFree Memory, Cpu Core Frequency:\n" --auto-kill  --button="$TEXT_ZAMKNIJ:1" --on-top --window-icon="/opt/NeteXt73/ikony/monitor.png" --image="/opt/NeteXt73/ikony/monitor.png"
+if [ "$?" != "" ]; then
+    petla_duza="nie"  
+fi
+}
+
+
+yad_wget_passwd(){
+
+# NAME:         yad_wget
+# VERSION:      0.2
+# AUTHOR:       (c) 2014 Glutanimate
+# DESCRIPTION:  graphical frontend to wget in form of a yad script
+# FEATURES:     - display progress of multiple simultaneous downloads
+#               - set maximum number of simultaneous downloads
+# DEPENDENCIES: yad
+#
+#               Install yad on Ubuntu with:
+#
+#                   sudo add-apt-repository ppa:webupd8team/y-ppa-manager
+#                   sudo apt-get update
+#                   sudo apt-get install yad
+#
+# LICENSE:      GNU GPLv3 (http://www.gnu.de/documents/gpl-3.0.en.html)
+#
+# NOTICE:       THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. 
+#               EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES 
+#               PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR 
+#               IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
+#               AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND 
+#               PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+#               YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+#
+#               IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY 
+#               COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS THE PROGRAM AS 
+#               PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, 
+#               INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE 
+#               THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED 
+#               INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A FAILURE OF THE 
+#               PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER OR OTHER 
+#               PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+#
+# USAGE:        yad_wget <space-delimited URLs>
+#               Closing the yad dialog will terminate all downloads in progress
+
+# Variables and settings
+
+MAXDLS="5" # set maximum number of simultaneous downloads
+
+URILIST="$@" # gets list of URIs from stdin
+USAGE="$0 <space-delimited URLs>"
+
+# Usage checks
+
+if [[ -z "$URILIST" ]]
+  then
+      echo "Error: No arguments provided"
+      echo "Usage: $USAGE"
+      exit 1
+fi
+
+# download file and extract progress, speed and ETA from wget
+# we use sed regex for this
+# source: http://ubuntuforums.org/showthread.php?t=306515&page=2&p=7455412#post7455412
+# modified to work with different locales and decimal point conventions
+download(){
+    wget --user=netext73 --password='netext73' "$1" 2>&1 | sed -u \
     "s/.* \([0-9]\+%\)\ \+\([0-9,.]\+.\) \(.*\)/$2:\1\n$2:#  \2\/s,  \3/"
     RET_WGET="${PIPESTATUS[0]}"             # get return code of wget
     if [[ "$RET_WGET" = 0 ]]                # check return code for errors
