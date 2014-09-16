@@ -1,10 +1,13 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.95
+-	zmiana uwierzytelniania klientów premim, indywidualne konta
 v0.7.94
 -	przepisanie instalatora grafik na nowy serwer
 -	przepisanie instalatora kerneli na nowy serwer
 -	przepisanie instalators kerneli premium na nowy serwer
+-	usunięcie przełącznika HTTP/HTTPS
 v0.7.93
 -	dodanie do instalatora Nvidia brakujących zależności libvdpau1
 v0.7.92

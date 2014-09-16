@@ -153,8 +153,6 @@ if [ "$klawisz" = "2" ]; then
     cat ~/.netext73/apm_status >> system$losowa.log
     echo -e "\n\n#################################  archiwum_deb ##########################################################" >> system$losowa.log
     cat ~/.netext73/archiwum_deb >> system$losowa.log
-    echo -e "\n\n#################################  https_link ############################################################" >> system$losowa.log
-    cat ~/.netext73/https_link >> system$losowa.log
     echo -e "\n\n#################################  instalator_kerneli ####################################################" >> system$losowa.log
     cat ~/.netext73/instalator_kerneli >> system$losowa.log
     echo -e "\n\n#################################  jezyk #################################################################" >> system$losowa.log

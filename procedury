@@ -111,36 +111,28 @@ if [ -e ~/.netext73/server_no ]; then
 	#wybor_serwera="server2!server1!server3"
     if [ "$(cat ~/.netext73/server_no)" = "server2" ];then
 	#konto="3999827"
-	konto="2936246"
+	export adres_glowny="ftp://37.59.165.105"
+	export adres_sterownikow="$adres_glowny/sterowniki2/"
 	wybor_serwera="server2!server1"
     else
-	konto="72313101"
+	export adres_glowny="ftp://37.59.165.105"
+	export adres_sterownikow="$adres_glowny/sterowniki2/"
 	wybor_serwera="server1!server2"
     fi
 else
-    konto="72313101"
+    export adres_glowny="ftp://37.59.165.105"
+    export adres_sterownikow="$adres_glowny/sterowniki2/"
     wybor_serwera="server1!server2"
 fi
-#zmiana adresu w premium
-if [ -e ~/.netext73/kernel_premium ] && [ "$(cat  ~/.netext73/kernel_premium | grep $konto)" = "" ];then
-    sed -i "s/u.*kernele/u\/$konto\/kernele/g" ~/.netext73/kernel_premium
-fi
-#przełącznik http/https
-if [ -e ~/.netext73/https_link ] && [ "$(cat ~/.netext73/https_link)" = "FALSE" ]; then
-      echo "FALSE" > ~/.netext73/https_link
-      export adres_glowny="http://dl.dropbox.com/u/$konto"
-      export adres_skryptow="$adres_glowny/skrypty"
-      export adres_sterownikow="$adres_glowny/sterowniki2"
-else
-      echo "TRUE" > ~/.netext73/https_link
-      export adres_glowny="https://dl.dropbox.com/u/$konto"
-      export adres_skryptow="$adres_glowny/skrypty"
-      export adres_sterownikow="$adres_glowny/sterowniki2"
-fi
 
-#adres ftp
-export adres_glowny="ftp://37.59.165.105"
-export adres_sterownikow="$adres_glowny/sterowniki2/"
+#premium
+if [ "$(grep @ ~/.netext73/kernel_premium)" = "" ]; then
+    rm -f ~/.netext73/kernel_premium
+fi
+if [ -e ~/.netext73/kernel_premium ]; then
+    export US1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 1) 
+    export PASS1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 3)
+fi
 
 #kolor textu
 if [ -e ~/.netext73/kolor_textu ]; then
@@ -1152,7 +1144,7 @@ fi
 # source: http://ubuntuforums.org/showthread.php?t=306515&page=2&p=7455412#post7455412
 # modified to work with different locales and decimal point conventions
 download(){
-    wget --user=netext73 --password='netext73' "$1" 2>&1 | sed -u \
+    wget --user=$US1 --password=$PASS1 "$1" 2>&1 | sed -u \
     "s/.* \([0-9]\+%\)\ \+\([0-9,.]\+.\) \(.*\)/$2:\1\n$2:#  \2\/s,  \3/"
     RET_WGET="${PIPESTATUS[0]}"             # get return code of wget
     if [[ "$RET_WGET" = 0 ]]                # check return code for errors

@@ -1,3 +1,9 @@
+netext73 (0.7.95) stable; urgency=medium
+
+  * zmiana uwierzytelniania klientów premim, indywidualne konta
+
+ -- eloaders <eloaders@linux.pl>  Tue, 16 Sep 2014 15:08:12 +0200
+
 netext73 (0.7.94) stable; urgency=medium
 
   * przepisanie instalatora grafik na nowy serwer
