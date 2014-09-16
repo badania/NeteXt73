@@ -86,14 +86,15 @@ fi
 
 menu=""
 ilosc_aktualizacji=0
-if [ -e ~/.netext73/kernel_premium ] && [ "$(grep html ~/.netext73/kernel_premium)" != "" ] ; then
-    wget $(cat ~/.netext73/kernel_premium | sed 's/index.html/i7\/index.html/') -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie #sprawdzanie dla kerneli premium
+if [ -e ~/.netext73/kernel_premium ] && [ "$(grep @ ~/.netext73/kernel_premium)" != "" ] ; then
+    wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/i7/ -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie #sprawdzanie dla kerneli premium
 else
-    wget $adres_glowny/kernele/index.html -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie # sprawdzanie dla kerneli standard
+    wget $adres_glowny/kernele/ -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie # sprawdzanie dla kerneli standard
 fi
 
 twoj_firmware=$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1 | sed 's/~.*//')
-nowy_kernel=$(grep 'href='   ./kernel.txt | grep 'href="v'| cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/' | sort -r | head -n 1 | sed 's/v...._//')
+#nowy_kernel=$(grep 'href='   ./kernel.txt | grep 'href="v'| cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/' | sort -r | head -n 1 | sed 's/v...._//')
+nowy_kernel=$(grep 'href="ftp' kernel.txt | cut -d '"' -f 2 | sed 's/.*kernele\///g'| sed 's/.*premium\/brazos-pro//g' | sed 's/.*premium\/brazos//g' | sed 's/.*premium\/i7-pro//g' | sed 's/.*premium\/i7//g' | sort -r | head -n 1 | sed 's/v...._//' | sed 's/\///g')
 
 #sprawdzanie kerneli do wersji v29.x
 if [ "$(uname -r | grep ags)" != "" ];then
