@@ -174,7 +174,7 @@ export TEST_INSTALOWAC_KERNEL4="na podstawie pobranych plików:"
 export TEST_INSTALOWAC_KERNEL5="Program zapamiętał ścieżkę do pobranych plików, możesz je wkleić w terminalu skrótem klawiszy:\n\nSHIFT+INSERT lub CTRL+SHIFT+V\n"
 export TEXT_INSTALOWAC_KERNEL6="Nie pobrały się pliki instalacyjne, spróbuj jeszcze raz."
 export TEXT_INSTALOWAC_KERNEL7="Masz już zainstalowany ten kernel.\nPrzed ponowną instalacją musisz go usunąć."
-export TEXT_STRONA1="Podaj kod dostępu do płatnych kerneli.\nJeżeli jeszcze nie masz skontaktuj się z: Tomasz e X t 7 3 Miś,mail:ext73@wp.pl" 
+export TEXT_STRONA1="Podaj kod dostępu do kerneli Premium.\nJeżeli jeszcze nie masz skontaktuj się z: Tomasz e X t 7 3 Miś,mail:ext73@wp.pl" 
 export TEXT_K8="K8 - od Intel C2D, AMD K8"
 export TEXT_DEB1="Wskaż plik linux-headers lub linux-image, który chcesz zainstalować:"
 
