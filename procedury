@@ -136,7 +136,7 @@ fi
 
 #sumy sumy kontrolne
 export sumy_kontrolne='/tmp/netext73/sumy/sumy_kontrolne.txt'
-export adres_sum_kontrolnych='https://dl.dropboxusercontent.com/u/2552069/trash/sumy.txt'
+export adres_sum_kontrolnych='http://dl.dropboxusercontent.com/u/2936246/weryfikacja/sumy.txt'
 
 
 #kolor textu
