@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.7.96
+-	sumy kontrolne pobierana na starcie z innego serwera
 v0.7.95
 -	zmiana uwierzytelniania klientów premim, indywidualne konta
 v0.7.94

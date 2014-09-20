@@ -61,6 +61,8 @@ if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ]; 
       fi
 fi
 
+#pobranie sum kontrolnych
+mkdir -p /tmp/netext73/sumy; wget $adres_sum_kontrolnych | pobieranie && mv sumy.txt /tmp/netext73/sumy/sumy_kontrolne.txt
 aktualizacja &
 
 yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="$TEXT_REBOOT:5" --button="$TEXT_BUG:4" --button="$TEXT_CHANGELOG:3" --button="$TEXT_LICENCJA:2" --button="$TEXT_ZAMKNIJ:1" --single-click

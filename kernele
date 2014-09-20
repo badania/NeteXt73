@@ -221,7 +221,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 					mkdir $a; cd $a
 					#wywołanie funkcji pobierania odpowiednich wersji kerneli
 					pobieranie_kerneli
-					if [ "$(grep $(md5sum linux-image*) 1.txt)" != "" ] && [ "$(grep $(md5sum linux-headers*) 1.txt)" != "" ]; then
+					if [ "$(grep $(md5sum linux-image*) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum linux-headers*) $sumy_kontrolne)" != "" ]; then
 						echo "nie" > /tmp/netext73/ok.txt
 						if [ -e linux-headers* ] && [ -e linux-image* ]; then
 							if yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --height=280 --width=590 --text="$TEST_INSTALOWAC_KERNEL3 $rodzaj $TEST_INSTALOWAC_KERNEL4\n\n$(ls *.deb)\n\n$TEXT_INSTALOWAC ?\n\n" ; then

@@ -56,19 +56,19 @@ if [ "$1" = "nvidia" ]; then
 	if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 			  if [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -ge "331" ];then
 				  nv_set="nvidia-settings_331.20-0ubuntu8_amd64.deb"
-				  yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$nv_set $adres_sterownikow/$ster.deb
+				  yad_wget $adres_sterownikow/$nv_set $adres_sterownikow/$ster.deb
 			  elif  [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -ge "337" ]; then
 				  nv_set="nvidia-settings"
-				  yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$nv_set $adres_sterownikow/$ster.deb
+				  yad_wget $adres_sterownikow/$nv_set $adres_sterownikow/$ster.deb
 			  else
-				  yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb
+				  yad_wget $adres_sterownikow/$ster.deb
 			  fi  
-			  if [ -e $ster.deb ] && [ -e $nv_set ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ] && [ "$(grep $(md5sum $nv_set) 1.txt)" != "" ]; then
+			  if [ -e $ster.deb ] && [ -e $nv_set ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum $nv_set) $sumy_kontrolne)" != "" ]; then
 				  echo "nie" > /tmp/netext73/ok.txt
 				  naglowek > instaluj.sh
 				  nvidia >> instaluj.sh
 				  instalacja
-			  elif [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ]; then
+			  elif [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ]; then
 				  echo "nie" > /tmp/netext73/ok.txt
 				  naglowek > instaluj.sh
 				  nvidia >> instaluj.sh
@@ -89,8 +89,8 @@ elif [ "$1" = "radeon" ]; then
 		ster=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/radeon.png" --image="/opt/NeteXt73/ikony/radeon.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Radeon</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 			klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
 			if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
-				  yad_wget $adres_sterownikow/1.txt $adres_sterownikow/$ster.deb $adres_sterownikow/$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")
-				  if [ -e $ster.deb ] && [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ] && [ "$(grep $(md5sum $ster.deb) 1.txt)" != "" ]; then
+				  yad_wget $adres_sterownikow/$ster.deb $adres_sterownikow/$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")
+				  if [ -e $ster.deb ] && [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ]; then
 					  echo "nie" > /tmp/netext73/ok.txt
 					  naglowek > instaluj.sh
 					  radeon >> instaluj.sh

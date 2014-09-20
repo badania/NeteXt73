@@ -1,3 +1,9 @@
+netext73 (0.7.96) stable; urgency=medium
+
+  * sumy kontrolne pobierana na starcie z innego serwera
+
+ -- eloaders <eloaders@linux.pl>  Sat, 20 Sep 2014 19:28:31 +0200
+
 netext73 (0.7.95) stable; urgency=medium
 
   * zmiana uwierzytelniania klientów premim, indywidualne konta

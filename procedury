@@ -134,6 +134,11 @@ if [ -e ~/.netext73/kernel_premium ]; then
     export PASS1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 3)
 fi
 
+#sumy sumy kontrolne
+export sumy_kontrolne='/tmp/netext73/sumy/sumy_kontrolne.txt'
+export adres_sum_kontrolnych='https://dl.dropboxusercontent.com/u/2552069/trash/sumy.txt'
+
+
 #kolor textu
 if [ -e ~/.netext73/kolor_textu ]; then
       kolor_textu=$(cat ~/.netext73/kolor_textu)
@@ -206,9 +211,9 @@ else
 		
 	fi
 	if [ "$rodzaj" = "atom" ] || [ "$rodzaj" = "k8" ]; then
-	      yad_wget $strona/$a/1.txt $strona/$a/linux-headers-$nazwa_paczki $strona/$a/linux-image-$nazwa_paczki
+	      yad_wget $strona/$a/linux-headers-$nazwa_paczki $strona/$a/linux-image-$nazwa_paczki
 	else
-	      yad_wget_passwd $strona/$a/1.txt $strona/$a/linux-headers-$nazwa_paczki $strona/$a/linux-image-$nazwa_paczki
+	      yad_wget_passwd $strona/$a/linux-headers-$nazwa_paczki $strona/$a/linux-image-$nazwa_paczki
 	fi
 fi
 rm ./index.html -f
