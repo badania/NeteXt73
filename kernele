@@ -204,14 +204,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 			fi
 			lista_kerneli
 			if [ "$klawisz" = "0" ] && [ "$blad" != "1" ] ; then
-				echo "nie" > /tmp/netext73/ok.txt
-				dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj.*//g"  > 1.txt
-				for kernel in $(cat 1.txt); do
-					if [ "$(echo $a | grep $(echo $kernel))" != "" ]; then
-					      echo "tak" > /tmp/netext73/ok.txt
-					fi
-				done
-				if [ "$(cat /tmp/netext73/ok.txt)" = "nie" ]; then
+				if [ "$(echo $a1)" = "-" ]; then
 					rm ./index.html -f; rm $a -rf
 					mkdir $a; cd $a
 					#wywołanie funkcji pobierania odpowiednich wersji kerneli
@@ -236,7 +229,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 					else
 						yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
 					fi
-				elif [ "$(cat /tmp/netext73/ok.txt)" = "tak" ]; then
+				else
 				      yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_INSTALOWAC_KERNEL7"
 				fi
 			fi

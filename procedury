@@ -620,9 +620,11 @@ if [ "$(echo $lista)" = "TRUE" ]; then
     yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="Błąd pobierania danych z serwera"
     blad=11
 else
-    a=$(yad-netext --center --height=340 --width=690 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_PLATFORMA1 <b><span color=\"$kolor_textu\">$rodzaj</span></b>$TEXT_PLATFORMA2" --column="$TEXT_ZAZNACZ" --column="$TEXT_WYBIERZ_KERNEL" --column="$TEXT_ZNITY1" --button="$TEXT_POWROT:1" --button="gtk-ok:0" --list --radiolist $lista)
+    aa=$(yad-netext --center --height=340 --width=690 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_PLATFORMA1 <b><span color=\"$kolor_textu\">$rodzaj</span></b>$TEXT_PLATFORMA2" --column="$TEXT_ZAZNACZ" --column="$TEXT_WYBIERZ_KERNEL" --column="$TEXT_ZNITY1" --button="$TEXT_POWROT:1" --button="gtk-ok:0" --list --radiolist $lista)
     klawisz=$?
-    a=$(echo $a | cut -d "|" -f 2)
+    a=$(echo $aa | cut -d "|" -f 2)	#wybrany kernel
+    a1=$(echo $aa | cut -d "|" -f 3)	#czy zainstalowany jeżeli '-' można instalować
+    
 fi
 }
 
