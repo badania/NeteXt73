@@ -194,13 +194,8 @@ if [ "$kern" = "ppa mainline" ];then
 	fi
 else
 #pobieranie kerneli e X t 7 3
-	#nazwy paczek dla v29.x
-	if [ "$(echo $a | grep 'ags-cfs')" != "" ];then
-		nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/ags-cfs.*/$rodzaj-ags-cfs_$bit2.deb/")
-	else
 	#nazwy paczek dla v30.x
-		nazwa_paczki="$(echo $a | cut -d "_" -f 2)$(echo -$rodzaj'_'$bit2.deb)"
-	fi
+	nazwa_paczki="$(echo $a | cut -d "_" -f 2)$(echo -$rodzaj'_'$bit2.deb)"
 	if [ "$rodzaj" = "atom" ] || [ "$rodzaj" = "k8" ]; then
 	      yad_wget $strona/$a/linux-headers-$nazwa_paczki $strona/$a/linux-image-$nazwa_paczki
 	else
