@@ -3,6 +3,7 @@
 
 v0.8.00
 -	przepięcie usług na nowy serwer
+-	zmiana struktury katalogów kerneli premium na serwerze
 v0.7.96
 -	sumy kontrolne pobierana na starcie z innego serwera
 -	poprawki w trybu root

@@ -99,7 +99,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 		if [ -e ~/.netext73/kernel_premium ] && [ "$(cat  ~/.netext73/kernel_premium)" != "" ]; then
 		    #str="$(cat ~/.netext73/kernel_premium)"
 		    #zrodlo=$(echo $str | sed -e "s/index.html//g")
-		    strona="$adres_glowny/kernele_premium/$rodzaj/"
+		    strona="$adres_glowny/kernele_premium/"
 		else
 		    str=""
 		    ##
@@ -113,7 +113,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 					    echo $strona > ~/.netext73/kernel_premium
 					    if [ "$strona" != "" ]; then
 						    #zrodlo=$(echo $strona | sed -e "s/index.html//g")
-						    strona="$adres_glowny/kernele_premium/$rodzaj/"
+						    strona="$adres_glowny/kernele_premium/"
 					    fi
 				    fi
 			    fi
@@ -199,7 +199,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 	if [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] || [ "$(echo $kern | grep 'Intel C2D, AMD K8')" != "" ] && [ "$blad" != "1" ]; then
 		if [ "$rodzaj" != "" ]; then
 			if [ "$(echo $kern | grep i7)" != "" ] || [ "$(echo $kern | grep Brazos)" != "" ]; then
-			    rm index.html -f; wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/$rodzaj/ 2>&1 | pobieranie 
+			    rm index.html -f; wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/ 2>&1 | pobieranie 
 			else
 			    rm index.html -f; wget $strona 2>&1 | pobieranie 
 			fi
@@ -209,7 +209,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 				if [ "$rodzaj" = "k8" ] || [ "$rodzaj" = "atom" ];then
 				    dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj.*//g"  > 1.txt
 				else
-				    dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g'  > 1.txt
+				    dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj.*//g"  > 1.txt
 				fi
 				for kernel in $(cat 1.txt); do
 					if [ "$(echo $a | grep $(echo $kernel))" != "" ]; then

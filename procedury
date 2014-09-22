@@ -196,19 +196,10 @@ else
 #pobieranie kerneli e X t 7 3
 	#nazwy paczek dla v29.x
 	if [ "$(echo $a | grep 'ags-cfs')" != "" ];then
-		if [ "$rodzaj" = "atom" ] || [ "$rodzaj" = "k8" ]; then
-		    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/ags-cfs.*/$rodzaj-ags-cfs_$bit2.deb/")
-		else
-		    nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/ags-cfs.*/ags-cfs_$bit2.deb/")
-		fi
+		nazwa_paczki=$(echo $a | cut -d "_" -f 2 | sed "s/ags-cfs.*/$rodzaj-ags-cfs_$bit2.deb/")
 	else
 	#nazwy paczek dla v30.x
-		if [ "$rodzaj" = "atom" ] || [ "$rodzaj" = "k8" ]; then
-		    nazwa_paczki="$(echo $a | cut -d "_" -f 2)$(echo -$rodzaj'_'$bit2.deb)"
-		else
-		    nazwa_paczki="$(echo $a | cut -d "_" -f 2)$(echo _$bit2.deb)"
-		fi
-		
+		nazwa_paczki="$(echo $a | cut -d "_" -f 2)$(echo -$rodzaj'_'$bit2.deb)"
 	fi
 	if [ "$rodzaj" = "atom" ] || [ "$rodzaj" = "k8" ]; then
 	      yad_wget $strona/$a/linux-headers-$nazwa_paczki $strona/$a/linux-image-$nazwa_paczki
@@ -606,15 +597,9 @@ xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo 
 }
 
 lista_kerneli(){
-echo $(grep 'href="ftp' index.html | cut -d '"' -f 2 | sed 's/.*kernele\///g' \
-| sed 's/.*premium\/brazos-pro//g' | sed 's/.*premium\/brazos//g' | sed 's/.*premium\/i7-pro//g' | sed 's/.*premium\/i7//g' | sed 's/\///g') | tr ' ' '\n' > 2.txt
-#echo $(grep 'href='   ./index.html | cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/') | tr ' ' '\n' > 2.txt
-#cat 1.txt | tr ' ' '\n' > 2.txt
-if [ "$rodzaj" = "k8" ] || [ "$rodzaj" = "atom" ];then
-    dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj.*//g" > 3.txt
-else
-    dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g'  > 3.txt
-fi
+echo $(grep 'href="ftp' index.html | grep 'v' | cut -d '"' -f 2 | sed 's/.*v/v/g' | sed 's/\///g') | tr ' ' '\n' > 2.txt
+dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj.*//g" > 3.txt
+
 for kernel in $(cat 2.txt); do
     echo "$kernel" >> 4.txt
 	for kernel1 in $(cat 3.txt); do
