@@ -82,7 +82,7 @@ else
 	    klawisz=$?   
     fi
 fi
-#--button="$TEXT_MENU_INSTALATOR4:3" --button="$TEXT_MENU_INSTALATOR3:2" [ "$klawisz" = "2" ]; then kern="$TEXT_MENU_INSTALATOR3" elif [ "$klawisz" = "3" ]; then       kern="$TEXT_MENU_INSTALATOR4"
+
 if [ "$klawisz" = "4" ]; then
       kern="$TEXT_MENU_INSTALATOR5"
 fi
@@ -94,11 +94,9 @@ if [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] |
 fi
 
 rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
-
+	#adres kerneli premium
 	if [ "$(echo $kern | grep i7)" != "" ] || [ "$(echo $kern | grep Brazos)" != "" ]; then
 		if [ -e ~/.netext73/kernel_premium ] && [ "$(cat  ~/.netext73/kernel_premium)" != "" ]; then
-		    #str="$(cat ~/.netext73/kernel_premium)"
-		    #zrodlo=$(echo $str | sed -e "s/index.html//g")
 		    strona="$adres_glowny/kernele_premium/"
 		else
 		    str=""
@@ -119,6 +117,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 			    fi
 		    fi
 		fi
+	#adres kerneli standard	
 	elif [ "$(echo $kern | grep K8)" != "" ] || [ "$(echo $kern | grep Atom)" != "" ]; then
 		strona="$adres_glowny/kernele/"
 	#lokalne
@@ -165,7 +164,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 			yad-netext --center --error --title="$nazwa_skryptu"  --text="$(echo $TEXT_DEB1 | sed 's/:/!/' | sed 's/lub linux-image//' | sed 's/headers/headers ext73 /')" --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0"  --timeout=15
 		fi
 		fi
-	    
+	#kernele PPA
 	elif [ "$kern" = "$TEXT_MENU_INSTALATOR5" ]; then
 		cd /tmp/netext73; rm *.html -f
 		strona="http://kernel.ubuntu.com/~kernel-ppa/mainline/"
@@ -195,7 +194,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 			fi
 		fi
 	fi
-  
+	#instalacja kerneli ext73
 	if [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] || [ "$(echo $kern | grep 'Intel C2D, AMD K8')" != "" ] && [ "$blad" != "1" ]; then
 		if [ "$rodzaj" != "" ]; then
 			if [ "$(echo $kern | grep i7)" != "" ] || [ "$(echo $kern | grep Brazos)" != "" ]; then
@@ -206,11 +205,7 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 			lista_kerneli
 			if [ "$klawisz" = "0" ] && [ "$blad" != "1" ] ; then
 				echo "nie" > /tmp/netext73/ok.txt
-				if [ "$rodzaj" = "k8" ] || [ "$rodzaj" = "atom" ];then
-				    dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj.*//g"  > 1.txt
-				else
-				    dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj.*//g"  > 1.txt
-				fi
+				dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g' | sed "s/-$rodzaj.*//g"  > 1.txt
 				for kernel in $(cat 1.txt); do
 					if [ "$(echo $a | grep $(echo $kernel))" != "" ]; then
 					      echo "tak" > /tmp/netext73/ok.txt
