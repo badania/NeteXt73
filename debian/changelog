@@ -1,3 +1,9 @@
+netext73 (0.8.01) stable; urgency=medium
+
+  * czyszczenie kodu
+
+ -- eloaders <eloaders@linux.pl>  Tue, 23 Sep 2014 11:30:30 +0200
+
 netext73 (0.8.00) stable; urgency=medium
 
   * stabilizacja netext'a

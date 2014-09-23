@@ -87,41 +87,10 @@ if [ "$klawisz" = "4" ]; then
       kern="$TEXT_MENU_INSTALATOR5"
 fi
 
-rodzaj=$(echo $kern | cut -d " " -f 1)
+rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 
-if [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] || [ "$(echo $kern | grep 'Intel C2D, AMD K8')" != "" ]; then
-      echo $kern > ~/.netext73/instalator_kerneli
-fi
-
-rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
-	#adres kerneli premium
-	if [ "$(echo $kern | grep i7)" != "" ] || [ "$(echo $kern | grep Brazos)" != "" ]; then
-		if [ -e ~/.netext73/kernel_premium ] && [ "$(cat  ~/.netext73/kernel_premium)" != "" ]; then
-		    strona="$adres_glowny/kernele_premium/"
-		else
-		    str=""
-		    ##
-		    strona=$(yad-netext --center --entry --width=610 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_STRONA1" --entry-text="$str" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
-		    klawisz=$?
-		    if [ "$klawisz" = "1" ]; then
-			    blad=1
-		    else
-			    if [ "$strona" != "" ]; then
-				    if [ $? = 0 ]; then
-					    echo $strona > ~/.netext73/kernel_premium
-					    if [ "$strona" != "" ]; then
-						    #zrodlo=$(echo $strona | sed -e "s/index.html//g")
-						    strona="$adres_glowny/kernele_premium/"
-					    fi
-				    fi
-			    fi
-		    fi
-		fi
-	#adres kerneli standard	
-	elif [ "$(echo $kern | grep K8)" != "" ] || [ "$(echo $kern | grep Atom)" != "" ]; then
-		strona="$adres_glowny/kernele/"
 	#lokalne
-	elif [ "$kern" = "$TEXT_MENU_INSTALATOR3" ]; then
+	if [ "$kern" = "$TEXT_MENU_INSTALATOR3" ]; then
 		a=$(yad-netext --center --file-selection --filename="$download/" --title="$(echo $TEXT_DEB1 | sed 's/headers/headers ext73 /' | sed 's/image/image ext73 /')" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		if [ $? = 0 ]; then
 			if [ "$(echo $a | grep 'linux-image' | grep 'ext' | grep '.deb')" != "" ]; then
@@ -193,13 +162,36 @@ rodzaj=$(echo $rodzaj | awk '{print tolower($0)}')
 				fi
 			fi
 		fi
-	fi
 	#instalacja kerneli ext73
-	if [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] || [ "$(echo $kern | grep 'Intel C2D, AMD K8')" != "" ] && [ "$blad" != "1" ]; then
+	elif [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] || [ "$(echo $kern | grep 'Intel C2D, AMD K8')" != "" ] && [ "$blad" != "1" ]; then
 		if [ "$rodzaj" != "" ]; then
+			echo $kern > ~/.netext73/instalator_kerneli #zapamiętanie wybranego kernela
 			if [ "$(echo $kern | grep i7)" != "" ] || [ "$(echo $kern | grep Brazos)" != "" ]; then
+			    #adres kerneli premium
+			    if [ -e ~/.netext73/kernel_premium ] && [ "$(cat  ~/.netext73/kernel_premium)" != "" ]; then
+				strona="$adres_glowny/kernele_premium/"
+			    else
+				str=""
+				##
+				strona=$(yad-netext --center --entry --width=610 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_STRONA1" --entry-text="$str" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+				klawisz=$?
+				if [ "$klawisz" = "1" ]; then
+					blad=1
+				else
+					if [ "$strona" != "" ]; then
+						if [ $? = 0 ]; then
+							echo $strona > ~/.netext73/kernel_premium
+							if [ "$strona" != "" ]; then
+								#zrodlo=$(echo $strona | sed -e "s/index.html//g")
+								strona="$adres_glowny/kernele_premium/"
+							fi
+						fi
+					fi
+				fi
+			    fi
 			    rm index.html -f; wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/ 2>&1 | pobieranie 
 			else
+			    strona="$adres_glowny/kernele/"
 			    rm index.html -f; wget $strona 2>&1 | pobieranie 
 			fi
 			lista_kerneli
