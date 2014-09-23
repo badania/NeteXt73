@@ -313,7 +313,7 @@ if [ $klawisz = 0 ]; then
 	elif [ "$skrypt" = "vsFTPd" ]; then #logi vsFTPd
 		cd /tmp/netext73
 		wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/logi/vsftpd.log 2>&1 | pobieranie 
-		cat vsftpd.log | sed -e '/netbit73/d'  > vsftpd.log1
+		cat vsftpd.log | sed -e '/netbit73/d' | sed -e '/109.241.113.97/d' > vsftpd.log1
 		cat vsftpd.log1 | awk '{print $1"_"$3"_"$2"_"$5"_"$4}'  > 1.txt #data
 		cat vsftpd.log1 | awk '{print $7}' > 2.txt #ip
 		cat vsftpd.log1 | awk '{print $9}' | sed 's/.*\///g' > 3.txt #plik
