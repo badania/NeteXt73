@@ -312,17 +312,14 @@ if [ $klawisz = 0 ]; then
 		fi
 	elif [ "$skrypt" = "vsFTPd" ]; then #logi vsFTPd
 		cd /tmp/netext73
-		wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/logi/vsftpd.log 2>&1 | pobieranie 
-		cat vsftpd.log | sed -e '/netbit73/d' | sed -e '/109.241.113.97/d' > vsftpd.log1
-		cat vsftpd.log1 | awk '{print $1"_"$3"_"$2"_"$5"_"$4}'  > 1.txt #data
-		cat vsftpd.log1 | awk '{print $7}' > 2.txt #ip
-		cat vsftpd.log1 | awk '{print $9}' | sed 's/.*\///g' > 3.txt #plik
-		cat vsftpd.log1 | awk '{print $14}' | sed 's/-wget@/anonim/g' > 4.txt #user
-		paste -d " " 1.txt 2.txt 3.txt 4.txt > logi.txt
-
-		yad-netext --center --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --on-top --text="Logi VsFTPd" --width=1024 --height=450 --column="data" --column="ip" --column="plik" --column="user" --list $(cat logi.txt | sort -r) --button="$TEXT_ZAMKNIJ:1"
-		rm 1.txt 2.txt 3.txt 4.txt logi.txt vsftpd.log* -f
-		
+		wget --user=$US1 --password=$PASS1 $adres_glowny/kernele_premium/logi/plik 2>&1 | pobieranie
+		openssl enc -d -aes-256-cbc -in plik -pass pass:$( cat ~/.netext73/haslo) -out vsftpd.log
+		rm plik
+		sed -i '/netbit73/d' vsftpd.log; sed -i '/109.241.113.97/d' vsftpd.log
+		sed -i 's/-wget@/anonimowy/g' vsftpd.log; sed -i 's/\/.*\// /g' vsftpd.log
+		yad-netext --center --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --on-top --text="Logi VsFTPd" --width=1024 --height=650 \
+		--column="Data pobrania" --column="Nazwa użytkownika" --column="adres IP" --column="Nazwa pliku" --column="Wilekość pliku" --list $(cat vsftpd.log | awk '{print $3"_"$2"_"$5"_"$4" "$14" "$7" "$9" "$8}' | sort -r) --button="$TEXT_ZAMKNIJ:1"
+		rm vsftpd.log -f		
 	fi
 fi
 
