@@ -42,10 +42,18 @@ source /opt/NeteXt73/procedury
 
 cd /tmp/netext73
 
-if [ "$(cat /etc/sysctl.conf | grep 'net.ipv6.conf.all.disable_ipv6 = 1')" = "" ]; then
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!BurnTest!Sysbench!glmark2!$MENU13"
-    else
-	menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU10!$MENU11!BurnTest!Sysbench!glmark2!$MENU13"
+if [ -e ~/.netext73/kernel_premium ] && [ "$(grep 'ext73' ~/.netext73/kernel_premium)" != "" ] || [ "$(grep 'netbit73' ~/.netext73/kernel_premium)" != "" ]; then
+    	  if [ "$(cat /etc/sysctl.conf | grep 'net.ipv6.conf.all.disable_ipv6 = 1')" = "" ]; then
+		  menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!BurnTest!Sysbench!glmark2!$MENU13!vsFTPd"
+	      else
+		  menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU10!$MENU11!BurnTest!Sysbench!glmark2!$MENU13!vsFTPd"
+	  fi
+else
+	  if [ "$(cat /etc/sysctl.conf | grep 'net.ipv6.conf.all.disable_ipv6 = 1')" = "" ]; then
+		  menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU7!$MENU10!$MENU11!BurnTest!Sysbench!glmark2!$MENU13"
+	      else
+		  menu="$MENU3!$MENU4!$MENU5!$MENU6!$MENU8!$MENU10!$MENU11!BurnTest!Sysbench!glmark2!$MENU13"
+	  fi
 fi
 
 skrypt=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/skrypty.png" --image="/opt/NeteXt73/ikony/skrypty.png" --form --field="$TEXT_SKRYPT1:CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
@@ -302,6 +310,19 @@ if [ $klawisz = 0 ]; then
 			      x-terminal-emulator -e bash -c "killall dropbox;cd ~;rmdir --ignore-fail-on-non-empty .dropbox-dist && wget -O - 'http://www.dropbox.com/download?plat=lnx.x86' | tar xzf - ; echo -e \"$TEXT_INSTALACJA2\"; read ent"
 			fi
 		fi
+	elif [ "$skrypt" = "vsFTPd" ]; then #logi vsFTPd
+		cd /tmp/netext73
+		wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/logi/vsftpd.log 2>&1 | pobieranie 
+		cat vsftpd.log | sed -e '/netbit73/d'  > vsftpd.log1
+		cat vsftpd.log1 | awk '{print $1"_"$3"_"$2"_"$5"_"$4}'  > 1.txt #data
+		cat vsftpd.log1 | awk '{print $7}' > 2.txt #ip
+		cat vsftpd.log1 | awk '{print $9}' | sed 's/.*\///g' > 3.txt #plik
+		cat vsftpd.log1 | awk '{print $14}' | sed 's/-wget@/anonim/g' > 4.txt #user
+		paste -d " " 1.txt 2.txt 3.txt 4.txt > logi.txt
+
+		yad-netext --center --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --on-top --text="Logi VsFTPd" --width=1024 --height=450 --column="data" --column="ip" --column="plik" --column="user" --list $(cat logi.txt | sort -r) --button="$TEXT_ZAMKNIJ:1"
+		rm 1.txt 2.txt 3.txt 4.txt logi.txt vsftpd.log* -f
+		
 	fi
 fi
 
