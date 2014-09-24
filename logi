@@ -102,9 +102,13 @@ echo "Powertop - $(dpkg -l | grep powertop | awk '{print $3}' | head -n 1)" >> s
 echo -e "\n<span color=\"$kolor_textu\"><b>OpenGL</b></span>" >> system$losowa.log
 glxinfo | grep OpenGL | sed 's/OpenGL ext.*//g' | sed 's/OpenGL core profile extensions://g' | sed '/^[ \t]*$/ d' >> system$losowa.log
 
-
-yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="Firewall status:3"
-klawisz=$?
+if [ -e ~/.netext73/kernel_premium ] && [ "$(grep 'eXt73' ~/.netext73/kernel_premium)" != "" ] || [ "$(grep 'netbit73' ~/.netext73/kernel_premium)" != "" ] && [ -e ~/.netext73/has* ]; then
+	yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="Firewall status:3" --button="vsFTPd:4"
+	klawisz=$?
+else
+	yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="Firewall status:3"
+	klawisz=$?
+fi
 
 
 if [ "$klawisz" = "2" ]; then
@@ -201,5 +205,65 @@ if [ "$klawisz" = "2" ]; then
     fi
 elif  [ "$klawisz" = "3" ] ; then
     x-terminal-emulator -e bash -c "sudo ufw status verbose; read ent"
+elif  [ "$klawisz" = "4" ] ; then    
+cd /tmp/netext73
+    wget --user=$US1 --password=$PASS1 $adres_glowny/kernele_premium/logi/plik 2>&1 | pobieranie
+    openssl enc -d -aes-256-cbc -in plik -pass pass:$( cat ~/.netext73/haslo) -out vsftpd.log
+    rm plik
+    for i in $(echo netbit73 109.241.113.97 plik logi vsftpd.log eXt73); do
+	    sed -i "/$i/d" vsftpd.log
+    done
+    sed -i 's/-wget@/anonimowy/g' vsftpd.log; sed -i 's/\/.*\// /g' vsftpd.log
+    cat vsftpd.log | awk '{print $3 $2 $5" "$4" "$14" "$7" "$9" "$8}' | sort -r > logi.log
+    petla="tak"
+    while [ $petla = "tak" ]; do
+    yad-netext --center --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --on-top --text="Logi VsFTPd" --width=1024 --height=650 \
+    --column="Data" --column="Godzina" --column="Nazwa użytkownika" --column="adres IP" --column="Nazwa pliku" --column="Wielkość pliku" --list $(cat logi.log) --button="$TEXT_ZAMKNIJ:1" --button="dni:2" --button="user:3" --button="IP:4"
+    klawisz=$?
+    if [ "$klawisz" = "2" ];then
+	  #dni
+	  cat logi.log | awk '{print $1}' | sort -r | uniq > lista_dni.txt
+	  for i in $(cat lista_dni.txt);do
+	      grep $i logi.log | wc | awk '{print $1}'  >> ilosc_pobran.txt
+	      grep $i logi.log | awk '{print $5}' | sort -r | uniq | wc | awk '{print $1}'  >> ilosc_plikow.txt
+	      grep $i logi.log | awk '{print $4}' | sort -r | uniq | wc | awk '{print $1}'  >> ilosc_ip.txt
+	      grep $i logi.log | awk '{print $3}' | sort -r | uniq | wc | awk '{print $1}'  >> ilosc_userow.txt
+	      a=0; for b in $(grep $i logi.log | awk '{print $6}'); do a=$(( $a + $b )); done; echo "scale=2;$(echo $a)/1024/1024" | bc -q  >> pojemnosc.txt
+	  done
+	  paste -d " " lista_dni.txt ilosc_pobran.txt ilosc_plikow.txt ilosc_ip.txt ilosc_userow.txt pojemnosc.txt > logi1.log
+	  yad-netext --center --title="Logi Vsftpd" --text="Logi VsFTPd" --width=754 --height=450 --column="data" --column="ilość pobrań" --column="unikalnych plików" \
+	  --column="unikalnych IP" --column="unikalnych userów" --column="transfer dzienny MB" --list $(cat logi1.log) --button="$TEXT_ZAMKNIJ:1" 
+	  rm *.txt -f
+    elif [ "$klawisz" = "3" ];then
+	  #user
+	  cat logi.log | awk '{print $3}' | sort -r | uniq > lista_userow.txt
+	  for i in $(cat lista_userow.txt);do
+	      grep $i logi.log | wc | awk '{print $1}'  >> ilosc_pobran.txt
+	      grep $i logi.log | awk '{print $5}' | sort -r | uniq | wc | awk '{print $1}'  >> ilosc_plikow.txt
+	      grep $i logi.log | awk '{print $4}' | sort -r | uniq | wc | awk '{print $1}'  >> ilosc_ip.txt
+	      a=0; for b in $(grep $i logi.log | awk '{print $6}'); do a=$(( $a + $b )); done; echo "scale=2;$(echo $a)/1024/1024" | bc -q  >> pojemnosc.txt
+	  done
+	  paste -d " " lista_userow.txt ilosc_pobran.txt ilosc_plikow.txt ilosc_ip.txt pojemnosc.txt > logi1.log
+	  yad-netext --center --title="Logi Vsftpd" --text="Logi VsFTPd" --width=584 --height=450 --column="unikalnych user" --column="ilość pobrań" --column="unikalnych plików" \
+	  --column="unikalnych IP" --column="pobrano MB" --list $(cat logi1.log) --button="$TEXT_ZAMKNIJ:1" 
+	  rm *.txt -f
+    elif [ "$klawisz" = "4" ];then
+	  #ip
+	  cat logi.log | awk '{print $4}' | sort -r | uniq > lista_ip.txt
+	  for i in $(cat lista_ip.txt);do
+	      grep $i logi.log | wc | awk '{print $1}'  >> ilosc_pobran.txt
+	      grep $i logi.log | awk '{print $5}' | sort -r | uniq | wc | awk '{print $1}'  >> ilosc_plikow.txt
+	      a=0; for b in $(grep $i logi.log | awk '{print $6}'); do a=$(( $a + $b )); done; echo "scale=2;$(echo $a)/1024/1024" | bc -q  >> pojemnosc.txt
+	  done
+	  paste -d " " lista_ip.txt ilosc_pobran.txt ilosc_plikow.txt pojemnosc.txt > logi1.log
+	  yad-netext --center --title="Logi Vsftpd" --text="Logi VsFTPd" --width=554 --height=450 --column="unikalnych IP" --column="ilość pobrań" --column="unikalnych plików" \
+	  --column="pobrano MB" --list $(cat logi1.log) --button="$TEXT_ZAMKNIJ:1" 
+	  rm *.txt -f 
+    fi
+    if [ "$klawisz" = "1" ]; then
+	      petla="nie"
+	  fi
+    done
+    rm *.log -f
 fi
 rm *.log losowa -f
