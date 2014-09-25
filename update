@@ -225,13 +225,21 @@ elif [ $klawisz = "2" ]; then
 	a3="TRUE"
 	a4="TRUE"
 	aktualizuj_calosc 
-elif [ $klawisz = "3" ]; then
+elif [ $klawisz = "3" ]; then  #lista zmian
     if [ "$stable" != "$TEXT_BRAK_DANYCH" ]; then
-	  if [ "$USER" = "root" ]; then
-	      userek=$(cat /tmp/netext73/userek)
-	      su $userek -c "xdg-open \"https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable\""
+	  userek=$(cat /tmp/netext73/userek)
+	  if [ "$(echo $nr | grep "\.*\.")" != "" ];then
+		  if [ "$USER" = "root" ]; then
+		      su $userek -c "xdg-open \"https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable\""
+		  else
+		      xdg-open "https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable"
+		  fi
 	  else
-	      xdg-open "https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable"
+		  if [ "$USER" = "root" ]; then
+		      su $userek -c "xdg-open \"https://www.kernel.org"
+		  else
+		      xdg-open "https://www.kernel.org"
+		  fi
 	  fi
     fi
 fi
