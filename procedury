@@ -588,6 +588,42 @@ xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo 
 }
 
 lista_kerneli(){
+if [ "$1" = "update" ]; then
+      if [ -e ~/.netext73/kernel_premium ] && [ "$(grep @ ~/.netext73/kernel_premium)" != "" ] ; then
+	      wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/ -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie
+      else
+	      wget $adres_glowny/kernele/ -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie
+      fi
+else
+echo $kern > ~/.netext73/instalator_kerneli #zapamiętanie wybranego kernela
+if [ "$(echo $kern | grep i7)" != "" ] || [ "$(echo $kern | grep Brazos)" != "" ]; then
+    #adres kerneli premium
+    if [ -e ~/.netext73/kernel_premium ] && [ "$(cat  ~/.netext73/kernel_premium)" != "" ]; then
+	strona="$adres_glowny/kernele_premium/"
+    else
+	str=""
+	##
+	strona=$(yad-netext --center --entry --width=610 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_STRONA1" --entry-text="$str" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+	klawisz=$?
+	if [ "$klawisz" = "1" ]; then
+		blad=1
+	else
+		if [ "$strona" != "" ]; then
+			if [ $? = 0 ]; then
+				echo $strona > ~/.netext73/kernel_premium
+				if [ "$strona" != "" ]; then
+					#zrodlo=$(echo $strona | sed -e "s/index.html//g")
+					strona="$adres_glowny/kernele_premium/"
+				fi
+			fi
+		fi
+	fi
+    fi
+    rm index.html -f; wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/ 2>&1 | pobieranie 
+else
+    strona="$adres_glowny/kernele/"
+    rm index.html -f; wget $strona 2>&1 | pobieranie 
+fi
 echo $(grep 'href="ftp' index.html | grep 'v' | cut -d '"' -f 2 | sed 's/.*v/v/g' | sed 's/\///g') | tr ' ' '\n' > 2.txt
 dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g'  > 3.txt
 
@@ -615,7 +651,7 @@ else
     klawisz=$?
     a=$(echo $aa | cut -d "|" -f 2)	#wybrany kernel
     a1=$(echo $aa | cut -d "|" -f 3)	#czy zainstalowany jeżeli '-' można instalować
-    
+fi
 fi
 }
 

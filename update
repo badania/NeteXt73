@@ -44,7 +44,6 @@ rm *.html* -f
 rm -f /tmp/netext73/*.txt 
 }
 
-
 aktualizuj_calosc(){
 konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_UPDATE1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
 		  "$a1" "microcode" \
@@ -86,15 +85,48 @@ fi
 
 menu=""
 ilosc_aktualizacji=0
-if [ -e ~/.netext73/kernel_premium ] && [ "$(grep @ ~/.netext73/kernel_premium)" != "" ] ; then
-    wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/ -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie #sprawdzanie dla kerneli premium
+
+#GRUB
+if [ "$(grep 'acpi_osi=' /etc/default/grub)" != "" ]; then
+      a2="FALSE"
 else
-    wget $adres_glowny/kernele/ -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie # sprawdzanie dla kerneli standard
+      a2="TRUE"
+      ((ilosc_aktualizacji++))
 fi
 
+#firmware
+stan_firmware
 twoj_firmware=$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1 | sed 's/~.*//')
-#nowy_kernel=$(grep 'href='   ./kernel.txt | grep 'href="v'| cut -d '"' -f 2 | sed -e "s/index.html//g" | sed 's/\(.*\)./\1/' | sort -r | head -n 1 | sed 's/v...._//')
-nowy_kernel=$(grep 'href="ftp' kernel.txt | cut -d '"' -f 2 | sort -r | head -n 1 | sed 's/.*v...._//' | sed 's/\///g')
+
+#microcode
+if [ "$stan_microcode" != "-" ] && [ "$twoj_firmware" = "" ]; then
+      firm=$TEXT_UPDATE5a
+      a1="TRUE"
+      menu="$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 APM!$TEXT_UPDATE2!$TEXT_UPDATE8"
+elif [ "$stan_microcode" = "-" ]; then
+      firm=$TEXT_UPDATE5a
+      a1="TRUE"
+      menu="$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 APM!$TEXT_UPDATE2!$TEXT_UPDATE8"
+else
+      firm=v$twoj_firmware
+      a1="FALSE"
+fi
+
+#APM
+twoj_apm=$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)
+wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
+if [ "$twoj_apm" = "$wersja_apm" ]  ; then
+    apm="$TEXT_UPDATE4"
+    a3="FALSE"
+else
+    apm="$TEXT_UPDATE5 $wersja_apm"
+    menu="$TEXT_UPDATE1 APM!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE2!$TEXT_UPDATE8"
+    a3="TRUE"
+    ((ilosc_aktualizacji++))
+fi
+
+#kernele stable
+lista_kerneli update
 
 #sprawdzanie kerneli do wersji v29.x
 if [ "$(uname -r | grep ags)" != "" ];then
@@ -115,45 +147,9 @@ else
 	  twoj_kernel=$(uname -r)
       fi
 fi
-twoj_apm=$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)
-wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 
-#GRUB
-if [ "$(grep 'acpi_osi=' /etc/default/grub)" != "" ]; then
-      a2="FALSE"
-else
-      a2="TRUE"
-      ((ilosc_aktualizacji++))
-fi
+nowy_kernel=$(grep 'href="ftp' kernel.txt | cut -d '"' -f 2 | sort -r | head -n 1 | sed 's/.*v...._//' | sed 's/\///g')
 
-stan_firmware
-
-#microcode
-if [ "$stan_microcode" != "-" ] && [ "$twoj_firmware" = "" ]; then
-      firm=$TEXT_UPDATE5a
-      a1="TRUE"
-      menu="$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 APM!$TEXT_UPDATE2!$TEXT_UPDATE8"
-elif [ "$stan_microcode" = "-" ]; then
-      firm=$TEXT_UPDATE5a
-      a1="TRUE"
-      menu="$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 APM!$TEXT_UPDATE2!$TEXT_UPDATE8"
-else
-      firm=v$twoj_firmware
-      a1="FALSE"
-fi
-
-#APM
-if [ "$twoj_apm" = "$wersja_apm" ]  ; then
-    apm="$TEXT_UPDATE4"
-    a3="FALSE"
-else
-    apm="$TEXT_UPDATE5 $wersja_apm"
-    menu="$TEXT_UPDATE1 APM!$TEXT_UPDATE1 Kernel!$TEXT_UPDATE1 Firmware/microcode!$TEXT_UPDATE2!$TEXT_UPDATE8"
-    a3="TRUE"
-    ((ilosc_aktualizacji++))
-fi
-
-#kernele stable
 if  [ "$(cat stable.txt)" = "" ]; then
       stable=$TEXT_BRAK_DANYCH
       nr=""

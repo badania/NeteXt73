@@ -113,6 +113,7 @@ if [ $klawisz = 0 ]; then
 		echo $konfiguracja | cut -d "|" -f 9 > ~/.netext73/server_no
 		if [ "$root_mode" != "$(cat ~/.netext73/root_mode)" ]; then
 		    killall -9 yad-netext
+		    rm -fr /tmp/netext73
 		fi    
 	fi
 fi

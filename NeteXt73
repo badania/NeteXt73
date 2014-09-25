@@ -91,6 +91,8 @@ elif [ "$klawisz" = "4" ]; then
       cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "5" ]; then
       restart
+elif [ "$klawisz" = "1" ]; then
+      rm -rf /tmp/netext73
 fi
 
 if [ $USER = "root" ] && [ -e /home/root ]; then
