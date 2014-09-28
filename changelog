@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.03
+-	zmiana YAD na wersję 0.27
 v0.8.02
 -	usuwanie /tmp/netext73 netexta przy zmianie root-user i przy zamknięciu programu
 -	poprawki w sekcji update

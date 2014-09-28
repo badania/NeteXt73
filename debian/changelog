@@ -1,3 +1,9 @@
+netext73 (0.8.03) stable; urgency=medium
+
+  * zmiana YAD na 0.27
+
+ -- eloaders <eloaders@linux.pl>  Sun, 28 Sep 2014 21:48:14 +0200
+
 netext73 (0.8.02) stable; urgency=medium
 
   * usuwanie /tmp/netext73 netexta przy zmiania root-user i przy zamknięciu programu

@@ -37,7 +37,6 @@ LATEST_VERSION=$(grep 'v[0-9]' /opt/NeteXt73/changelog | head -n 1 | cut -d 'v' 
 
 jezyczek(){
 
-#teksty w języku polskim
 if [ ! -e ~/.netext73 ]; then
     mkdir ~/.netext73
 fi
@@ -51,8 +50,7 @@ if [ ! -e ~/.netext73/glmark2 ]; then
     mkdir ~/.netext73/glmark2
 fi
 
-
-
+#teksty w języku polskim
 if [ -e ~/.netext73/jezyk ] && [ "$(cat ~/.netext73/jezyk)" = "niemiecki" ]; then
     export jezyk="angielski"
     echo 'angielski' >  ~/.netext73/jezyk
@@ -138,7 +136,6 @@ fi
 export sumy_kontrolne='/tmp/netext73/sumy/sumy_kontrolne.txt'
 export adres_sum_kontrolnych='http://dl.dropboxusercontent.com/u/2936246/weryfikacja/sumy.txt'
 
-
 #kolor textu
 if [ -e ~/.netext73/kolor_textu ]; then
       kolor_textu=$(cat ~/.netext73/kolor_textu)
@@ -155,8 +152,6 @@ if [ "$(uname -m)" = "x86_64" ]; then
     bit="64bit"
     bit2="amd64"
 else 
-    bit="32bit"
-    bit2="i386"
     yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/netext.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_STEROWNIKI1"
     exit 1
 fi
@@ -970,11 +965,6 @@ yad_wget(){
 #               - set maximum number of simultaneous downloads
 # DEPENDENCIES: yad
 #
-#               Install yad on Ubuntu with:
-#
-#                   sudo add-apt-repository ppa:webupd8team/y-ppa-manager
-#                   sudo apt-get update
-#                   sudo apt-get install yad
 #
 # LICENSE:      GNU GPLv3 (http://www.gnu.de/documents/gpl-3.0.en.html)
 #
@@ -1014,10 +1004,6 @@ if [[ -z "$URILIST" ]]
       exit 1
 fi
 
-# download file and extract progress, speed and ETA from wget
-# we use sed regex for this
-# source: http://ubuntuforums.org/showthread.php?t=306515&page=2&p=7455412#post7455412
-# modified to work with different locales and decimal point conventions
 download(){
     if [ "$(echo $1 | grep premium)" != "" ]; then  #jeżeli konto premium to logujemy się na hasło
 	  wget --user=$US1 --password=$PASS1 "$1" 2>&1 | sed -u \
@@ -1072,48 +1058,6 @@ for URI in $URILIST; do
 done | yad-netext --center --multi-progress --auto-kill --auto-close $YADBARS --title "$nazwa_skryptu" \
 --text "<b>$TEXT_POB2</b>" --window-icon="/opt/NeteXt73/ikony/download.png" --image="/opt/NeteXt73/ikony/download.png" --button="$TEXT_ZAMKNIJ:1"
 # ↑ launch yad multi progress-bar window 
-}
-
-procesor_monitor(){
-barek="--bar=total --bar="used-buffers-cached" --bar="free+buffers+cached" --bar=reserver --bar="total-reserved" --bar=shared --bar=buffers --bar=cached --bar=swap"
-for i in $(seq 1 $(grep 'model name' /proc/cpuinfo | wc -l )); do
-    barek="$barek --bar=$(echo "core"$i"")" 
-done
-petla_duza="tak"
-
-while [ "$petla_duza" = "tak" ]; do
-      echo "1:$((100*$(free -m | grep Mem | awk '{print $2}')/$(free -m | grep Mem | awk '{print $2}')))"
-      echo "2:$(($(($(free -m | grep Mem | awk '{print $3}')-$(free -m | grep Mem | awk '{print $6}')-$(free -m | grep Mem | awk '{print $7}')))*100/$(free -m | grep Mem | awk '{print $2}')))"
-      echo "3:$(($(($(free -m | grep Mem | awk '{print $4}')+$(free -m | grep Mem | awk '{print $6}')+$(free -m | grep Mem | awk '{print $7}')))*100/$(free -m | grep Mem | awk '{print $2}')))"
-      echo "4:$(($(free -m | grep Mem | awk '{print $3}')*100/$(free -m | grep Mem | awk '{print $2}')))"
-      echo "5:$(($(free -m | grep Mem | awk '{print $4}')*100/$(free -m | grep Mem | awk '{print $2}')))"
-      echo "6:$((100*$(free -m | grep Mem | awk '{print $5}')/$(free -m | grep Mem | awk '{print $2}')))"
-      echo "7:$((100*$(free -m | grep Mem | awk '{print $6}')/$(free -m | grep Mem | awk '{print $2}')))"
-      echo "8:$((100*$(free -m | grep Mem | awk '{print $7}')/$(free -m | grep Mem | awk '{print $2}')))"
-      if [ "$(free -m | grep Swap | awk '{print $4}')" = "" ] || [ "$(free -m | grep Swap | awk '{print $4}')" = "0" ]; then
-	  echo "9:0"
-	  echo "9:#0 MB"
-      else
-	  echo "9:$((100*$(free -m | grep Swap | awk '{print $3}')/$(free -m | grep Swap | awk '{print $4}')))"
-	  echo "9:#$((100*$(free -m | grep Swap | awk '{print $3}')/$(free -m | grep Swap | awk '{print $4}'))) MB"
-      fi
-      echo "1:#$(free -m | grep Mem | awk '{print $2}') MB"
-      echo "2:#$(($(free -m | grep Mem | awk '{print $3}')-$(free -m | grep Mem | awk '{print $6}')-$(free -m | grep Mem | awk '{print $7}'))) MB"
-      echo "3:#$(($(free -m | grep Mem | awk '{print $4}')+$(free -m | grep Mem | awk '{print $6}')+$(free -m | grep Mem | awk '{print $7}'))) MB"
-      echo "4:#$(free -m | grep Mem | awk '{print $3}') MB"
-      echo "5:#$(free -m | grep Mem | awk '{print $4}') MB"
-      echo "6:#$(free -m | grep Mem | awk '{print $5}') MB"
-      echo "7:#$(free -m | grep Mem | awk '{print $6}') MB"
-      echo "8:#$(free -m | grep Mem | awk '{print $7}') MB"
-      sleep 1
-      for i in $(seq 10 $(($(grep 'model name' /proc/cpuinfo | wc -l )+9))); do
-	  echo "$i:$(($(cat /proc/cpuinfo | grep MHz | cut -d ' ' -f 3 | sed -n $(($i-9))'p' | sed 's/\..*//' )/60))" # * 6000MHZ/100 
-	  echo "$i:#$(cat /proc/cpuinfo | grep MHz | cut -d ' ' -f 3 | sed -n $(($i-9))'p' | sed 's/\..*//' ) MHz"
-      done 
-done | yad-netext --title "$nazwa_skryptu" --center --multi-progress $barek --text="$(cat /proc/cpuinfo | grep 'model name' | head -n 1 | sed 's/.*: //')\nFree Memory, Cpu Core Frequency:\n" --auto-kill  --button="$TEXT_ZAMKNIJ:1" --on-top --window-icon="/opt/NeteXt73/ikony/monitor.png" --image="/opt/NeteXt73/ikony/monitor.png"
-if [ "$?" != "" ]; then
-    petla_duza="nie"  
-fi
 }
 
 procesor_monitor(){
