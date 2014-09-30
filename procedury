@@ -566,7 +566,7 @@ echo "rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f"
 
 #instalacja za chwile nastąpi wprowadzenie zmian
 instalacja(){
-xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
+xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh  && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
 }
 
 instalacja_nativ(){

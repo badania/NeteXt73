@@ -81,20 +81,18 @@ while [ $petla_duza = "tak" ]; do
 				do
 					export a1=$a
 					    if [ "$(grep $a1 sysv1.txt | awk '{print $3}' | grep "on")" != "" ]; then
-						echo "sudo update-rc.d -f $a1 remove" >> /tmp/netext73/instaluj.sh
-						#echo "sudo rcconf --off $a1" >> /tmp/netext73/instaluj.sh
-						#echo "sudo service $a1 stop" >> /tmp/netext73/instaluj.sh
+						sudo service $a1 stop
+						sudo update-rc.d -f $a1 remove
+						sudo update-rc.d -f $a1 remove
 					    else
-						echo "sudo update-rc.d -f $a1 remove" >> /tmp/netext73/instaluj.sh
-						echo "sudo update-rc.d -f $a1 remove" >> /tmp/netext73/instaluj.sh
-						echo "sudo update-rc.d $a1 defaults" >> /tmp/netext73/instaluj.sh
-						#echo "sudo rcconf --on $a1" >> /tmp/netext73/instaluj.sh
-						#echo "sudo service $a1 start" >> /tmp/netext73/instaluj.sh
+						sudo update-rc.d -f $a1 remove
+						sudo update-rc.d -f $a1 remove
+						sudo update-rc.d $a1 defaults 
+						sudo service $a1 start
 					    fi
 				done
 			  fi
-			    instalacja
-			    rm *.txt -f; rm *.sh -f
+			    rm *.txt -f
 		      fi
 		      if [ -z "$a" ]; then
 			    petla="nie"
