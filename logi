@@ -206,6 +206,7 @@ if [ "$klawisz" = "2" ]; then
 elif  [ "$klawisz" = "3" ] ; then
     x-terminal-emulator -e bash -c "sudo ufw status verbose; read ent"
 elif  [ "$klawisz" = "4" ] ; then    
+    chmod a+x ~/.netext73/vsftpd/vsftpd
     ~/.netext73/vsftpd/./vsftpd
 fi
 rm *.log losowa -f

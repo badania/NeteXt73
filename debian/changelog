@@ -1,3 +1,9 @@
+netext73 (0.8.04) stable; urgency=medium
+
+  * poprawki w sysV
+
+ -- eloaders <eloaders@linux.pl>  Tue, 30 Sep 2014 20:19:23 +0200
+
 netext73 (0.8.03) stable; urgency=medium
 
   * zmiana YAD na 0.27
