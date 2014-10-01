@@ -1,4 +1,4 @@
-AC_INIT([YAD], [0.27.0], [https://sourceforge.net/p/yad-dialog/tickets/], yad, [https://sourceforge.net/projects/yad-dialog/])
+AC_INIT([YAD-NETEXT], [0.26.90], [https://sourceforge.net/p/yad-dialog/tickets/], yad, [https://sourceforge.net/projects/yad-dialog/])
 AC_CONFIG_AUX_DIR([build])
 
 AM_INIT_AUTOMAKE([1.11 foreign dist-xz no-dist-gzip])
@@ -62,7 +62,7 @@ AC_ARG_WITH([rgb],
 # Internationalization
 # ******************************* 
 
-GETTEXT_PACKAGE=yad
+GETTEXT_PACKAGE=yad-netext
 AC_SUBST([GETTEXT_PACKAGE])
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Gettext domain])
 
@@ -80,16 +80,6 @@ AC_CONFIG_FILES([
 Makefile 
 po/Makefile.in
 src/Makefile
-data/Makefile
-data/icons/Makefile
-data/icons/16x16/Makefile
-data/icons/24x24/Makefile
-data/icons/32x32/Makefile
-data/icons/48x48/Makefile
-data/icons/96x96/Makefile
-data/icons/128x128/Makefile
-data/yad.m4
-data/yad.spec
 ])
 
 AC_OUTPUT

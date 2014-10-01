@@ -1,3 +1,9 @@
+netext73 (0.8.05) stable; urgency=medium
+
+  * naprawa konfliktu yad z webupd8 i yad-netext
+
+ -- eloaders <eloaders@linux.pl>  Wed, 01 Oct 2014 18:01:51 +0200
+
 netext73 (0.8.04) stable; urgency=medium
 
   * poprawki w sysV
