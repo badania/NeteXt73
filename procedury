@@ -37,17 +37,14 @@ LATEST_VERSION=$(grep 'v[0-9]' /opt/NeteXt73/changelog | head -n 1 | cut -d 'v' 
 
 jezyczek(){
 
-if [ ! -e ~/.netext73 ]; then
-    mkdir ~/.netext73
-fi
 #katalog dla sysbench
 if [ ! -e ~/.netext73/sysbench ]; then
-    mkdir ~/.netext73/sysbench
+    mkdir ~/.netext73/sysbench -p
 fi
 
 #katalog dla glmark2
 if [ ! -e ~/.netext73/glmark2 ]; then
-    mkdir ~/.netext73/glmark2
+    mkdir ~/.netext73/glmark2 -p
 fi
 
 #teksty w języku polskim
