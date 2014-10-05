@@ -944,6 +944,52 @@ rm *.txt -f
 sudo initctl list | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state" > lista.txt
 }
 
+uslugi(){
+rm *.txt -f
+#upstart
+sudo initctl list | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state" > lista.txt
+cat lista.txt | cut -d " " -f 1 > 1.txt
+			sed -e 's/,//g' lista.txt | cut -d " " -f 2 | sed -e 's/start.*/wł/g' | sed -e 's/stop.*/wł/g'  > 2.txt
+			paste -d " " 1.txt 2.txt  > 4.txt
+			for SOFT in $(ls /etc/init/*.conf-disabled | sed 's/\.conf-disabled//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state")
+			do
+			    echo "$SOFT wył" >> 4.txt
+			done  2>&1 | pobieranie
+			sed  4.txt -i -e 's/wł/on -/g'
+			sed  4.txt -i -e 's/wył/- off/g'
+			echo $(sed -e '/^[^#]/s:^:FALSE :' 4.txt) > 1.txt
+
+			
+#sysv
+sudo rcconf --list | sort > sysv.txt
+cat sysv.txt | awk '{print $1}' > nazwy_uslug.txt
+sed -i 's/ on/X/g' sysv.txt
+sed -i 's/ off/-/g' sysv.txt
+for i in $(seq 1 $(wc -l sysv.txt | awk '{print $1}')); do 
+		      head sysv.txt -n$i | tail -n1 > 10.txt
+			  if  [ "$(grep "X" 10.txt | head -n1)" != "" ]
+			  then
+			      echo -e "on\t-">> stan_uslug.txt
+			  else
+			      echo -e "-\toff" >> stan_uslug.txt
+			  fi
+		      done  2>&1 | pobieranie
+		      
+		      paste -d " " nazwy_uslug.txt stan_uslug.txt > 4.txt
+		      
+		      #usunięcie usług upstart z sysV
+		      ls /etc/init/*.conf* | sed 's/\.conf.*//g' | cut -d "/" -f 4 | tr '\n' ' ' > 1.txt
+		      for i in $(cat 1.txt) ; do
+			  sed -i "/$i/d" 4.txt 
+		      done
+		      
+		      echo $(sed -e '/^[^#]/s:^:FALSE :' 4.txt) > sysv.txt
+		      
+cat 1.txt >> lista.txt
+cat sysv.txt >> lista.txt
+
+}
+
 burntest(){
 glxgears &
 for i in $(seq 1 $(grep 'model name' /proc/cpuinfo | wc -l )); do
