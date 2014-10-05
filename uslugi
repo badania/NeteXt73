@@ -43,7 +43,7 @@ petla_duza="tak"
 while [ $petla_duza = "tak" ]; do
 	echo "nie" > /tmp/netext73/ok.txt
 	
-	uslugi=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --text="<span color=\"$kolor_textu\">$TEXT_MENU_USLUGI</span>" --form --field=" :CB" "uslugi!$TEXT_MENU_USLUGI1!$TEXT_MENU_USLUGI1A!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C"  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
+	uslugi=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --text="<span color=\"$kolor_textu\">$TEXT_MENU_USLUGI</span>" --form --field=" :CB" "$TEXT_MENU_USLUGI1!$TEXT_MENU_USLUGI1A!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C"  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
 	klawisz=$?; uslugi=$(echo $uslugi | cut -d "|" -f 1)
 	#SysV - automat
 	if [ $klawisz = 0 ]; then 
@@ -99,10 +99,7 @@ while [ $petla_duza = "tak" ]; do
 			    rm *.txt -f; rm *.sh -f
 		      fi
 		done
-	#uslugi
-	elif [ "$uslugi" = "$uslugi" ] ; then
 	#Upstart - automat
-		uslugi
 	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1A" ] ; then
 		  petla="tak"
 		  while [ $petla = "tak" ]; do
