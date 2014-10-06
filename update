@@ -228,7 +228,8 @@ elif [ $klawisz = "2" ]; then
 elif [ $klawisz = "3" ]; then  #lista zmian
     if [ "$stable" != "$TEXT_BRAK_DANYCH" ]; then
 	  userek=$(cat /tmp/netext73/userek)
-	  if [ "$(echo $nr | grep "\.*\.")" != "" ];then
+	  echo $nr
+	  if [ "$(echo $nr | grep "......")" != "" ];then
 		  if [ "$USER" = "root" ]; then
 		      su $userek -c "xdg-open \"https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable\""
 		  else

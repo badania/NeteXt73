@@ -4,6 +4,7 @@
 v0.8.07
 -	połączenie zarządzania upstart i sysv
 -	usuniecie osobnego zarządzania upstart i sysv
+-	poprawka w sekcji update
 v0.8.06
 -	zmiana ikony paypal
 -	poprawki tłumaczeń
