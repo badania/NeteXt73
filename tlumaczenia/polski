@@ -263,8 +263,6 @@ export TEXT_BRAK_DANYCH="Brak danych, przerwane połączenia w trakcie pobierani
 #tlumaczenia_uslugi
 export TEXT_MENU_USLUGI="Wybierz sekcję, w której chcesz dokonać zmian:"
 export TEXT_MENU_USLUGI0="Zarządzaj usługami"
-export TEXT_MENU_USLUGI1="Zarządzaj usługami SysV"
-export TEXT_MENU_USLUGI1A="Zarządzaj usługami Upstart"
 export TEXT_MENU_USLUGI1B="Zarządzaj usługami SysV - tryb expert"
 export TEXT_MENU_USLUGI1C="Zarządzaj usługami Upstart - tryb expert"
 export TEXT_MENU_USLUGI2="Wybierz usługi, które chcesz włączyć lub wyłączyć."
