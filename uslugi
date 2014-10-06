@@ -51,11 +51,10 @@ while [ $petla_duza = "tak" ]; do
 	if [ "$uslugi" = "$TEXT_MENU_USLUGI0" ] ; then
 		petla="tak"
 		while [ $petla = "tak" ]; do
-		rm *.txt -f
 		#upstart
-		sudo initctl list | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state" > lista.txt
-		cat lista.txt | cut -d " " -f 1 > 1.txt
-		sed -e 's/,//g' lista.txt | cut -d " " -f 2 | sed -e 's/start.*/wł/g' | sed -e 's/stop.*waiting*/wł/g'  > 2.txt
+		upstart_test
+		cat lista.txt | cut -d " " -f 1 > 1.txt #nazwa usługi
+		sed -e 's/,//g' lista.txt | cut -d " " -f 2 | sed -e 's/start.*/wł/g' | sed -e 's/stop.*waiting*/wł/g'  > 2.txt #stan usługi
 		
 		paste -d " " 1.txt 2.txt  > upstart.txt
 		for SOFT in $(ls /etc/init/*.conf-disabled | sed 's/\.conf-disabled//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state")
@@ -68,7 +67,7 @@ while [ $petla_duza = "tak" ]; do
 		
 		#sysv
 		sudo rcconf --list | sort > sysv.txt
-		cat sysv.txt | awk '{print $1}' > nazwy_uslug.txt
+		cat sysv.txt | awk '{print $1}' > nazwy_uslug.txt #nazwa usługi
 		sed -i 's/ on/X/g' sysv.txt
 		sed -i 's/ off/-/g' sysv.txt
 		for i in $(seq 1 $(wc -l sysv.txt | awk '{print $1}')); do 
@@ -95,41 +94,52 @@ while [ $petla_duza = "tak" ]; do
 		sed -i -e '/^[^#]/s:^:FALSE :' uslugi.txt
 		
 		a=$(yad-netext --center --height=680 --width=490   --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>SysV, Upstart - automat</b></span>\n$TEXT_MENU_USLUGI2" --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU_USLUGI3"  --column="$TEXT_MENU_USLUGI4" --column="$TEXT_MENU_USLUGI5"  --checklist --list $(cat uslugi.txt))
-		      if [ $? = "0" ]; then
-			    if [ "$a" != "" ]; then
+		if [ $? = "0" ]; then
+			if [ "$a" != "" ]; then
 				echo $a | sed 's/|/\n/g' | sed '/^on/ d' | sed '/^off/ d' | sed '/^-/ d' | sed '/^.*TRUE/ d' > 12.txt
 				for a1 in $(cat 12.txt)
 				do
 					if [ "$(grep $a1 sysv.txt)" != "" ]; then
-						    #export a1=$a
 							if [ "$(grep $a1 sysv.txt | awk '{print $2}')" = "on" ]; then
-							    sudo service $a1 stop
-							    sudo update-rc.d -f $a1 remove
-							    sudo update-rc.d -f $a1 remove
+								#wyłączanie sysv
+								sudo service $a1 stop
+								sudo update-rc.d -f $a1 remove
+								sudo update-rc.d -f $a1 remove
 							else
-							    sudo update-rc.d -f $a1 remove
-							    sudo update-rc.d -f $a1 remove
-							    sudo update-rc.d $a1 defaults 
-							    sudo service $a1 start
+								#włączanie sysv
+								sudo update-rc.d -f $a1 remove
+								sudo update-rc.d -f $a1 remove
+								sudo update-rc.d $a1 defaults 
+								sudo service $a1 start
 							fi
 					elif [ "$(grep $a1 upstart.txt)" != "" ]; then
-							    if [ "$a1" = "binfmt-support" ]; then
-								    if [ -e /etc/init/$a1.conf-disabled ]; then
-									    sudo update-rc.d -f $a1 defaults; sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start
-								    elif [ -e /etc/init/$a1.conf ]; then
-									    sudo update-rc.d -f $a1 remove; sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled
-								    fi
-							    else
-								    if [ -e /etc/init/$a1.conf-disabled ]; then
-									    sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start
-								    elif [ -e /etc/init/$a1.conf ]; then
-									    sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled
-								    fi
-							    fi
+							if [ "$a1" = "binfmt-support" ]; then
+								if [ -e /etc/init/$a1.conf-disabled ]; then
+									#włączanie upstart
+									sudo update-rc.d -f $a1 defaults
+									sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf
+									sudo service $a1 start
+								elif [ -e /etc/init/$a1.conf ]; then
+									#wyłączanie upstart
+									sudo update-rc.d -f $a1 remove
+									sudo service $a1 stop
+									sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled
+								fi
+							else
+								if [ -e /etc/init/$a1.conf-disabled ]; then
+									#włączanie upstart
+									sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf
+									sudo service $a1 start
+								elif [ -e /etc/init/$a1.conf ]; then
+									#wyłączanie upstart
+									sudo service $a1 stop
+									sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled
+								fi
+							fi
 					fi
 				done
-			    fi
-		    fi
+			fi
+		fi
 		if [ -z "$a" ]; then
 			petla="nie"
 			rm *.txt -f

@@ -696,14 +696,6 @@ elif  [ "$(cat /tmp/netext73/ok.txt)" = "nie" ]; then
 fi
 }
 
-sysv2(){
-rm *.txt -f
-sudo rcconf --list | sort > sysv.txt
-cat sysv.txt | awk '{print $1}' > nazwy_uslug.txt
-sed -i 's/ on/X/g' sysv.txt
-sed -i 's/ off/-/g' sysv.txt
-}
-
 klucze(){
 echo "sudo apt-get update 2> /tmp/netext73/keymissing"
 echo "for key in \$(grep 'NO_PUBKEY' /tmp/netext73/keymissing |sed \"s/.*NO_PUBKEY //\"); do"
