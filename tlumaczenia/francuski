@@ -259,6 +259,7 @@ export TEXT_BRAK_DANYCH="Serveurs pas disponibles. Vérifiez votre connexion Int
 #########################################################################################################################################################################
 #tlumaczenia_uslugi
 export TEXT_MENU_USLUGI="Sélectionnez la section dans laquelle vous souhaitez apporter des modifications:"
+export TEXT_MENU_USLUGI0="Gérez les services"
 export TEXT_MENU_USLUGI1="Gérez les services SysV"
 export TEXT_MENU_USLUGI1A="Gérez les services Upstart"
 export TEXT_MENU_USLUGI1B="Gérez les services SysV - mode expert"

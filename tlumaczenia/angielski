@@ -265,6 +265,7 @@ export TEXT_BRAK_DANYCH="Servers not available. Check your Internet connection o
 #########################################################################################################################################################################
 #tlumaczenia_uslugi
 export TEXT_MENU_USLUGI="Select where you want to make changes:"
+export TEXT_MENU_USLUGI0="Manage services"
 export TEXT_MENU_USLUGI1="Manage services SysV"
 export TEXT_MENU_USLUGI1A="Manage services Upstart"
 export TEXT_MENU_USLUGI1B="Manage services SysV - expert mode"
