@@ -375,4 +375,4 @@ export TEXT_USUN_WYNIK="Remove result"
 
 #########################################################################################################################################################################
 
-
+export TEXT_WARRING_DEP1="For proper operation of energy management [script APM] remove the following packages:"

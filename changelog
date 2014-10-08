@@ -3,6 +3,8 @@
 
 v0.8.08
 -	usunięcie curl i perl z zależności
+-	dodanie do logów informacji o konfliktach
+-	dodanie dymku z informacją o znanych konfliktach
 v0.8.07
 -	połączenie zarządzania upstart i sysv
 -	usuniecie osobnego zarządzania upstart i sysv

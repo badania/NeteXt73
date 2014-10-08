@@ -173,6 +173,9 @@ if [ "$klawisz" = "2" ]; then
     cat ~/.netext73/soft >> system$losowa.log
     echo -e "\n\n#################################  stan tmp ##############################################################" >> system$losowa.log
     ls -la /tmp/netext73 >> system$losowa.log
+    echo -e "\n\n#################################  konflikty #############################################################" >> system$losowa.log
+    dpkg -l | awk '{print $2}' | grep laptop-mode-tools -x >> system$losowa.log    
+    dpkg -l | awk '{print $2}' | grep tlp -x >> system$losowa.log    
     
     sed -i 's/<\/span>//g' system$losowa.log
     sed -i 's/<span.*">//g' system$losowa.log

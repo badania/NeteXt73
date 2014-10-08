@@ -51,6 +51,19 @@ sumy(){
     wget $adres_sum_kontrolnych | pobieranie && mv sumy.txt $sumy_kontrolne
 }
 
+#ostrzeżenie o konfliktach
+zaleznosci(){
+plik=""
+for i in $(echo tlp laptop-mode-tools);do
+if [ "$(dpkg -l | awk '{print $2}' | grep $i -x)" != "" ];then
+    export plik="$plik $i"
+fi
+done
+if [ "$plik" != "" ]; then
+    dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_WARRING_DEP1 $plik"
+fi
+}
+
 #########################################################################################################################################################################
 
 
@@ -67,7 +80,7 @@ if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ]; 
       fi
 fi
 
-
+zaleznosci
 sumy &
 aktualizacja &
 
