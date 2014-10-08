@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.08
+-	usunięcie curl i perl z zależności
 v0.8.07
 -	połączenie zarządzania upstart i sysv
 -	usuniecie osobnego zarządzania upstart i sysv

@@ -1,446 +1,452 @@
+netext73 (0.8.08) stable; urgency=medium
+
+  * usunięcie curl i perl z zależności
+
+ -- NetBit73 <netbit73@gmail.com>  Wed, 08 Oct 2014 20:50:33 +0200
+
 netext73 (0.8.07) stable; urgency=medium
 
   * połączenie zarządzania upstart i sysv
 
- -- eloaders <eloaders@linux.pl>  Mon, 06 Oct 2014 09:22:26 +0200
+ -- NetBit73 <netbit73@gmail.com>  Mon, 06 Oct 2014 09:22:26 +0200
 
 netext73 (0.8.06) stable; urgency=medium
 
   * poprawki tłumaczeń i ikony pp
 
- -- eloaders <eloaders@linux.pl>  Thu, 02 Oct 2014 15:08:23 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 02 Oct 2014 15:08:23 +0200
 
 netext73 (0.8.05) stable; urgency=medium
 
   * naprawa konfliktu yad z webupd8 i yad-netext
 
- -- eloaders <eloaders@linux.pl>  Wed, 01 Oct 2014 18:01:51 +0200
+ -- NetBit73 <netbit73@gmail.com>  Wed, 01 Oct 2014 18:01:51 +0200
 
 netext73 (0.8.04) stable; urgency=medium
 
   * poprawki w sysV
 
- -- eloaders <eloaders@linux.pl>  Tue, 30 Sep 2014 20:19:23 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 30 Sep 2014 20:19:23 +0200
 
 netext73 (0.8.03) stable; urgency=medium
 
   * zmiana YAD na 0.27
 
- -- eloaders <eloaders@linux.pl>  Sun, 28 Sep 2014 21:48:14 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sun, 28 Sep 2014 21:48:14 +0200
 
 netext73 (0.8.02) stable; urgency=medium
 
   * usuwanie /tmp/netext73 netexta przy zmiania root-user i przy zamknięciu programu
 
- -- eloaders <eloaders@linux.pl>  Thu, 25 Sep 2014 13:36:55 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 25 Sep 2014 13:36:55 +0200
 
 netext73 (0.8.01) stable; urgency=medium
 
   * czyszczenie kodu
 
- -- eloaders <eloaders@linux.pl>  Tue, 23 Sep 2014 11:30:30 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 23 Sep 2014 11:30:30 +0200
 
 netext73 (0.8.00) stable; urgency=medium
 
   * stabilizacja netext'a
 
- -- eloaders <eloaders@linux.pl>  Sun, 21 Sep 2014 21:14:17 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sun, 21 Sep 2014 21:14:17 +0200
 
 netext73 (0.7.96) stable; urgency=medium
 
   * sumy kontrolne pobierana na starcie z innego serwera
 
- -- eloaders <eloaders@linux.pl>  Sat, 20 Sep 2014 19:28:31 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sat, 20 Sep 2014 19:28:31 +0200
 
 netext73 (0.7.95) stable; urgency=medium
 
   * zmiana uwierzytelniania klientów premim, indywidualne konta
 
- -- eloaders <eloaders@linux.pl>  Tue, 16 Sep 2014 15:08:12 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 16 Sep 2014 15:08:12 +0200
 
 netext73 (0.7.94) stable; urgency=medium
 
   * przepisanie instalatora grafik na nowy serwer
 
- -- eloaders <eloaders@linux.pl>  Mon, 15 Sep 2014 12:57:10 +0200
+ -- NetBit73 <netbit73@gmail.com>  Mon, 15 Sep 2014 12:57:10 +0200
 
 netext73 (0.7.93) stable; urgency=medium
 
   * dodanie do instalatora Nvidia brakujących zależności libvdpau1
 
- -- eloaders <eloaders@linux.pl>  Tue, 09 Sep 2014 14:38:50 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 09 Sep 2014 14:38:50 +0200
 
 netext73 (0.7.92) stable; urgency=medium
 
   * rts51xx zmiany
 
- -- eloaders <eloaders@linux.pl>  Fri, 29 Aug 2014 20:29:13 +0200
+ -- NetBit73 <netbit73@gmail.com>  Fri, 29 Aug 2014 20:29:13 +0200
 
 netext73 (0.7.91) stable; urgency=medium
 
   * APM 3.7
 
- -- eloaders <eloaders@linux.pl>  Fri, 29 Aug 2014 12:23:42 +0200
+ -- NetBit73 <netbit73@gmail.com>  Fri, 29 Aug 2014 12:23:42 +0200
 
 netext73 (0.7.90) stable; urgency=medium
 
   * wdrożenie APM v3.6
 
- -- eloaders <eloaders@linux.pl>  Sat, 23 Aug 2014 07:58:32 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sat, 23 Aug 2014 07:58:32 +0200
 
 netext73 (0.7.89) stable; urgency=medium
 
   * wyłączenie wsparcia dla 32bit
 
- -- eloaders <eloaders@linux.pl>  Thu, 21 Aug 2014 18:12:36 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 21 Aug 2014 18:12:36 +0200
 
 netext73 (0.7.88) stable; urgency=medium
 
   * GRUB nowe wpisy dla icore
 
- -- eloaders <eloaders@linux.pl>  Thu, 07 Aug 2014 20:32:55 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 07 Aug 2014 20:32:55 +0200
 
 netext73 (0.7.87) stable; urgency=medium
 
   * update - otwieranie okna premium zamiast std, gdy mamy adres
 
- -- eloaders <eloaders@linux.pl>  Mon, 21 Jul 2014 21:04:41 +0200
+ -- NetBit73 <netbit73@gmail.com>  Mon, 21 Jul 2014 21:04:41 +0200
 
 netext73 (0.7.86) stable; urgency=medium
 
   * skrypt do aktualizacji dropboxa
 
- -- eloaders <eloaders@linux.pl>  Sun, 13 Jul 2014 14:39:55 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sun, 13 Jul 2014 14:39:55 +0200
 
 netext73 (0.7.85) stable; urgency=medium
 
   * przywrócenie wykonania initramfs po instalacji kernela
 
- -- eloaders <eloaders@linux.pl>  Wed, 09 Jul 2014 21:33:43 +0200
+ -- NetBit73 <netbit73@gmail.com>  Wed, 09 Jul 2014 21:33:43 +0200
 
 netext73 (0.7.84) stable; urgency=medium
 
   * naprawa błędu w sekcji update dla kerneli nie premium
 
- -- eloaders <eloaders@linux.pl>  Tue, 08 Jul 2014 18:28:22 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 08 Jul 2014 18:28:22 +0200
 
 netext73 (0.7.83) stable; urgency=medium
 
   * zmiana w sekcji update - sprawdzanie dostępnych kerneli premium
 
- -- eloaders <eloaders@linux.pl>  Fri, 04 Jul 2014 12:52:20 +0200
+ -- NetBit73 <netbit73@gmail.com>  Fri, 04 Jul 2014 12:52:20 +0200
 
 netext73 (0.7.82) stable; urgency=medium
 
   * zmiany w pliku makefile
 
- -- eloaders <eloaders@linux.pl>  Wed, 02 Jul 2014 17:38:23 +0200
+ -- NetBit73 <netbit73@gmail.com>  Wed, 02 Jul 2014 17:38:23 +0200
 
 netext73 (0.7.81) stable; urgency=medium
 
   * APM - osobny planista SSD i HDD
 
- -- eloaders <eloaders@linux.pl>  Thu, 26 Jun 2014 19:14:51 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 26 Jun 2014 19:14:51 +0200
 
 netext73 (0.7.80) stable; urgency=medium
 
   * zmiany dotyczące microcode dla AMD
 
- -- eloaders <eloaders@linux.pl>  Thu, 26 Jun 2014 11:56:37 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 26 Jun 2014 11:56:37 +0200
 
 netext73 (0.7.79) stable; urgency=medium
 
   * dodanie glmark2
 
- -- eloaders <eloaders@linux.pl>  Mon, 23 Jun 2014 21:54:42 +0200
+ -- NetBit73 <netbit73@gmail.com>  Mon, 23 Jun 2014 21:54:42 +0200
 
 netext73 (0.7.78) stable; urgency=medium
 
   * dodadnie do GRUB zswap.compressor lz4,lzo,deflate
 
- -- eloaders <eloaders@linux.pl>  Sat, 21 Jun 2014 20:50:12 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sat, 21 Jun 2014 20:50:12 +0200
 
 netext73 (0.7.77) stable; urgency=medium
 
   * poprawka sprawdzania zainstoalowanych kerneli
 
- -- eloaders <eloaders@linux.pl>  Sat, 21 Jun 2014 08:04:58 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sat, 21 Jun 2014 08:04:58 +0200
 
 netext73 (0.7.76) stable; urgency=medium
 
   * dodanie sysbench
 
- -- eloaders <eloaders@linux.pl>  Thu, 19 Jun 2014 13:35:33 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 19 Jun 2014 13:35:33 +0200
 
 netext73 (0.7.75) stable; urgency=medium
 
   * wyłączenie update-initramfs z instalatora kerneli
 
- -- eloaders <eloaders@linux.pl>  Tue, 17 Jun 2014 09:17:50 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 17 Jun 2014 09:17:50 +0200
 
 netext73 (0.7.74) stable; urgency=medium
 
   * poprawka sekcji update-dostosowanie do nowego nazewnictwa kerneli
 
- -- eloaders <eloaders@linux.pl>  Mon, 16 Jun 2014 19:44:37 +0200
+ -- NetBit73 <netbit73@gmail.com>  Mon, 16 Jun 2014 19:44:37 +0200
 
 netext73 (0.7.73) stable; urgency=medium
 
   * poprawa kodu instalatora grafik
 
- -- eloaders <eloaders@linux.pl>  Sat, 14 Jun 2014 19:40:14 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sat, 14 Jun 2014 19:40:14 +0200
 
 netext73 (0.7.72) stable; urgency=medium
 
   * dostosowanie instalatora do nowych nazw paczek
 
- -- eloaders <eloaders@linux.pl>  Sun, 08 Jun 2014 15:19:14 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sun, 08 Jun 2014 15:19:14 +0200
 
 netext73 (0.7.71) stable; urgency=medium
 
   * zmiana ikony repo
 
- -- eloaders <eloaders@linux.pl>  Thu, 05 Jun 2014 09:35:38 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 05 Jun 2014 09:35:38 +0200
 
 netext73 (0.7.70) stable; urgency=medium
 
   * poprawki kodu, szerokości okien
 
- -- eloaders <eloaders@linux.pl>  Wed, 04 Jun 2014 08:07:13 +0200
+ -- NetBit73 <netbit73@gmail.com>  Wed, 04 Jun 2014 08:07:13 +0200
 
 netext73 (0.7.69) stable; urgency=medium
 
   * poprawki tłumaczeń
 
- -- eloaders <eloaders@linux.pl>  Tue, 03 Jun 2014 12:30:48 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 03 Jun 2014 12:30:48 +0200
 
 netext73 (0.7.68) stable; urgency=medium
 
   * dodanie graficznego monitora RAM
 
- -- eloaders <eloaders@linux.pl>  Mon, 02 Jun 2014 14:02:33 +0200
+ -- NetBit73 <netbit73@gmail.com>  Mon, 02 Jun 2014 14:02:33 +0200
 
 netext73 (0.7.67) stable; urgency=medium
 
   * ustawienie sztywnej skali do 6GHz dla core freq
 
- -- eloaders <eloaders@linux.pl>  Mon, 02 Jun 2014 10:29:10 +0200
+ -- NetBit73 <netbit73@gmail.com>  Mon, 02 Jun 2014 10:29:10 +0200
 
 netext73 (0.7.66) stable; urgency=medium
 
   * zmiana instalatora Radeon i monitora baterii
 
- -- eloaders <eloaders@linux.pl>  Sat, 31 May 2014 22:22:39 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sat, 31 May 2014 22:22:39 +0200
 
 netext73 (0.7.65) stable; urgency=medium
 
   * zmiany w instalatorze NVidia - dostosowanie do nowych nazw paczek
 
- -- eloaders <eloaders@linux.pl>  Fri, 30 May 2014 20:21:56 +0200
+ -- NetBit73 <netbit73@gmail.com>  Fri, 30 May 2014 20:21:56 +0200
 
 netext73 (0.7.64) stable; urgency=medium
 
   * dodanie do zależności sysv-rc-conf
 
- -- eloaders <eloaders@linux.pl>  Sun, 25 May 2014 21:36:38 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sun, 25 May 2014 21:36:38 +0200
 
 netext73 (0.7.63) stable; urgency=medium
 
   * wyłączenie wymuszenia grub background
 
- -- eloaders <eloaders@linux.pl>  Sun, 25 May 2014 09:54:23 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sun, 25 May 2014 09:54:23 +0200
 
 netext73 (0.7.62) stable; urgency=medium
 
   * stabilizowanie wersji
 
- -- eloaders <eloaders@linux.pl>  Fri, 23 May 2014 14:13:53 +0200
+ -- NetBit73 <netbit73@gmail.com>  Fri, 23 May 2014 14:13:53 +0200
 
 netext73 (0.7.61) stable; urgency=medium
 
   * zmiana GRUB background z jpg na png
 
- -- eloaders <eloaders@linux.pl>  Fri, 23 May 2014 11:37:50 +0200
+ -- NetBit73 <netbit73@gmail.com>  Fri, 23 May 2014 11:37:50 +0200
 
 netext73 (0.7.60) stable; urgency=medium
 
   * yad_wget multiprogress
 
- -- eloaders <eloaders@linux.pl>  Tue, 20 May 2014 15:38:08 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 20 May 2014 15:38:08 +0200
 
 netext73 (0.7.59) stable; urgency=medium
 
   * dodanie grafiki do GRUB
 
- -- eloaders <eloaders@linux.pl>  Sun, 18 May 2014 22:37:22 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sun, 18 May 2014 22:37:22 +0200
 
 netext73 (0.7.58) stable; urgency=medium
 
   * możliwość wyboru rozdzielczości w GRUB
 
- -- eloaders <eloaders@linux.pl>  Fri, 16 May 2014 11:19:55 +0200
+ -- NetBit73 <netbit73@gmail.com>  Fri, 16 May 2014 11:19:55 +0200
 
 netext73 (0.7.58) stable; urgency=medium
 
   * kubuntu ppa
 
- -- eloaders <eloaders@linux.pl>  Wed, 14 May 2014 16:15:21 +0200
+ -- NetBit73 <netbit73@gmail.com>  Wed, 14 May 2014 16:15:21 +0200
 
 netext73 (0.7.57) stable; urgency=medium
 
   * dużo zbiór poprawek
 
- -- eloaders <eloaders@linux.pl>  Tue, 13 May 2014 09:57:03 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 13 May 2014 09:57:03 +0200
 
 netext73 (0.7.56) stable; urgency=medium
 
   * poprawki w nvidia instalatorze
 
- -- eloaders <eloaders@linux.pl>  Sun, 11 May 2014 14:39:38 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sun, 11 May 2014 14:39:38 +0200
 
 netext73 (0.7.55) stable; urgency=medium
 
   * naprawa 2xnv settings
 
- -- eloaders <eloaders@linux.pl>  Thu, 08 May 2014 21:25:44 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 08 May 2014 21:25:44 +0200
 
 netext73 (0.7.54) stable; urgency=medium
 
   * przejście na YAD 0.26.9
 
- -- eloaders <eloaders@linux.pl>  Tue, 06 May 2014 18:31:06 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 06 May 2014 18:31:06 +0200
 
 netext73 (0.7.53) stable; urgency=medium
 
   * poprawki w repo
 
- -- eloaders <eloaders@linux.pl>  Sun, 04 May 2014 18:43:48 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sun, 04 May 2014 18:43:48 +0200
 
 netext73 (0.7.52) stable; urgency=medium
 
   * poprawka monitora systemu
 
- -- eloaders <eloaders@linux.pl>  Wed, 30 Apr 2014 20:11:41 +0200
+ -- NetBit73 <netbit73@gmail.com>  Wed, 30 Apr 2014 20:11:41 +0200
 
 netext73 (0.7.51) stable; urgency=medium
 
   * integracja APM z NeteXt
 
- -- eloaders <eloaders@linux.pl>  Wed, 30 Apr 2014 13:04:06 +0200
+ -- NetBit73 <netbit73@gmail.com>  Wed, 30 Apr 2014 13:04:06 +0200
 
 netext73 (0.7.50) stable; urgency=medium
 
   * firmware w repo
 
- -- eloaders <eloaders@linux.pl>  Tue, 29 Apr 2014 19:03:32 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 29 Apr 2014 19:03:32 +0200
 
 netext73 (0.7.49) stable; urgency=medium
 
   * zmiany sprawdzania firmware w sekcji update
 
- -- eloaders <eloaders@linux.pl>  Tue, 29 Apr 2014 12:33:12 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 29 Apr 2014 12:33:12 +0200
 
 netext73 (0.7.48) stable; urgency=medium
 
   * zmiany w module logów
 
- -- eloaders <eloaders@linux.pl>  Fri, 25 Apr 2014 09:26:52 +0200
+ -- NetBit73 <netbit73@gmail.com>  Fri, 25 Apr 2014 09:26:52 +0200
 
 netext73 (0.7.47) stable; urgency=medium
 
   * zmiana natywnego serwera
 
- -- eloaders <eloaders@linux.pl>  Thu, 24 Apr 2014 11:35:01 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 24 Apr 2014 11:35:01 +0200
 
 netext73 (0.7.46) stable; urgency=medium
 
   * dodanie kolejnego serwera do wyboru
 
- -- eloaders <eloaders@linux.pl>  Thu, 24 Apr 2014 08:26:20 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 24 Apr 2014 08:26:20 +0200
 
 netext73 (0.7.45) stable; urgency=medium
 
   * włączanie i wyłączanie wifi N
 
- -- eloaders <eloaders@linux.pl>  Tue, 22 Apr 2014 12:08:25 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 22 Apr 2014 12:08:25 +0200
 
 netext73 (0.7.44) stable; urgency=medium
 
   * zmiana podkreślników na spacje w module usuwania kluczy GPG
 
- -- eloaders <eloaders@linux.pl>  Mon, 21 Apr 2014 08:40:54 +0200
+ -- NetBit73 <netbit73@gmail.com>  Mon, 21 Apr 2014 08:40:54 +0200
 
 netext73 (0.7.43) stable; urgency=medium
 
   * przepisanie SysV na rcconf
 
- -- eloaders <eloaders@linux.pl>  Sat, 19 Apr 2014 21:05:51 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sat, 19 Apr 2014 21:05:51 +0200
 
 netext73 (0.7.42) stable; urgency=medium
 
   * przepięcie na bug.netext73.pl
 
- -- eloaders <eloaders@linux.pl>  Mon, 14 Apr 2014 09:12:19 +0200
+ -- NetBit73 <netbit73@gmail.com>  Mon, 14 Apr 2014 09:12:19 +0200
 
 netext73 (0.7.42) stable; urgency=medium
 
   * poprawki instalatora grafik
 
- -- eloaders <eloaders@linux.pl>  Thu, 10 Apr 2014 19:09:44 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 10 Apr 2014 19:09:44 +0200
 
 netext73 (0.7.41) stable; urgency=medium
 
   * naprawa trybu root
 
- -- eloaders <eloaders@linux.pl>  Thu, 10 Apr 2014 19:04:01 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 10 Apr 2014 19:04:01 +0200
 
 netext73 (0.7.40) stable; urgency=medium
 
   * zmiany w instalatorze NV i w monitorze
 
- -- eloaders <eloaders@linux.pl>  Wed, 09 Apr 2014 21:16:00 +0200
+ -- NetBit73 <netbit73@gmail.com>  Wed, 09 Apr 2014 21:16:00 +0200
 
 netext73 (0.7.39) stable; urgency=medium
 
   * deinstalator przepisany na natywną konsolę
 
- -- eloaders <eloaders@linux.pl>  Sat, 05 Apr 2014 12:34:57 +0200
+ -- NetBit73 <netbit73@gmail.com>  Sat, 05 Apr 2014 12:34:57 +0200
 
 netext73 (0.7.38) stable; urgency=medium
 
   * czyszczenie kodu
 
- -- eloaders <eloaders@linux.pl>  Thu, 03 Apr 2014 15:38:08 +0200
+ -- NetBit73 <netbit73@gmail.com>  Thu, 03 Apr 2014 15:38:08 +0200
 
 netext73 (0.7.37) stable; urgency=medium
 
   * poprawki kodu, usunięcie dublujących się skryptów
 
- -- eloaders <eloaders@linux.pl>  Wed, 02 Apr 2014 20:23:31 +0200
+ -- NetBit73 <netbit73@gmail.com>  Wed, 02 Apr 2014 20:23:31 +0200
 
 netext73 (0.7.36) stable; urgency=medium
 
   * dostosowanie Makefile do zmian
 
- -- eloaders <eloaders@linux.pl>  Tue, 01 Apr 2014 13:11:11 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 01 Apr 2014 13:11:11 +0200
 
 netext73 (0.7.35) stable; urgency=medium
 
   * duży zestaw poprawek
 
- -- eloaders <eloaders@linux.pl>  Tue, 01 Apr 2014 11:16:54 +0200
+ -- NetBit73 <netbit73@gmail.com>  Tue, 01 Apr 2014 11:16:54 +0200
 
 netext73 (0.7.34) stable; urgency=low
 
   * wymuszenie hasła dla opcji restart
 
- -- eloaders <eloaders@linux.pl>  Thu, 27 Mar 2014 18:54:23 +0100
+ -- NetBit73 <netbit73@gmail.com>  Thu, 27 Mar 2014 18:54:23 +0100
 
 netext73 (0.7.33) stable; urgency=low
 
   * kolejne zmiany w zarządzaniu usługami, teraz cały zbiór obsługiwnany jest jednym hasłem roota
 
- -- eloaders <eloaders@linux.pl>  Fri, 21 Mar 2014 17:59:13 +0100
+ -- NetBit73 <netbit73@gmail.com>  Fri, 21 Mar 2014 17:59:13 +0100
 
 netext73 (0.7.32) stable; urgency=low
 
@@ -450,109 +456,109 @@ netext73 (0.7.32) stable; urgency=low
   * zmiana w chkconfig długości nazw dla usług skanowanych
   * zmiany w sekcji monitor, monitor baterii nie pokaże się w menu jeżeli nie mamy baterii
 
- -- eloaders <eloaders@linux.pl>  Fri, 21 Mar 2014 13:58:01 +0100
+ -- NetBit73 <netbit73@gmail.com>  Fri, 21 Mar 2014 13:58:01 +0100
 
 netext73 (0.7.31) stable; urgency=low
 
   * zmiana sposobu sprawdzania statusu usług upstart
 
- -- eloaders <eloaders@linux.pl>  Sat, 15 Mar 2014 22:06:49 +0100
+ -- NetBit73 <netbit73@gmail.com>  Sat, 15 Mar 2014 22:06:49 +0100
 
 netext73 (0.7.30) stable; urgency=low
 
   * dostosowanie zarządznia UPSTARTEM do trusty
 
- -- eloaders <eloaders@linux.pl>  Sat, 15 Mar 2014 17:33:03 +0100
+ -- NetBit73 <netbit73@gmail.com>  Sat, 15 Mar 2014 17:33:03 +0100
 
 netext73 (0.7.29) stable; urgency=low
 
   * zmiany w zarządzaniu UPSTART, sprawdznie stanu usługi nie będzie już wymagać podawania hasła
 
- -- eloaders <eloaders@linux.pl>  Sat, 15 Mar 2014 12:49:12 +0100
+ -- NetBit73 <netbit73@gmail.com>  Sat, 15 Mar 2014 12:49:12 +0100
 
 netext73 (0.7.28) stable; urgency=low
 
   * poprawki w pliku MakeFile
 
- -- eloaders <eloaders@linux.pl>  Thu, 13 Mar 2014 20:21:13 +0100
+ -- NetBit73 <netbit73@gmail.com>  Thu, 13 Mar 2014 20:21:13 +0100
 
 netext73 (0.7.27) stable; urgency=low
 
   * dodanie terminalowego launchera pod nazwą: netext73
 
- -- eloaders <eloaders@linux.pl>  Thu, 13 Mar 2014 19:17:31 +0100
+ -- NetBit73 <netbit73@gmail.com>  Thu, 13 Mar 2014 19:17:31 +0100
 
 netext73 (0.7.26) stable; urgency=low
 
   * poprawki w instalatorach oprogramowania-przyspieszenie wyszukiwania i wyświetlania listy, doszły repozytoria
 
- -- eloaders <eloaders@linux.pl>  Thu, 13 Mar 2014 18:13:44 +0100
+ -- NetBit73 <netbit73@gmail.com>  Thu, 13 Mar 2014 18:13:44 +0100
 
 netext73 (0.7.25) stable; urgency=low
 
   * poprawki w tłumaczeniach, poprawki w sekcji GRUB
 
- -- eloaders <eloaders@linux.pl>  Thu, 13 Mar 2014 11:06:33 +0100
+ -- NetBit73 <netbit73@gmail.com>  Thu, 13 Mar 2014 11:06:33 +0100
 
 netext73 (0.7.24) stable; urgency=low
 
   * kolejne zmiany w sekcji GRUB
 
- -- eloaders <eloaders@linux.pl>  Wed, 12 Mar 2014 11:12:52 +0100
+ -- NetBit73 <netbit73@gmail.com>  Wed, 12 Mar 2014 11:12:52 +0100
 
 netext73 (0.7.23) stable; urgency=low
 
   * zmiany w sekcji GRUB
 
- -- eloaders <eloaders@linux.pl>  Tue, 11 Mar 2014 21:43:02 +0100
+ -- NetBit73 <netbit73@gmail.com>  Tue, 11 Mar 2014 21:43:02 +0100
 
 netext73 (0.7.22) stable; urgency=low
 
   * dodane nowe repozytoria
 
- -- eloaders <eloaders@linux.pl>  Mon, 10 Mar 2014 15:28:20 +0100
+ -- NetBit73 <netbit73@gmail.com>  Mon, 10 Mar 2014 15:28:20 +0100
 
 netext73 (0.7.21) stable; urgency=low
 
   * dodane nowe repozytoria oraz drobne poprawki
 
- -- eloaders <eloaders@linux.pl>  Mon, 10 Mar 2014 15:15:08 +0100
+ -- NetBit73 <netbit73@gmail.com>  Mon, 10 Mar 2014 15:15:08 +0100
 
 netext73 (0.7.20) stable; urgency=low
 
   * zmiana w sekcji APM - dodanie 4 fixów, powrót do okna APM po wykonaniu zmian celem sprawdzenia czy zaszyły
 
- -- eloaders <eloaders@linux.pl>  Wed, 05 Mar 2014 09:39:19 +0100
+ -- NetBit73 <netbit73@gmail.com>  Wed, 05 Mar 2014 09:39:19 +0100
 
 netext73 (0.7.19) stable; urgency=low
 
   * dostosowanie APM do v3.3
 
- -- eloaders <eloaders@linux.pl>  Mon, 03 Mar 2014 20:51:34 +0100
+ -- NetBit73 <netbit73@gmail.com>  Mon, 03 Mar 2014 20:51:34 +0100
 
 netext73 (0.7.18) stable; urgency=low
 
   * naprawa modułu sysv
 
- -- eloaders <eloaders@linux.pl>  Mon, 03 Mar 2014 11:35:32 +0100
+ -- NetBit73 <netbit73@gmail.com>  Mon, 03 Mar 2014 11:35:32 +0100
 
 netext73 (0.7.17) stable; urgency=low
 
   * przywrócenie paczek i386
 
- -- eloaders <eloaders@linux.pl>  Sun, 02 Mar 2014 20:54:50 +0100
+ -- NetBit73 <netbit73@gmail.com>  Sun, 02 Mar 2014 20:54:50 +0100
 
 netext73 (0.7.16) stable; urgency=low
 
   * zmiany w sekcji GRUB
 
- -- eloaders <eloaders@linux.pl>  Sun, 02 Mar 2014 20:39:58 +0100
+ -- NetBit73 <netbit73@gmail.com>  Sun, 02 Mar 2014 20:39:58 +0100
 
 netext73 (0.7.15) stable; urgency=low
 
   * wyłączenie notify-send z zależności obowiązkowych
 
- -- eloaders <eloaders@linux.pl>  Sun, 02 Mar 2014 17:39:58 +0100
+ -- NetBit73 <netbit73@gmail.com>  Sun, 02 Mar 2014 17:39:58 +0100
 
 
 netext73 (0.7.14) stable; urgency=low
@@ -560,50 +566,50 @@ netext73 (0.7.14) stable; urgency=low
   * zmiana kolejności w changelog
   * wyłaczenie budowania paczek i386
 
- -- eloaders <eloaders@linux.pl>  Fri, 28 Feb 2014 08:28:11 +0100
+ -- NetBit73 <netbit73@gmail.com>  Fri, 28 Feb 2014 08:28:11 +0100
 
 netext73 (0.7.13) stable; urgency=low
 
   * dodana możliwość instalacji Vboxa
 
- -- eloaders <eloaders@linux.pl>  Thu, 27 Feb 2014 20:00:11 +0100
+ -- NetBit73 <netbit73@gmail.com>  Thu, 27 Feb 2014 20:00:11 +0100
 
 netext73 (0.7.12) stable; urgency=low
 
   * poprawka pobierania kerneli dla K8
 
- -- eloaders <eloaders@linux.pl>  Tue, 25 Feb 2014 14:16:17 +0100
+ -- NetBit73 <netbit73@gmail.com>  Tue, 25 Feb 2014 14:16:17 +0100
 
 netext73 (0.7.11) stable; urgency=low
 
   * poprawki w zależnościach
 
- -- eloaders <eloaders@linux.pl>  Mon, 24 Feb 2014 22:08:00 +0100
+ -- NetBit73 <netbit73@gmail.com>  Mon, 24 Feb 2014 22:08:00 +0100
 
 netext73 (0.7.10) stable; urgency=low
 
   * dodanie zależnosci pm-utils, wsparcie APM dla ubuntu gnome
   * zmiana w configu programu, część opcji nie będzie wymagać restartu programu, root-mode wymaga ponownego uruchomienia programu, opcja jest zapamiętywana
 
- -- eloaders <eloaders@linux.pl>  Mon, 24 Feb 2014 21:34:45 +0100
+ -- NetBit73 <netbit73@gmail.com>  Mon, 24 Feb 2014 21:34:45 +0100
 
 netext73 (0.7.09) stable; urgency=low
 
   * zmiana modułu sysv, przepisanie kodu z chkconfig na sysv-rc-conf, zmniejszenie zależności programu
 
- -- eloaders <eloaders@linux.pl>  Mon, 24 Feb 2014 11:42:33 +0100
+ -- NetBit73 <netbit73@gmail.com>  Mon, 24 Feb 2014 11:42:33 +0100
 
 netext73 (0.7.08) stable; urgency=low
 
   * wycentrowanie okien yad, poprawki kodu
 
- -- eloaders <eloaders@linux.pl>  Sun, 23 Feb 2014 19:17:22 +0100
+ -- NetBit73 <netbit73@gmail.com>  Sun, 23 Feb 2014 19:17:22 +0100
 
 
 netext73 (0.7.07) unstable; urgency=medium
 
   * testowy build na githubie + launchpadzie
-  * dodanie eloaders'a - opiekuna paczek do kontaktów
+  * dodanie NetBit73'a - opiekuna paczek do kontaktów
   * zmiana sposobu aktualizacji programu, testing zostaje na dotychczasowych warunkach, stable przez ppa
   * poprawki kodu celem dostosowania do potrzeb launchpada
   * zmiana yad na yad-netext, dzięki temu nie będzie on kolidował z paczkami pochodzącymi z webupd8
@@ -617,6 +623,6 @@ netext73 (0.7.07-1) unstable; urgency=medium
   * zmiany w instalatorze kerneli
   * przekierowanie na nową stronę domową netext73.blogspot.com
 
- -- eloaders <eloaders@linux.pl>  Wed, 29 Jan 2014 00:49:41 +0100
+ -- NetBit73 <netbit73@gmail.com>  Wed, 29 Jan 2014 00:49:41 +0100
  
 
