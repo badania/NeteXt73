@@ -1,3 +1,9 @@
+netext73 (0.8.09) stable; urgency=medium
+
+  * GRUB - dodanie możliwości startowego kernela/systemu
+
+ -- NetBit73 <netbit73@gmail.com>  Thu, 09 Oct 2014 19:56:13 +0200
+
 netext73 (0.8.08) stable; urgency=medium
 
   * usunięcie curl i perl z zależności

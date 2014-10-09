@@ -371,3 +371,4 @@ export TEXT_USUN_WYNIK="Usuń wynik"
 #########################################################################################################################################################################
 
 export TEXT_WARRING_DEP1="Do prawidłowego działania zarządzania energią [Skryptu APM] usuń następujące pakiety:"
+export TEXT_BOOT_START="Domyślnie bootowany system:"

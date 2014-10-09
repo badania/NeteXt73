@@ -137,6 +137,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 		    else
 			zswap_compressor="lzo@lz4@deflate"
 		    fi
+		    startowy=$(echo -e "@" $(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | cut -d "'" -f 2 | tr '\n' '@' | sed '$s/.$//')) #lista kerneli/systemów
 		    
 		    menu_rozdzielczosci="@1024x600@1024x768@1280x720@1280x800@1280x1024@1366x768@1400x1050@1440x900@1600x900@1600x1024@1600x1200@1680x1050@1920x1080@1920x1200"
 		    menu_rozdz=$(echo $menu_rozdzielczosci | sed "s/$aktualna//" | sed 's/@@/@/')
@@ -153,6 +154,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  --field="Grub Background on/off:CHK" \
 			  --field="zswap on/off:CHK" \
 			  --field="zswap.compressor:CB" \
+			   --field="$TEXT_BOOT_START:CB" \
 			  "$wpis_grub" \
 			  "$menu1" \
 			  "$menu2" \
@@ -161,7 +163,8 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  "$menu4" \
 			  "$grub_back" \
 			  "$zswap_czek" \
-			  "$zswap_compressor" )
+			  "$zswap_compressor" \
+			  "$startowy" )
 		    else
 			  menu_rozdz=$(echo $menu_rozdzielczosci | sed "s/$aktualna//" | sed 's/@@/@/')
 			  menu5=$(echo "$aktualna$menu_rozdz" | sed 's/@@/@/')
@@ -174,6 +177,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  --field="Grub Background on/off:CHK" \
 			  --field="zswap on/off:CHK" \
 			  --field="zswap.compressor:CB" \
+			  --field="$TEXT_BOOT_START:CB" \
 			  "$wpis_grub" \
 			  "$menu1" \
 			  "$menu2" \
@@ -183,7 +187,8 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  "$menu5" \
 			  "$grub_back" \
 			  "$zswap_czek" \
-			  "$zswap_compressor" )
+			  "$zswap_compressor" \
+			  "$startowy" )
 		    fi
 		    if [ $? = 0 ]; then
 			  w0=$(echo $acpi_wpis  | cut -d "|" -f 2)				#acpi Linux/Windows pcie_aspm=force
@@ -193,13 +198,15 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  export w4=$(echo $acpi_wpis  | cut -d "|" -f 6)			#rozdzielczość GRUB
 			  export grub_back=$(echo $acpi_wpis  | cut -d "|" -f 7)		#tło
 			  export zswap=$(echo $acpi_wpis  | cut -d "|" -f 8)			#zwswap
-			  export zswap_compressor=$(echo $acpi_wpis  | cut -d "|" -f 9)			#zwswap compressor
+			  export zswap_compressor=$(echo $acpi_wpis  | cut -d "|" -f 9)		#zwswap compressor
+			  export starter=$(echo $acpi_wpis  | cut -d "|" -f 10  | sed 's/\//\\\//g')	#bootowalne iso
 			  
 			  if [ "$menu5" != "" ];then
 			      export w5=$(echo $acpi_wpis  | cut -d "|" -f 7)			#rozdzielczość Plymouth
 			      export grub_back=$(echo $acpi_wpis  | cut -d "|" -f 8)
-			      export zswap=$(echo $acpi_wpis  | cut -d "|" -f 9)		#zwswap compressor
-			      export zswap_compressor=$(echo $acpi_wpis  | cut -d "|" -f 10)		#zwswap compressor
+			      export zswap=$(echo $acpi_wpis  | cut -d "|" -f 9)		#zwswap
+			      export zswap_compressor=$(echo $acpi_wpis  | cut -d "|" -f 10)	#zwswap compressor
+			      export starter=$(echo $acpi_wpis  | cut -d "|" -f 11 | sed 's/\//\\\//g')	#bootowalne iso
 			  fi
 			  if [ "$w0" = "acpi_osi='!Windows 2012' acpi_osi=Linux" ]; then w0="acpi_osi='!Windows 2012' acpi_osi=Linux pcie_aspm=force"
 			  else 
