@@ -60,7 +60,11 @@ if [ "$(dpkg -l | awk '{print $2}' | grep $i -x)" != "" ];then
 fi
 done
 if [ "$plik" != "" ]; then
-    dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_WARRING_DEP1 $plik"
+	if yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1" --text="$TEXT_WARRING_DEP1\n$plik"; then
+		naglowek > instaluj.sh
+		echo "sudo apt-get purge $plik" >> instaluj.sh
+		instalacja
+	fi
 fi
 }
 

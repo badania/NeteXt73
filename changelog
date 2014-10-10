@@ -1,8 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.10
+-	deinstalator konflikotów z APM: tlp i laptop-mode-tools
 v0.8.09
--	GRUB - dodanie możliwości startowego kernela/systemu
+-	GRUB - dodanie możliwości wyboru startowego kernela/systemu
 v0.8.08
 -	usunięcie curl i perl z zależności
 -	dodanie do logów informacji o konfliktach

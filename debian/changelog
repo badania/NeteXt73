@@ -1,6 +1,12 @@
+netext73 (0.8.10) stable; urgency=medium
+
+  * deinstalator konflikotów z APM: tlp i laptop-mode-tools
+
+ -- NetBit73 <netbit73@gmail.com>  Fri, 10 Oct 2014 15:57:39 +0200
+
 netext73 (0.8.09) stable; urgency=medium
 
-  * GRUB - dodanie możliwości startowego kernela/systemu
+  * GRUB - dodanie możliwości wyboru startowego kernela/systemu
 
  -- NetBit73 <netbit73@gmail.com>  Thu, 09 Oct 2014 19:56:13 +0200
 
