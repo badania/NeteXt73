@@ -137,8 +137,14 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 		    else
 			zswap_compressor="lzo@lz4@deflate"
 		    fi
-		    startowy=$(echo -e "@" $(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | cut -d "'" -f 2 | tr '\n' '@' | sed '$s/.$//')) #lista kerneli/systemów
-		    
+		    #grub 2 lista
+		    if [ "$(dpkg -l | grep grub2-common | awk '{print $1}')" = "ii" ];then 
+			grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | cut -d "'" -f 2  > nazwy_grub.txt
+			grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | cut -d "'" -f 4  > nazwy_grub2.txt
+			startowy=$(echo -e "default@"$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | cut -d "'" -f 2 | tr '\n' '@' | sed '$s/.$//')) #lista kerneli/systemów
+		    else
+			startowy="default"
+		    fi
 		    menu_rozdzielczosci="@1024x600@1024x768@1280x720@1280x800@1280x1024@1366x768@1400x1050@1440x900@1600x900@1600x1024@1600x1200@1680x1050@1920x1080@1920x1200"
 		    menu_rozdz=$(echo $menu_rozdzielczosci | sed "s/$aktualna//" | sed 's/@@/@/')
 		    menu4=$(echo "$aktualna$menu_rozdz" | sed 's/@@/@/')
@@ -199,14 +205,23 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			  export grub_back=$(echo $acpi_wpis  | cut -d "|" -f 7)		#tło
 			  export zswap=$(echo $acpi_wpis  | cut -d "|" -f 8)			#zwswap
 			  export zswap_compressor=$(echo $acpi_wpis  | cut -d "|" -f 9)		#zwswap compressor
-			  export starter=$(echo $acpi_wpis  | cut -d "|" -f 10  | sed 's/\//\\\//g')	#bootowalne iso
+			  export starter=$(echo $acpi_wpis  | cut -d "|" -f 10 )		#bootowalne iso
 			  
 			  if [ "$menu5" != "" ];then
 			      export w5=$(echo $acpi_wpis  | cut -d "|" -f 7)			#rozdzielczość Plymouth
 			      export grub_back=$(echo $acpi_wpis  | cut -d "|" -f 8)
 			      export zswap=$(echo $acpi_wpis  | cut -d "|" -f 9)		#zwswap
 			      export zswap_compressor=$(echo $acpi_wpis  | cut -d "|" -f 10)	#zwswap compressor
-			      export starter=$(echo $acpi_wpis  | cut -d "|" -f 11 | sed 's/\//\\\//g')	#bootowalne iso
+			      export starter=$(echo $acpi_wpis  | cut -d "|" -f 11 )		#bootowalne iso
+			  fi
+			  #znalezienie wpisu grub na podstawie wytycznych usera
+			  if [ "$starter" != "default" ]; then
+			      for i in $(seq 1 $(cat nazwy_grub.txt | wc | awk '{print $1}')); do
+				  if [ "$starter" = "$(sed -n $i'p' nazwy_grub.txt)" ]; then
+					export wpis_nowy="$(sed -n $i'p' nazwy_grub2.txt)"
+				  fi
+			      done
+			      #rm -f nazwy_grub*.txt
 			  fi
 			  if [ "$w0" = "acpi_osi='!Windows 2012' acpi_osi=Linux" ]; then w0="acpi_osi='!Windows 2012' acpi_osi=Linux pcie_aspm=force"
 			  else 
@@ -225,11 +240,13 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			      w6=""
 			  fi
 			  if [ "$w5" != "" ];then
-				wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_ROZDZIELCZOSC Plymouth:RO" "$w4" "$w5" )
-				wpis_grub=$(echo $wpis_grub | sed 's/|//g' | sed "s/$w4//" | sed "s/$w5//" )
+				wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_ROZDZIELCZOSC Plymouth:RO" --field="$TEXT_BOOT_START:RO" "$w4" "$w5" "$wpis_nowy")
+				wpis_grub=$(echo $wpis_grub | cut -d "|" -f 1)
+				#| sed 's/|//g' | sed "s/$w4//" | sed "s/$w5//" | sed "s/"$wpis_nowy"//" )
 			  else
-				wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" "$w4" )
-				wpis_grub=$(echo $wpis_grub | sed 's/|//g' | sed "s/$w4//" )
+				wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_BOOT_START:RO" "$w4" "$wpis_nowy")
+				wpis_grub=$(echo $wpis_grub | cut -d "|" -f 1)
+				#| sed 's/|//g' | sed "s/$w4//" | sed "s/"$wpis_nowy"//"  )
 			  fi
 			  if [ "$wpis_grub" != "" ];then
 				instaluj_grub

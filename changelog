@@ -4,6 +4,7 @@
 v0.8.10
 -	deinstalator konflikotów z APM: tlp i laptop-mode-tools
 -	drobne poprawki
+-	dostosowanie wyboru startującego kernela do GRUB2
 v0.8.09
 -	GRUB - dodanie możliwości wyboru startowego kernela/systemu
 v0.8.08
