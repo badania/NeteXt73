@@ -669,7 +669,7 @@ echo "echo 'GRUB_BACKGROUND=/opt/NeteXt73/menu/grub_background.png' | sudo tee -
 echo "fi"
 echo "fi"
 echo "if [ \"\$starter\" != \"default\" ];then"
-echo "sudo sed -i -e \"s/GRUB_DEFAULT=.*/GRUB_DEFAULT='$wpis_nowy'/\" /etc/default/grub"
+echo "sudo sed -i -e \"s/GRUB_DEFAULT=.*/GRUB_DEFAULT=\\\"$wpis_nowy\\\"/\" /etc/default/grub"
 echo "else"
 echo "sudo sed -i -e \"s/GRUB_DEFAULT=.*/GRUB_DEFAULT=0/\" /etc/default/grub"
 echo "fi"
