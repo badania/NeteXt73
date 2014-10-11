@@ -220,6 +220,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 				      export wpis_nowy="$(grep menuentry /boot/grub/grub.cfg | grep gnulinux-advanced | cut -d "'" -f 4)\>$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | grep "$starter" | cut -d "'" -f 4)"
 				fi
 			  fi
+			  export wpis_nowy=$(echo $wpis_nowy | sed 's/\//\\\//g') # poprawka z / \/
 			  if [ "$w0" = "acpi_osi='!Windows 2012' acpi_osi=Linux" ]; then w0="acpi_osi='!Windows 2012' acpi_osi=Linux pcie_aspm=force"
 			  else 
 			      w0="acpi_osi=Linux pcie_aspm=force"
