@@ -233,8 +233,6 @@ export TEXT_REBOOT="Reboot system"
 
 #########################################################################################################################################################################
 #tlumaczenia_ram
-export TEXT_NETBIT_RAM1="Free up unused memory now"
-export TEXT_NETBIT_RAM2="Set percent usage RAM, after which free up unused memory."
 export TEXT_POWROT="Cancel"
 export TEXT_RAM6="In a moment will be executed free up unused memory job. If you do not want to do this, close this window."
 export TEXT_RAM7="Before:"

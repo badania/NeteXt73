@@ -303,20 +303,11 @@ else
 			    fi
 		    fi
 		elif [ "$skrypt" = "$MENU13" ]; then #aktualizacja dropboxa 
-			if [ "$bit" = "64bit" ]; then
-				if [ "$USER" = "root" ]; then
-				      userek=$(cat /tmp/netext73/userek)
-				      su $userek -c "x-terminal-emulator -e bash -c \"killall dropbox;cd ~;rmdir --ignore-fail-on-non-empty .dropbox-dist && wget -O - 'http://www.dropbox.com/download?plat=lnx.x86_64' | tar xzf - ; echo -e \"$TEXT_INSTALACJA2\"; read ent\""
-				else
-				      x-terminal-emulator -e bash -c "killall dropbox;cd ~;rmdir --ignore-fail-on-non-empty .dropbox-dist && wget -O - 'http://www.dropbox.com/download?plat=lnx.x86_64' | tar xzf - ; echo -e \"$TEXT_INSTALACJA2\"; read ent"
-				fi
-			elif [ "$bit" = "32bit" ]; then
-				if [ "$USER" = "root" ]; then
-				      userek=$(cat /tmp/netext73/userek)
-				      su $userek -c "x-terminal-emulator -e bash -c \"killall dropbox;cd ~;rmdir --ignore-fail-on-non-empty .dropbox-dist && wget -O - 'http://www.dropbox.com/download?plat=lnx.x86' | tar xzf - ; echo -e \"$TEXT_INSTALACJA2\"; read ent\""
-				else
-				      x-terminal-emulator -e bash -c "killall dropbox;cd ~;rmdir --ignore-fail-on-non-empty .dropbox-dist && wget -O - 'http://www.dropbox.com/download?plat=lnx.x86' | tar xzf - ; echo -e \"$TEXT_INSTALACJA2\"; read ent"
-				fi
+			if [ "$USER" = "root" ]; then
+			      userek=$(cat /tmp/netext73/userek)
+			      su $userek -c "x-terminal-emulator -e bash -c \"killall dropbox;cd ~;rmdir --ignore-fail-on-non-empty .dropbox-dist && wget -O - 'http://www.dropbox.com/download?plat=lnx.x86_64' | tar xzf - ; echo -e \"$TEXT_INSTALACJA2\"; read ent\""
+			else
+			      x-terminal-emulator -e bash -c "killall dropbox;cd ~;rmdir --ignore-fail-on-non-empty .dropbox-dist && wget -O - 'http://www.dropbox.com/download?plat=lnx.x86_64' | tar xzf - ; echo -e \"$TEXT_INSTALACJA2\"; read ent"
 			fi
 		fi
 	fi

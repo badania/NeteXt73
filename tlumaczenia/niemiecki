@@ -244,8 +244,6 @@ export TEXT_UWAGA="ACHTUNG"
 }
 #########################################################################################################################################################################
 tlumaczenia_ram(){
-export TEXT_NETBIT_RAM1="Cache-Speicher sofort leeren"
-export TEXT_NETBIT_RAM2="Prozentuale RAM-Auslastung nennen, nach derer Überschreiten Cache-Speicher geleert werden soll"
 export TEXT_POWROT="Zurück"
 export TEXT_RAM6="Gleich wird der Cache-Speicher geleert. Wenn du das nicht willst, schließe dieses Fenster"
 export TEXT_RAM7="'Stand vor:"

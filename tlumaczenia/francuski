@@ -228,8 +228,6 @@ export TEXT_REBOOT="Redémarre le système"
 
 #########################################################################################################################################################################
 #tlumaczenia_ram
-export TEXT_NETBIT_RAM1="Vider le cache immédiatement"
-export TEXT_NETBIT_RAM2="La mémoire cache doit être vidé après avoir passé le pourcentage d'utilisation de la RAM "
 export TEXT_RAM6="Dans un moment, vidér de mémoire utilisé sera exécuté. Si vous ne voulez pas faire cela, fermez cette fenêtre."
 export TEXT_RAM7="Statut avant:"
 export TEXT_RAM8="Statut après:"

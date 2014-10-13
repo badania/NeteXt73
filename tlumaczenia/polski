@@ -231,8 +231,6 @@ export TEXT_REBOOT="Restart komputera"
 
 #########################################################################################################################################################################
 #tlumaczenia_ram
-export TEXT_NETBIT_RAM1="Zwolnij RAM natychmiast"
-export TEXT_NETBIT_RAM2="Podaj procentowe wykorzystanie RAM, po przekroczeniu którego ma nastąpić wyczyszczenie pamięci cache."
 export TEXT_RAM6="Za chwilę nastąpi wyczyszczenie pamięci cache, jeżeli tego nie chcesz, zamknij to okno"
 export TEXT_RAM7="Stan przed:"
 export TEXT_RAM8="Stan po:"
