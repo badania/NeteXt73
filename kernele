@@ -120,7 +120,7 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 		if [ "$(echo $a | grep 'linux-image' | grep 'ext' | grep '.deb')" != "" ]; then
 			cd $(echo $a | sed -e 's/linux.*//g');	b=$(echo $a | sed -e 's/linux-image/linux-headers/g')
 			rm /tmp/netext73/kernel -fr; 	mkdir /tmp/netext73/kernel
-			cd /tmp/netext73/kernel;    		cp $b /tmp/netext73/kernel/
+			cd /tmp/netext73/kernel;    	cp $b /tmp/netext73/kernel/
 			xterm -T instalator -e bash -c "/usr/bin/yes | sudo dpkg -i linux-headers*"
 		        restart
 		elif [ "$(echo $a | grep 'linux-headers' | grep 'ext' | grep '.deb')" != "" ]; then

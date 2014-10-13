@@ -40,38 +40,37 @@ source /opt/NeteXt73/procedury
 
 cd /tmp/netext73
 if [ -e ~/.netext73/monitor ]; then
-    if [ "$(cat ~/.netext73/monitor | grep system)" != "" ]; then
+    if [ "$(grep system ~/.netext73/monitor)" != "" ]; then
 	a1=TRUE
     else
 	a1=FALSE
     fi
-    if [ "$(cat ~/.netext73/monitor | grep powertop)" != "" ]; then
+    if [ "$(grep powertop ~/.netext73/monitor)" != "" ]; then
 	a2=TRUE
     else
 	a2=FALSE
     fi
-    if [ "$(cat ~/.netext73/monitor | grep HTOP)" != "" ]; then
+    if [ "$(grep HTOP ~/.netext73/monitor)" != "" ]; then
 	a3=TRUE
     else
 	a3=FALSE
     fi
-    if [ "$(cat ~/.netext73/monitor | grep saidar)" != "" ]; then
+    if [ "$(grep saidar ~/.netext73/monitor)" != "" ]; then
 	a4=TRUE
     else
 	a4=FALSE
     fi
-    if [ "$(cat ~/.netext73/monitor | grep battery)" != "" ]; then
+    if [ "$(grep battery ~/.netext73/monitor)" != "" ]; then
 	a5=TRUE
     else
 	a5=FALSE
     fi
-    if [ "$(cat ~/.netext73/monitor | grep CPU)" != "" ]; then
+    if [ "$(grep CPU ~/.netext73/monitor)" != "" ]; then
 	a6=TRUE
     else
 	a6=FALSE
     fi
 else
-
     a1=TRUE
     a2=FALSE
     a3=FALSE

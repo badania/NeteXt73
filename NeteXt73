@@ -48,7 +48,7 @@ fi
 sumy(){
 #pobranie sum kontrolnych
     cd /tmp
-    wget $adres_sum_kontrolnych | pobieranie && mv sumy.txt $sumy_kontrolne
+    wget $adres_sum_kontrolnych 2>&1 | pobieranie && mv sumy.txt $sumy_kontrolne
 }
 
 #ostrzeżenie o konfliktach

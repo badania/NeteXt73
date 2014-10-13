@@ -58,10 +58,8 @@ install: install_desktopfiles \
 	 install_file_monitor \
 	 install_file_grafiki \
 	 install_file_procedury \
-	 install_file_ram \
 	 install_file_repo \
 	 install_file_skrypty \
-	 install_file_paypal \
 	 install_file_update \
 	 install_file_uslugi 
 	 
@@ -146,14 +144,10 @@ install_file_grafiki:
 	$(INSTALL) 0755 grafiki $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 install_file_procedury:	
 	$(INSTALL) 0755 procedury $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
-install_file_ram:	
-	$(INSTALL) 0755 ram $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 install_file_repo:	
 	$(INSTALL) 0755 repo $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 install_file_skrypty:	
 	$(INSTALL) 0755 skrypty $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
-install_file_paypal:	
-	$(INSTALL) 0755 paypal $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 install_file_update:
 	$(INSTALL) 0755 update $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 install_file_uslugi:	

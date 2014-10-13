@@ -152,7 +152,7 @@ GenericName[vi]=Free up unused memory setup
 GenericName[zh_CN]=Free up unused memory setup
 GenericName[zh_TW]=Free up unused memory setup
 
-Exec=/opt/NeteXt73/./ram
+Exec=/opt/NeteXt73/./skrypty ram
 Icon=/opt/NeteXt73/ikony/ram.png
 Terminal=false
 StartupNotify=true

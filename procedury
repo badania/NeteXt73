@@ -466,7 +466,7 @@ echo "sudo sed -i '/apm_status_fix/d' /etc/rc.local"
 }
 
 stan_apm(){
-if [ "$(ls /etc/pm/power.d/ | wc | awk '{print $1}')" != "6" ]; then
+if [ "$(ls /etc/pm/power.d/ | wc -l)" != "6" ]; then
       stan_apm="-"
 else
       if [ -e /etc/pm/power.d/$wersja_apm1*$wersja_apm ]; then
@@ -479,7 +479,7 @@ fi
 #      stan_apm="-"
 #fi
 
-if [ "$(ls /etc/pm/power.d/ | wc | awk '{print $1}')" = "6" ] && [ $( ls /usr/lib/pm-utils/power.d/ -la | grep rwxr | wc | awk '{print $1}') != "6" ]; then 
+if [ "$(ls /etc/pm/power.d/ | wc -l)" = "6" ] && [ $( ls /usr/lib/pm-utils/power.d/ -la | grep rwxr | wc -l) != "6" ]; then 
 	    stan_apm="-"
 fi
 if [ "$(grep apm_status_fix /etc/rc.local)" = "" ]; then

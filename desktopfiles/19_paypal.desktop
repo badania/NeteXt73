@@ -152,7 +152,7 @@ GenericName[vi]=We will help you, you will help us
 GenericName[zh_CN]=We will help you, you will help us
 GenericName[zh_TW]=We will help you, you will help us
 
-Exec=/opt/NeteXt73/./paypal
+Exec=/opt/NeteXt73/./help paypal
 Icon=/opt/NeteXt73/ikony/paypal.png
 Terminal=false
 StartupNotify=true

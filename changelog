@@ -1,6 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.11
+-	czyszczenie kodu
+-	zmniejszenie ilości plików programu
+-	optymalizacja kodu
 v0.8.10
 -	deinstalator konflikotów z APM: tlp i laptop-mode-tools
 -	drobne poprawki

@@ -96,7 +96,7 @@ if [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINSTA
 					  fi
 				done
 			else
-				echo $a > /tmp/netext73/lista_kerneli.txt; cat /tmp/netext73/lista_kerneli.txt| tr '|' '\n' > kasuj.txt
+				echo $a > /tmp/netext73/lista_kerneli.txt; cat /tmp/netext73/lista_kerneli.txt | tr '|' '\n' > kasuj.txt
 			fi
 			#proces kasowania kerneli
 			naglowek > instaluj.sh
