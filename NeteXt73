@@ -53,8 +53,9 @@ sumy(){
 
 #ostrzeżenie o konfliktach
 zaleznosci(){
+cd /tmp/netext73
 plik=""
-for i in $(echo tlp laptop-mode-tools);do
+for i in $(echo tlp acpi-call laptop-mode-tools);do
 if [ "$(dpkg -l | awk '{print $2}' | grep $i -x)" != "" ];then
     export plik="$plik $i"
 fi
@@ -63,6 +64,7 @@ if [ "$plik" != "" ]; then
 	if yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1" --text="$TEXT_WARRING_DEP1\n$plik"; then
 		naglowek > instaluj.sh
 		echo "sudo apt-get purge $plik" >> instaluj.sh
+		echo "sudo apt-get autoremove" >> instaluj.sh
 		instalacja
 	fi
 fi

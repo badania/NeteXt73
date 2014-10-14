@@ -103,10 +103,10 @@ echo -e "\n<span color=\"$kolor_textu\"><b>OpenGL</b></span>" >> system$losowa.l
 glxinfo | grep OpenGL | sed 's/OpenGL ext.*//g' | sed 's/OpenGL core profile extensions://g' | sed '/^[ \t]*$/ d' >> system$losowa.log
 
 if [ -e ~/.netext73/kernel_premium ] && [ -e ~/.netext73/vsftpd/vsftpd ] && [ -e ~/.netext73/has* ]; then
-	yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="Firewall status:3" --button="vsFTPd:4"
+	yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="Firewall status:3" --button="vsFTPd:4" --button="dmidecode:5"
 	klawisz=$?
 else
-	yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="Firewall status:3"
+	yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="Firewall status:3"  --button="dmidecode:5"
 	klawisz=$?
 fi
 
@@ -211,5 +211,16 @@ elif  [ "$klawisz" = "3" ] ; then
 elif  [ "$klawisz" = "4" ] ; then    
     chmod a+x ~/.netext73/vsftpd/vsftpd
     ~/.netext73/vsftpd/./vsftpd
+elif  [ "$klawisz" = "5" ] ; then    
+    naglowek > instaluj.sh
+    echo "for i in \$(seq 1 42); do sudo dmidecode --type \$i >> dmidecode.log; done" >> instaluj.sh
+    instalacja2
+    i=$(echo dmidecode.log)
+    if [ "$USER" = "root" ]; then
+	userek=$(cat /tmp/netext73/userek)
+	su $userek -c "xdg-open $(cat $i | pastebinit)"
+    else
+	xdg-open $(cat $i | pastebinit)
+    fi
 fi
 rm *.log losowa -f

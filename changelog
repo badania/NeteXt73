@@ -1,12 +1,16 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.12
+-	dodanie do konfliktów acpi-call z tlp
+-	dodanie do logów dmidecode
+-	naprawa błędy sh: 0: Can't open instaluj.sh
 v0.8.11
 -	czyszczenie kodu
 -	zmniejszenie ilości plików programu
 -	optymalizacja kodu
 v0.8.10
--	deinstalator konflikotów z APM: tlp i laptop-mode-tools
+-	deinstalator konfliktów z APM: tlp i laptop-mode-tools
 -	drobne poprawki
 -	dostosowanie wyboru startującego kernela do GRUB2
 v0.8.09
