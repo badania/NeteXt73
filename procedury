@@ -518,12 +518,23 @@ stan_apm_config(){
 	    export wifin="TRUE"
 	fi
 	#sprawdzenie BFQ/CFQ/deadline HDD
-	if [ "$(grep 'bfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ] ;then
-	    export bfqfix="bfq"; export bfqfix_menu="bfq!cfq!deadline"
-	elif [ "$(grep 'cfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ]; then
-	    export bfqfix="cfq"; export bfqfix_menu="cfq!bfq!deadline"
-	elif [ "$(grep 'deadline' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ]; then
-	    export bfqfix="deadline"; export bfqfix_menu="deadline!bfq!cfq"
+	
+	if [ "$(grep bfq /sys/block/sda/queue/scheduler)" != "" ]; then
+		if [ "$(grep 'bfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ] ;then
+		    export bfqfix="bfq"; export bfqfix_menu="bfq!cfq!deadline"
+		elif [ "$(grep 'cfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ]; then
+		    export bfqfix="cfq"; export bfqfix_menu="cfq!bfq!deadline"
+		elif [ "$(grep 'deadline' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ]; then
+		    export bfqfix="deadline"; export bfqfix_menu="deadline!bfq!cfq"
+		fi
+	else
+		if [ "$(grep 'bfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ] ;then
+		    export bfqfix="bfq"; export bfqfix_menu="cfq!deadline"
+		elif [ "$(grep 'cfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ]; then
+		    export bfqfix="cfq"; export bfqfix_menu="cfq!deadline"
+		elif [ "$(grep 'deadline' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ]; then
+		    export bfqfix="deadline"; export bfqfix_menu="deadline!cfq"
+		fi
 	fi
 	#sprawdzenie noop/deadline SSD
 	if [ "$(grep 'noop' /etc/pm/power.d/advanced_power_management_by_ext73_* | grep '#SSD' )" != "" ] ;then
