@@ -52,7 +52,6 @@ install: install_desktopfiles \
 	 install_file_grub \
 	 install_file_help \
 	 install_file_kernele \
-	 install_file_kontakt \
 	 install_file_logi \
 	 install_file_microcode \
 	 install_file_monitor \
@@ -132,8 +131,6 @@ install_file_help:
 	$(INSTALL) 0755 help $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 install_file_kernele:	
 	$(INSTALL) 0755 kernele $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
-install_file_kontakt:
-	$(INSTALL) 0755 kontakt $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 install_file_logi:	
 	$(INSTALL) 0755 logi $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 install_file_microcode:	

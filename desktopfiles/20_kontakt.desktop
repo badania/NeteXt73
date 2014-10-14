@@ -152,7 +152,7 @@ GenericName[vi]=Contact with developers
 GenericName[zh_CN]=Contact with developers
 GenericName[zh_TW]=Contact with developers
 
-Exec=/opt/NeteXt73/./kontakt
+Exec=/opt/NeteXt73/./help kontakty
 Icon=/opt/NeteXt73/ikony/mail.png
 Terminal=false
 StartupNotify=true
