@@ -34,6 +34,6 @@ if [ "$(ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//')" = 
     sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative-conservative*
 fi
 #wyłączenie bfq jak kernel go nie posiada
-if [ "$(grep bfq /sys/block/sda*/queue/scheduler)" = "" ]; then
+if [ "$(grep bfq /sys/block/sd*/queue/scheduler)" = "" ]; then
     sudo sed -i '/#HDD/ s/bfq/cfq/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
 fi

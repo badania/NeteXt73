@@ -79,66 +79,29 @@ while [ $petla_duza = "tak" ]; do
 	menu=$(echo "$aktualny_apm$menu_apm" | sed 's/!!/!/')
 	
 	if [ "$stan_apm" != "-" ]; then
-		#sprawdzanie  HDD/SSD 
-		#jest HDD i SSD
-		if [ "$(cat /sys/block/sd*/queue/rotational | grep 0 | grep 1)" != "" ];then
-			  aa=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png"  --image="/opt/NeteXt73/ikony/apm.png" --form \
-			  --field="$TEXT_WERSJA_APM:RO" --field="$TEXT_AKTUALNY_PROFIL_APM:RO" --field="$TEXT_ZMIEN_PROFIL_APM:CB" \
-			  "$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)" "$aktualny_apm" "$menu" \
-			  --field="$TEXT_FIX1:CHK" "$wififix" \
-			  --field="$TEXT_FIX2:CHK" "$wifionoff" \
-			  --field="$TEXT_FIX3:CHK" "$btfix" \
-			  --field="$TEXT_FIX4:CHK" "$rts5139fix" \
-			  --field="$TEXT_FIX5:CHK" "$wifin" \
-			  --field="$TEXT_PLANISTA:CB" "$bfqfix_menu" \
-			  --field="$(echo $TEXT_PLANISTA | sed 's/HDD/SSD/'):CB" "$ssdfix_menu" \
-			  --button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" )
-			  
-				klawisz=$?
-				  a=$(echo $aa | cut -d "|" -f 3)
-				  export bfqfix=$(echo $aa | cut -d "|" -f 9)
-				  export ssdfix=$(echo $aa | cut -d "|" -f 10)
-		# HDD tak SSD nie
-		elif [ "$(cat /sys/block/sd*/queue/rotational | grep 1)" != "" ] && [ "$(cat /sys/block/sd*/queue/rotational | grep 0 )" = "" ];then
-			  aa=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png"  --image="/opt/NeteXt73/ikony/apm.png" --form \
-			  --field="$TEXT_WERSJA_APM:RO" --field="$TEXT_AKTUALNY_PROFIL_APM:RO" --field="$TEXT_ZMIEN_PROFIL_APM:CB" \
-			  "$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)" "$aktualny_apm" "$menu" \
-			  --field="$TEXT_FIX1:CHK" "$wififix" \
-			  --field="$TEXT_FIX2:CHK" "$wifionoff" \
-			  --field="$TEXT_FIX3:CHK" "$btfix" \
-			  --field="$TEXT_FIX4:CHK" "$rts5139fix" \
-			  --field="$TEXT_FIX5:CHK" "$wifin" \
-			  --field="$TEXT_PLANISTA:CB" "$bfqfix_menu" \
-			  --button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" )
-				  klawisz=$?
-				  a=$(echo $aa | cut -d "|" -f 3)
-				  export bfqfix=$(echo $aa | cut -d "|" -f 9)
-				  export ssdfix=$ssdfix_przed
-		# SSD tak HDD nie
-		elif [ "$(cat /sys/block/sd*/queue/rotational | grep 0)" != "" ] && [ "$(cat /sys/block/sd*/queue/rotational | grep 1 )" = "" ];then
-			  aa=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png"  --image="/opt/NeteXt73/ikony/apm.png" --form \
-			  --field="$TEXT_WERSJA_APM:RO" --field="$TEXT_AKTUALNY_PROFIL_APM:RO" --field="$TEXT_ZMIEN_PROFIL_APM:CB" \
-			  "$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)" "$aktualny_apm" "$menu" \
-			  --field="$TEXT_FIX1:CHK" "$wififix" \
-			  --field="$TEXT_FIX2:CHK" "$wifionoff" \
-			  --field="$TEXT_FIX3:CHK" "$btfix" \
-			  --field="$TEXT_FIX4:CHK" "$rts5139fix" \
-			  --field="$TEXT_FIX5:CHK" "$wifin" \
-			  --field="$(echo $TEXT_PLANISTA | sed 's/HDD/SSD/'):CB" "$ssdfix_menu" \
-			  --button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" )
-			  
-				  klawisz=$?
-				  a=$(echo $aa | cut -d "|" -f 3)
-				  export ssdfix=$(echo $aa | cut -d "|" -f 9)
-				  export bfqfix=$bfqfix_przed
+		aa=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png"  --image="/opt/NeteXt73/ikony/apm.png" --form \
+		--field="$TEXT_WERSJA_APM:RO" --field="$TEXT_AKTUALNY_PROFIL_APM:RO" --field="$TEXT_ZMIEN_PROFIL_APM:CB" \
+		"$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)" "$aktualny_apm" "$menu" \
+		--field="$TEXT_FIX1:CHK" "$wififix" \
+		--field="$TEXT_FIX2:CHK" "$wifionoff" \
+		--field="$TEXT_FIX3:CHK" "$btfix" \
+		--field="$TEXT_FIX4:CHK" "$rts5139fix" \
+		--field="$TEXT_FIX5:CHK" "$wifin" \
+		--field="$TEXT_PLANISTA:CB" "$bfqfix_menu" \
+		--field="$(echo $TEXT_PLANISTA | sed 's/HDD/SSD\/FLASH/'):CB" "$ssdfix_menu" \
+		--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" )
 		
-		fi	
+		klawisz=$?
 		if [ $klawisz = 0 ]; then 
+			a=$(echo $aa | cut -d "|" -f 3)
 			export wififix=$(echo $aa | cut -d "|" -f 4)
 			export wifionoff=$(echo $aa | cut -d "|" -f 5)
 			export btfix=$(echo $aa | cut -d "|" -f 6)
 			export rts5139fix=$(echo $aa | cut -d "|" -f 7)
 			export wifin=$(echo $aa | cut -d "|" -f 8)
+			export bfqfix=$(echo $aa | cut -d "|" -f 9)
+			export ssdfix=$(echo $aa | cut -d "|" -f 10)
+					
 			#uruchomienie aktualizacji gdy zaszła jakś zmiana
 			if [ "$a" = "$aktualny_apm" ] && [ "$wififix_przed" = "$wififix" ] && [ "$wifionoff_przed" = "$wifionoff" ] && [ "$btfix_przed" = "$btfix" ] && [ "$rts5139fix_przed" = "$rts5139fix" ] && [ "$wifin_przed" = "$wifin" ] && [ "$bfqfix_przed" = "$bfqfix" ] && [ "$ssdfix_przed" = "$ssdfix" ]; then
 			    petla_duza="nie"

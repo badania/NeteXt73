@@ -470,7 +470,7 @@ if [ "$(ls /etc/pm/power.d/ | wc -l)" != "6" ]; then
       stan_apm="-"
 else
       if [ -e /etc/pm/power.d/$wersja_apm1*$wersja_apm ]; then
-	    stan_apm=$(ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//')
+	    stan_apm=$(ls /etc/pm/power.d/advanced_power_management_by_ext73* -Fl | grep '*' | cut -d '_' -f 6)
       else
 	    stan_apm="-"
       fi
