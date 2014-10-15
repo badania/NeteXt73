@@ -94,17 +94,10 @@ while [ $petla_duza = "tak" ]; do
 			  --field="$(echo $TEXT_PLANISTA | sed 's/HDD/SSD/'):CB" "$ssdfix_menu" \
 			  --button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" )
 			  
-			  klawisz=$?
-			  if [ $klawisz = 0 ]; then 
+				klawisz=$?
 				  a=$(echo $aa | cut -d "|" -f 3)
-				  export wififix=$(echo $aa | cut -d "|" -f 4)
-				  export wifionoff=$(echo $aa | cut -d "|" -f 5)
-				  export btfix=$(echo $aa | cut -d "|" -f 6)
-				  export rts5139fix=$(echo $aa | cut -d "|" -f 7)
-				  export wifin=$(echo $aa | cut -d "|" -f 8)
 				  export bfqfix=$(echo $aa | cut -d "|" -f 9)
 				  export ssdfix=$(echo $aa | cut -d "|" -f 10)
-			  fi
 		# HDD tak SSD nie
 		elif [ "$(cat /sys/block/sd*/queue/rotational | grep 1)" != "" ] && [ "$(cat /sys/block/sd*/queue/rotational | grep 0 )" = "" ];then
 			  aa=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png"  --image="/opt/NeteXt73/ikony/apm.png" --form \
@@ -117,18 +110,10 @@ while [ $petla_duza = "tak" ]; do
 			  --field="$TEXT_FIX5:CHK" "$wifin" \
 			  --field="$TEXT_PLANISTA:CB" "$bfqfix_menu" \
 			  --button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" )
-			  
-			  klawisz=$?
-			  if [ $klawisz = 0 ]; then 
+				  klawisz=$?
 				  a=$(echo $aa | cut -d "|" -f 3)
-				  export wififix=$(echo $aa | cut -d "|" -f 4)
-				  export wifionoff=$(echo $aa | cut -d "|" -f 5)
-				  export btfix=$(echo $aa | cut -d "|" -f 6)
-				  export rts5139fix=$(echo $aa | cut -d "|" -f 7)
-				  export wifin=$(echo $aa | cut -d "|" -f 8)
 				  export bfqfix=$(echo $aa | cut -d "|" -f 9)
-				  export ssdfix="noop"
-			  fi
+				  export ssdfix=$ssdfix_przed
 		# SSD tak HDD nie
 		elif [ "$(cat /sys/block/sd*/queue/rotational | grep 0)" != "" ] && [ "$(cat /sys/block/sd*/queue/rotational | grep 1 )" = "" ];then
 			  aa=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png"  --image="/opt/NeteXt73/ikony/apm.png" --form \
@@ -142,39 +127,39 @@ while [ $petla_duza = "tak" ]; do
 			  --field="$(echo $TEXT_PLANISTA | sed 's/HDD/SSD/'):CB" "$ssdfix_menu" \
 			  --button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" )
 			  
-			  klawisz=$?
-			  if [ $klawisz = 0 ]; then 
+				  klawisz=$?
 				  a=$(echo $aa | cut -d "|" -f 3)
-				  export wififix=$(echo $aa | cut -d "|" -f 4)
-				  export wifionoff=$(echo $aa | cut -d "|" -f 5)
-				  export btfix=$(echo $aa | cut -d "|" -f 6)
-				  export rts5139fix=$(echo $aa | cut -d "|" -f 7)
-				  export wifin=$(echo $aa | cut -d "|" -f 8)
 				  export ssdfix=$(echo $aa | cut -d "|" -f 9)
-				  export bfqfix="cfq"
-			  fi
+				  export bfqfix=$bfqfix_przed
 		
 		fi	
-		#uruchomienie aktualizacji gdy zaszła jakś zmiana
-		if [ "$a" = "$aktualny_apm" ] && [ "$wififix_przed" = "$wififix" ] && [ "$wifionoff_przed" = "$wifionoff" ] && [ "$btfix_przed" = "$btfix" ] && [ "$rts5139fix_przed" = "$rts5139fix" ] && [ "$wifin_przed" = "$wifin" ] && [ "$bfqfix_przed" = "$bfqfix" ] && [ "$ssdfix_przed" = "$ssdfix" ]; then
-		    petla_duza="nie"
-		    rm *.txt -f *.sh
-		else
-			naglowek > instaluj.sh
-			if [ "$a" != "-" ]; then
-				apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
-			elif [ "$a" = "-" ]; then
-				yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
+		if [ $klawisz = 0 ]; then 
+			export wififix=$(echo $aa | cut -d "|" -f 4)
+			export wifionoff=$(echo $aa | cut -d "|" -f 5)
+			export btfix=$(echo $aa | cut -d "|" -f 6)
+			export rts5139fix=$(echo $aa | cut -d "|" -f 7)
+			export wifin=$(echo $aa | cut -d "|" -f 8)
+			#uruchomienie aktualizacji gdy zaszła jakś zmiana
+			if [ "$a" = "$aktualny_apm" ] && [ "$wififix_przed" = "$wififix" ] && [ "$wifionoff_przed" = "$wifionoff" ] && [ "$btfix_przed" = "$btfix" ] && [ "$rts5139fix_przed" = "$rts5139fix" ] && [ "$wifin_przed" = "$wifin" ] && [ "$bfqfix_przed" = "$bfqfix" ] && [ "$ssdfix_przed" = "$ssdfix" ]; then
+			    petla_duza="nie"
+			    rm *.txt -f *.sh
+			else
 				naglowek > instaluj.sh
-				apm_inst >> instaluj.sh
-				if [ -e ~/.netext73/apm_status ]; then
-				    apm_zmiana_config >> instaluj.sh
+				if [ "$a" != "-" ]; then
+					apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
+				elif [ "$a" = "-" ]; then
+					yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
+					naglowek > instaluj.sh
+					apm_inst >> instaluj.sh
+					if [ -e ~/.netext73/apm_status ]; then
+					    apm_zmiana_config >> instaluj.sh
+					fi
 				fi
+				instalacja2
+				#zapisanie stanu apm po zmianie
+				stan_apm_config
 			fi
-			instalacja2
-			#zapisanie stanu apm po zmianie
-			stan_apm_config
-		fi	
+		fi
 	fi
 	if [ -z "$aa" ]; then
 	      petla_duza="nie"
