@@ -1,3 +1,9 @@
+netext73 (0.8.14) stable; urgency=medium
+
+  * APM v3.8
+
+ -- NetBit73 <netbit73@gmail.com>  Wed, 15 Oct 2014 12:25:14 +0200
+
 netext73 (0.8.13) stable; urgency=medium
 
   * dynamiczna lista planisty I/O dla HDD i SSD
