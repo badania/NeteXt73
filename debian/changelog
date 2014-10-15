@@ -1,3 +1,9 @@
+netext73 (0.8.13) stable; urgency=medium
+
+  * dynamiczna lista planisty I/O dla HDD i SSD
+
+ -- NetBit73 <netbit73@gmail.com>  Wed, 15 Oct 2014 06:48:05 +0200
+
 netext73 (0.8.12) stable; urgency=medium
 
   * poprawki w konfliktach

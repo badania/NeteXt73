@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.13
+-	dynamiczna lista planisty I/O dla HDD i SSD
 v0.8.12
 -	dodanie do konfliktów acpi-call z tlp
 -	dodanie do logów dmidecode
