@@ -176,6 +176,8 @@ if [ "$klawisz" = "2" ]; then
     echo -e "\n\n#################################  konflikty #############################################################" >> system$losowa.log
     dpkg -l | awk '{print $2}' | grep laptop-mode-tools -x >> system$losowa.log    
     dpkg -l | awk '{print $2}' | grep tlp -x >> system$losowa.log    
+    echo -e "\n\n#################################  sumy kontrolne ########################################################" >> system$losowa.log
+    cat /tmp/netext73/sumy/* >> system$losowa.log
     
     sed -i 's/<\/span>//g' system$losowa.log
     sed -i 's/<span.*">//g' system$losowa.log
