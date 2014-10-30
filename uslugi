@@ -141,30 +141,37 @@ while [ $petla_duza = "tak" ]; do
 	elif  [ "$uslugi" = "$TEXT_MENU_USLUGI0 systemd" ]; then
 		 petla="tak"
 		 while [ $petla = "tak" ]; do
-		 rm uslugi_*.txt -f
-		 systemd-analyze blame | awk '{print $2}' | grep -v "@" | grep service > uslugi_wl.txt
-		 systemctl list-unit-files |grep disabled | awk '{print $1}' | grep -v "@" | grep service > uslugi_wyl.txt
+		 rm uslugi*.txt -f
+		 systemctl list-unit-files | grep service | awk '{print $1}' | grep -v -E "@|systemd*|plymouth|dbus|initd|alsa|console|udev" | sort | uniq  > uslugi.txt
+		 #systemctl list-unit-files | grep service | awk '{print $1}' | grep -v '@' | sort | uniq > uslugi.txt
+		 #systemctl -t service -a list-unit-files | awk '{print $1}' | grep service | grep -v '@' | sort | uniq > uslugi.txt
 		 #włączone
-		 for i in $(cat uslugi_wl.txt); do
-		      echo "FALSE "$i" on -" >> uslugi_on.txt
-		 done
+		 for i in $(cat uslugi.txt); do
+		      if [ "$(sudo systemctl is-enabled $i | grep enable)" != "" ];then
+			    echo "FALSE "$i" on -" >> uslugi_on.txt
+		      else
+			    echo "FALSE "$i" - off" >> uslugi_off.txt
+		      fi
+		 done 2>&1 | pobieranie
 		 #wyłączone
 		 for i in $(cat uslugi_wyl.txt); do
-		      echo "FALSE "$i" - off" >> uslugi_off.txt
+		      if [ "$(sudo systemctl status $i | grep enable)" = "" ];then
+			    echo "FALSE "$i" on -" >> uslugi_on.txt
+		      else
+			    echo "FALSE "$i" - off" >> uslugi_off.txt
+		      fi
 		 done		 
 		 cat uslugi_on.txt uslugi_off.txt > uslugi.txt
-		 a=$(yad-netext --center --height=680 --width=550   --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Systemd - automat</b></span>\n$TEXT_MENU_USLUGI2" --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU_USLUGI3"  --column="$TEXT_MENU_USLUGI4" --column="$TEXT_MENU_USLUGI5"  --checklist --list $(cat uslugi.txt))
+		 a=$(yad-netext --center --height=680 --width=680   --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Systemd - automat</b></span>\n$TEXT_MENU_USLUGI2" --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU_USLUGI3"  --column="$TEXT_MENU_USLUGI4" --column="$TEXT_MENU_USLUGI5"  --checklist --list $(cat uslugi.txt))
 			if [ $? = "0" ]; then
 				if [ "$a" != "" ]; then
 					echo $a | sed 's/|/\n/g' | sed '/^on/ d' | sed '/^off/ d' | sed '/^-/ d' | sed '/^.*TRUE/ d' > 12.txt
 					for a1 in $(cat 12.txt)
 					do
-						if [ "$(cat uslugi_wl.txt | grep $a1)" != "" ]; then
-							sudo systemctl stop $a1
+						if [ "$(cat uslugi_on.txt | grep $a1)" != "" ]; then
 							sudo systemctl disable $a1
-						elif [ "$(cat uslugi_wyl.txt | grep $a1)" != "" ]; then
+						elif [ "$(cat uslugi_off.txt | grep $a1)" != "" ]; then
 							sudo systemctl enable $a1
-							#sudo systemctl start $a1
 						fi
 					done
 				fi
