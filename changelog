@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.15
+-	dodanie zarządzania usługami systemd
 v0.8.14
 -	APM v3.8
 -	sumy kontrolne w logach

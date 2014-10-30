@@ -2,4 +2,5 @@
 #sprawdzenie sensorów jeżeli nie były włączone
 if [ "$(cat /etc/modules | grep sensors-detect)" = "" ]; then
     /usr/bin/yes| sudo sensors-detect; sudo /etc/init.d/lm-sensors stop;sudo update-rc.d -f lm-sensors remove	
+    #echo "" >/dev/null
 fi

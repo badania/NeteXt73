@@ -1,3 +1,9 @@
+netext73 (0.8.15) stable; urgency=medium
+
+  * zarządzanie usługami systemd
+
+ -- NetBit73 <netbit73@gmail.com>  Thu, 30 Oct 2014 18:44:44 +0100
+
 netext73 (0.8.14) stable; urgency=medium
 
   * APM v3.8
