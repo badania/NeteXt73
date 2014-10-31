@@ -41,109 +41,9 @@ source /opt/NeteXt73/procedury
 cd /tmp/netext73
 petla_duza="tak"
 while [ $petla_duza = "tak" ]; do
+	#sprawdzanie czy jest systemd - generowanie menu
 	if [ "$(journalctl -u cron | grep systemd)" != "" ];then
-	    menu="$TEXT_MENU_USLUGI0!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C!$TEXT_MENU_USLUGI0 systemd"
-	else
-	    menu="$TEXT_MENU_USLUGI0!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C"
-	fi
-	uslugi=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --text="<span color=\"$kolor_textu\">$TEXT_MENU_USLUGI</span>" --form --field=" :CB" "$menu"  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
-	klawisz=$?; uslugi=$(echo $uslugi | cut -d "|" -f 1)
-	#SysV - automat
-	if [ $klawisz = 0 ]; then 
-	#usługi
-	if [ "$uslugi" = "$TEXT_MENU_USLUGI0" ] ; then
-		petla="tak"
-		while [ $petla = "tak" ]; do
-		#upstart
-		upstart_test
-		cat lista.txt | cut -d " " -f 1 > 1.txt #nazwa usługi
-		sed -e 's/,//g' lista.txt | cut -d " " -f 2 | sed -e 's/start.*/wł/g' | sed -e 's/stop.*waiting*/wł/g'  > 2.txt #stan usługi
-		
-		paste -d " " 1.txt 2.txt  > upstart.txt
-		for SOFT in $(ls /etc/init/*.conf-disabled | sed 's/\.conf-disabled//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state"); do
-		      echo "$SOFT wył" >> upstart.txt
-		done
-		    
-		sed -i -e 's/wł/on -/g' upstart.txt
-		sed -i -e 's/wył/- off/g' upstart.txt
-		
-		#sysv
-		sudo rcconf --list | sort > sysv.txt
-		cat sysv.txt | awk '{print $1}' > nazwy_uslug.txt #nazwa usługi
-		sed -i 's/ on/X/g' sysv.txt
-		sed -i 's/ off/-/g' sysv.txt
-		for i in $(seq 1 $(wc -l sysv.txt | awk '{print $1}')); do 
-		head sysv.txt -n$i | tail -n1 > 10.txt
-			if  [ "$(grep "X" 10.txt | head -n1)" != "" ]
-			then
-			      echo -e "on\t-">> stan_uslug.txt
-			else
-			      echo -e "-\toff" >> stan_uslug.txt
-			fi
-		done  2>&1 | pobieranie
-		
-		paste -d " " nazwy_uslug.txt stan_uslug.txt > sysv.txt
-		#usunięcie usług upstart z sysV
-		ls /etc/init/*.conf* | sed 's/\.conf.*//g' | cut -d "/" -f 4 | tr '\n' ' ' > 1.txt
-		for i in $(cat 1.txt) ; do
-		    sed -i "/$i/d" sysv.txt
-		done  2>&1 | pobieranie
-		
-		cat upstart.txt sysv.txt | sort > uslugi.txt
-
-		sed -i "s/ on - / on -\n/g" uslugi.txt
-		sed -i "s/ - off / - off\n/g" uslugi.txt
-		sed -i -e '/^[^#]/s:^:FALSE :' uslugi.txt
-		
-		a=$(yad-netext --center --height=680 --width=490   --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>SysV, Upstart - automat</b></span>\n$TEXT_MENU_USLUGI2" --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU_USLUGI3"  --column="$TEXT_MENU_USLUGI4" --column="$TEXT_MENU_USLUGI5"  --checklist --list $(cat uslugi.txt))
-		if [ $? = "0" ]; then
-			if [ "$a" != "" ]; then
-				echo $a | sed 's/|/\n/g' | sed '/^on/ d' | sed '/^off/ d' | sed '/^-/ d' | sed '/^.*TRUE/ d' > 12.txt
-				for a1 in $(cat 12.txt)
-				do
-					if [ "$(grep $a1 sysv.txt)" != "" ]; then
-						if [ "$(grep $a1 sysv.txt | awk '{print $2}')" = "on" ]; then
-							#wyłączanie sysv
-							sudo service $a1 stop
-							sudo update-rc.d -f $a1 remove
-							sudo update-rc.d -f $a1 remove
-						else
-							#włączanie sysv
-							sudo update-rc.d -f $a1 remove
-							sudo update-rc.d -f $a1 remove
-							sudo update-rc.d $a1 defaults 
-							sudo service $a1 start
-						fi
-					elif [ "$(grep $a1 upstart.txt)" != "" ]; then
-						if [ -e /etc/init/$a1.conf-disabled ]; then
-							#włączanie upstart
-							sudo update-rc.d -f $a1 remove
-							sudo update-rc.d -f $a1 remove
-							sudo update-rc.d -f $a1 defaults
-							sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf
-							sudo service $a1 start
-						elif [ -e /etc/init/$a1.conf ]; then
-							#wyłączanie upstart
-							sudo update-rc.d -f $a1 remove
-							sudo update-rc.d -f $a1 remove
-							sudo service $a1 stop
-							sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled
-						fi
-					fi
-				done
-			fi
-		fi
-		if [ -z "$a" ]; then
-			petla="nie"
-			rm *.txt -f
-		fi
-		done
-	#SysV - expert
-	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1B" ] ; then
-		x-terminal-emulator -e bash -c "echo -e \"$TEXT_MENU_USLUGI7 sysv-rc-conf\n\"; sudo sysv-rc-conf"
-		exit 0
-	elif  [ "$uslugi" = "$TEXT_MENU_USLUGI0 systemd" ]; then
-		 petla="tak"
+	 petla="tak"
 		 while [ $petla = "tak" ]; do
 		 rm uslugi*.txt -f
 		 systemctl list-unit-files | grep service | awk '{print $1}' | grep -v -E "@|systemd*|plymouth|dbus|initd|alsa|console|udev" | sort | uniq  > uslugi.txt
@@ -186,71 +86,171 @@ while [ $petla_duza = "tak" ]; do
 			rm *.txt -f
 		fi
 		done
-			
-	#Upstart - expert
-	elif [ "$uslugi" = "$TEXT_MENU_USLUGI1C" ] ; then
-		petla="tak"
-		while [ $petla = "tak" ]; do
-			upstart_test
+	    #menu="$TEXT_MENU_USLUGI0 upstart,sysV!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C!$TEXT_MENU_USLUGI0 systemd"
+	else
+		uslugi=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --text="<span color=\"$kolor_textu\">$TEXT_MENU_USLUGI</span>" --form --field=" :CB" "$TEXT_MENU_USLUGI0 upstart,sysV!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C"  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
+		klawisz=$?; uslugi=$(echo $uslugi | cut -d "|" -f 1)
+		if [ $klawisz = 0 ]; then 
+		#usługisysv i upstart automat
+			if [ "$uslugi" = "$TEXT_MENU_USLUGI0 upstart,sysV" ] ; then
+				petla="tak"
+				while [ $petla = "tak" ]; do
+				#upstart
+				upstart_test
+				cat lista.txt | cut -d " " -f 1 > 1.txt #nazwa usługi
+				sed -e 's/,//g' lista.txt | cut -d " " -f 2 | sed -e 's/start.*/wł/g' | sed -e 's/stop.*waiting*/wł/g'  > 2.txt #stan usługi
+				
+				paste -d " " 1.txt 2.txt  > upstart.txt
+				for SOFT in $(ls /etc/init/*.conf-disabled | sed 's/\.conf-disabled//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state"); do
+				      echo "$SOFT wył" >> upstart.txt
+				done
+				    
+				sed -i -e 's/wł/on -/g' upstart.txt
+				sed -i -e 's/wył/- off/g' upstart.txt
+				
+				#sysv
+				sudo rcconf --list | sort > sysv.txt
+				cat sysv.txt | awk '{print $1}' > nazwy_uslug.txt #nazwa usługi
+				sed -i 's/ on/X/g' sysv.txt
+				sed -i 's/ off/-/g' sysv.txt
+				for i in $(seq 1 $(wc -l sysv.txt | awk '{print $1}')); do 
+				head sysv.txt -n$i | tail -n1 > 10.txt
+					if  [ "$(grep "X" 10.txt | head -n1)" != "" ]
+					then
+					      echo -e "on\t-">> stan_uslug.txt
+					else
+					      echo -e "-\toff" >> stan_uslug.txt
+					fi
+				done  2>&1 | pobieranie
+				
+				paste -d " " nazwy_uslug.txt stan_uslug.txt > sysv.txt
+				#usunięcie usług upstart z sysV
+				ls /etc/init/*.conf* | sed 's/\.conf.*//g' | cut -d "/" -f 4 | tr '\n' ' ' > 1.txt
+				for i in $(cat 1.txt) ; do
+				    sed -i "/$i/d" sysv.txt
+				done  2>&1 | pobieranie
+				
+				cat upstart.txt sysv.txt | sort > uslugi.txt
 
-			cat lista.txt | cut -d " " -f 1 > 1.txt
-			sed -e 's/,//g' lista.txt | cut -d " " -f 2 > 2.txt
-			cut lista.txt -d " " -f 4 | sed -e "s/^$/$TEXT_BRAK/g" > 3.txt
-			paste -d " " 1.txt 2.txt 3.txt  > 4.txt
-			for SOFT in $(ls /etc/init/*.conf-disabled | sed 's/\.conf-disabled//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state")
-			do
-			#do sprawdzenia
-				echo "$SOFT off $TEXT_BRAK" >> 4.txt
-			done  2>&1 | pobieranie
-			a=$(yad-netext --center --height=540 --width=490 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Upstart - expert</b></span>\n$TEXT_MENU_USLUGI8" --column="$TEXT_MENU_USLUGI9" --column="$TEXT_MENU_USLUGI10" --column="$TEXT_MENU_USLUGI11" --list --list $(cat 4.txt))
-			if [ $? = "0" ]; then
-				a=$(echo $a | cut -d '|' -f 1)
-				if [ "$a" != "" ]; then
+				sed -i "s/ on - / on -\n/g" uslugi.txt
+				sed -i "s/ - off / - off\n/g" uslugi.txt
+				sed -i -e '/^[^#]/s:^:FALSE :' uslugi.txt
+				
+				a=$(yad-netext --center --height=680 --width=490   --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>SysV, Upstart - automat</b></span>\n$TEXT_MENU_USLUGI2" --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU_USLUGI3"  --column="$TEXT_MENU_USLUGI4" --column="$TEXT_MENU_USLUGI5"  --checklist --list $(cat uslugi.txt))
+				if [ $? = "0" ]; then
+					if [ "$a" != "" ]; then
+						echo $a | sed 's/|/\n/g' | sed '/^on/ d' | sed '/^off/ d' | sed '/^-/ d' | sed '/^.*TRUE/ d' > 12.txt
+						for a1 in $(cat 12.txt)
+						do
+							if [ "$(grep $a1 sysv.txt)" != "" ]; then
+								if [ "$(grep $a1 sysv.txt | awk '{print $2}')" = "on" ]; then
+									#wyłączanie sysv
+									sudo service $a1 stop
+									sudo update-rc.d -f $a1 remove
+									sudo update-rc.d -f $a1 remove
+								else
+									#włączanie sysv
+									sudo update-rc.d -f $a1 remove
+									sudo update-rc.d -f $a1 remove
+									sudo update-rc.d $a1 defaults 
+									sudo service $a1 start
+								fi
+							elif [ "$(grep $a1 upstart.txt)" != "" ]; then
+								if [ -e /etc/init/$a1.conf-disabled ]; then
+									#włączanie upstart
+									sudo update-rc.d -f $a1 remove
+									sudo update-rc.d -f $a1 remove
+									sudo update-rc.d -f $a1 defaults
+									sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf
+									sudo service $a1 start
+								elif [ -e /etc/init/$a1.conf ]; then
+									#wyłączanie upstart
+									sudo update-rc.d -f $a1 remove
+									sudo update-rc.d -f $a1 remove
+									sudo service $a1 stop
+									sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled
+								fi
+							fi
+						done
+					fi
+				fi
+				if [ -z "$a" ]; then
+					petla="nie"
 					rm *.txt -f
-					usl=$( yad-netext --center --height=240 --width=560 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="$TEXT_MENU_USLUGI12 $a" --list --radiolist --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU" --column="$TEXT_OPIS"\
-					FALSE "start" 	"$TEXT_MENU_USLUGI22A"\
-					TRUE "stop" 		"$TEXT_MENU_USLUGI22B"\
-					FALSE "enable" 	"$TEXT_MENU_USLUGI22C"\
-					FALSE "disable" 	"$TEXT_MENU_USLUGI22D")
-					if [ $? = 0 ]; then
-						usl=$(echo $usl | cut -d '|' -f 2)
-						export usl1=$usl; export a1=$a
-						if [ "$usl" = "start" ]; then
-							if [ -e /etc/init/$a1.conf ]; then
-							      sudo service $a1 $usl1
-							else
-							      sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start
-							fi
-						elif [ "$usl" = "stop" ]; then
-							if [ -e /etc/init/$a1.conf ]; then
-							      sudo service $a1 $usl1
-							else
-							      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI34"
-							fi
-						elif [ "$usl" = "enable" ]; then
-							echo /etc/int/$a1.conf
-							if [ -e /etc/init/$a1.conf-disabled ]; then
-							      sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start
-							else
-							      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI35"
-							fi
-							echo /etc/int/$a1.conf-disabed
-						elif [ "$usl" = "disable" ]; then
-							if [ -e /etc/init/$a1.conf ]; then
-							      sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled
-							else
-							      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI37"
+				fi
+				done
+			#SysV - expert
+			elif [ "$uslugi" = "$TEXT_MENU_USLUGI1B" ] ; then
+				x-terminal-emulator -e bash -c "echo -e \"$TEXT_MENU_USLUGI7 sysv-rc-conf\n\"; sudo sysv-rc-conf"
+				exit 0
+			#elif  [ "$uslugi" = "$TEXT_MENU_USLUGI0 systemd" ]; then
+				
+					
+			#Upstart - expert
+			elif [ "$uslugi" = "$TEXT_MENU_USLUGI1C" ] ; then
+				petla="tak"
+				while [ $petla = "tak" ]; do
+					upstart_test
+
+					cat lista.txt | cut -d " " -f 1 > 1.txt
+					sed -e 's/,//g' lista.txt | cut -d " " -f 2 > 2.txt
+					cut lista.txt -d " " -f 4 | sed -e "s/^$/$TEXT_BRAK/g" > 3.txt
+					paste -d " " 1.txt 2.txt 3.txt  > 4.txt
+					for SOFT in $(ls /etc/init/*.conf-disabled | sed 's/\.conf-disabled//g' | cut -d "/" -f 4 | grep -v -E "cryptdisks-udev|network-interface|network-interface-security|wait-for-state")
+					do
+					#do sprawdzenia
+						echo "$SOFT off $TEXT_BRAK" >> 4.txt
+					done  2>&1 | pobieranie
+					a=$(yad-netext --center --height=540 --width=490 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Upstart - expert</b></span>\n$TEXT_MENU_USLUGI8" --column="$TEXT_MENU_USLUGI9" --column="$TEXT_MENU_USLUGI10" --column="$TEXT_MENU_USLUGI11" --list --list $(cat 4.txt))
+					if [ $? = "0" ]; then
+						a=$(echo $a | cut -d '|' -f 1)
+						if [ "$a" != "" ]; then
+							rm *.txt -f
+							usl=$( yad-netext --center --height=240 --width=560 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="$TEXT_MENU_USLUGI12 $a" --list --radiolist --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU" --column="$TEXT_OPIS"\
+							FALSE "start" 	"$TEXT_MENU_USLUGI22A"\
+							TRUE "stop" 		"$TEXT_MENU_USLUGI22B"\
+							FALSE "enable" 	"$TEXT_MENU_USLUGI22C"\
+							FALSE "disable" 	"$TEXT_MENU_USLUGI22D")
+							if [ $? = 0 ]; then
+								usl=$(echo $usl | cut -d '|' -f 2)
+								export usl1=$usl; export a1=$a
+								if [ "$usl" = "start" ]; then
+									if [ -e /etc/init/$a1.conf ]; then
+									      sudo service $a1 $usl1
+									else
+									      sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start
+									fi
+								elif [ "$usl" = "stop" ]; then
+									if [ -e /etc/init/$a1.conf ]; then
+									      sudo service $a1 $usl1
+									else
+									      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI34"
+									fi
+								elif [ "$usl" = "enable" ]; then
+									echo /etc/int/$a1.conf
+									if [ -e /etc/init/$a1.conf-disabled ]; then
+									      sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start
+									else
+									      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI35"
+									fi
+									echo /etc/int/$a1.conf-disabed
+								elif [ "$usl" = "disable" ]; then
+									if [ -e /etc/init/$a1.conf ]; then
+									      sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled
+									else
+									      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI37"
+									fi
+								fi
 							fi
 						fi
 					fi
-				fi
+					if [ -z "$a" ]; then
+					    petla="nie"
+					    rm *.txt -f
+					fi
+				  done
 			fi
-			if [ -z "$a" ]; then
-			    petla="nie"
-			    rm *.txt -f
-			fi
-		  done
-	fi
+		fi
 	fi
 	if [ -z "$uslugi" ]; then
 		petla_duza="nie"
