@@ -3,6 +3,7 @@
 
 v0.8.15
 -	dodanie zarządzania usługami systemd
+-	dodanie menu systemd tylko jak usługa jest włączono
 v0.8.14
 -	APM v3.8
 -	sumy kontrolne w logach

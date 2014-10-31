@@ -41,8 +41,12 @@ source /opt/NeteXt73/procedury
 cd /tmp/netext73
 petla_duza="tak"
 while [ $petla_duza = "tak" ]; do
-	
-	uslugi=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --text="<span color=\"$kolor_textu\">$TEXT_MENU_USLUGI</span>" --form --field=" :CB" "$TEXT_MENU_USLUGI0!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C!$TEXT_MENU_USLUGI0 systemd"  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
+	if [ "$(journalctl -u cron | grep systemd)" != "" ];then
+	    menu="$TEXT_MENU_USLUGI0!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C!$TEXT_MENU_USLUGI0 systemd"
+	else
+	    menu="$TEXT_MENU_USLUGI0!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C"
+	fi
+	uslugi=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --text="<span color=\"$kolor_textu\">$TEXT_MENU_USLUGI</span>" --form --field=" :CB" "$menu"  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
 	klawisz=$?; uslugi=$(echo $uslugi | cut -d "|" -f 1)
 	#SysV - automat
 	if [ $klawisz = 0 ]; then 
