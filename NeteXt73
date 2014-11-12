@@ -55,7 +55,7 @@ sumy(){
 zaleznosci(){
 cd /tmp/netext73
 plik=""
-for i in $(echo tlp acpi-call laptop-mode-tools);do
+for i in $(echo tlp acpi-call laptop-mode-tools ulatelcy ulatencyd);do
 if [ "$(dpkg -l | awk '{print $2}' | grep $i -x)" != "" ];then
     export plik="$plik $i"
 fi
