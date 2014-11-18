@@ -363,6 +363,12 @@ echo "sudo sed -i '/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo rmmod
 echo "else"
 echo "sudo sed -i '/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
+#intel turbo
+echo "if [ \"\$turbooff\" != \"FALSE\" ];then"
+echo "sudo sed -i 's/echo 1 > \$intel/echo 0 > \$intel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "else"
+echo "sudo sed -i 's/echo 0 > \$intel/echo 1 > \$intel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "fi"
 #HDD
 echo "if [ \"\$bfqfix\" = \"bfq\" ];then"
 echo "sudo sed -i '/#HDD/ s/cfq/bfq/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
@@ -407,6 +413,13 @@ echo "if [ \"\$(grep wifionoff ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"F
 echo "sudo sed -i 's/echo 1 > \$wifi/echo 0 > \$wifi/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
 echo "sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "fi"
+
+#intel turbo
+echo "if [ \"\$(grep turbooff ~/.netext73/apm_status | cut -d ' ' -f 2)\" != \"FALSE\" ];then"
+echo "sudo sed -i 's/echo 1 > \$intel/echo 0 > \$intel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "else"
+echo "sudo sed -i 's/echo 0 > \$intel/echo 1 > \$intel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 
 echo "if [ \"\$(grep rts5139fix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"TRUE\" ];then"
@@ -517,6 +530,12 @@ stan_apm_config(){
 	else 
 	    export wifin="TRUE"
 	fi
+	#sprawdzenie intel turbo
+	if [ "$(grep 'echo 1 > $intel' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ];then
+	    export turbooff="FALSE"
+	else 
+	    export turbooff="TRUE"
+	fi
 	#sprawdzenie BFQ/CFQ/deadline HDD
 	
 	if [ "$(grep bfq /sys/block/sda/queue/scheduler)" != "" ]; then
@@ -550,6 +569,7 @@ stan_apm_config(){
 	export rts5139fix_przed=$rts5139fix
 	export bfqfix_przed=$bfqfix
 	export ssdfix_przed=$ssdfix
+	export turbooff_przed=$turbooff
 	#wysłanie danych do configu 
 	ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//' > ~/.netext73/apm_status
 	echo "wififix $wififix" >> ~/.netext73/apm_status
@@ -559,6 +579,7 @@ stan_apm_config(){
 	echo "wifin $wifin" >> ~/.netext73/apm_status
 	echo "bfqfix $bfqfix" >> ~/.netext73/apm_status
 	echo "ssdfix $ssdfix" >> ~/.netext73/apm_status
+	echo "turbooff $turbooff" >> ~/.netext73/apm_status
 }
 
 usun_kernel(){

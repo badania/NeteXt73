@@ -46,6 +46,7 @@ export TEXT_FIX2="APM WiFi on the battery"
 export TEXT_FIX3="APM Bluetooth on the battery"
 export TEXT_FIX4="APM module rts5xx"
 export TEXT_FIX5="APM WiFi b/g/[N]"
+export TEXT_FIX6="Intel CPU Turbo Boost on the battery"
 export TEXT_PLANISTA="Scheduler I/O [HDD]"
 
 #########################################################################################################################################################################

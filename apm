@@ -46,7 +46,7 @@ export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | 
 #zapamiętanie configu jeżeli był niepełen config
 if [ -e  ~/.netext73/apm_status ] && [ "$(cat ~/.netext73/apm_status | wc -l)" != "8" ]; then
     #sprawdzanie czy jest włączony jakiś APM
-    if [ "$(ls /etc/pm/power.d/advanced_power_management_by_ext73* -Fl | grep '*' | cut -d '_' -f 6)" = "" ];then
+    if [ "$(ls /etc/pm/power.d/advanced_power_management_by_ext73* -Fl | grep '*' | cut -d '_' -f 7)" = "" ];then
       naglowek > instaluj.sh
       echo "sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative*" >> instaluj.sh
       instalacja
@@ -87,6 +87,7 @@ while [ $petla_duza = "tak" ]; do
 		--field="$TEXT_FIX3:CHK" "$btfix" \
 		--field="$TEXT_FIX4:CHK" "$rts5139fix" \
 		--field="$TEXT_FIX5:CHK" "$wifin" \
+		--field="$TEXT_FIX6:CHK" "$turbooff" \
 		--field="$TEXT_PLANISTA:CB" "$bfqfix_menu" \
 		--field="$(echo $TEXT_PLANISTA | sed 's/HDD/SSD\/FLASH/'):CB" "$ssdfix_menu" \
 		--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" )
@@ -99,11 +100,12 @@ while [ $petla_duza = "tak" ]; do
 			export btfix=$(echo $aa | cut -d "|" -f 6)
 			export rts5139fix=$(echo $aa | cut -d "|" -f 7)
 			export wifin=$(echo $aa | cut -d "|" -f 8)
-			export bfqfix=$(echo $aa | cut -d "|" -f 9)
-			export ssdfix=$(echo $aa | cut -d "|" -f 10)
+			export turbooff=$(echo $aa | cut -d "|" -f 9)
+			export bfqfix=$(echo $aa | cut -d "|" -f 10)
+			export ssdfix=$(echo $aa | cut -d "|" -f 11)
 					
 			#uruchomienie aktualizacji gdy zaszła jakś zmiana
-			if [ "$a" = "$aktualny_apm" ] && [ "$wififix_przed" = "$wififix" ] && [ "$wifionoff_przed" = "$wifionoff" ] && [ "$btfix_przed" = "$btfix" ] && [ "$rts5139fix_przed" = "$rts5139fix" ] && [ "$wifin_przed" = "$wifin" ] && [ "$bfqfix_przed" = "$bfqfix" ] && [ "$ssdfix_przed" = "$ssdfix" ]; then
+			if [ "$a" = "$aktualny_apm" ] && [ "$wififix_przed" = "$wififix" ] && [ "$wifionoff_przed" = "$wifionoff" ] && [ "$btfix_przed" = "$btfix" ] && [ "$rts5139fix_przed" = "$rts5139fix" ] && [ "$wifin_przed" = "$wifin" ] && [ "$bfqfix_przed" = "$bfqfix" ] && [ "$ssdfix_przed" = "$ssdfix" ] && [ "$turbooff_przed" = "$turbooff" ]; then
 			    petla_duza="nie"
 			    rm *.txt -f *.sh
 			else
