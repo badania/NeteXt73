@@ -267,6 +267,7 @@ else
 		    porownanie(){
 		    petla="tak"
 		    while [ $petla = "tak" ]; do
+			    IFS=$' \t\n'
 			    rm tymczasowy.txt -f
 			    for i in $(ls *glmark2.log ); do
 				  if [ "$(grep test_time $i)" = "" ]; then
