@@ -201,7 +201,7 @@ else
 		    done
 		    pliczek=$(yad-netext --center --title="$nazwa_skryptu" --text="$1 sysbench" --width=1024 --height=450 --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" \
 		    --column="uname -r" --column="test dates:" --column="$(echo $a1 | sed 's/ of/\nof/')" --column="$a2" --column="$(echo $a3 | sed 's/ of/\nof/')" --column="$(echo $a4 | sed 's/ event/\nevent/' | sed 's/ taken/\ntaken/' )" --column="$a5"  --column="$a6" --column="$a7" --column="$(echo $a8 | sed 's/ 95/\n95/')" --column="$(echo $a9 | sed 's/(/\n(/')" --column="$(echo $a10 | sed 's/(/\n(/')" --list $(cat pliki) --button="$TEXT_USUN_WYNIK:0"  --button="$TEXT_ZAMKNIJ:1" )
-		    klawisz=$?; pliczek=$(echo $pliczek | cut -d "|" -f 2)
+		    klawisz=$?; pliczek=$(echo $pliczek | cut -d " " -f 2)
 		    if [ "$klawisz" = "0" ]; then
 			if [ "$1" = "cpu" ]; then
 			    rm $(ls | grep $pliczek | grep cpu)
@@ -265,30 +265,36 @@ else
 		    }
 
 		    porownanie(){
-		    rm tymczasowy.txt -f
-		    for i in $(ls *glmark2.log ); do
-			  if [ "$(grep test_time $i)" = "" ]; then
-			      rm $i
-			  else
-			      grep "uname" $i | cut -d " " -f 2 >> tymczasowy.txt
-			      echo -e "\n" >> tymczasowy.txt
-			      for a in $(echo test_time: GL_VENDOR: GL_RENDERER: GL_VERSION:); do
-				  grep "$a" $i | sed "s/$a[[:space:]]*//g" | sed 's/^[ \t]*//' | sed 's/ $//' >> tymczasowy.txt
-				  echo -e "\n" >> tymczasowy.txt
-			      done
-			      grep "glmark2 Score:" $i | sed "s/glmark2 Score:[[:space:]]*//g" | sed "s/[[:space:]]//g" >> tymczasowy.txt
-			      echo -e "\n" >> tymczasowy.txt
-			  fi
+		    petla="tak"
+		    while [ $petla = "tak" ]; do
+			    rm tymczasowy.txt -f
+			    for i in $(ls *glmark2.log ); do
+				  if [ "$(grep test_time $i)" = "" ]; then
+				      rm $i
+				  else
+				      grep "uname" $i | cut -d " " -f 2 >> tymczasowy.txt
+				      echo -e "\n" >> tymczasowy.txt
+				      for a in $(echo test_time: GL_VENDOR: GL_RENDERER: GL_VERSION:); do
+					  grep "$a" $i | sed "s/$a[[:space:]]*//g" | sed 's/^[ \t]*//' | sed 's/ $//' >> tymczasowy.txt
+					  echo -e "\n" >> tymczasowy.txt
+				      done
+				      grep "glmark2 Score:" $i | sed "s/glmark2 Score:[[:space:]]*//g" | sed "s/[[:space:]]//g" >> tymczasowy.txt
+				      echo -e "\n" >> tymczasowy.txt
+				  fi
+			    done
+			    sed -i '/^[ \t]*$/ d' tymczasowy.txt
+			    IFS=$'\n'
+			    pliczek=$(yad-netext --center --title="$nazwa_skryptu" --text="glmark2 tests" --width=1024 --height=450 --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" \
+			    --column="uname -r" --column="test dates:" --column="GL_VENDOR:" --column="GL_RENDERER:" --column="GL_VERSION:" --column="Total score:" --separator=$'\n' --list $(cat tymczasowy.txt) --button="$TEXT_USUN_WYNIK:0"  --button="$TEXT_ZAMKNIJ:1" )
+			    klawisz=$?; pliczek=$(echo $pliczek | cut -d " " -f 2)
+			    if [ "$klawisz" = "0" ]; then
+				    rm $(ls | grep $pliczek)
+			    fi
+			    rm tymczasowy.txt -f
+			    if [ "$klawisz" = "1" ]; then
+				petla="nie"
+			    fi
 		    done
-		    sed -i '/^[ \t]*$/ d' tymczasowy.txt
-		    IFS=$'\n'
-		    pliczek=$(yad-netext --center --title="$nazwa_skryptu" --text="glmark2 tests" --width=1024 --height=450 --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" \
-		    --column="uname -r" --column="test dates:" --column="GL_VENDOR:" --column="GL_RENDERER:" --column="GL_VERSION:" --column="Total score:" --separator=$'\n' --list $(cat tymczasowy.txt) --button="$TEXT_USUN_WYNIK:0"  --button="$TEXT_ZAMKNIJ:1" )
-		    klawisz=$?; pliczek=$(echo $pliczek | cut -d " " -f 2)
-		    if [ "$klawisz" = "0" ]; then
-			    rm $(ls | grep $pliczek)
-		    fi
-		    rm tymczasowy.txt -f
 		    }
 
 
