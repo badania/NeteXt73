@@ -284,7 +284,7 @@ else
 		    IFS=$'\n'
 		    pliczek=$(yad-netext --center --title="$nazwa_skryptu" --text="glmark2 tests" --width=1024 --height=450 --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" \
 		    --column="uname -r" --column="test dates:" --column="GL_VENDOR:" --column="GL_RENDERER:" --column="GL_VERSION:" --column="Total score:" --separator=$'\n' --list $(cat tymczasowy.txt) --button="$TEXT_USUN_WYNIK:0"  --button="$TEXT_ZAMKNIJ:1" )
-		    klawisz=$?; pliczek=$(echo $pliczek | cut -d "|" -f 2)
+		    klawisz=$?; pliczek=$(echo $pliczek | cut -d " " -f 2)
 		    if [ "$klawisz" = "0" ]; then
 			    rm $(ls | grep $pliczek)
 		    fi
@@ -298,6 +298,7 @@ else
 			    if [ "$skrypt" = "$MENU1" ]; then
 				zrob_test
 				wynik_testu $(uname -r)_$DATE-glmark2.log
+				porownanie
 			    elif [ "$skrypt" = "$MENU2" ]; then
 				porownanie
 			    fi
