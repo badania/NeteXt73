@@ -36,7 +36,7 @@
 source /opt/NeteXt73/procedury
 
 sofcik(){
-echo "audacity avidemux clementine compizconfig-settings-manager dropbox ffmulticonverter google-chrome-stable guake gufw homebank htop i-nex kadu kget kubuntu-restricted-extras language-pack-gnome-pl libnss3-tools libreoffice-gtk libreoffice-kde lubuntu-restricted-extras mc network-manager-openvpn openssh-client openssl oracle-java8-installer pidgin ppa-purge radiotray saidar showfoto shutter spotify-client synaptic tomahawk ubuntu-restricted-extras unetbootin unity-tweak-tool vlc wakeonlan wine wmctrl x2goclient x2goserver xbmc xubuntu-restricted-extras yakuake youtube-dl " > ~/.netext73/soft
+echo "audacity avidemux clementine compizconfig-settings-manager digikam dropbox ffmulticonverter gimp google-chrome-stable grsync guake gufw homebank htop i-nex kadu kget kodi kubuntu-restricted-extras language-pack-gnome-pl libnss3-tools libreoffice-gtk libreoffice-kde libreoffice-style-sifr lubuntu-restricted-extras mc network-manager-openvpn openssh-client openssl oracle-java8-installer pidgin plasma-scriptengines plasma-widget-homerun-kicker plasma widget-yawp ppa-purge radiotray saidar showfoto shutter spotify-client synaptic tomahawk ubuntu-restricted-extras ufw-kde unetbootin unity-tweak-tool vlc wakeonlan wine1.7 wmctrl x2goclient x2goserver xubuntu-restricted-extras yakuake youtube-dl" > ~/.netext73/soft
 }
 
 baza=(	
@@ -548,7 +548,7 @@ if [ "$klawisz" = "0" ]; then
 	fi
 	nowa_lista=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --width=400 --height=600 --form --field="$MENU_OPIS:TXT" "$(cat -e ~/.netext73/soft | tr ' ' '\n' | sed 's/\$//g' | sort)" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 	if [ $? = "0" ]; then
-	    echo -e $nowa_lista | sed 's/|//g'| tr ' ' '\n' | sed 's/\$//g' | sort > ~/.netext73/soft
+	    echo -e $nowa_lista | sed 's/|//g'| tr ' ' '\n' | sed 's/\$//g' | sort | uniq > ~/.netext73/soft
 	    sed -i '/^[ \t]*$/ d' ~/.netext73/soft
 	fi
 #########################################################################################################################################################################
