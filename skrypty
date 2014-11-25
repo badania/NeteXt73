@@ -289,11 +289,11 @@ else
 			    --column="uname -r" --column="test dates:" --column="GL_VENDOR:" --column="GL_RENDERER:" --column="GL_VERSION:" --column="Total score:" --separator=$'\n' --list $(cat tymczasowy.txt) --button="$TEXT_USUN_WYNIK:0"  --button="$TEXT_ZAMKNIJ:1" )
 			    klawisz=$?; pliczek=$(echo $pliczek | cut -d " " -f 2)
 			    if [ "$klawisz" = "0" ]; then
-				    rm $(ls | grep $pliczek)
-			    fi
-			    rm tymczasowy.txt -f
-			    if [ "$klawisz" = "1" ]; then
+				rm $(ls | grep $pliczek)
+				rm tymczasowy.txt -f
+			    else
 				petla="nie"
+				rm tymczasowy.txt -f
 			    fi
 		    done
 		    }
