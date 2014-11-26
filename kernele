@@ -108,7 +108,7 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 				cd /tmp/netext73/kernel; 	cp $a $b /tmp/netext73/kernel/
 				naglowek > instaluj.sh
 				naglowek2 >> instaluj.sh
-				instalacja
+				instalacja2
 				cd /tmp/netext73; rm -rf kernel
 				restart
 			fi
@@ -178,7 +178,7 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 							if yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --height=280 --width=590 --text="$TEST_INSTALOWAC_KERNEL3 $rodzaj $TEST_INSTALOWAC_KERNEL4\n\n$(ls *.deb)\n\n$TEXT_INSTALOWAC ?\n\n" ; then
 								naglowek > instaluj.sh
 								naglowek2 >> instaluj.sh
-								instalacja
+								instalacja2
 								#wywalenie plików po instalacji
 								wywal_pobrane_pliki_kernela
 								restart
