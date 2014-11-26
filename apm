@@ -46,7 +46,7 @@ export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | 
 #zapamiętanie configu jeżeli był niepełen config
 if [ -e  ~/.netext73/apm_status ] && [ "$(cat ~/.netext73/apm_status | wc -l)" != "8" ]; then
     #sprawdzanie czy jest włączony jakiś APM
-    if [ "$(ls /etc/pm/power.d/advanced_power_management_by_ext73* -Fl | grep '*' | cut -d '_' -f 7)" = "" ];then
+    if [ "$(ls /etc/pm/power.d/)" != "" ] && [ "$(ls /etc/pm/power.d/advanced_power_management_by_ext73* -Fl | grep '*' | cut -d '_' -f 7)" = "" ];then
       naglowek > instaluj.sh
       echo "sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative*" >> instaluj.sh
       instalacja
@@ -66,8 +66,8 @@ while [ $petla_duza = "tak" ]; do
 		      if [ -e ~/.netext73/apm_status ]; then
 			  apm_zmiana_config >> instaluj.sh
 		      fi
-		      instalacja
-		      stan_apm #sprawdzenie stanu instalacji
+		      instalacja2
+		      stan_apm  #sprawdzenie stanu instalacji
 		fi
 	fi
 	
@@ -122,7 +122,7 @@ while [ $petla_duza = "tak" ]; do
 				fi
 				instalacja2
 				#zapisanie stanu apm po zmianie
-				stan_apm_config
+				stan_apm_config czeki
 			fi
 		fi
 	fi

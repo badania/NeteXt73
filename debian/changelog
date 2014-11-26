@@ -1,3 +1,9 @@
+netext73 (0.8.19) stable; urgency=medium
+
+  * poprawki w instalatorze APM
+
+ -- NetBit73 <netbit73@gmail.com>  Wed, 26 Nov 2014 19:27:13 +0100
+
 netext73 (0.8.18) stable; urgency=medium
 
   * APM v4.0

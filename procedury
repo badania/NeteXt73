@@ -286,7 +286,7 @@ echo "cp /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz
 echo "tar -xvzf advanced_power_management_by_ext73_$wersja_apm.tar.gz"
 echo "sudo mv $wersja_apm1*$wersja_apm $wersja_apm2*$wersja_apm $wersja_apm3*$wersja_apm $wersja_apm4*$wersja_apm $wersja_apm5*$wersja_apm $wersja_apm6*$wersja_apm /etc/pm/power.d/"
 echo "sudo mv readahead /usr/lib/pm-utils/power.d/"
-echo "rm *tar.gz"
+echo "rm *tar.gz -f"
 echo "sudo chmod a-x /etc/pm/power.d/*"
 echo "if [ -e ~/.netext73/apm_status ]; then"
 echo "if [ \"\$(ls /etc/pm/power.d/* | grep \$(cat  ~/.netext73/apm_status | head -n 1))\" != \"\" ]; then" #zaznaczanie aktywnego APM wg configu
@@ -570,16 +570,19 @@ stan_apm_config(){
 	export bfqfix_przed=$bfqfix
 	export ssdfix_przed=$ssdfix
 	export turbooff_przed=$turbooff
+	
 	#wysłanie danych do configu 
-	ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//' > ~/.netext73/apm_status
-	echo "wififix $wififix" >> ~/.netext73/apm_status
-	echo "wifionoff $wifionoff" >> ~/.netext73/apm_status
-	echo "btfix $btfix">> ~/.netext73/apm_status
-	echo "rts5139fix $rts5139fix" >> ~/.netext73/apm_status
-	echo "wifin $wifin" >> ~/.netext73/apm_status
-	echo "bfqfix $bfqfix" >> ~/.netext73/apm_status
-	echo "ssdfix $ssdfix" >> ~/.netext73/apm_status
-	echo "turbooff $turbooff" >> ~/.netext73/apm_status
+	if [ "$1" = "czeki" ]; then
+		ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//' > ~/.netext73/apm_status
+		echo "wififix $wififix" >> ~/.netext73/apm_status
+		echo "wifionoff $wifionoff" >> ~/.netext73/apm_status
+		echo "btfix $btfix">> ~/.netext73/apm_status
+		echo "rts5139fix $rts5139fix" >> ~/.netext73/apm_status
+		echo "wifin $wifin" >> ~/.netext73/apm_status
+		echo "bfqfix $bfqfix" >> ~/.netext73/apm_status
+		echo "ssdfix $ssdfix" >> ~/.netext73/apm_status
+		echo "turbooff $turbooff" >> ~/.netext73/apm_status
+	fi
 }
 
 usun_kernel(){
