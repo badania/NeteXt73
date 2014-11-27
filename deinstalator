@@ -98,6 +98,8 @@ elif [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINS
 					naglowek > instaluj.sh
 					usun_kernel >> instaluj.sh
 					instalacja2
+				else
+					petla="nie"
 				fi
 			else
 				rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f
