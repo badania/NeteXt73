@@ -1,6 +1,11 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.20
+-	wyodrębnienie testów pod własną ikoną
+-	przeniesienie zwalniania RAM do skryptów
+-	poprawki tłumaczeń
+-	zmiany w testach
 v0.8.19
 -	poprawki w instalatorze APM
 v0.8.18
