@@ -270,24 +270,28 @@ if [ $klawisz = 0 ]; then
 			while [ $petla = "tak" ]; do
 				IFS=$' \t\n'
 				rm tymczasowy.txt -f
+				#walidacja wyników
 				for i in $(ls *glmark2.log ); do
-					if [ "$(grep test_time $i)" = "" ]; then
-						rm $i
-					else
-						grep "uname" $i | cut -d " " -f 2 >> tymczasowy.txt
-						echo -e "\n" >> tymczasowy.txt
-						for a in $(echo test_time: GL_VENDOR: GL_RENDERER: GL_VERSION:); do
-							grep "$a" $i | sed "s/$a[[:space:]]*//g" | sed 's/^[ \t]*//' | sed 's/ $//' >> tymczasowy.txt
-							echo -e "\n" >> tymczasowy.txt
-						done
-						grep "glmark2 Score:" $i | sed "s/glmark2 Score:[[:space:]]*//g" | sed "s/[[:space:]]//g" >> tymczasowy.txt
-						echo -e "\n" >> tymczasowy.txt
+					if [ "$(cat $i | tr '\n' ' ' | grep test_time | grep loop | grep function | grep conditionals | grep shadow | grep buffer | grep pulsar | grep effect2d | grep bump | grep shading | grep texture | grep buil)" = "" ]; then 
+						rm $i -f
 					fi
+				done 2>&1 | pobieranie
+				for i in $(ls *glmark2.log ); do
+					grep "uname" $i | cut -d " " -f 2 >> tymczasowy.txt
+					echo -e "\n" >> tymczasowy.txt
+					for a in $(echo test_time: GL_VENDOR: GL_RENDERER: GL_VERSION:); do
+						grep "$a" $i | sed "s/$a[[:space:]]*//g" | sed 's/^[ \t]*//' | sed 's/ $//' | head -n 1 >> tymczasowy.txt
+						echo -e "\n" >> tymczasowy.txt
+					done
+					grep "glmark2 Score:" $i | sed "s/glmark2 Score:[[:space:]]*//g" | sed "s/[[:space:]]//g" >> tymczasowy.txt
+					echo -e "\n" >> tymczasowy.txt
+					grep "glmark2" $i  | sed "s/glmark2[[:space:]]*//g" | sed 's/^[ \t]*//' | sed 's/ $//' | head -n 1 >> tymczasowy.txt
+					echo -e "\n" >> tymczasowy.txt
 				done
 				sed -i '/^[ \t]*$/ d' tymczasowy.txt
 				IFS=$'\n'
 				pliczek=$(yad-netext --center --title="$nazwa_skryptu" --text="$MENU16" --width=1024 --height=450 --window-icon="/opt/NeteXt73/ikony/glmark.png" --image="/opt/NeteXt73/ikony/glmark.png" \
-				--column="uname -r" --column="test dates:" --column="GL_VENDOR:" --column="GL_RENDERER:" --column="GL_VERSION:" --column="Total score:" --separator=$'\n' --list $(cat tymczasowy.txt) --button="$TEXT_USUN_WYNIK:0"  --button="$TEXT_ZAMKNIJ:1" )
+				--column="uname -r" --column="test dates:" --column="GL_VENDOR:" --column="GL_RENDERER:" --column="GL_VERSION:" --column="Total score:" --column="glmark2 version:" --separator=$'\n' --list $(cat tymczasowy.txt) --button="$TEXT_USUN_WYNIK:0"  --button="$TEXT_ZAMKNIJ:1" )
 				klawisz=$?; pliczek=$(echo $pliczek | cut -d " " -f 2)
 				if [ "$klawisz" = "0" ]; then
 					rm $(ls | grep $pliczek)
