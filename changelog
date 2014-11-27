@@ -6,6 +6,7 @@ v0.8.20
 -	przeniesienie zwalniania RAM do skryptów
 -	poprawki tłumaczeń
 -	zmiany w testach
+-	walidacja tabeli glmark2
 v0.8.19
 -	poprawki w instalatorze APM
 v0.8.18
