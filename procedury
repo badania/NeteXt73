@@ -629,7 +629,6 @@ else
 		strona="$adres_glowny/kernele/"
 		rm index.html -f; wget $strona 2>&1 | pobieranie 
 	fi
-fi
 	echo $(grep 'href="ftp' index.html | grep 'v' | grep -v "logi" | cut -d '"' -f 2 | sed 's/.*v/v/g' | sed 's/\///g') | tr ' ' '\n' > 2.txt
 	dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g'  > 3.txt
 
@@ -660,6 +659,7 @@ fi
 		a=$(echo $aa | cut -d "|" -f 2)	 #wybrany kernel
 		a1=$(echo $aa | cut -d "|" -f 3) #czy zainstalowany jeżeli '-' można instalować
 	fi
+fi
 }
 
 grub(){
