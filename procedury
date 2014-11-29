@@ -58,9 +58,6 @@ else
 	if [ "$(echo $LANG | grep pl)" != "" ]; then
 		export jezyk="polski"
 		echo 'polski' >  ~/.netext73/jezyk
-    #    elif [ "$(echo $LANG | grep de)" != "" ]; then
-    #	    export jezyk="niemiecki"
-    #	    echo 'niemiecki' >  ~/.netext73/jezyk
 	elif [ "$(echo $LANG | grep fr)" != "" ]; then
 		export jezyk="francuski"
 		echo 'francuski' >  ~/.netext73/jezyk
@@ -73,10 +70,7 @@ fi
 }
 
 source /opt/NeteXt73/tlumaczenia/angielski
-jezyczek; case $jezyk in de*)
-	source /opt/NeteXt73/tlumaczenia/niemiecki
-;;
-fr*)
+jezyczek; case $jezyk in fr*)
 	source /opt/NeteXt73/tlumaczenia/francuski
 ;;
 pol*)
@@ -100,22 +94,8 @@ export adres_opisu="http://www.netext73.pl/search/label/opis_netext73"
 
 
 #adres serwera
-if [ -e ~/.netext73/server_no ]; then
-	if [ "$(cat ~/.netext73/server_no)" = "server2" ];then
-		#konto="3999827"
-		export adres_glowny="ftp://37.59.165.105"
-		export adres_sterownikow="$adres_glowny/sterowniki2/"
-		wybor_serwera="server2!server1"
-	else
-		export adres_glowny="ftp://37.59.165.105"
-		export adres_sterownikow="$adres_glowny/sterowniki2/"
-		wybor_serwera="server1!server2"
-	fi
-else
-	export adres_glowny="ftp://37.59.165.105"
-	export adres_sterownikow="$adres_glowny/sterowniki2/"
-	wybor_serwera="server1!server2"
-fi
+export adres_glowny="ftp://37.59.165.105"
+export adres_sterownikow="$adres_glowny/sterowniki2/"
 
 #premium
 if [ "$(grep @ ~/.netext73/kernel_premium)" = "" ]; then
