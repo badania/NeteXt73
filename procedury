@@ -347,7 +347,7 @@ echo "fi"
 echo "if [ \"\$wifin\" = \"TRUE\" ];then"
 echo "sudo rm -f /etc/modprobe.d/wifin.conf"
 echo "else"
-echo "echo 'options iwlwifi 11n_disable=1' | sudo tee -a /etc/modprobe.d/wifin.conf"
+echo "echo 'options iwlwifi 11n_disable=1' | sudo tee /etc/modprobe.d/wifin.conf"
 echo "echo 'options ath9k nohwcrypt=1'  | sudo tee -a /etc/modprobe.d/wifin.conf"
 echo "fi"
 
