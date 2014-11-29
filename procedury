@@ -159,9 +159,9 @@ pobieranie_kerneli(){
 if [ "$kern" = "ppa mainline" ];then
 	wget $strona/$a #2>&1  | pobieranie 
 	if [ "$(grep extra $a)" != "" ]; then
-	    yad_wget $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep "all" | grep "linux-headers" | grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-headers"| grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image-[0-9]"| grep -v -E "latency")  $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image-extra" | grep "linux-image"| grep -v -E "latency")
+		yad_wget $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep "all" | grep "linux-headers" | grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-headers"| grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image-[0-9]"| grep -v -E "latency")  $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image-extra" | grep "linux-image"| grep -v -E "latency")
 	else
-	    yad_wget $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep "all" | grep "linux-headers" | grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-headers"| grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image"| grep -v -E "latency")
+		yad_wget $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep "all" | grep "linux-headers" | grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-headers"| grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image"| grep -v -E "latency")
 	fi
 else
 #pobieranie kerneli e X t 7 3
@@ -609,7 +609,7 @@ else
 			strona=$(yad-netext --center --entry --width=610 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_STRONA1" --entry-text="$str" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 			klawisz=$?
 			if [ "$klawisz" = "1" ]; then
-				blad=1
+				exit 1
 			else
 				if [ "$strona" != "" ]; then
 					if [ $? = 0 ]; then
@@ -650,6 +650,7 @@ fi
 	sort -r 4.txt > 3.txt;  echo $(sed -e '/^[^#]/s:^:FALSE :' 3.txt) > 1.txt
 	lista=$(sed  's/FALSE/TRUE/' 1.txt ); rm *.txt -f
 	a1="-"
+	blad=0
 	if [ "$(echo $lista)" = "TRUE" ]; then
 		yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_SERVER_ERROR"
 		blad=1
