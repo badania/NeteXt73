@@ -622,7 +622,7 @@ else
 echo $kern > ~/.netext73/instalator_kerneli #zapamiętanie wybranego kernela
 if [ "$(echo $kern | grep i7)" != "" ] || [ "$(echo $kern | grep Brazos)" != "" ]; then
     #adres kerneli premium
-    if [ -e ~/.netext73/kernel_premium ] && [ "$(cat  ~/.netext73/kernel_premium)" != "" ]; then
+    if [ -e ~/.netext73/kernel_premium ] && [ "$(cat ~/.netext73/kernel_premium)" != "" ]; then
 	strona="$adres_glowny/kernele_premium/"
     else
 	str=""
