@@ -5,6 +5,7 @@ v0.8.21
 -	naprawa APM wifi N
 -	poprawki czytelności kodu
 -	poprawka w sekcji update /brak automatycznego przełączania na kernele premium/
+-	usunięcie widocznego kodu dostępu do kerneli płatnych z configu
 v0.8.20
 -	wyodrębnienie testów pod własną ikoną
 -	przeniesienie zwalniania RAM do skryptów

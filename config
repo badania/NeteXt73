@@ -40,11 +40,7 @@ source /opt/NeteXt73/procedury
 
 #kasowanie starych configów
 rm ~/.netext73/https_link -f
-if [ "$(grep @ ~/.netext73/kernel_premium)" = "" ]; then
-	rm -f ~/.netext73/kernel_premium
-fi
 
-adres_kerneli_premium
 if [ -e ~/.netext73/apm_status ]; then
 	apm_stat=$(cat ~/.netext73/apm_status | sed 's/.* //' | head -n 1)
 else
@@ -89,7 +85,7 @@ else
 fi
 
 konfiguracja=$(yad-netext --center --title="$nazwa_skryptu" --width="155" --height="320" --window-icon="/opt/NeteXt73/ikony/config.png" --image="/opt/NeteXt73/ikony/config.png" --text="<span color=\"$kolor_textu\">$TEXT_CONFIG2</span>" --form \
---field="$TEXT_CONFIG7:CB" --field="$TEXT_CONFIG4" --field="$TEXT_CONFIG6:CB" --field="$TEXT_CONFIG9:RO" --field="$TEXT_CONFIG10:RO" --field="$TEXT_CONFIG11:CHK" --field="$TEXT_CONFIG12:CHK" --field="NeteXt'73 -root mode:CHK" --field="Server No:CB" "$TEXT_NIE!$TEXT_TAK" "$adres_premium" "$lang1" "$apm_stat" "$ik" "$automatyczna_instalacja" "$archiwum_deb" "$root_mode" "$wybor_serwera" \
+--field="$TEXT_CONFIG7:CB" --field="$TEXT_CONFIG4" --field="$TEXT_CONFIG6:CB" --field="$TEXT_CONFIG9:RO" --field="$TEXT_CONFIG10:RO" --field="$TEXT_CONFIG11:CHK" --field="$TEXT_CONFIG12:CHK" --field="NeteXt'73 -root mode:CHK" --field="Server No:CB" "$TEXT_NIE!$TEXT_TAK" "" "$lang1" "$apm_stat" "$ik" "$automatyczna_instalacja" "$archiwum_deb" "$root_mode" "$wybor_serwera" \
 --button="$TEXT_CONFIG3:2" --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
 klawisz=$?
 if [ $klawisz = 2 ]; then
@@ -112,8 +108,8 @@ if [ $klawisz = 0 ]; then
 		echo $konfiguracja | cut -d "|" -f 8 > ~/.netext73/root_mode
 		echo $konfiguracja | cut -d "|" -f 9 > ~/.netext73/server_no
 		if [ "$root_mode" != "$(cat ~/.netext73/root_mode)" ]; then
-		      killall -9 yad-netext
-		      rm -fr /tmp/netext73
+			killall -9 yad-netext
+			rm -fr /tmp/netext73
 		fi    
 	fi
 fi
