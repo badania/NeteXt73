@@ -7,6 +7,8 @@ v0.8.21
 -	poprawka w sekcji update /brak automatycznego przełączania na kernele premium/
 -	usunięcie widocznego kodu dostępu do kerneli płatnych z configu
 -	usunięcie z configu wyboru serwera
+-	uzupełnienie tłumaczeń
+-	poprawki w module pobierania kerneli
 v0.8.20
 -	wyodrębnienie testów pod własną ikoną
 -	przeniesienie zwalniania RAM do skryptów

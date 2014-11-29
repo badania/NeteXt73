@@ -342,6 +342,7 @@ export TEXT_STEROWNIK="Wybierz sterownik"
 export TEXT_BLAD_POBIERANIA="Błąd pobierania."
 export TEXT_POBIERANIE_GOTOWE="Pobieranie zakończone."
 export TEXT_SUMY_KONTROLNE="sumy_kontrolne"
+export TEXT_SERVER_ERROR="Błąd pobierania danych z serwera"
 
 #########################################################################################################################################################################
 
