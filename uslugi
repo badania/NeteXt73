@@ -53,19 +53,19 @@ while [ $petla_duza = "tak" ]; do
 		 #cat uslugi1.txt | grep -v -E "@|systemd*|plymouth|dbus|initd|alsa|console|udev" |sort | uniq > uslugi.txt
 		 #włączone
 		 for i in $(cat uslugi.txt); do
-		      if [ "$(sudo systemctl is-enabled $i | grep enable)" != "" ];then
-			    echo "FALSE "$i" on -" >> uslugi_on.txt
-		      else
-			    echo "FALSE "$i" - off" >> uslugi_off.txt
-		      fi
+			if [ "$(sudo systemctl is-enabled $i | grep enable)" != "" ];then
+			      echo "FALSE "$i" on -" >> uslugi_on.txt
+			else
+			      echo "FALSE "$i" - off" >> uslugi_off.txt
+			fi
 		 done 2>&1 | pobieranie
 		 #wyłączone
 		 for i in $(cat uslugi_wyl.txt); do
-		      if [ "$(sudo systemctl status $i | grep enable)" = "" ];then
-			    echo "FALSE "$i" on -" >> uslugi_on.txt
-		      else
-			    echo "FALSE "$i" - off" >> uslugi_off.txt
-		      fi
+			if [ "$(sudo systemctl status $i | grep enable)" = "" ];then
+			      echo "FALSE "$i" on -" >> uslugi_on.txt
+			else
+			      echo "FALSE "$i" - off" >> uslugi_off.txt
+			fi
 		 done		 
 		 cat uslugi_on.txt uslugi_off.txt > uslugi.txt
 		 a=$(yad-netext --center --height=680 --width=680   --window-icon="/opt/NeteXt73/ikony/uslugi.png" --image="/opt/NeteXt73/ikony/uslugi.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Systemd - automat</b></span>\n$TEXT_MENU_USLUGI2" --column="$TEXT_ZAZNACZ" --column="$TEXT_MENU_USLUGI3"  --column="$TEXT_MENU_USLUGI4" --column="$TEXT_MENU_USLUGI5"  --checklist --list $(cat uslugi.txt))
@@ -129,7 +129,7 @@ while [ $petla_duza = "tak" ]; do
 				#usunięcie usług upstart z sysV
 				ls /etc/init/*.conf* | sed 's/\.conf.*//g' | cut -d "/" -f 4 | tr '\n' ' ' > 1.txt
 				for i in $(cat 1.txt) ; do
-				    sed -i "/$i/d" sysv.txt
+					sed -i "/$i/d" sysv.txt
 				done  2>&1 | pobieranie
 				
 				cat upstart.txt sysv.txt | sort > uslugi.txt

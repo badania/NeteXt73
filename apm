@@ -42,17 +42,16 @@ cd /tmp/netext73
 rm *.html -f
 rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f
 stan_apm=""
-export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 #zapamiętanie configu jeżeli był niepełen config
 if [ -e  ~/.netext73/apm_status ] && [ "$(cat ~/.netext73/apm_status | wc -l)" != "8" ]; then
-    #sprawdzanie czy jest włączony jakiś APM
-    if [ "$(ls /etc/pm/power.d/)" != "" ] && [ "$(ls /etc/pm/power.d/advanced_power_management_by_ext73* -Fl | grep '*' | cut -d '_' -f 7)" = "" ];then
-      naglowek > instaluj.sh
-      echo "sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative*" >> instaluj.sh
-      instalacja
-    fi
-    #sprawdzenie stanu czeków
-    stan_apm_config
+	#sprawdzanie czy jest włączony jakiś APM
+	if [ "$(ls /etc/pm/power.d/)" != "" ] && [ "$(ls /etc/pm/power.d/advanced_power_management_by_ext73* -Fl | grep '*' | cut -d '_' -f 7)" = "" ];then
+		naglowek > instaluj.sh
+		echo "sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative*" >> instaluj.sh
+		instalacja
+	fi
+	#sprawdzenie stanu czeków
+	stan_apm_config
 fi
 petla_duza="tak"
 while [ $petla_duza = "tak" ]; do

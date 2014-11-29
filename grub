@@ -51,9 +51,9 @@ else
 fi
 #sprawdzenie czasu timeout
 if [ "$(grep 'GRUB_TIMEOUT' /etc/default/grub | sed 's/.*=//g')" != "" ]; then
-    czas=$(grep 'GRUB_TIMEOUT' /etc/default/grub | sed 's/.*=//g')
+      czas=$(grep 'GRUB_TIMEOUT' /etc/default/grub | sed 's/.*=//g')
 else
-    czas="3"
+      czas="3"
 fi
 
 #GRUB
@@ -66,206 +66,206 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 	if [ $klawisz = 0 ]; then 
 	#backup pliku grub
 	if [ "$grub" = "$TEXT_GRUB4A" ]; then
-	      echo "nie" > /tmp/netext73/ok.txt
-	      xterm -T Grub -e bash -c "echo \"$TEXT_GRUB8 /etc/default/grub\";sudo cp $sciezka/grub $sciezka/grub.backup -f; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
-	      if [ "$(cat /tmp/netext73/ok.txt)" = "nie" ]; then
-		      dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB9"
-	      fi
+		echo "nie" > /tmp/netext73/ok.txt
+		xterm -T Grub -e bash -c "echo \"$TEXT_GRUB8 /etc/default/grub\";sudo cp $sciezka/grub $sciezka/grub.backup -f; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
+		if [ "$(cat /tmp/netext73/ok.txt)" = "nie" ]; then
+			dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB9"
+		fi
 	#przywrócenie pliku grub z backupu
 	elif [ "$grub" = "$TEXT_GRUB5A" ]; then
-	      if [ -e $sciezka/grub.backup ]; then
-		    echo "nie" > /tmp/netext73/ok.txt
-		    xterm -T Grub -e bash -c "echo \"$TEXT_GRUB10\"; sudo cp $sciezka/grub.backup $sciezka/grub -f; sudo update-grub; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
-		    if [ "$(cat /tmp/netext73/ok.txt)" = "nie" ]; then
-			  dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB11"
-		    fi
-	      else
-		    dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB12"
-	      fi
+		if [ -e $sciezka/grub.backup ]; then
+			echo "nie" > /tmp/netext73/ok.txt
+			xterm -T Grub -e bash -c "echo \"$TEXT_GRUB10\"; sudo cp $sciezka/grub.backup $sciezka/grub -f; sudo update-grub; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
+			if [ "$(cat /tmp/netext73/ok.txt)" = "nie" ]; then
+			      dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB11"
+			fi
+		else
+			dymek  -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB12"
+		fi
 	#dokonaie zmian we wpisach w pliku grub
 	elif [ "$grub" = "$TEXT_GRUB6A" ]; then
-	      if [ -e $sciezka/grub.backup ]; then
-		    echo 'tak' > /tmp/netext73/ok.txt
-	      else
-		    dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB13 $sciezka"
-		    #kasowanie starych wpisów w grub
-		    xterm -e bash -c "sudo cp $sciezka/grub $sciezka/grub.backup -f; echo -e \"$TEXT_INSTALACJA2\"; read ent;  echo 'tak' > /tmp/netext73/ok.txt"
-	      fi
-	      if [ "$(cat /tmp/netext73/ok.txt)" = "tak" ]; then
-		    wpis_grub=$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | sed 's/GRUB_CMDLINE_LINUX=//' | cut -d '"' -f 2)
-		    export grub_pro="nie" #sprawdzenie czy ma robić rozdzielczość itp
-		    if [ "$(echo $wpis_grub | grep 'Windows')" != "" ] ; then
-			menu1="acpi_osi='!Windows 2012' acpi_osi=Linux@acpi_osi=Linux"
-		    else
-			menu1="acpi_osi=Linux@acpi_osi='!Windows 2012' acpi_osi=Linux"
-		    fi
-		    if [ "$(echo $wpis_grub | grep '915')" != "" ] ; then
-			menu2="$TEXT_GRUB_INTEL@$TEXT_GRUB_STD@$TEXT_GRUB_RADEON"
-		    elif [ "$(echo $wpis_grub | grep 'radeon')" != "" ] ; then
-			menu2="$TEXT_GRUB_RADEON@$TEXT_GRUB_INTEL@$TEXT_GRUB_STD"
-		    else
-			menu2="$TEXT_GRUB_STD@$TEXT_GRUB_INTEL@$TEXT_GRUB_RADEON"
-		    fi
-		    if [ "$(echo $wpis_grub | grep 'vendor')" != "" ] ; then
-			menu3="$TEXT_GRUB19@standard"
-		    else
-			menu3="standard@$TEXT_GRUB19"
-		    fi
-		    #rozdzielczość Grub
-		    aktualna=$(cat /etc/default/grub | grep 'GRUB_GFXMODE' | head -n 1 | sed 's/.*GRUB_GFXMODE=//')
-		    if [ "$(echo $aktualna | grep 'x')" = "" ]; then
-			aktualna="1024x600"
-		    fi
-		    if [ "$(grep GRUB_BACKGROUND /etc/default/grub)" = "" ] && [ "$(grep '#GRUB_BACKGROUND' /etc/default/grub)" = "" ]; then
-			grub_back="FALSE"
-		    else
-			grub_back="TRUE"
-		    fi
-		    
-		    #zswap
-		    if [ "$(grep 'zswap.enabled=1' /etc/default/grub)" = "" ]; then
-			zswap_czek="FALSE"
-		    else
-			zswap_czek="TRUE"
-		    fi
-		    
-		    if [ "$(echo $wpis_grub | grep 'lz4')" != "" ] ; then
-			zswap_compressor="lz4@lzo@deflate"
-		    elif [ "$(echo $wpis_grub | grep 'lzo')" != "" ] ; then
-			zswap_compressor="lzo@lz4@deflate"
-		    elif [ "$(echo $wpis_grub | grep 'deflate')" != "" ] ; then
-			zswap_compressor="deflate@lz4@lzo"
-		    else
-			zswap_compressor="lzo@lz4@deflate"
-		    fi
-		    #grub 2 lista
-		    if [ "$(dpkg -l | grep grub2-common | awk '{print $1}')" = "ii" ] && [ "$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | cut -d "'" -f 2 | grep buntu)" != "" ];then 
-			startowy=$(echo -e "default@"$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | cut -d "'" -f 2 | tr '\n' '@' | sed '$s/.$//')) #lista kerneli/systemów
-		    else
-			startowy="default"
-		    fi
-		    menu_rozdzielczosci="@1024x600@1024x768@1280x720@1280x800@1280x1024@1366x768@1400x1050@1440x900@1600x900@1600x1024@1600x1200@1680x1050@1920x1080@1920x1200"
-		    menu_rozdz=$(echo $menu_rozdzielczosci | sed "s/$aktualna//" | sed 's/@@/@/')
-		    menu4=$(echo "$aktualna$menu_rozdz" | sed 's/@@/@/')
-		    menu5=""
-		    #rozdzielczość plymouth
-		    aktualna=$(cat /etc/default/grub | grep 'GRUB_GFXPAYLOAD_LINUX' | head -n 1 | sed 's/.*GRUB_GFXPAYLOAD_LINUX=//')
-		    if [ "$(echo $aktualna | grep 'x')" = "" ]; then
-			  acpi_wpis=$( yad-netext --window-icon="/opt/NeteXt73/ikony/grub.png" --image="/opt/NeteXt73/ikony/grub.png" --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --form  --item-separator="@" \
-			  --field="$TEXT_SKRYPTEXT_10:TXT" \
-			  --field="ACPI:CB" --field="$TEXT_GRUB14:CB" --field="$TEXT_GRUB17:CB" \
-			  --field="$TEXT_NETBIT_MENU18:NUM" \
-			  --field="$TEXT_ROZDZIELCZOSC GRUB:CB" \
-			  --field="Grub Background on/off:CHK" \
-			  --field="zswap on/off:CHK" \
-			  --field="zswap.compressor:CB" \
-			   --field="$TEXT_BOOT_START:CB" \
-			  "$wpis_grub" \
-			  "$menu1" \
-			  "$menu2" \
-			  "$menu3" \
-			  "$czas[@-1..10[@1]]" \
-			  "$menu4" \
-			  "$grub_back" \
-			  "$zswap_czek" \
-			  "$zswap_compressor" \
-			  "$startowy" )
-		    else
-			  menu_rozdz=$(echo $menu_rozdzielczosci | sed "s/$aktualna//" | sed 's/@@/@/')
-			  menu5=$(echo "$aktualna$menu_rozdz" | sed 's/@@/@/')
-			  acpi_wpis=$( yad-netext --window-icon="/opt/NeteXt73/ikony/grub.png" --image="/opt/NeteXt73/ikony/grub.png" --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --form  --item-separator="@" \
-			  --field="$TEXT_SKRYPTEXT_10:TXT" \
-			  --field="ACPI:CB" --field="$TEXT_GRUB14:CB" --field="$TEXT_GRUB17:CB" \
-			  --field="$TEXT_NETBIT_MENU18:NUM" \
-			  --field="$TEXT_ROZDZIELCZOSC GRUB:CB" \
-			  --field="$TEXT_ROZDZIELCZOSC Plymouth:CB" \
-			  --field="Grub Background on/off:CHK" \
-			  --field="zswap on/off:CHK" \
-			  --field="zswap.compressor:CB" \
-			  --field="$TEXT_BOOT_START:CB" \
-			  "$wpis_grub" \
-			  "$menu1" \
-			  "$menu2" \
-			  "$menu3" \
-			  "$czas[@-1..10[@1]]" \
-			  "$menu4" \
-			  "$menu5" \
-			  "$grub_back" \
-			  "$zswap_czek" \
-			  "$zswap_compressor" \
-			  "$startowy" )
-		    fi
-		    if [ $? = 0 ]; then
-			  w0=$(echo $acpi_wpis  | cut -d "|" -f 2)				#acpi Linux/Windows pcie_aspm=force
-			  w1=$(echo $acpi_wpis  | cut -d "|" -f 3)				#
-			  w2=$(echo $acpi_wpis  | cut -d "|" -f 4)				#podświetlenie
-			  export w3=$(echo $acpi_wpis  | cut -d "|" -f 5 | sed 's/,.*//g' ) 	#grub timeout
-			  export w4=$(echo $acpi_wpis  | cut -d "|" -f 6)			#rozdzielczość GRUB
-			  export grub_back=$(echo $acpi_wpis  | cut -d "|" -f 7)		#tło
-			  export zswap=$(echo $acpi_wpis  | cut -d "|" -f 8)			#zwswap
-			  export zswap_compressor=$(echo $acpi_wpis  | cut -d "|" -f 9)		#zwswap compressor
-			  export starter=$(echo $acpi_wpis  | cut -d "|" -f 10 )		#bootowalne iso
-			  
-			  if [ "$menu5" != "" ];then
-			      export w5=$(echo $acpi_wpis  | cut -d "|" -f 7)			#rozdzielczość Plymouth
-			      export grub_back=$(echo $acpi_wpis  | cut -d "|" -f 8)
-			      export zswap=$(echo $acpi_wpis  | cut -d "|" -f 9)		#zwswap
-			      export zswap_compressor=$(echo $acpi_wpis  | cut -d "|" -f 10)	#zwswap compressor
-			      export starter=$(echo $acpi_wpis  | cut -d "|" -f 11 )		#bootowalne iso
+		if [ -e $sciezka/grub.backup ]; then
+			echo 'tak' > /tmp/netext73/ok.txt
+		else
+			dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_GRUB13 $sciezka"
+			#kasowanie starych wpisów w grub
+			xterm -e bash -c "sudo cp $sciezka/grub $sciezka/grub.backup -f; echo -e \"$TEXT_INSTALACJA2\"; read ent;  echo 'tak' > /tmp/netext73/ok.txt"
+		fi
+		if [ "$(cat /tmp/netext73/ok.txt)" = "tak" ]; then
+			wpis_grub=$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | sed 's/GRUB_CMDLINE_LINUX=//' | cut -d '"' -f 2)
+			export grub_pro="nie" #sprawdzenie czy ma robić rozdzielczość itp
+			if [ "$(echo $wpis_grub | grep 'Windows')" != "" ] ; then
+			      menu1="acpi_osi='!Windows 2012' acpi_osi=Linux@acpi_osi=Linux"
+			else
+			      menu1="acpi_osi=Linux@acpi_osi='!Windows 2012' acpi_osi=Linux"
+			fi
+			if [ "$(echo $wpis_grub | grep '915')" != "" ] ; then
+			      menu2="$TEXT_GRUB_INTEL@$TEXT_GRUB_STD@$TEXT_GRUB_RADEON"
+			elif [ "$(echo $wpis_grub | grep 'radeon')" != "" ] ; then
+			    menu2="$TEXT_GRUB_RADEON@$TEXT_GRUB_INTEL@$TEXT_GRUB_STD"
+			else
+			      menu2="$TEXT_GRUB_STD@$TEXT_GRUB_INTEL@$TEXT_GRUB_RADEON"
+			fi
+			if [ "$(echo $wpis_grub | grep 'vendor')" != "" ] ; then
+			      menu3="$TEXT_GRUB19@standard"
+			else
+			      menu3="standard@$TEXT_GRUB19"
+			fi
+			#rozdzielczość Grub
+			aktualna=$(cat /etc/default/grub | grep 'GRUB_GFXMODE' | head -n 1 | sed 's/.*GRUB_GFXMODE=//')
+			if [ "$(echo $aktualna | grep 'x')" = "" ]; then
+			      aktualna="1024x600"
+			fi
+			if [ "$(grep GRUB_BACKGROUND /etc/default/grub)" = "" ] && [ "$(grep '#GRUB_BACKGROUND' /etc/default/grub)" = "" ]; then
+			      grub_back="FALSE"
+			else
+			      grub_back="TRUE"
+			fi
+			
+			#zswap
+			if [ "$(grep 'zswap.enabled=1' /etc/default/grub)" = "" ]; then
+			      zswap_czek="FALSE"
+			else
+			      zswap_czek="TRUE"
+			fi
+			
+			if [ "$(echo $wpis_grub | grep 'lz4')" != "" ] ; then
+			      zswap_compressor="lz4@lzo@deflate"
+			elif [ "$(echo $wpis_grub | grep 'lzo')" != "" ] ; then
+			      zswap_compressor="lzo@lz4@deflate"
+			elif [ "$(echo $wpis_grub | grep 'deflate')" != "" ] ; then
+			      zswap_compressor="deflate@lz4@lzo"
+			else
+			      zswap_compressor="lzo@lz4@deflate"
+			fi
+			#grub 2 lista
+			if [ "$(dpkg -l | grep grub2-common | awk '{print $1}')" = "ii" ] && [ "$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | cut -d "'" -f 2 | grep buntu)" != "" ];then 
+			      startowy=$(echo -e "default@"$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | cut -d "'" -f 2 | tr '\n' '@' | sed '$s/.$//')) #lista kerneli/systemów
+			else
+			      startowy="default"
+			fi
+			menu_rozdzielczosci="@1024x600@1024x768@1280x720@1280x800@1280x1024@1366x768@1400x1050@1440x900@1600x900@1600x1024@1600x1200@1680x1050@1920x1080@1920x1200"
+			menu_rozdz=$(echo $menu_rozdzielczosci | sed "s/$aktualna//" | sed 's/@@/@/')
+			menu4=$(echo "$aktualna$menu_rozdz" | sed 's/@@/@/')
+			menu5=""
+			#rozdzielczość plymouth
+			aktualna=$(cat /etc/default/grub | grep 'GRUB_GFXPAYLOAD_LINUX' | head -n 1 | sed 's/.*GRUB_GFXPAYLOAD_LINUX=//')
+			if [ "$(echo $aktualna | grep 'x')" = "" ]; then
+				acpi_wpis=$( yad-netext --window-icon="/opt/NeteXt73/ikony/grub.png" --image="/opt/NeteXt73/ikony/grub.png" --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --form  --item-separator="@" \
+				--field="$TEXT_SKRYPTEXT_10:TXT" \
+				--field="ACPI:CB" --field="$TEXT_GRUB14:CB" --field="$TEXT_GRUB17:CB" \
+				--field="$TEXT_NETBIT_MENU18:NUM" \
+				--field="$TEXT_ROZDZIELCZOSC GRUB:CB" \
+				--field="Grub Background on/off:CHK" \
+				--field="zswap on/off:CHK" \
+				--field="zswap.compressor:CB" \
+				--field="$TEXT_BOOT_START:CB" \
+				"$wpis_grub" \
+				"$menu1" \
+				"$menu2" \
+				"$menu3" \
+				"$czas[@-1..10[@1]]" \
+				"$menu4" \
+				"$grub_back" \
+				"$zswap_czek" \
+				"$zswap_compressor" \
+				"$startowy" )
+			else
+				menu_rozdz=$(echo $menu_rozdzielczosci | sed "s/$aktualna//" | sed 's/@@/@/')
+				menu5=$(echo "$aktualna$menu_rozdz" | sed 's/@@/@/')
+				acpi_wpis=$( yad-netext --window-icon="/opt/NeteXt73/ikony/grub.png" --image="/opt/NeteXt73/ikony/grub.png" --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --form  --item-separator="@" \
+				--field="$TEXT_SKRYPTEXT_10:TXT" \
+				--field="ACPI:CB" --field="$TEXT_GRUB14:CB" --field="$TEXT_GRUB17:CB" \
+				--field="$TEXT_NETBIT_MENU18:NUM" \
+				--field="$TEXT_ROZDZIELCZOSC GRUB:CB" \
+				--field="$TEXT_ROZDZIELCZOSC Plymouth:CB" \
+				--field="Grub Background on/off:CHK" \
+				--field="zswap on/off:CHK" \
+				--field="zswap.compressor:CB" \
+				--field="$TEXT_BOOT_START:CB" \
+				"$wpis_grub" \
+				"$menu1" \
+				"$menu2" \
+				"$menu3" \
+				"$czas[@-1..10[@1]]" \
+				"$menu4" \
+				"$menu5" \
+				"$grub_back" \
+				"$zswap_czek" \
+				"$zswap_compressor" \
+				"$startowy" )
 			  fi
-			  #znalezienie wpisu grub na podstawie wytycznych usera
-			  if [ "$starter" != "default" ]; then
-				if [ "$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | grep "$starter" | cut -d "'" -f 4 | grep osprober)" != "" ] && [ "$(echo $starter | grep indow)" != "" ] ;then
-				      export wpis_nowy="$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | grep "$starter" | cut -d "'" -f 4)"
-				elif [ "$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | grep "$starter" | cut -d "'" -f 4 | grep osprober)" != "" ] && [ "$(echo $starter | grep indow)" = "" ];then
-				      export wpis_nowy="$(grep menuentry /boot/grub/grub.cfg | grep gnulinux-advanced | grep osprober | cut -d "'" -f 4)\>$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | grep "$starter" | cut -d "'" -f 4)"
-				else
-				      export wpis_nowy="$(grep menuentry /boot/grub/grub.cfg | grep gnulinux-advanced | sed '/osprober/ d' | cut -d "'" -f 4)\>$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | grep "$starter" | cut -d "'" -f 4)"
+			if [ $? = 0 ]; then
+				w0=$(echo $acpi_wpis  | cut -d "|" -f 2)				#acpi Linux/Windows pcie_aspm=force
+				w1=$(echo $acpi_wpis  | cut -d "|" -f 3)				#
+				w2=$(echo $acpi_wpis  | cut -d "|" -f 4)				#podświetlenie
+				export w3=$(echo $acpi_wpis  | cut -d "|" -f 5 | sed 's/,.*//g' ) 	#grub timeout
+				export w4=$(echo $acpi_wpis  | cut -d "|" -f 6)			#rozdzielczość GRUB
+				export grub_back=$(echo $acpi_wpis  | cut -d "|" -f 7)		#tło
+				export zswap=$(echo $acpi_wpis  | cut -d "|" -f 8)			#zwswap
+				export zswap_compressor=$(echo $acpi_wpis  | cut -d "|" -f 9)		#zwswap compressor
+				export starter=$(echo $acpi_wpis  | cut -d "|" -f 10 )		#bootowalne iso
+				
+				if [ "$menu5" != "" ];then
+					export w5=$(echo $acpi_wpis  | cut -d "|" -f 7)			#rozdzielczość Plymouth
+					export grub_back=$(echo $acpi_wpis  | cut -d "|" -f 8)
+					export zswap=$(echo $acpi_wpis  | cut -d "|" -f 9)		#zwswap
+					export zswap_compressor=$(echo $acpi_wpis  | cut -d "|" -f 10)	#zwswap compressor
+					export starter=$(echo $acpi_wpis  | cut -d "|" -f 11 )		#bootowalne iso
 				fi
-			  fi
-			  export wpis_nowy=$(echo $wpis_nowy | sed 's/\//\\\//g') # poprawka z / \/
-			  if [ "$w0" = "acpi_osi='!Windows 2012' acpi_osi=Linux" ]; then w0="acpi_osi='!Windows 2012' acpi_osi=Linux pcie_aspm=force"
-			  else 
-			      w0="acpi_osi=Linux pcie_aspm=force"
-			  fi    
-			  if [ "$w1" = "$TEXT_GRUB_STD" ]; then		w1=" acpi_enforce_resources=lax"
-			  elif [ "$w1" = "$TEXT_GRUB_INTEL" ]; then 	w1=" acpi_enforce_resources=lax i915.enable_rc6=1 i915.enable_fbc=1 i915.lvds_downclock=1 i915.semaphores=1"
-			  elif [ "$w1" = "$TEXT_GRUB_RADEON" ]; then	w1=" acpi_enforce_resources=lax radeon.dpm=1"
-			  fi
-			  if [ "$w2" = "standard" ]; then      		w2=""
-			  elif [ "$w2" = "$TEXT_GRUB19" ]; then  	w2=" acpi_backlight=vendor"
-			  fi
-			  if [ "$zswap" = "TRUE" ];then
-			      w6=" zswap.enabled=1 zswap.compressor=$zswap_compressor"
-			  else
-			      w6=""
-			  fi
-			  if [ "$w5" != "" ];then
-				wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_ROZDZIELCZOSC Plymouth:RO" --field="$TEXT_BOOT_START:RO" "$w4" "$w5" "$starter")
-				wpis_grub=$(echo $wpis_grub | cut -d "|" -f 1)
-			  else
-				wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_BOOT_START:RO" "$w4" "$starter")
-				wpis_grub=$(echo $wpis_grub | cut -d "|" -f 1)
-			  fi
-			  if [ "$wpis_grub" != "" ];then
-				instaluj_grub
-			  fi
-		    fi
+				#znalezienie wpisu grub na podstawie wytycznych usera
+				if [ "$starter" != "default" ]; then
+					if [ "$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | grep "$starter" | cut -d "'" -f 4 | grep osprober)" != "" ] && [ "$(echo $starter | grep indow)" != "" ] ;then
+					      export wpis_nowy="$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | grep "$starter" | cut -d "'" -f 4)"
+					elif [ "$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | grep "$starter" | cut -d "'" -f 4 | grep osprober)" != "" ] && [ "$(echo $starter | grep indow)" = "" ];then
+					      export wpis_nowy="$(grep menuentry /boot/grub/grub.cfg | grep gnulinux-advanced | grep osprober | cut -d "'" -f 4)\>$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | grep "$starter" | cut -d "'" -f 4)"
+					else
+					      export wpis_nowy="$(grep menuentry /boot/grub/grub.cfg | grep gnulinux-advanced | sed '/osprober/ d' | cut -d "'" -f 4)\>$(grep menuentry /boot/grub/grub.cfg | grep class | sed '/reco/ d' | sed '/simple/ d' | grep "$starter" | cut -d "'" -f 4)"
+					fi
+				fi
+				export wpis_nowy=$(echo $wpis_nowy | sed 's/\//\\\//g') # poprawka z / \/
+				if [ "$w0" = "acpi_osi='!Windows 2012' acpi_osi=Linux" ]; then w0="acpi_osi='!Windows 2012' acpi_osi=Linux pcie_aspm=force"
+				else 
+				      w0="acpi_osi=Linux pcie_aspm=force"
+				fi    
+				if [ "$w1" = "$TEXT_GRUB_STD" ]; then		w1=" acpi_enforce_resources=lax"
+				elif [ "$w1" = "$TEXT_GRUB_INTEL" ]; then 	w1=" acpi_enforce_resources=lax i915.enable_rc6=1 i915.enable_fbc=1 i915.lvds_downclock=1 i915.semaphores=1"
+				elif [ "$w1" = "$TEXT_GRUB_RADEON" ]; then	w1=" acpi_enforce_resources=lax radeon.dpm=1"
+				fi
+				if [ "$w2" = "standard" ]; then      		w2=""
+				elif [ "$w2" = "$TEXT_GRUB19" ]; then  	w2=" acpi_backlight=vendor"
+				fi
+				if [ "$zswap" = "TRUE" ];then
+				      w6=" zswap.enabled=1 zswap.compressor=$zswap_compressor"
+				else
+				      w6=""
+				fi
+				if [ "$w5" != "" ];then
+				      wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_ROZDZIELCZOSC Plymouth:RO" --field="$TEXT_BOOT_START:RO" "$w4" "$w5" "$starter")
+				      wpis_grub=$(echo $wpis_grub | cut -d "|" -f 1)
+				else
+				      wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_BOOT_START:RO" "$w4" "$starter")
+				      wpis_grub=$(echo $wpis_grub | cut -d "|" -f 1)
+				fi
+				if [ "$wpis_grub" != "" ];then
+				      instaluj_grub
+				fi
+			fi
 		fi
 	#ręczna edycja wpisów w pliku grub
 	elif [ "$grub" = "$TEXT_GRUB7A" ]; then
-	    echo "nie" > /tmp/netext73/ok.txt
-	    wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --form --field="$TEXT_GRUB23:TXT" --window-icon="/opt/NeteXt73/ikony/pytanie.png" "$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | cut -d "\"" -f 2)")
-	    if [ $? = 0 ]; then
-		    wpis_grub=$(echo $wpis_grub | sed 's/|//g')
-		    export grub_pro="tak" #sprawdzenie czy ma robić rozdzielczość itp
-		    instaluj_grub
-	    fi
+		echo "nie" > /tmp/netext73/ok.txt
+		wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --form --field="$TEXT_GRUB23:TXT" --window-icon="/opt/NeteXt73/ikony/pytanie.png" "$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | cut -d "\"" -f 2)")
+		if [ $? = 0 ]; then
+			wpis_grub=$(echo $wpis_grub | sed 's/|//g')
+			export grub_pro="tak" #sprawdzenie czy ma robić rozdzielczość itp
+			instaluj_grub
+		fi
 	fi
 	fi
 if [ -z "$a" ]; then
-    petla_duza="nie"
-    rm *.txt -f
+	petla_duza="nie"
+	rm *.txt -f
 fi
 done
 

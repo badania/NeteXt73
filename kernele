@@ -49,42 +49,42 @@ menu4="Atom - Intel Atom 64bit"
 
 
 if [ "$(cat ~/.netext73/kernel_automat)" = "TRUE" ]; then
-      kern="$(cat ~/.netext73/instalator_kerneli)"
+	kern="$(cat ~/.netext73/instalator_kerneli)"
 else
-    if [ "$1" = "K8" ]; then
-	    kern="K8 - od Intel C2D, AMD K8"
-    elif [ "$1" = "amd" ]; then
-	    kern="Brazos - AMD Athlon II, Phenom II, Brazos, Bulldozer"
-    elif [ "$1" = "amd_pro" ]; then
-	    kern="Brazos-PRO Piledriver, Steamroller"
-    elif [ "$1" = "i7" ]; then
-	    kern="i7 - Intel Sandy Bridge, Ivy Bridge"
-    elif [ "$1" = "i7_pro" ]; then
-	    kern="i7-PRO Haswell"
-    elif [ "$1" = "atom" ]; then
-	    kern="Atom - Intel Atom 64bit"
-    elif [ "$1" = "naglowki" ]; then
-	    kern="$TEXT_MENU_INSTALATOR4"
-    elif [ "$1" = "lokalne" ]; then
-	    kern="$TEXT_MENU_INSTALATOR3"
-    fi
-    if [ "$1" = "premium" ]; then
-	pliki="/opt/NeteXt73/kernel-premium"
-	ikona="linux-premium.png"
-    else
-	pliki="/opt/NeteXt73/kernel"
-	ikona="linux.png"
-    fi
-    if [ "$kern" = "" ]; then
-	    yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/$ikona" \
-	    --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="200" --read-dir="$pliki" --width="830" --height="300" \
-	    --title="$nazwa_skryptu " --button="$TEXT_MENU_INSTALATOR5:4"  --button="$TEXT_ZAMKNIJ:1" --single-click
-	    klawisz=$?   
-    fi
+	if [ "$1" = "K8" ]; then
+		kern="K8 - od Intel C2D, AMD K8"
+	elif [ "$1" = "amd" ]; then
+		kern="Brazos - AMD Athlon II, Phenom II, Brazos, Bulldozer"
+	elif [ "$1" = "amd_pro" ]; then
+		kern="Brazos-PRO Piledriver, Steamroller"
+	elif [ "$1" = "i7" ]; then
+		kern="i7 - Intel Sandy Bridge, Ivy Bridge"
+	elif [ "$1" = "i7_pro" ]; then
+		kern="i7-PRO Haswell"
+	elif [ "$1" = "atom" ]; then
+		kern="Atom - Intel Atom 64bit"
+	elif [ "$1" = "naglowki" ]; then
+		kern="$TEXT_MENU_INSTALATOR4"
+	elif [ "$1" = "lokalne" ]; then
+		kern="$TEXT_MENU_INSTALATOR3"
+	fi
+	if [ "$1" = "premium" ]; then
+		pliki="/opt/NeteXt73/kernel-premium"
+		ikona="linux-premium.png"
+	else
+		pliki="/opt/NeteXt73/kernel"
+		ikona="linux.png"
+	fi
+	if [ "$kern" = "" ]; then
+		yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/$ikona" \
+		--image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="200" --read-dir="$pliki" --width="830" --height="300" \
+		--title="$nazwa_skryptu " --button="$TEXT_MENU_INSTALATOR5:4"  --button="$TEXT_ZAMKNIJ:1" --single-click
+		klawisz=$?   
+	fi
 fi
 
 if [ "$klawisz" = "4" ]; then
-      kern="$TEXT_MENU_INSTALATOR5"
+	kern="$TEXT_MENU_INSTALATOR5"
 fi
 
 rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')

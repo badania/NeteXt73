@@ -47,59 +47,59 @@ rm nvidia-settings -f
 
 usun
 if [ "$1" = "nvidia" ]; then
-    wget $adres_sterownikow  2>&1 | pobieranie 
-    if [ -e index.html ]; then
-	cat index.html | grep "href=" ./index.html   | cut -d '"' -f 2 | sed 's/.*\///g' | grep 'nvidia-' | sed 's/.deb//' | grep -v -E "nvidia-settings.*"  | sort -r > 2a.txt
-	lista=$(cat 2a.txt | tr '\n' '!' | sed -e '$s/!$//g' )
-	ster=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/nvidia.png" --image="/opt/NeteXt73/ikony/nvidia.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Nvidia</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
-	klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
-	if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
-			  if [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -ge "331" ];then
-				  nv_set="nvidia-settings_331.20-0ubuntu8_amd64.deb"
-				  yad_wget $adres_sterownikow/$nv_set $adres_sterownikow/$ster.deb
-			  elif  [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -ge "337" ]; then
-				  nv_set="nvidia-settings"
-				  yad_wget $adres_sterownikow/$nv_set $adres_sterownikow/$ster.deb
-			  else
-				  yad_wget $adres_sterownikow/$ster.deb
-			  fi  
-			  if [ -e $ster.deb ] && [ -e $nv_set ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum $nv_set) $sumy_kontrolne)" != "" ]; then
-				  echo "nie" > /tmp/netext73/ok.txt
-				  naglowek > instaluj.sh
-				  nvidia >> instaluj.sh
-				  instalacja
-			  elif [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ]; then
-				  echo "nie" > /tmp/netext73/ok.txt
-				  naglowek > instaluj.sh
-				  nvidia >> instaluj.sh
-				  instalacja 
-			  else
-				  yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
-			  fi
+	wget $adres_sterownikow  2>&1 | pobieranie 
+	if [ -e index.html ]; then
+		cat index.html | grep "href=" ./index.html   | cut -d '"' -f 2 | sed 's/.*\///g' | grep 'nvidia-' | sed 's/.deb//' | grep -v -E "nvidia-settings.*"  | sort -r > 2a.txt
+		lista=$(cat 2a.txt | tr '\n' '!' | sed -e '$s/!$//g' )
+		ster=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/nvidia.png" --image="/opt/NeteXt73/ikony/nvidia.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Nvidia</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
+		if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
+			if [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -ge "331" ];then
+				nv_set="nvidia-settings_331.20-0ubuntu8_amd64.deb"
+				yad_wget $adres_sterownikow/$nv_set $adres_sterownikow/$ster.deb
+			elif  [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -ge "337" ]; then
+				nv_set="nvidia-settings"
+				yad_wget $adres_sterownikow/$nv_set $adres_sterownikow/$ster.deb
+			else
+				yad_wget $adres_sterownikow/$ster.deb
+			fi  
+			if [ -e $ster.deb ] && [ -e $nv_set ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum $nv_set) $sumy_kontrolne)" != "" ]; then
+				echo "nie" > /tmp/netext73/ok.txt
+				naglowek > instaluj.sh
+				nvidia >> instaluj.sh
+				instalacja
+			elif [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ]; then
+				echo "nie" > /tmp/netext73/ok.txt
+				naglowek > instaluj.sh
+				nvidia >> instaluj.sh
+				instalacja 
+			else
+				yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
+			fi
 	fi
-    fi
+	fi
 elif [ "$1" = "radeon" ]; then
 	if [ "$(lspci | grep VGA | awk '{print tolower($0)}' | grep radeon)" = "" ] || [ "$(glxinfo | grep 'AMD Radeon HD' | sed 's/.*HD //g' | sed 's/ .*//g')" -le 5000 ]; then
-	  dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI3"
+		dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_STEROWNIKI3"
 	else
-	    wget $adres_sterownikow  2>&1 | pobieranie 
-	    if [ -e index.html ]; then
-		cat index.html | grep "href=" ./index.html   | cut -d '"' -f 2 | sed 's/.*\///g' | grep 'fglrx_' | grep $bit2 | sed 's/.deb//' | sort -r >> 2a.txt
-		lista=$(cat 2a.txt | tr '\n' '!' | sed -e '$s/!$//g' )
-		ster=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/radeon.png" --image="/opt/NeteXt73/ikony/radeon.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Radeon</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		wget $adres_sterownikow  2>&1 | pobieranie 
+		if [ -e index.html ]; then
+		    cat index.html | grep "href=" ./index.html   | cut -d '"' -f 2 | sed 's/.*\///g' | grep 'fglrx_' | grep $bit2 | sed 's/.deb//' | sort -r >> 2a.txt
+		    lista=$(cat 2a.txt | tr '\n' '!' | sed -e '$s/!$//g' )
+		    ster=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/radeon.png" --image="/opt/NeteXt73/ikony/radeon.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Radeon</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 			klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
 			if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
-				  yad_wget $adres_sterownikow/$ster.deb $adres_sterownikow/$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")
-				  if [ -e $ster.deb ] && [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ]; then
-					  echo "nie" > /tmp/netext73/ok.txt
-					  naglowek > instaluj.sh
-					  radeon >> instaluj.sh
-					  instalacja
-				  else
-					  yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
-				  fi
+				yad_wget $adres_sterownikow/$ster.deb $adres_sterownikow/$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")
+				if [ -e $ster.deb ] && [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ]; then
+					echo "nie" > /tmp/netext73/ok.txt
+					naglowek > instaluj.sh
+					radeon >> instaluj.sh
+					instalacja
+				else
+					yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
+				fi
 			fi
-	    fi
+		fi
 	fi
 fi
 usun

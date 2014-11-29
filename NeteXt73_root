@@ -36,15 +36,15 @@ cd /opt/NeteXt73/
 source /opt/NeteXt73/procedury
 
 if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ] && [ -e /tmp/netext73/stan_netext ] && [ $(cat /tmp/netext73/stan_netext) = "root" ]; then
-    sudo -S $1
+	sudo -S $1
 else
-    echo "root" > /tmp/netext73/stan_netext
-    while ! yad-netext --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S $1; do
-	if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
-	    rm /tmp/netext73/stan_netext
-	    exit 0
-	fi
-done
+	echo "root" > /tmp/netext73/stan_netext
+	while ! yad-netext --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S $1; do
+		if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
+		      rm /tmp/netext73/stan_netext
+		      exit 0
+		fi
+	done
 fi
 rm /tmp/netext73/stan_netext
 sudo -K

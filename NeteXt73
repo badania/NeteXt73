@@ -40,15 +40,15 @@ source /opt/NeteXt73/procedury
 aktualizacja(){
 #odpalanie strony domowej 
 if [ ! -e ~/.netext73/strona_domowa ]; then
-    xdg-open "http://www.netext73.pl/p/netext73-poczatek.html"
-    echo "TRUE" > ~/.netext73/strona_domowa
+	xdg-open "http://www.netext73.pl/p/netext73-poczatek.html"
+	echo "TRUE" > ~/.netext73/strona_domowa
 fi
 }
 
 sumy(){
 #pobranie sum kontrolnych
-    cd /tmp
-    wget $adres_sum_kontrolnych 2>&1 | pobieranie && mv sumy.txt $sumy_kontrolne
+	cd /tmp
+	wget $adres_sum_kontrolnych 2>&1 | pobieranie && mv sumy.txt $sumy_kontrolne
 }
 
 #ostrzeżenie o konfliktach
@@ -57,7 +57,7 @@ cd /tmp/netext73
 plik=""
 for i in $(echo tlp acpi-call laptop-mode-tools ulatelcy ulatencyd);do
 if [ "$(dpkg -l | awk '{print $2}' | grep $i -x)" != "" ];then
-    export plik="$plik $i"
+	export plik="$plik $i"
 fi
 done
 if [ "$plik" != "" ]; then
@@ -74,16 +74,16 @@ fi
 
 
 if [ ! -e /tmp/netext73/userek ]; then
-    echo $USER > /tmp/netext73/userek
+	echo $USER > /tmp/netext73/userek
 fi
 
 if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ]; then
-      if [ -e /tmp/netext73/stan_netext ] && [ $(cat /tmp/netext73/stan_netext) = "root" ]; then
-	  echo "tryb normalny" > /dev/null
-      else
-	  cd /opt/NeteXt73 && ./NeteXt73_root ./NeteXt73
-	  exit 0
-      fi
+	if [ -e /tmp/netext73/stan_netext ] && [ $(cat /tmp/netext73/stan_netext) = "root" ]; then
+	      echo "tryb normalny" > /dev/null
+	else
+	      cd /opt/NeteXt73 && ./NeteXt73_root ./NeteXt73
+	      exit 0
+	fi
 fi
 
 zaleznosci
@@ -95,25 +95,25 @@ yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon
 klawisz=$?
 
 if [ "$klawisz" = "2" ]; then
-      yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=/opt/NeteXt73/LICENSE --width=600 --height=600 --button="gtk-ok:1" 
-      cd /opt/NeteXt73 && ./NeteXt73
+	yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=/opt/NeteXt73/LICENSE --width=600 --height=600 --button="gtk-ok:1" 
+	cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "3" ]; then
-      yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1"
-      cd /opt/NeteXt73 && ./NeteXt73
+	yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=/opt/NeteXt73/changelog --width=800 --height=600 --button="gtk-ok:1"
+	cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "4" ]; then
-      if [ "$USER" = "root" ]; then
-	    userek=$(cat /tmp/netext73/userek)
-	    su $userek -c "xdg-open \"http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html\""
-      else
-	    xdg-open "http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html"
-      fi
-      cd /opt/NeteXt73 && ./NeteXt73
+	if [ "$USER" = "root" ]; then
+	      userek=$(cat /tmp/netext73/userek)
+	      su $userek -c "xdg-open \"http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html\""
+	else
+	      xdg-open "http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html"
+	fi
+	cd /opt/NeteXt73 && ./NeteXt73
 elif [ "$klawisz" = "5" ]; then
-      restart
+	restart
 elif [ "$klawisz" = "1" ]; then
-      rm -rf /tmp/netext73
+	rm -rf /tmp/netext73
 fi
 
 if [ $USER = "root" ] && [ -e /home/root ]; then
-    sudo rm -rf /home/root
+	sudo rm -rf /home/root
 fi

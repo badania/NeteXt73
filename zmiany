@@ -1,14 +1,14 @@
 #!/bin/bash
 if [ "$1" = "2" ]; then
-      git add -A
-      IFS=$'\n'
-      echo 'podaj komentarz:'
-      read a
-      git commit -m $a
-      git push origin master
+	git add -A
+	IFS=$'\n'
+	echo 'podaj komentarz:'
+	read a
+	git commit -m $a
+	git push origin master
 else
-      LATEST_VERSION=`grep 'v[0-9]' ./changelog | head -n 1 | cut -d 'v' -f 2`
-      PKG_NAME="netext73"
-      dch --controlmaint --distribution stable -v $LATEST_VERSION --package netext73
+	LATEST_VERSION=`grep 'v[0-9]' ./changelog | head -n 1 | cut -d 'v' -f 2`
+	PKG_NAME="netext73"
+	dch --controlmaint --distribution stable -v $LATEST_VERSION --package netext73
 fi
 

@@ -86,7 +86,7 @@ esac
 
 export nazwa_skryptu="NeteXt'73 v$LATEST_VERSION - $TEXT_NETEXT2"
 export nazwa_skryptu1="NeteXt'73 v$LATEST_VERSION"
-
+export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 export wersja_apm1="advanced_power_management_by_ext73_conservative-conservative"
 export wersja_apm2="advanced_power_management_by_ext73_ondemand-ondemand"
 export wersja_apm3="advanced_power_management_by_ext73_intel-performance"

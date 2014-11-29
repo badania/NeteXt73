@@ -41,51 +41,51 @@ source /opt/NeteXt73/procedury
 #kasowanie starych configów
 rm ~/.netext73/https_link -f
 if [ "$(grep @ ~/.netext73/kernel_premium)" = "" ]; then
-  rm -f ~/.netext73/kernel_premium
+	rm -f ~/.netext73/kernel_premium
 fi
 
 adres_kerneli_premium
 if [ -e ~/.netext73/apm_status ]; then
-    apm_stat=$(cat ~/.netext73/apm_status | sed 's/.* //' | head -n 1)
+	apm_stat=$(cat ~/.netext73/apm_status | sed 's/.* //' | head -n 1)
 else
-    apm_stat=""
+	apm_stat=""
 fi
 if [ -e ~/.netext73/instalator_kerneli ]; then
-    ik=$(cat ~/.netext73/instalator_kerneli)
+	ik=$(cat ~/.netext73/instalator_kerneli)
 else
-    ik=""
+	ik=""
 fi
 if [ -e ~/.netext73/instalator_kerneli ]; then
-    ik=$(cat ~/.netext73/instalator_kerneli)
+	ik=$(cat ~/.netext73/instalator_kerneli)
 else
-    ik="i7 - Intel Sandy Bridge, Ivy Bridge, Haswell"
+	ik="i7 - Intel Sandy Bridge, Ivy Bridge, Haswell"
 fi
 
 if [ -e ~/.netext73/kernel_automat ]; then
-    if [ "$(cat ~/.netext73/kernel_automat)" = "TRUE" ]; then
-	automatyczna_instalacja="TRUE"
-    else  
-	automatyczna_instalacja="FALSE"
-    fi
+	if [ "$(cat ~/.netext73/kernel_automat)" = "TRUE" ]; then
+	      automatyczna_instalacja="TRUE"
+	else  
+	      automatyczna_instalacja="FALSE"
+	fi
 else
-    automatyczna_instalacja="FALSE"
+	automatyczna_instalacja="FALSE"
 fi
 
 
 if [ -e ~/.netext73/archiwum_deb ]; then
-    if [ "$(cat ~/.netext73/archiwum_deb)" = "TRUE" ]; then
-	archiwum_deb="TRUE"
-    else  
-	archiwum_deb="FALSE"
-    fi
+	if [ "$(cat ~/.netext73/archiwum_deb)" = "TRUE" ]; then
+	      archiwum_deb="TRUE"
+	else  
+	      archiwum_deb="FALSE"
+	fi
 else
-    archiwum_deb="FALSE"
+	archiwum_deb="FALSE"
 fi
 
 if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ]; then
-    root_mode="TRUE"
+	root_mode="TRUE"
 else
-    root_mode="FALSE"
+	root_mode="FALSE"
 fi
 
 konfiguracja=$(yad-netext --center --title="$nazwa_skryptu" --width="155" --height="320" --window-icon="/opt/NeteXt73/ikony/config.png" --image="/opt/NeteXt73/ikony/config.png" --text="<span color=\"$kolor_textu\">$TEXT_CONFIG2</span>" --form \
@@ -112,8 +112,8 @@ if [ $klawisz = 0 ]; then
 		echo $konfiguracja | cut -d "|" -f 8 > ~/.netext73/root_mode
 		echo $konfiguracja | cut -d "|" -f 9 > ~/.netext73/server_no
 		if [ "$root_mode" != "$(cat ~/.netext73/root_mode)" ]; then
-		    killall -9 yad-netext
-		    rm -fr /tmp/netext73
+		      killall -9 yad-netext
+		      rm -fr /tmp/netext73
 		fi    
 	fi
 fi
