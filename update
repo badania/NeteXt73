@@ -63,7 +63,7 @@ konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.pn
 				/opt/NeteXt73/./apm
 			fi
 			if [ "$(echo $konfiguracja | grep kernel)" != "" ]; then
-				if [ -e ~/.netext73/kernel_premium ]; then
+				if [ "$kernel_premium" = "tak" ]; then
 				      /opt/NeteXt73/./kernele premium
 				else
 				      /opt/NeteXt73/./kernele
@@ -207,7 +207,7 @@ if [ $klawisz = "0" ]; then
 		fi
 	elif [ "$a" = "$TEXT_UPDATE1 Kernel" ]; then 
 		usun
-		if [ -e ~/.netext73/kernel_premium ] && [ "$(grep @ ~/.netext73/kernel_premium)" != "" ] ; then
+		if [ "$kernel_premium" = "tak" ] ; then
 		      cd /opt/NeteXt73 && ./kernele premium
 		else
 		      cd /opt/NeteXt73 && ./kernele

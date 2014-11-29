@@ -39,48 +39,48 @@ jezyczek(){
 
 #katalog dla sysbench
 if [ ! -e ~/.netext73/sysbench ]; then
-    mkdir ~/.netext73/sysbench -p
+	mkdir ~/.netext73/sysbench -p
 fi
 
 #katalog dla glmark2
 if [ ! -e ~/.netext73/glmark2 ]; then
-    mkdir ~/.netext73/glmark2 -p
+	mkdir ~/.netext73/glmark2 -p
 fi
 
 #teksty w języku polskim
 if [ -e ~/.netext73/jezyk ] && [ "$(cat ~/.netext73/jezyk)" = "niemiecki" ]; then
-    export jezyk="angielski"
-    echo 'angielski' >  ~/.netext73/jezyk
+	export jezyk="angielski"
+	echo 'angielski' >  ~/.netext73/jezyk
 fi
 if [ -e ~/.netext73/jezyk ]; then
-    export jezyk=$(cat ~/.netext73/jezyk)
+	export jezyk=$(cat ~/.netext73/jezyk)
 else
-    if [ "$(echo $LANG | grep pl)" != "" ]; then
-	    export jezyk="polski"
-	    echo 'polski' >  ~/.netext73/jezyk
-#    elif [ "$(echo $LANG | grep de)" != "" ]; then
-#	    export jezyk="niemiecki"
-#	    echo 'niemiecki' >  ~/.netext73/jezyk
-    elif [ "$(echo $LANG | grep fr)" != "" ]; then
-	    export jezyk="francuski"
-	    echo 'francuski' >  ~/.netext73/jezyk
-    else
-	    export jezyk="angielski"
-	    echo 'angielski' >  ~/.netext73/jezyk
-    fi
+	if [ "$(echo $LANG | grep pl)" != "" ]; then
+		export jezyk="polski"
+		echo 'polski' >  ~/.netext73/jezyk
+    #    elif [ "$(echo $LANG | grep de)" != "" ]; then
+    #	    export jezyk="niemiecki"
+    #	    echo 'niemiecki' >  ~/.netext73/jezyk
+	elif [ "$(echo $LANG | grep fr)" != "" ]; then
+		export jezyk="francuski"
+		echo 'francuski' >  ~/.netext73/jezyk
+	else
+		export jezyk="angielski"
+		echo 'angielski' >  ~/.netext73/jezyk
+	fi
 fi
 
 }
 
 source /opt/NeteXt73/tlumaczenia/angielski
 jezyczek; case $jezyk in de*)
-    source /opt/NeteXt73/tlumaczenia/niemiecki
+	source /opt/NeteXt73/tlumaczenia/niemiecki
 ;;
 fr*)
-    source /opt/NeteXt73/tlumaczenia/francuski
+	source /opt/NeteXt73/tlumaczenia/francuski
 ;;
 pol*)
-    source /opt/NeteXt73/tlumaczenia/polski
+	source /opt/NeteXt73/tlumaczenia/polski
 ;;
 esac
 
@@ -101,32 +101,31 @@ export adres_opisu="http://www.netext73.pl/search/label/opis_netext73"
 
 #adres serwera
 if [ -e ~/.netext73/server_no ]; then
-    #if [ "$(cat ~/.netext73/server_no)" = "server2" ];then
-	#konto="3999827"
-	#wybor_serwera="server2!server1!server3"
-    if [ "$(cat ~/.netext73/server_no)" = "server2" ];then
-	#konto="3999827"
-	export adres_glowny="ftp://37.59.165.105"
-	export adres_sterownikow="$adres_glowny/sterowniki2/"
-	wybor_serwera="server2!server1"
-    else
+	if [ "$(cat ~/.netext73/server_no)" = "server2" ];then
+		#konto="3999827"
+		export adres_glowny="ftp://37.59.165.105"
+		export adres_sterownikow="$adres_glowny/sterowniki2/"
+		wybor_serwera="server2!server1"
+	else
+		export adres_glowny="ftp://37.59.165.105"
+		export adres_sterownikow="$adres_glowny/sterowniki2/"
+		wybor_serwera="server1!server2"
+	fi
+else
 	export adres_glowny="ftp://37.59.165.105"
 	export adres_sterownikow="$adres_glowny/sterowniki2/"
 	wybor_serwera="server1!server2"
-    fi
-else
-    export adres_glowny="ftp://37.59.165.105"
-    export adres_sterownikow="$adres_glowny/sterowniki2/"
-    wybor_serwera="server1!server2"
 fi
 
 #premium
 if [ "$(grep @ ~/.netext73/kernel_premium)" = "" ]; then
-    rm -f ~/.netext73/kernel_premium
+	rm -f ~/.netext73/kernel_premium
+	kernel_premium="brak"
 fi
 if [ -e ~/.netext73/kernel_premium ]; then
-    export US1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 1) 
-    export PASS1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 3)
+	export US1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 1) 
+	export PASS1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 3)
+	kernel_premium="tak"
 fi
 
 #sumy sumy kontrolne
@@ -135,36 +134,36 @@ export adres_sum_kontrolnych='http://dl.dropboxusercontent.com/u/2936246/weryfik
 
 #kolor textu
 if [ -e ~/.netext73/kolor_textu ]; then
-      kolor_textu=$(cat ~/.netext73/kolor_textu)
+	kolor_textu=$(cat ~/.netext73/kolor_textu)
 else
-      kolor_textu="blue"
+	kolor_textu="blue"
 fi
 if [ "$(cat /proc/cpuinfo | grep Intel)" != "" ]; then
-	     export komputerek="INTEL"
+	export komputerek="INTEL"
 elif [ "$(cat /proc/cpuinfo | grep AMD)" != "" ]; then
-	     export komputerek="AMD"
+	export komputerek="AMD"
 fi
 #bity
 if [ "$(uname -m)" = "x86_64" ]; then
-    bit="64bit"
-    bit2="amd64"
+	bit="64bit"
+	bit2="amd64"
 else 
-    yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/netext.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_STEROWNIKI1"
-    exit 1
+	yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/netext.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_STEROWNIKI1"
+	exit 1
 fi
 
 #adres katalogu download
 if [ -e ~/Pobrane ]; then
-  export download="/home/$USER/Pobrane"
+	export download="/home/$USER/Pobrane"
 else
-  export download="/home/$USER/Downloads"
+	export download="/home/$USER/Downloads"
 fi
 
 if [ $USER = "root" ]; then
-     export download="/root"
+	export download="/root"
 fi
 if [ ! -e $download ]; then
-  mkdir -p $download
+      mkdir -p $download
 fi
 
 #########################################################################################################################################################################
@@ -613,7 +612,7 @@ xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo 
 
 lista_kerneli(){
 if [ "$1" = "update" ]; then
-      if [ -e ~/.netext73/kernel_premium ] && [ "$(grep @ ~/.netext73/kernel_premium)" != "" ] ; then
+      if [ "$kernel_premium" = "tak" ] ; then
 	      wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/ -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie
       else
 	      wget $adres_glowny/kernele/ -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie
@@ -622,7 +621,7 @@ else
 echo $kern > ~/.netext73/instalator_kerneli #zapamiętanie wybranego kernela
 if [ "$(echo $kern | grep i7)" != "" ] || [ "$(echo $kern | grep Brazos)" != "" ]; then
     #adres kerneli premium
-    if [ -e ~/.netext73/kernel_premium ] && [ "$(cat ~/.netext73/kernel_premium)" != "" ]; then
+    if [ "$kernel_premium" = "tak" ]; then
 	strona="$adres_glowny/kernele_premium/"
     else
 	str=""
@@ -815,15 +814,6 @@ yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/Nete
       done
 fi
 
-}
-
-adres_kerneli_premium() {
-#adres premium
-if [ -e ~/.netext73/kernel_premium ]; then
-      adres_premium=$(cat ~/.netext73/kernel_premium)
-else
-      adres_premium=""
-fi
 }
 
 sprawdz_klucze(){
