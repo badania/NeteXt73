@@ -108,6 +108,7 @@ elif [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINS
 		      
 		else
 		      dymek -i $warning1 "$TEXT_UWAGA" "$TEXT_BRAK_KERNELI"
+		      petla="nie"
 		fi
 	done
 fi

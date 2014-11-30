@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.22
+-	naprawa forka w deinstalatorze przy zainstalowanym 1 kernelu
 v0.8.21
 -	naprawa APM wifi N
 -	poprawki czytelności kodu
