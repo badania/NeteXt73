@@ -238,6 +238,8 @@ echo "else"
 echo "sudo apt-get install amd64-microcode -y"
 echo "fi"
 echo "sudo tar -xvzf /opt/NeteXt73/APM/iwlwifi-10.ucode.tar.gz -C /lib/firmware/"
+echo "sudo chown root:root /lib/firmware/*10.ucode"
+echo "sudo chmod 644 /lib/firmware/*10.ucode"
 }
 
 microcode_usun(){
