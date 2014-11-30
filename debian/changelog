@@ -1,3 +1,9 @@
+netext73 (0.8.23) stable; urgency=medium
+
+  * dodanie firmware iwlwifi-3160-10.ucode iwlwifi-7260-10.ucode iwlwifi-7265-10.ucode iwlwifi-7265D-10.ucode potrzebnych do kerneli 3.17+
+
+ -- NetBit73 <netbit73@gmail.com>  Sun, 30 Nov 2014 22:26:46 +0100
+
 netext73 (0.8.22) stable; urgency=medium
 
   * naprawa forka w deinstalatorze przy zainstalowanym 1 kernelu
