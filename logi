@@ -76,7 +76,7 @@ if [ "$(dpkg -l intel-microcode | grep "ii" | awk '{print $1}'| head -n1)" = "ii
 	  echo "microcode AMD - <b>OFF</b>" >> system$losowa.log
     fi
 if [ -e /usr/lib/pm-utils/power.d/readahead ] ; then
-      if [ -e /etc/pm/power.d/$wersja_apm ]; then
+      if [ "$stan_apm" != "-" ]; then
 	  echo -e "$TEXT_SKRYPT APM - <b>ON</b>" >> system$losowa.log
       else
 	  echo -e "$TEXT_SKRYPT APM - <b>$TEXT_LOGI7</b>" >> system$losowa.log
