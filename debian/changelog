@@ -1,3 +1,9 @@
+netext73 (0.8.24) stable; urgency=medium
+
+  * drobne poprawki kodu
+
+ -- NetBit73 <netbit73@gmail.com>  Mon, 01 Dec 2014 11:50:11 +0100
+
 netext73 (0.8.23) stable; urgency=medium
 
   * dodanie firmware iwlwifi-3160-10.ucode iwlwifi-7260-10.ucode iwlwifi-7265-10.ucode iwlwifi-7265D-10.ucode potrzebnych do kerneli 3.17+

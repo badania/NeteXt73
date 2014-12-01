@@ -264,11 +264,8 @@ echo "fi"
 echo "sudo rm -f /etc/modprobe.d/ums-realtek.conf"
 echo "sudo rm -f /etc/modprobe.d/rts5139.conf"
 echo "sudo chmod a-x /usr/lib/pm-utils/power.d/*"
-echo "cp /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz /tmp/netext73/"
-echo "tar -xvzf advanced_power_management_by_ext73_$wersja_apm.tar.gz"
-echo "sudo mv $wersja_apm1*$wersja_apm $wersja_apm2*$wersja_apm $wersja_apm3*$wersja_apm $wersja_apm4*$wersja_apm $wersja_apm5*$wersja_apm $wersja_apm6*$wersja_apm /etc/pm/power.d/"
-echo "sudo mv readahead /usr/lib/pm-utils/power.d/"
-echo "rm *tar.gz -f"
+echo "sudo tar -xvzf /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz -C /etc/pm/power.d/"
+echo "sudo mv /etc/pm/power.d/readahead /usr/lib/pm-utils/power.d/"
 echo "sudo chmod a-x /etc/pm/power.d/*"
 echo "if [ -e ~/.netext73/apm_status ]; then"
 echo "if [ \"\$(ls /etc/pm/power.d/* | grep \$(cat  ~/.netext73/apm_status | head -n 1))\" != \"\" ]; then" #zaznaczanie aktywnego APM wg configu
@@ -300,13 +297,6 @@ echo "sudo sed -i '/exit 0/d' /etc/rc.local"
 echo "echo 'bash /opt/NeteXt73/menu/apm_status_fix' | sudo tee -a /etc/rc.local"
 echo "echo 'exit 0' | sudo tee -a /etc/rc.local" 
 }
-
-#1 conservative-conservative
-#2 ondemand-ondemand
-#3 intel-performance
-#4 intel-powersave
-#5 performance-conservative
-#6 performance-ondemand
 
 apm_zmiana(){
 echo "echo \"$TEXT_PROCEDURA_8_1 $1 \""

@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.24
+-	drobne poprawki kodu
 v0.8.23
 -	dodanie firmware iwlwifi-3160-10.ucode iwlwifi-7260-10.ucode iwlwifi-7265-10.ucode iwlwifi-7265D-10.ucode potrzebnych do kerneli 3.17+
 -	nadanie odpowiednich atrybutów plikom: iwlwifi-3160-10.ucode iwlwifi-7260-10.ucode iwlwifi-7265-10.ucode iwlwifi-7265D-10.ucode
