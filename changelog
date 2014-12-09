@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.25
+-	zmiany instalatora grafik radeon
 v0.8.24
 -	naprawa błędnego wskazywnia stanu instalacji APM w logach
 -	drobne poprawki kodu
