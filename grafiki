@@ -89,14 +89,32 @@ elif [ "$1" = "radeon" ]; then
 		    ster=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/radeon.png" --image="/opt/NeteXt73/ikony/radeon.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Radeon</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 			klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
 			if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
-				yad_wget $adres_sterownikow/$ster.deb $adres_sterownikow/$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")
-				if [ -e $ster.deb ] && [ -e $ster.deb ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ]; then
-					echo "nie" > /tmp/netext73/ok.txt
-					naglowek > instaluj.sh
-					radeon >> instaluj.sh
-					instalacja
+				ster1=$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")
+				ster2="brak"
+				if [ "$(cat index.html | grep $(echo $ster.deb | sed "s/fglrx/fglrx-core/"))" = "" ];then
+					yad_wget $adres_sterownikow/$ster.deb $adres_sterownikow/$ster1
 				else
-					yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
+					ster2=$(echo $ster.deb | sed "s/fglrx/fglrx-core/")
+					yad_wget $adres_sterownikow/$ster.deb $adres_sterownikow/$ster1 $adres_sterownikow/$ster2
+				fi
+				if [ "$ster2" = "brak" ]; then
+					if [ -e $ster.deb ] && [ -e $ster1 ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum $ster1) $sumy_kontrolne)" != "" ]; then
+						echo "nie" > /tmp/netext73/ok.txt
+						naglowek > instaluj.sh
+						radeon >> instaluj.sh
+						instalacja
+					else
+						yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
+					fi
+				elif [ "$ster2" != "brak" ]; then
+					if [ -e $ster.deb ] && [ -e $ster1 ] && [ -e $ster2 ] && [ "$(grep $(md5sum $ster.deb) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum $ster1) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum $ster2) $sumy_kontrolne)" != "" ]; then
+						echo "nie" > /tmp/netext73/ok.txt
+						naglowek > instaluj.sh
+						radeon >> instaluj.sh
+						instalacja
+					else
+						yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_SUMA_KONTROLNA"
+					fi
 				fi
 			fi
 		fi
