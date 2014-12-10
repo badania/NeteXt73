@@ -3,6 +3,7 @@
 
 v0.8.25
 -	zmiany instalatora grafik radeon
+-	poprawka deinstaloatora kerneli
 v0.8.24
 -	naprawa błędnego wskazywnia stanu instalacji APM w logach
 -	drobne poprawki kodu
