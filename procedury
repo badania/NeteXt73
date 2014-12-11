@@ -728,7 +728,7 @@ echo "rm -f /tmp/netext73/keymissing 1.txt"
 radeon(){
 echo "echo \"$TEXT_PROCEDURA_14\""
 echo "sudo apt-get install lib32gcc1 libc6-i386"
-echo "sudo dpkg -P fglrx fglrx-amdcccle fglrx-core ocl-icd-libopencl1 xvba-va-driver"
+echo "sudo dpkg -P fglrx fglrx-amdcccle fglrx-core xvba-va-driver"
 echo "/usr/bin/yes | sudo dpkg -i *.deb"
 echo "sudo apt-get install fglrx-pxpress vainfo -y"
 echo "if [ \"\$(ls | grep 14.9)\" != \"\" ] || [ \"\$(ls | grep 14.41)\" != \"\" ]; then"
