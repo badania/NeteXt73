@@ -1,3 +1,9 @@
+netext73 (0.8.26) stable; urgency=medium
+
+  * dostosowanie do firmware 1.140
+
+ -- NetBit73 <netbit73@gmail.com>  Sat, 13 Dec 2014 10:24:37 +0100
+
 netext73 (0.8.25) stable; urgency=medium
 
   * zmiany instalatora grafik radeon

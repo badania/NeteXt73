@@ -195,7 +195,7 @@ echo "echo 'tak' > /tmp/netext73/ok.txt"
 stan_firmware(){
 twoj_firmware=$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1 | sed 's/~.*//')
 if [ "$(cat /proc/cpuinfo | grep Intel)" != "" ]; then
-      if [ "$(dpkg -l intel-microcode | grep "ii" | awk '{print $1}'| head -n1)" = "ii" ] && [ "$(ls /lib/firmware | grep iwlwifi-7260-10.ucode)" != "" ]; then
+      if [ "$(dpkg -l intel-microcode | grep "ii" | awk '{print $1}'| head -n1)" = "ii" ]; then
 	    stan_microcode=$TEXT_TAK
       else
 	    stan_microcode="-"
@@ -237,9 +237,9 @@ echo "fi"
 echo "else"
 echo "sudo apt-get install amd64-microcode -y"
 echo "fi"
-echo "sudo tar -xvzf /opt/NeteXt73/APM/iwlwifi-10.ucode.tar.gz -C /lib/firmware/"
-echo "sudo chown root:root /lib/firmware/*10.ucode"
-echo "sudo chmod 644 /lib/firmware/*10.ucode"
+#echo "sudo tar -xvzf /opt/NeteXt73/APM/iwlwifi-10.ucode.tar.gz -C /lib/firmware/"
+#echo "sudo chown root:root /lib/firmware/*10.ucode"
+#echo "sudo chmod 644 /lib/firmware/*10.ucode"
 }
 
 microcode_usun(){
