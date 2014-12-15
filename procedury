@@ -787,8 +787,8 @@ echo "fi"
 echo "sudo update-initramfs -u -k all"
 echo "sudo update-grub"
 echo "sudo rm -f /usr/share/applications/nvidia-settings.desktop"
-echo "if [ -e /etc/X11/xorg.conf\$(date +\"%m%d%Y\") ]; then"
-echo "sudo mv /etc/X11/xorg.conf\$(date +\"%m%d%Y\") /etc/X11/xorg.conf"
+echo "if [ -e /etc/X11/xorg.conf.\$(date +\"%m%d%Y\") ]; then"
+echo "sudo mv /etc/X11/xorg.conf.\$(date +\"%m%d%Y\") /etc/X11/xorg.conf"
 echo "fi"
 }
      
