@@ -1,3 +1,9 @@
+netext73 (0.8.28) stable; urgency=medium
+
+  * APM 4.1
+
+ -- NetBit73 <netbit73@gmail.com>  Tue, 16 Dec 2014 11:00:13 +0100
+
 netext73 (0.8.27) stable; urgency=medium
 
   * Dostosowanie instalatora NV do nowych paczek
