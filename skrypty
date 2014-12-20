@@ -184,6 +184,7 @@ if [ $klawisz = 0 ]; then
 
 		porownanie(){
 			rm pliki -f
+			IFS=$' \t\n'
 			for i in $(ls *sysbench.log | grep $1 ); do
 				if [ "$(grep test_time $i)" = "" ]; then
 					rm $i
@@ -207,15 +208,16 @@ if [ $klawisz = 0 ]; then
 			else
 				ikona="/opt/NeteXt73/ikony/microcode.png"
 			fi
-			pliczek=$(yad-netext --center --title="$nazwa_skryptu" --text="$skrypt" --width=1024 --height=450 --window-icon=$ikona --image=$ikona \
-			--column="uname -r" --column="test dates:" --column="$(echo $a1 | sed 's/ of/\nof/')" --column="$a2" --column="$(echo $a3 | sed 's/ of/\nof/')" --column="$(echo $a4 | sed 's/ event/\nevent/' | sed 's/ taken/\ntaken/' )" --column="$a5"  --column="$a6" --column="$a7" --column="$(echo $a8 | sed 's/ 95/\n95/')" --column="$(echo $a9 | sed 's/(/\n(/')" --column="$(echo $a10 | sed 's/(/\n(/')" --list $(cat pliki) --button="$TEXT_USUN_WYNIK:0"  --button="$TEXT_ZAMKNIJ:1" )
-			klawisz=$?; pliczek=$(echo $pliczek | cut -d " " -f 2)
+			if [ "$2" = "usun" ]; then
+				pliczek=$(yad-netext --center --title="$nazwa_skryptu" --text="$skrypt" --width=1024 --height=450 --window-icon=$ikona --image=$ikona \
+			--column="uname -r" --column="test dates:" --column="$(echo $a1 | sed 's/ of/\nof/')" --column="$a2" --column="$(echo $a3 | sed 's/ of/\nof/')" --column="$(echo $a4 | sed 's/ event/\nevent/' | sed 's/ taken/\ntaken/' )" --column="$a5"  --column="$a6" --column="$a7" --column="$(echo $a8 | sed 's/ 95/\n95/')" --column="$(echo $a9 | sed 's/(/\n(/')" --column="$(echo $a10 | sed 's/(/\n(/')" --list $(cat pliki)  --button="$TEXT_USUN_WYNIK:0" --button="$TEXT_ZAMKNIJ:1")
+			else
+				pliczek=$(yad-netext --center --title="$nazwa_skryptu" --text="$skrypt" --width=1024 --height=450 --window-icon=$ikona --image=$ikona \
+			--column="uname -r" --column="test dates:" --column="$(echo $a1 | sed 's/ of/\nof/')" --column="$a2" --column="$(echo $a3 | sed 's/ of/\nof/')" --column="$(echo $a4 | sed 's/ event/\nevent/' | sed 's/ taken/\ntaken/' )" --column="$a5"  --column="$a6" --column="$a7" --column="$(echo $a8 | sed 's/ 95/\n95/')" --column="$(echo $a9 | sed 's/(/\n(/')" --column="$(echo $a10 | sed 's/(/\n(/')" --list $(cat pliki)   --button="$TEXT_ZAMKNIJ:1")
+			fi
+			klawisz=$?; pliczek=$(echo $pliczek | cut -d "|" -f 2)
 			if [ "$klawisz" = "0" ]; then
-				if [ "$1" = "cpu" ]; then
-					rm $(ls | grep $pliczek | grep cpu)
-				else
-					rm $(ls | grep $pliczek | grep memory)
-				fi
+				rm $(ls | grep $pliczek | grep $1)
 			fi
 			rm pliki -f
 		}
@@ -226,14 +228,16 @@ if [ $klawisz = 0 ]; then
 				info_test 5 CPU & 
 				zrob_test $(grep 'model name' /proc/cpuinfo | wc -l ) cpu 
 				wynik_testu cpu_$(uname -r)_$DATE-sysbench.log 
+				porownanie cpu
 			elif [ "$skrypt" = "$MENU02" ]; then
 				info_test 25 MEMORY &
 				zrob_test $(grep 'model name' /proc/cpuinfo | wc -l ) memory
 				wynik_testu memory_$(uname -r)_$DATE-sysbench.log
+				porownanie memor
 			elif [ "$skrypt" = "$MENU03" ]; then
-				porownanie cpu
+				porownanie cpu usun
 			elif [ "$skrypt" = "$MENU04" ]; then
-				porownanie memory
+				porownanie memory usun
 			fi
 			if [ -z "$pliczek" ]; then
 				petla="nie"
