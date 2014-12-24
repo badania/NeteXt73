@@ -43,6 +43,11 @@ if [ ! -e ~/.netext73/strona_domowa ]; then
 	xdg-open "http://www.netext73.pl/p/netext73-poczatek.html"
 	echo "TRUE" > ~/.netext73/strona_domowa
 fi
+#życzenia świąteczne
+DATA=$(date +"%m-%d")
+if [ "$DATA" = "12-24" ] ||  [ "$DATA" = "12-25" ] ||  [ "$DATA" = "12-26" ]; then
+	yad-netext --center --info --title="$nazwa_skryptu   "  --text="Zespół NeteXt'73 życzy\n<span color=\"$kolor_textu\"><b>Wesołych Świąt Bożego Narodzenia!</b></span>\n\n\nNeteXt'73 team\n<span color=\"$kolor_textu\"><b>wishes Merry Christmas!</b></span>" --window-icon="/opt/NeteXt73/ikony/tux_santa.jpg" --image="/opt/NeteXt73/ikony/tux_santa.jpg" --button="gtk-ok:0" --on-top
+fi
 }
 
 sumy(){

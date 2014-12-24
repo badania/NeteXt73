@@ -41,19 +41,19 @@ sofcik(){
 
 baza=(	
 	"ppa:team-xbmc/xbmc-nightly"
-	"XBMC wydanie codzienne"
-	"XBMC Nightly Builds"
+	"KODI wydanie codzienne"
+	"KODI Nightly Builds"
 	"kodi"
 	
 	"ppa:team-xbmc/unstable"
-	"XBMC wydanie niestabilne"
-	"XBMC Unstable Builds"
+	"KODI wydanie niestabilne"
+	"KODI Unstable Builds"
 	"kodi"
 	
 	"ppa:team-xbmc/ppa"
-	"XBMC stabilne wydane"
-	"XBMC XBMC Stable PPA"
-	"xbmc" 
+	"KODI stabilne wydane"
+	"KODI XBMC Stable PPA"
+	"kodi" 
 	
 	"ppa:oibaf/graphics-drivers"
 	"Najnowsze graficzne sterowniki otwarte + Mesa"

@@ -1,3 +1,9 @@
+netext73 (0.8.30) stable; urgency=medium
+
+  * kodi zamiast xbmc
+
+ -- NetBit73 <netbit73@gmail.com>  Wed, 24 Dec 2014 09:58:21 +0100
+
 netext73 (0.8.29) stable; urgency=medium
 
   * pokazywanie tabeli z wynikami po testach pamięci i procesora
