@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.31
+-	wycofanie 3.8.28 z instalatora PPA, bo jest pusty http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.8.13.28-utopic/
 v0.8.30
 -	życzenia świąteczne
 -	kodi zamiast xbmc

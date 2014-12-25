@@ -141,7 +141,7 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 		klawisz=$?; export WERSJA_DISTRO=$(echo $WERSJA_DISTRO | cut -d "|" -f 1)
 		if [ "$klawisz" = 0 ];then
 			wget $strona  2>&1 | pobieranie 
-			a=$(yad-netext --center --height=630 --width=410 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --window-icon="/opt/NeteXt73/ikony/linux.png" --list $(grep 'href=' ./index.html | cut -d '"' -f 8 | grep $WERSJA_DISTRO | sed -e "s/-$WERSJA_DISTRO//g"   | sed -e 's/v//g' | sed 's/\(.*\)./\1/' | sort -r  | awk 'ORS=NR%3?"\t\t\t":"\n"') --column="" --text="$TEXT_LISTA_KERNELI <b><span color=\"$kolor_textu\">$WERSJA_DISTRO</span></b> \n\n$TEXT_ZAZNACZ_KERNEL" --title="Kernel instalator")
+			a=$(yad-netext --center --height=630 --width=410 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --window-icon="/opt/NeteXt73/ikony/linux.png" --list $(grep 'href=' ./index.html | cut -d '"' -f 8 | grep $WERSJA_DISTRO | sed -e "s/-$WERSJA_DISTRO//g"   | sed -e 's/v//g' | sed 's/\(.*\)./\1/' | grep -v -E "3.8.13.28" | sort -r  | awk 'ORS=NR%3?"\t\t\t":"\n"') --column="" --text="$TEXT_LISTA_KERNELI <b><span color=\"$kolor_textu\">$WERSJA_DISTRO</span></b> \n\n$TEXT_ZAZNACZ_KERNEL" --title="Kernel instalator")
 			klawisz=$?
 			if [ "$klawisz" = 0 ] && [ "$a" != "" ];then
 				a="v"$(echo $a | cut -d '|' -f 1)"-"$WERSJA_DISTRO
