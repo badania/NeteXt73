@@ -103,10 +103,10 @@ echo -e "\n<span color=\"$kolor_textu\"><b>OpenGL</b></span>" >> system$losowa.l
 glxinfo | grep OpenGL | sed 's/OpenGL ext.*//g' | sed 's/OpenGL core profile extensions://g' | sed '/^[ \t]*$/ d' >> system$losowa.log
 
 if [ -e ~/.netext73/kernel_premium ] && [ -e ~/.netext73/vsftpd/vsftpd ] && [ -e ~/.netext73/has* ]; then
-	yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="Firewall status:3" --button="vsFTPd:4" --button="dmidecode:5"
+	yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2"  --button="vsFTPd:4" 
 	klawisz=$?
 else
-	yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2" --button="Firewall status:3"  --button="dmidecode:5"
+	yad-netext --center --title="$nazwa_skryptu" --width=550 --window-icon="/opt/NeteXt73/ikony/logi.png" --image="/opt/NeteXt73/ikony/logi.png" --text="$(cat system$losowa.log)" --button="$TEXT_POWROT:1" --button="$TEXT_WYGENERUJ:2"
 	klawisz=$?
 fi
 
@@ -186,43 +186,44 @@ if [ "$klawisz" = "2" ]; then
 	dmesg > dmesg.log
 	mv system$losowa.log netext.log
 	if [ "$klawisz" = "2" ]; then
+		naglowek > instaluj.sh
+		#Firewall
+		echo "sudo ufw status verbose > firewall.log" >> instaluj.sh
+		#dmidecode
+		echo "for i in \$(seq 1 42); do sudo dmidecode --type \$i >> dmidecode.log; done" >> instaluj.sh
+		#kern.log
+		echo "sudo tac /var/log/kern.log | sed -n 1,1000p > kern.log" >> instaluj.sh
+		instalacja2
+		
 		#system logi
-		for i in $(echo  netext.log dmesg.log /var/log/kern.log); do
-			if [ "$i" = "/var/log/kern.log" ]; then
-				tac /var/log/kern.log | sed -n 1,1000p > kern.log
-				i=$(echo kern.log)
-			fi
+		KEY="12345"
+		#zmienne losowe
+		res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
+		res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)
+		res3=$(mktemp --tmpdir=/tmp/netext73 netext73_3.XXXXXXXX)
+		res4=$(mktemp --tmpdir=/tmp/netext73 netext73_4.XXXXXXXX)
+		res5=$(mktemp --tmpdir=/tmp/netext73 netext73_5.XXXXXXXX)
+		#zakładki
+		yad-netext --plug=$KEY --tabnum=1 --text-info --filename=netext.log 	> $res1 &
+		yad-netext --plug=$KEY --tabnum=2 --text-info --filename=dmesg.log 	> $res2 &
+		yad-netext --plug=$KEY --tabnum=3 --text-info --filename=kern.log 	> $res3 &
+		yad-netext --plug=$KEY --tabnum=4 --text-info --filename=firewall.log 	> $res4 &
+		yad-netext --plug=$KEY --tabnum=5 --text-info --filename=dmidecode.log 	> $res5 &
 		  
-			yad-netext --center --title="$nazwa_skryptu1 - $i" --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --text-info --filename=$i --width=900 --height=700 --button="$TEXT_CLIPBOARD:3" --button="$TEXT_PASTEBIN:2" --button="$TEXT_ZAMKNIJ:1"
-			co=$?
-			if [ "$co" = "2" ]; then
-				if [ "$USER" = "root" ]; then
-				      userek=$(cat /tmp/netext73/userek)
-				      su $userek -c "xdg-open $(cat $i | pastebinit)"
-				 else
-				      xdg-open $(cat $i | pastebinit)
-				fi  
-			elif [ "$co" = "3" ]; then
-				cat $i | pastebinit | xclip -selection clipboard
-				yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_PASTE"
-			fi
-		done
+		yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="netext.log" --tab="dmesg.log" --tab="kern.log"  --tab="firewall.log"  --tab="dmidecode.log"  --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --width=900 --height=900 --button="$TEXT_PASTEBIN:0" --button="$TEXT_ZAMKNIJ:1"
+		klawisz=$?
+		if [ "$klawisz" = "0" ]; then
+			if [ "$USER" = "root" ]; then
+				userek=$(cat /tmp/netext73/userek)
+				su $userek -c "xdg-open $(cat netext.log dmesg.log kern.log | pastebinit)"
+			  else
+				xdg-open $(cat netext.log dmesg.log kern.log | pastebinit)
+			fi  
+		fi
+		rm -f $res1 $res2 $res3 $res4 $res5
 	fi
-elif  [ "$klawisz" = "3" ] ; then
-	x-terminal-emulator -e bash -c "sudo ufw status verbose; read ent"
 elif  [ "$klawisz" = "4" ] ; then    
 	chmod a+x ~/.netext73/vsftpd/vsftpd
 	~/.netext73/vsftpd/./vsftpd
-elif  [ "$klawisz" = "5" ] ; then    
-	naglowek > instaluj.sh
-	echo "for i in \$(seq 1 42); do sudo dmidecode --type \$i >> dmidecode.log; done" >> instaluj.sh
-	instalacja2
-	i=$(echo dmidecode.log)
-	if [ "$USER" = "root" ]; then
-		userek=$(cat /tmp/netext73/userek)
-		su $userek -c "xdg-open $(cat $i | pastebinit)"
-	else
-		xdg-open $(cat $i | pastebinit)
-	fi
 fi
 rm *.log losowa -f

@@ -74,7 +74,7 @@ while [ $petla_duza = "tak" ]; do
 	stan_apm_config
 	
 	aktualny_apm=$(echo $stan_apm | awk '{print $1}')
-	menu_apm=$(echo "!conservative-conservative!ondemand-ondemand!intel-performance!intel-powersave!performance-conservative!performance-ondemand" | sed  "s/$aktualny_apm//" | sed 's/!!/!/')
+	menu_apm=$(echo "!conservative-conservative!ondemand-ondemand!intel-performance!intel-powersave!performance-conservative!performance-ondemand" | sed -e "s/$aktualny_apm//" -e 's/!!/!/')
 	menu=$(echo "$aktualny_apm$menu_apm" | sed 's/!!/!/')
 	
 	if [ "$stan_apm" != "-" ]; then

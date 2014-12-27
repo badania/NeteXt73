@@ -1,3 +1,9 @@
+netext73 (0.8.32) stable; urgency=medium
+
+  * prezentowanie logów w zakładkach
+
+ -- NetBit73 <netbit73@gmail.com>  Sat, 27 Dec 2014 21:07:13 +0100
+
 netext73 (0.8.31) stable; urgency=medium
 
   * wycofanie 3.8.28 z instalatora PPA, bo jest pusty http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.8.13.28-utopic/

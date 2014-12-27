@@ -545,7 +545,7 @@ stan_apm_config(){
 	
 	#wysłanie danych do configu 
 	if [ "$1" = "czeki" ]; then
-		ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' | sed 's/advanced_power_management_by_ext73_//' | sed 's/_v.*//' > ~/.netext73/apm_status
+		ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed -e 's/*//' -e 's/advanced_power_management_by_ext73_//' -e 's/_v.*//' > ~/.netext73/apm_status
 		echo "wififix $wififix" >> ~/.netext73/apm_status
 		echo "wifionoff $wifionoff" >> ~/.netext73/apm_status
 		echo "btfix $btfix">> ~/.netext73/apm_status
@@ -567,7 +567,7 @@ echo "rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f"
 
 #instalacja za chwile nastąpi wprowadzenie zmian
 instalacja(){
-xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh  && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
+xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh  && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt" 
 }
 
 instalacja_nativ(){
@@ -622,7 +622,7 @@ else
 		strona="$adres_glowny/kernele/"
 		rm index.html -f; wget $strona 2>&1 | pobieranie 
 	fi
-	echo $(grep 'href="ftp' index.html | grep 'v' | grep -v "logi" | cut -d '"' -f 2 | sed 's/.*v/v/g' | sed 's/\///g') | tr ' ' '\n' > 2.txt
+	echo $(grep 'href="ftp' index.html | grep 'v' | grep -v "logi" | cut -d '"' -f 2 | sed -e 's/.*v/v/g' -e 's/\///g') | tr ' ' '\n' > 2.txt
 	dpkg -l |grep linux-image | awk '{print $2}' | grep $rodzaj | sed 's/linux-image-//g'  > 3.txt
 
 	for kernel in $(cat 2.txt); do
