@@ -179,7 +179,7 @@ export TEXT_DEBI1="Indiquez le fichier linux-headers ou linux-image, lequel vous
 
 #########################################################################################################################################################################
 #tlumaczenia_kontakt
-export TEXT_KONTAKT_Z_AUTORAMI="Le contact avec les auteurs:"
+export TEXT_KONTAKT_Z_AUTORAMI="Le contact avec les auteurs"
 export TEXT_NETBIT="NetBit73 - développement l'installateur graphique NeteXt73"
 export TEXT_EXT="e X t 7 3 - préparation des kernels et du script d'APM"
 export TEXT_FADEMIND="FadeMind - la traduction en anglais des textes et des bêta tests"

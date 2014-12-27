@@ -196,7 +196,7 @@ if [ "$klawisz" = "2" ]; then
 		instalacja2
 		
 		#system logi
-		KEY="12345"
+		KEY="$(echo $RANDOM)"
 		#zmienne losowe
 		res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
 		res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)

@@ -181,7 +181,7 @@ export TEXT_DEB1="Select the file linux-headers or linux-image, which do you wan
 
 #########################################################################################################################################################################
 #tlumaczenia_kontakt
-export TEXT_KONTAKT_Z_AUTORAMI="Contact with authors:"
+export TEXT_KONTAKT_Z_AUTORAMI="Contact with authors"
 export TEXT_NETBIT="NetBit73 - development graphical setup script"
 export TEXT_EXT="e X t 7 3 - development a custom kernel and APM script"
 export TEXT_FADEMIND="FadeMind - translations and beta tests"
