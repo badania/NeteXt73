@@ -114,9 +114,9 @@ export adres_sum_kontrolnych='http://dl.dropboxusercontent.com/u/2936246/weryfik
 
 #kolor textu
 if [ -e ~/.netext73/kolor_textu ]; then
-	kolor_textu=$(cat ~/.netext73/kolor_textu)
+	export kolor_textu=$(cat ~/.netext73/kolor_textu)
 else
-	kolor_textu="blue"
+	export kolor_textu="blue"
 fi
 if [ "$(cat /proc/cpuinfo | grep Intel)" != "" ]; then
 	export komputerek="INTEL"
