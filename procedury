@@ -98,14 +98,15 @@ export adres_glowny="ftp://37.59.165.105"
 export adres_sterownikow="$adres_glowny/sterowniki2/"
 
 #premium
-if [ "$(grep @ ~/.netext73/kernel_premium)" = "" ]; then
-	rm -f ~/.netext73/kernel_premium
-	kernel_premium="brak"
-fi
 if [ -e ~/.netext73/kernel_premium ]; then
-	export US1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 1) 
-	export PASS1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 3)
-	kernel_premium="tak"
+	if [ "$(grep @.*@ ~/.netext73/kernel_premium)" = "" ]; then
+		rm -f ~/.netext73/kernel_premium
+		kernel_premium="brak"
+	else
+		export US1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 1) 
+		export PASS1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 3)
+		kernel_premium="tak"
+	fi
 fi
 
 #sumy sumy kontrolne
