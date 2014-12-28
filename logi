@@ -214,8 +214,9 @@ if [ "$klawisz" = "2" ]; then
 		klawisz=$?
 		if [ "$klawisz" = "0" ]; then
 			if [ "$USER" = "root" ]; then
-				userek=$(cat /tmp/netext73/userek)
-				su $userek -c "xdg-open $(cat netext.log dmesg.log kern.log | pastebinit)"
+				sudo -u $userek bash << EOF
+				xdg-open $(cat netext.log dmesg.log kern.log | pastebinit)
+EOF
 			  else
 				xdg-open $(cat netext.log dmesg.log kern.log | pastebinit)
 			fi  

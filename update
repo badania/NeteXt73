@@ -226,17 +226,19 @@ elif [ $klawisz = "2" ]; then
 	aktualizuj_calosc 
 elif [ $klawisz = "3" ]; then  #lista zmian
     if [ "$stable" != "$TEXT_BRAK_DANYCH" ]; then
-	userek=$(cat /tmp/netext73/userek)
-	echo $nr
 	if [ "$(echo $nr | grep "......")" != "" ];then
 		if [ "$USER" = "root" ]; then
-		      su $userek -c "xdg-open \"https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable\""
+		      sudo -u $userek bash << EOF
+		      xdg-open "https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable"
+EOF
 		else
 		      xdg-open "https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable"
 		fi
 	else
 		if [ "$USER" = "root" ]; then
-		      su $userek -c "xdg-open \"https://www.kernel.org"
+		      sudo -u $userek bash << EOF
+		      xdg-open "https://www.kernel.org"
+EOF
 		else
 		      xdg-open "https://www.kernel.org"
 		fi

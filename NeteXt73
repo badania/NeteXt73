@@ -90,25 +90,17 @@ if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ]; 
 	      exit 0
 	fi
 fi
-
+export userek=$(cat /tmp/netext73/userek)
 zaleznosci
 sumy &
 aktualizacja &
 
 
-yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="$TEXT_REBOOT:3" --button="$TEXT_BUG:2" --button="$TEXT_ZAMKNIJ:1" --single-click
+yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="$TEXT_REBOOT:2" --button="$TEXT_ZAMKNIJ:1" --single-click
 klawisz=$?
 
 
 if [ "$klawisz" = "2" ]; then
-	if [ "$USER" = "root" ]; then
-	      userek=$(cat /tmp/netext73/userek)
-	      su $userek -c "xdg-open \"http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html\""
-	else
-	      xdg-open "http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html"
-	fi
-	cd /opt/NeteXt73 && ./NeteXt73
-elif [ "$klawisz" = "3" ]; then
 	restart
 elif [ "$klawisz" = "1" ]; then
 	rm -rf /tmp/netext73
@@ -117,4 +109,3 @@ fi
 if [ $USER = "root" ] && [ -e /home/root ]; then
 	sudo rm -rf /home/root
 fi
-killall yad-netext
