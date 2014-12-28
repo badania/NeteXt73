@@ -108,10 +108,18 @@ if [ "$klawisz" = 0 ]; then
 		cat $res1 | cut -d "|" -f 7 > ~/.netext73/archiwum_deb
 		cat $res1 | cut -d "|" -f 8 > ~/.netext73/root_mode
 		cat $res2 > ~/.netext73/kolor_textu
+		#kasowanie śmieci w configach
+		for i in $(echo jezyk kernel_automat archiwum_deb root_mode kernel_premium kolor_textu); do
+			sed -i '/.*yad-netext.*/ d' ~/.netext73/$i
+			sed -i '/^[ \t]*$/ d' ~/.netext73/$i
+		done
+
 		if [ "$root_mode" != "$(cat ~/.netext73/root_mode)" ]; then
 			killall -9 yad-netext
 			rm -fr /tmp/netext73
 		fi    
 	fi
+	sed -i '/yad-netext/ d' ~/.netext73/*
+	sed -i '/^[ \t]*$/ d' ~/.netext73/*
 fi
 rm -f $res1 $res2
