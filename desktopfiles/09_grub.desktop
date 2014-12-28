@@ -152,7 +152,7 @@ GenericName[vi]=GRUB Editor
 GenericName[zh_CN]=GRUB Editor
 GenericName[zh_TW]=GRUB Editor
 
-Exec=/opt/NeteXt73/./grub
+Exec=/opt/NeteXt73/./NeteXt73_root ./grub
 Icon=/opt/NeteXt73/ikony/grub.png
 Terminal=false
 StartupNotify=true

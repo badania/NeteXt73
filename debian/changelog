@@ -1,3 +1,9 @@
+netext73 (0.8.35) stable; urgency=medium
+
+  * poprawki w trybie root
+
+ -- NetBit73 <netbit73@gmail.com>  Sun, 28 Dec 2014 18:26:43 +0100
+
 netext73 (0.8.34) stable; urgency=medium
 
   * zmiana okna konfiguratora programu
