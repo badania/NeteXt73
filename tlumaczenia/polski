@@ -80,7 +80,7 @@ export TEXT_NIE_POBRALES_KLUCZY="Nie pobrałeś listy kluczy"
 #tlumaczenia_config
 export lang1="polski!english!français"
 export TEXT_CONFIG1="Konfigurator NeteXt73"
-export TEXT_CONFIG2="Menu konfiguracyjne NeteXt73:"
+export TEXT_CONFIG2="Menu konfiguracyjne NeteXt73"
 export TEXT_CONFIG3="Kolor wyróżnionych napisów"
 export TEXT_CONFIG4="Kod dostępu do kerneli premium:"
 export TEXT_CONFIG5="Adres wersji testing:"
@@ -348,7 +348,7 @@ export TEXT_SERVER_ERROR="Błąd pobierania danych z serwera"
 
 #tlumaczenia_skrypty
 export TEXT_SKRYPT1="Zbiór skryptów"
-export MENU01="sysbench test procosora"
+export MENU01="sysbench test procesora"
 export MENU02="sysbench test pamięci"
 export MENU03="sysbench tabela wyników testów procesora"
 export MENU04="sysbench tabela wyników testów pamięci"

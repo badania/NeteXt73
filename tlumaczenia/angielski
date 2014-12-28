@@ -80,7 +80,7 @@ export TEXT_NIE_POBRALES_KLUCZY="List of keys has not been downloaded."
 #tlumaczenia_config
 export lang1="english!polski!français"
 export TEXT_CONFIG1="Configurator NeteXt73"
-export TEXT_CONFIG2="Configure NeteXt73:"
+export TEXT_CONFIG2="Configure NeteXt73"
 export TEXT_CONFIG3="Color highlighted subtitles"
 export TEXT_CONFIG4="The access code to the premium kernels:"
 export TEXT_CONFIG5="URL testing version:"
