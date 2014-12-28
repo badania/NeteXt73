@@ -119,7 +119,5 @@ if [ "$klawisz" = 0 ]; then
 			rm -fr /tmp/netext73
 		fi    
 	fi
-	sed -i '/yad-netext/ d' ~/.netext73/*
-	sed -i '/^[ \t]*$/ d' ~/.netext73/*
 fi
 rm -f $res1 $res2
