@@ -5,6 +5,7 @@ v0.8.34
 -	zmiana okna konfiguratora programu
 -	kasowanie śmieci w configach
 -	poprawki w plikach logów
+-	logi w trybie root
 v0.8.33
 -	poprawki dla root-mode
 v0.8.32

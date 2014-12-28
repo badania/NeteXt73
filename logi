@@ -180,20 +180,9 @@ if [ "$klawisz" = "2" ]; then
 	dmesg > dmesg.log
 	mv system$losowa.log netext.log
 	if [ "$klawisz" = "2" ]; then
-		if [ "$USER" = "root" ]; then
-			sudo ufw status verbose > firewall.log
-			for i in $(seq 1 42); do sudo dmidecode --type $i >> dmidecode.log; done
-			sudo tac /var/log/kern.log | sed -n 1,1000p > kern.log
-		else
-			naglowek > instaluj.sh
-			#Firewall
-			echo "sudo ufw status verbose > firewall.log" >> instaluj.sh
-			#dmidecode
-			echo "for i in \$(seq 1 42); do sudo dmidecode --type \$i >> dmidecode.log; done" >> instaluj.sh
-			#kern.log
-			echo "sudo tac /var/log/kern.log | sed -n 1,1000p > kern.log" >> instaluj.sh
-			instalacja2
-		fi
+		sudo ufw status verbose > firewall.log
+		for i in $(seq 1 42); do sudo dmidecode --type $i >> dmidecode.log; done
+		sudo tac /var/log/kern.log | sed -n 1,1000p > kern.log
 		#system logi
 		KEY="$(echo $RANDOM)"
 		#zmienne losowe

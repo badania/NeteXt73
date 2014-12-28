@@ -10,7 +10,7 @@ if [ "$1" = "kontakty" ]; then
 	yad-netext --plug=$KEY --tabnum=1 --icons --image-on-top --single-click --item-width=150 --read-dir=/opt/NeteXt73/kontakty &> $res1 &
 	yad-netext --plug=$KEY --tabnum=2 --text-info --filename=/opt/NeteXt73/changelog &> $res2 &
 	yad-netext --plug=$KEY --tabnum=3 --text-info --filename=/opt/NeteXt73/LICENSE &> $res3 &
-	yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_KONTAKT_Z_AUTORAMI" --tab="$TEXT_CHANGELOG" --tab="$TEXT_LICENCJA" --window-icon="/opt/NeteXt73/ikony/mail.png" --on-top --width=840 --height=400 --button="gtk-ok:1" --button="$TEXT_BUG:2"
+	yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_KONTAKT_Z_AUTORAMI" --tab="$TEXT_CHANGELOG" --tab="$TEXT_LICENCJA" --window-icon="/opt/NeteXt73/ikony/mail.png" --on-top --width=840 --height=400 --button="$TEXT_ZAMKNIJ:1" --button="$TEXT_BUG:2"
 	klawisz=$?
 
 	if [ "$klawisz" = "2" ]; then
