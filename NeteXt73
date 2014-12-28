@@ -84,7 +84,7 @@ fi
 
 if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ]; then
 	if [ -e /tmp/netext73/stan_netext ] && [ $(cat /tmp/netext73/stan_netext) = "root" ]; then
-	      echo "tryb normalny" > /dev/null
+	      sudo -K
 	else
 	      cd /opt/NeteXt73 && ./NeteXt73_root ./NeteXt73
 	      exit 0
