@@ -93,7 +93,7 @@ res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)
 yad-netext --plug=$KEY --tabnum=1 --form \
 --field="$TEXT_CONFIG7:CB" --field="$TEXT_CONFIG4" --field="$TEXT_CONFIG6:CB" --field="$TEXT_CONFIG9:RO" --field="$TEXT_CONFIG10:RO" --field="$TEXT_CONFIG11:CHK" --field="$TEXT_CONFIG12:CHK" --field="NeteXt'73 -root mode:CHK" "$TEXT_NIE!$TEXT_TAK" "" "$lang1" "$apm_stat" "$ik" "$automatyczna_instalacja" "$archiwum_deb" "$root_mode" --button="$TEXT_CONFIG3:2" &> $res1 &
 yad-netext --plug=$KEY --tabnum=2 --color --init-color=$kolor_textu &> $res2 &
-yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_CONFIG2" --tab="$TEXT_CONFIG3" --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=840 --height=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1"
+yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_CONFIG2" --tab="$TEXT_CONFIG3" --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=540 --height=400 --button="gtk-ok:0" --button="$TEXT_POWROT:1"
 klawisz=$?
 if [ "$klawisz" = 0 ]; then 
 	if [ "$(grep "$TEXT_TAK" $res1)" != "" ]; then
@@ -114,4 +114,4 @@ if [ "$klawisz" = 0 ]; then
 		fi    
 	fi
 fi
-rm -r $res1 $res2
+rm -f $res1 $res2

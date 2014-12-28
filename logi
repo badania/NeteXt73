@@ -163,14 +163,8 @@ if [ "$klawisz" = "2" ]; then
 	cat ~/.netext73/jezyk >> system$losowa.log
 	echo -e "\n\n#################################  kernel_automat ########################################################" >> system$losowa.log
 	cat ~/.netext73/kernel_automat >> system$losowa.log
-	echo -e "\n\n#################################  monitor ###############################################################" >> system$losowa.log
-	cat ~/.netext73/monitor >> system$losowa.log
 	echo -e "\n\n#################################  root_mode #############################################################" >> system$losowa.log
 	cat ~/.netext73/root_mode >> system$losowa.log
-	echo -e "\n\n#################################  server_no #############################################################" >> system$losowa.log
-	cat ~/.netext73/server_no >> system$losowa.log
-	echo -e "\n\n#################################  soft ##################################################################" >> system$losowa.log
-	cat ~/.netext73/soft >> system$losowa.log
 	echo -e "\n\n#################################  stan tmp ##############################################################" >> system$losowa.log
 	ls -la /tmp/netext73 >> system$losowa.log
 	echo -e "\n\n#################################  konflikty #############################################################" >> system$losowa.log
@@ -186,15 +180,20 @@ if [ "$klawisz" = "2" ]; then
 	dmesg > dmesg.log
 	mv system$losowa.log netext.log
 	if [ "$klawisz" = "2" ]; then
-		naglowek > instaluj.sh
-		#Firewall
-		echo "sudo ufw status verbose > firewall.log" >> instaluj.sh
-		#dmidecode
-		echo "for i in \$(seq 1 42); do sudo dmidecode --type \$i >> dmidecode.log; done" >> instaluj.sh
-		#kern.log
-		echo "sudo tac /var/log/kern.log | sed -n 1,1000p > kern.log" >> instaluj.sh
-		instalacja2
-		
+		if [ "$USER" = "root" ]; then
+			sudo ufw status verbose > firewall.log
+			for i in $(seq 1 42); do sudo dmidecode --type $i >> dmidecode.log; done
+			sudo tac /var/log/kern.log | sed -n 1,1000p > kern.log
+		else
+			naglowek > instaluj.sh
+			#Firewall
+			echo "sudo ufw status verbose > firewall.log" >> instaluj.sh
+			#dmidecode
+			echo "for i in \$(seq 1 42); do sudo dmidecode --type \$i >> dmidecode.log; done" >> instaluj.sh
+			#kern.log
+			echo "sudo tac /var/log/kern.log | sed -n 1,1000p > kern.log" >> instaluj.sh
+			instalacja2
+		fi
 		#system logi
 		KEY="$(echo $RANDOM)"
 		#zmienne losowe
@@ -204,11 +203,11 @@ if [ "$klawisz" = "2" ]; then
 		res4=$(mktemp --tmpdir=/tmp/netext73 netext73_4.XXXXXXXX)
 		res5=$(mktemp --tmpdir=/tmp/netext73 netext73_5.XXXXXXXX)
 		#zakładki
-		yad-netext --plug=$KEY --tabnum=1 --text-info --filename=netext.log 	> $res1 &
-		yad-netext --plug=$KEY --tabnum=2 --text-info --filename=dmesg.log 	> $res2 &
-		yad-netext --plug=$KEY --tabnum=3 --text-info --filename=kern.log 	> $res3 &
-		yad-netext --plug=$KEY --tabnum=4 --text-info --filename=firewall.log 	> $res4 &
-		yad-netext --plug=$KEY --tabnum=5 --text-info --filename=dmidecode.log 	> $res5 &
+		yad-netext --plug=$KEY --tabnum=1 --text-info --filename=netext.log 	&> $res1 &
+		yad-netext --plug=$KEY --tabnum=2 --text-info --filename=dmesg.log 	&> $res2 &
+		yad-netext --plug=$KEY --tabnum=3 --text-info --filename=kern.log 	&> $res3 &
+		yad-netext --plug=$KEY --tabnum=4 --text-info --filename=firewall.log 	&> $res4 &
+		yad-netext --plug=$KEY --tabnum=5 --text-info --filename=dmidecode.log 	&> $res5 &
 		  
 		yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="netext.log" --tab="dmesg.log" --tab="kern.log"  --tab="firewall.log"  --tab="dmidecode.log"  --window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --width=900 --height=900 --button="$TEXT_PASTEBIN:0" --button="$TEXT_ZAMKNIJ:1"
 		klawisz=$?

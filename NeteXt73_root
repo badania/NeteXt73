@@ -46,5 +46,5 @@ else
 		fi
 	done
 fi
-rm /tmp/netext73/stan_netext
+rm /tmp/netext73/stan_netext -f
 sudo -K
