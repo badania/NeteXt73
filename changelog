@@ -3,6 +3,7 @@
 
 v0.8.36
 -	życzenia noworoczne
+-	poprawki literówek
 v0.8.35
 -	poprawki w trybie root
 -	poprawki tłumaczeń
@@ -34,7 +35,7 @@ v0.8.25
 -	zmiany instalatora grafik radeon
 -	poprawka deinstaloatora kerneli
 v0.8.24
--	naprawa błędnego wskazywnia stanu instalacji APM w logach
+-	naprawa błędnego wskazywania stanu instalacji APM w logach
 -	drobne poprawki kodu
 v0.8.23
 -	dodanie firmware iwlwifi-3160-10.ucode iwlwifi-7260-10.ucode iwlwifi-7265-10.ucode iwlwifi-7265D-10.ucode potrzebnych do kerneli 3.17+
