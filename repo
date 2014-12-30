@@ -218,6 +218,11 @@ baza=(
 	"Ksuperkey - uruchom program uruchamiający za pomocą klawisza SuperKey"
 	"Ksuperkey - bind Superkey for open Launcher Menu"
 	"ksuperkey"
+	
+	"ppa:wseverin/ppa"
+	"LinSSID - graficzny skaner sieci wifi"
+	"LinSSID - Graphical Wireless Scanner"
+	"linssid"
 	)
 #########################################################################################################################################################################
 #backuprepo

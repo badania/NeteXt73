@@ -152,7 +152,7 @@ GenericName[vi]=APM Script
 GenericName[zh_CN]=APM Script
 GenericName[zh_TW]=APM Script
 
-Exec=/opt/NeteXt73/./NeteXt73_root ./apm
+Exec=/opt/NeteXt73/./apm
 Icon=/opt/NeteXt73/ikony/apm.png
 Terminal=false
 StartupNotify=true
