@@ -50,7 +50,7 @@ if [ "$DATA" = "12-24" ] ||  [ "$DATA" = "12-25" ] ||  [ "$DATA" = "12-26" ]; th
 fi
 #życzenia noworoczne
 if [ "$DATA" = "12-31" ]; then
-	dymek  -i /opt/NeteXt73/ikony/happyny.png "Happy New Year" "<b>NeteXt'73 team wishes Happy New Year $(( $(date +"%Y")+1 ))\nZespół NeteXt'73 życzy Nowego Roku $(( $(date +"%Y")+1 ))</b>"
+	dymek  -i /opt/NeteXt73/ikony/happyny.png "Happy New Year" "<b>NeteXt'73 team wishes Happy New Year $(( $(date +"%Y")+1 ))\nZespół NeteXt'73 życzy Szczęśliwego Nowego Roku $(( $(date +"%Y")+1 ))</b>"
 fi
 if [ "$DATA" = "01-01" ]; then
 	dymek  -i /opt/NeteXt73/ikony/happyny.png "Happy New Year" "<b>NeteXt'73 team wishes Happy New Year $(date +"%Y")\nZespół NeteXt'73 życzy Szczęśliwego Nowego Roku$(date +"%Y")</b>"
