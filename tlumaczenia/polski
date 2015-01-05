@@ -59,6 +59,7 @@ export a5="Usuń zbędne klucze GPG"
 export a6="Dodaj lub usuń aplikacje/sterowniki oraz repozytorium"
 export a7="Instalator oprogramowania"
 export a8="Edytor plików instalatora"
+export a9="Usuń repozytorium wraz z pakietami - PPA-Purge"
 export MENU1="Włącz repozytorium partnerów"
 export MENU2="Wyłącz repozytorium partnerów"
 export MENU_OPIS="Zmodyfikuj listę pakietów:"
@@ -373,6 +374,7 @@ export TEXT_BACK_CRITIC="UWAGA: Znaleziono ciągi Fokirtor w procesie SSHD:"
 export TEXT_BACK_OK="OK: Brak zagrożenia w procesach SSHD."
 export TEXT_SYSBENCH_PROGRESS="Trwa test Sysbench,\npo jego zakończeniu \npojawi się tabela z wynikiem."
 export TEXT_USUN_WYNIK="Usuń wynik"
+export TEXT_PPAPURGE="Usuń wskazane repozytorium i przywróć oficjalne pakiety jeżeli są dostępne"
 
 
 #########################################################################################################################################################################

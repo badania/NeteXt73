@@ -229,11 +229,11 @@ baza=(
 
 cd /tmp/netext73
 if [ "$(cat /etc/apt/sources.list | grep 'deb' | grep 'partner' | grep '#')" = "" ];then
-	menu="$a1!$a2!$a3!$a4!$a5!$a6!$a7!$a8!$MENU2!PPA-Purge"
+	menu="$a1!$a2!$a3!$a4!$a5!$a9!$a6!$a7!$a8!$MENU2"
 else
-	menu="$a1!$a2!$a3!$a4!$a5!$a6!$a7!$a8!$MENU1!PPA-Purge"
+	menu="$a1!$a2!$a3!$a4!$a5!$a9!$a6!$a7!$a8!$MENU1"
 fi
-backup=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --text="<span color=\"$kolor_textu\">$TEXT_BACKUP1</span>" --form --field=" :CB" \
+backup=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --text="<span color=\"$kolor_textu\"><b>$TEXT_BACKUP1</b></span>" --form --field=" :CB" \
 "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 klawisz=$?; backup=$(echo $backup | cut -d "|" -f 1)
 
@@ -258,7 +258,7 @@ if [ "$klawisz" = "0" ]; then
 #Stwórz kopię zapasową repozytorium wraz z kluczami GPG
 
 	elif [ "$backup" = "$a1" ]; then
-		x-terminal-emulator -e bash -c "echo -e \"$TEXT_BACKUP7\";cd /etc; sudo tar -zcvf $download/source.list.backup_$(date +"%d-%m-%y")_$(lsb_release -irs | tr '\n' '_').tar.gz apt; echo -e \"\n\nBackup:$download/source.list.backup_$(date +'%d-%m-%y')_$(lsb_release -irs | tr '\n' '_').tar.gz\"; echo -e \"$TEXT_INSTALACJA\"; read ent"
+		xterm -e bash -c "echo -e \"$TEXT_BACKUP7\";cd /etc; sudo tar -zcvf $download/source.list.backup_$(date +"%d-%m-%y")_$(lsb_release -irs | tr '\n' '_').tar.gz apt; echo -e \"\n\nBackup:$download/source.list.backup_$(date +'%d-%m-%y')_$(lsb_release -irs | tr '\n' '_').tar.gz\"; echo -e \"$TEXT_INSTALACJA\"; read ent"
 #########################################################################################################################################################################
 #Pobieranie brakujących kluczy GPG
 	elif [ "$backup" = "$a3" ]; then
@@ -268,7 +268,7 @@ if [ "$klawisz" = "0" ]; then
 		instalacja
 #########################################################################################################################################################################
 	elif [ "$backup" = "$a4" ]; then
-		x-terminal-emulator -e bash -c "echo -e \"$a4\n\"; sudo apt-get clean; sudo mv /var/lib/apt/lists /tmp/netext73; sudo mkdir /var/lib/apt/lists; sudo apt-get update; echo -e \"$TEXT_INSTALACJA\"; read ent"
+		xterm -e bash -c "echo -e \"$a4\n\"; sudo apt-get clean; sudo mv /var/lib/apt/lists /tmp/netext73; sudo mkdir /var/lib/apt/lists; sudo apt-get update; echo -e \"$TEXT_INSTALACJA\"; read ent"
 #########################################################################################################################################################################
 #Moduł usuwania zbędnych kluczy
 	elif [ "$backup" = "$a5" ]; then
@@ -549,14 +549,14 @@ if [ "$klawisz" = "0" ]; then
 		if [ ! -e ~/.netext73/soft ]; then
 			sofcik
 		fi
-		nowa_lista=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --width=400 --height=600 --form --field="$MENU_OPIS:TXT" "$(cat -e ~/.netext73/soft | tr ' ' '\n' | sed 's/\$//g' | sort)" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		nowa_lista=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --width=400 --height=600 --form --field="<span color=\"$kolor_textu\"><b>$MENU_OPIS</b></span>:TXT" "$(cat -e ~/.netext73/soft | tr ' ' '\n' | sed 's/\$//g' | sort)" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		if [ $? = "0" ]; then
 			echo -e $nowa_lista | sed 's/|//g'| tr ' ' '\n' | sed 's/\$//g' | sort | uniq > ~/.netext73/soft
 			sed -i '/^[ \t]*$/ d' ~/.netext73/soft
 		fi
 #########################################################################################################################################################################
 #PPA PURGE
-	elif [ "$backup" = "PPA-Purge" ]; then
+	elif [ "$backup" = "$a9" ]; then
 		cat /etc/apt/sources.list.d/*.list > lista.txt
 		cat /etc/apt/sources.list >> lista.txt
 		cat lista.txt | sed -e 's/^deb-src.*//g' -e '/^$/d' | grep -v "^[[:space:]]*\(#.*\)\?$" | grep "http://ppa.launchpad.net" > lista_ppa.txt
@@ -573,7 +573,7 @@ if [ "$klawisz" = "0" ]; then
 			
 			let n=n+1
 		done < lista_ppa.txt
-		usunppa=$(yad-netext --center --always-print-result --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --separator="" --list --width=600 --height=500 --title="$nazwa_skryptu" --search-column="1" --regex-search --text="PPA-PURGE:" --column "PPA" --list $(cat lista.txt) --button="$TEXT_USUN:0" --button="$TEXT_ZAMKNIJ:1")
+		usunppa=$(yad-netext --center --always-print-result --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --separator="" --list --width=600 --height=500 --title="$nazwa_skryptu" --search-column="1" --regex-search --text="<span color=\"$kolor_textu\"><b>$TEXT_PPAPURGE</b></span>" --column "PPA" --list $(cat lista.txt) --button="$TEXT_USUN:0" --button="$TEXT_ZAMKNIJ:1")
 		klawisz=$?
 		if [ "$klawisz" = "0" ]; then
 			naglowek > instaluj.sh
@@ -585,10 +585,10 @@ if [ "$klawisz" = "0" ]; then
 #########################################################################################################################################################################
 	#dodajemy repo partnerów
 	elif [ "$backup" = "$MENU1" ]; then
-		x-terminal-emulator -e bash -c "echo -e \"$MENU1\n\"; sudo sed -i '/partner/ s/#//' /etc/apt/sources.list;sudo apt-get update"
+		xterm -e bash -c "echo -e \"$MENU1\n\"; sudo sed -i '/partner/ s/#//' /etc/apt/sources.list;sudo apt-get update"
 #########################################################################################################################################################################
 	#usuwamy repo partnerów
 	elif [ "$backup" = "$MENU2" ]; then
-	      x-terminal-emulator -e bash -c "echo -e \"$MENU2\n\"; sudo sed -i '/partner/ s/^/#/' /etc/apt/sources.list;sudo apt-get update"	  
+	      xterm -e bash -c "echo -e \"$MENU2\n\"; sudo sed -i '/partner/ s/^/#/' /etc/apt/sources.list;sudo apt-get update"	  
 	fi
 fi

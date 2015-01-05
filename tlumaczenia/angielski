@@ -59,6 +59,7 @@ export a5="Delete unnecessary GPG keys"
 export a6="Add or remove applications/drivers and repository"
 export a7="Software instalator"
 export a8="Instalator editor"
+export a9="PPA Purge"
 export MENU1="Enable Canonical Partner Repository"
 export MENU2="Disable Canonical Partner Repository"
 export MENU_OPIS="Modify the list of packages:"
@@ -379,6 +380,7 @@ export TEXT_BACK_CRITIC="CRITICAL: Fokirtor strings found in sshd process"
 export TEXT_BACK_OK="OK: No indication of Fokirtor found."
 export TEXT_SYSBENCH_PROGRESS="Sysbench test in progress."
 export TEXT_USUN_WYNIK="Remove result"
+export TEXT_PPAPURGE="Disable a PPA and reverts to the official packages if applicable"
 
 #########################################################################################################################################################################
 
