@@ -265,7 +265,7 @@ if [ "$klawisz" = "0" ]; then
 		rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f
 		naglowek > instaluj.sh
 		klucze >> instaluj.sh
-		instalacja_nativ
+		instalacja
 #########################################################################################################################################################################
 	elif [ "$backup" = "$a4" ]; then
 		x-terminal-emulator -e bash -c "echo -e \"$a4\n\"; sudo apt-get clean; sudo mv /var/lib/apt/lists /tmp/netext73; sudo mkdir /var/lib/apt/lists; sudo apt-get update; echo -e \"$TEXT_INSTALACJA\"; read ent"
@@ -557,7 +557,6 @@ if [ "$klawisz" = "0" ]; then
 #########################################################################################################################################################################
 #PPA PURGE
 	elif [ "$backup" = "PPA-Purge" ]; then
-		cd /tmp/netext73
 		cat /etc/apt/sources.list.d/*.list > lista.txt
 		cat /etc/apt/sources.list >> lista.txt
 		cat lista.txt | sed -e 's/^deb-src.*//g' -e '/^$/d' | grep -v "^[[:space:]]*\(#.*\)\?$" | grep "http://ppa.launchpad.net" > lista_ppa.txt
@@ -578,8 +577,8 @@ if [ "$klawisz" = "0" ]; then
 		klawisz=$?
 		if [ "$klawisz" = "0" ]; then
 			naglowek > instaluj.sh
-			echo "sudo ppa-purge $(echo $usunppa | cut -d ' ' -f 1)" >> instaluj.sh
-			instalacja_nativ
+			echo "sudo ppa-purge -y $(echo $usunppa | cut -d ' ' -f 1)" >> instaluj.sh
+			instalacja
 		fi
 		rm *.txt *.sh -f
 		

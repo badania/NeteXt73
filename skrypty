@@ -147,7 +147,8 @@ if [ $klawisz = 0 ]; then
 		#procedury
 
 		info_test(){
-			yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_SYSBENCH_PROGRESS" --timeout=$1
+			#yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_SYSBENCH_PROGRESS" --timeout=$1
+			python /opt/NeteXt73/menu/czas.py
 		}
 
 		zrob_test(){
@@ -161,6 +162,7 @@ if [ $klawisz = 0 ]; then
 			      sysbench --num-threads=$1 --test=memory run >> memory_$(uname -r)_$DATE-sysbench.log 
 			      echo "test_time : " $DATE >> memory_$(uname -r)_$DATE-sysbench.log  
 			fi
+			killall python
 		}
 
 

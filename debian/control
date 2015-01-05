@@ -32,6 +32,8 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
   lm-sensors, 
   sysbench, 
   glmark2, 
+  python-gtk2, 
+  python, 
   gcc  
 Replaces: netext73
 Recommends:
