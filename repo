@@ -229,9 +229,9 @@ baza=(
 
 cd /tmp/netext73
 if [ "$(cat /etc/apt/sources.list | grep 'deb' | grep 'partner' | grep '#')" = "" ];then
-	menu="$a1!$a2!$a3!$a4!$a5!$a6!$a7!$a8!$MENU2"
+	menu="$a1!$a2!$a3!$a4!$a5!$a6!$a7!$a8!$MENU2!PPA-Purge"
 else
-	menu="$a1!$a2!$a3!$a4!$a5!$a6!$a7!$a8!$MENU1"
+	menu="$a1!$a2!$a3!$a4!$a5!$a6!$a7!$a8!$MENU1!PPA-Purge"
 fi
 backup=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --text="<span color=\"$kolor_textu\">$TEXT_BACKUP1</span>" --form --field=" :CB" \
 "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
@@ -554,6 +554,35 @@ if [ "$klawisz" = "0" ]; then
 			echo -e $nowa_lista | sed 's/|//g'| tr ' ' '\n' | sed 's/\$//g' | sort | uniq > ~/.netext73/soft
 			sed -i '/^[ \t]*$/ d' ~/.netext73/soft
 		fi
+#########################################################################################################################################################################
+#PPA PURGE
+	elif [ "$backup" = "PPA-Purge" ]; then
+		cd /tmp/netext73
+		cat /etc/apt/sources.list.d/*.list > lista.txt
+		cat /etc/apt/sources.list >> lista.txt
+		cat lista.txt | sed -e 's/^deb-src.*//g' -e '/^$/d' | grep -v "^[[:space:]]*\(#.*\)\?$" | grep "http://ppa.launchpad.net" > lista_ppa.txt
+		rm lista.txt
+		IFS=$'\n'
+		n=1
+		while read linia; do
+			ppanazwa=$(echo "$linia" | grep "^deb http://ppa.launchpad.net" | sed -e 's/.*ppa.launchpad.net//g' -e 's/$ main//g' | cut -d '/' -f2)
+			nazwa=$(echo "$linia" | grep "^deb http://ppa.launchpad.net" | sed -e 's/.*ppa.launchpad.net//g' -e 's/$ main//g' | cut -d '/' -f3)
+			wersja=$(echo "$linia" | grep "^deb http://ppa.launchpad.net" | sed -e 's/.*ppa.launchpad.net//g' -e 's/$ main//g' | cut -d ' ' -f2)
+			if [[ $ppanazwa ]]; then
+				echo "ppa:$ppanazwa/$nazwa ($wersja)" | tee -a lista.txt > /dev/null 2>&1;
+			fi
+			
+			let n=n+1
+		done < lista_ppa.txt
+		usunppa=$(yad-netext --center --always-print-result --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --separator="" --list --width=600 --height=500 --title="$nazwa_skryptu" --search-column="1" --regex-search --text="PPA-PURGE:" --column "PPA" --list $(cat lista.txt) --button="$TEXT_USUN:0" --button="$TEXT_ZAMKNIJ:1")
+		klawisz=$?
+		if [ "$klawisz" = "0" ]; then
+			naglowek > instaluj.sh
+			echo "sudo ppa-purge $(echo $usunppa | cut -d ' ' -f 1)" >> instaluj.sh
+			instalacja_nativ
+		fi
+		rm *.txt *.sh -f
+		
 #########################################################################################################################################################################
 	#dodajemy repo partnerów
 	elif [ "$backup" = "$MENU1" ]; then
