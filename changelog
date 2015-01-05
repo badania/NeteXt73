@@ -5,6 +5,7 @@ v0.8.38
 -	dodanie listowania i usuwania ppa
 -	klepsydra podczas testów
 -	rozbudowa modułu ppa-purge
+-	przebudowanie menu instalatorów ppa
 v0.8.37
 -	dodanie linSSID
 - zdjęcie root z apm i grub
