@@ -233,7 +233,7 @@ if [ "$(cat /etc/apt/sources.list | grep 'deb' | grep 'partner' | grep '#')" = "
 else
 	menu="$a1!$a2!$a3!$a4!$a5!$a9!$a6!$a7!$a8!$MENU1"
 fi
-backup=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --text="<span color=\"$kolor_textu\"><b>$TEXT_BACKUP1</b></span>" --form --field=" :CB" \
+backup=$(yad-netext --center --title="$nazwa_skryptu   " --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --text="<span color=\"$kolor_textu\"><b>$TEXT_BACKUP1</b></span>" --form --field=" :CB" \
 "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 klawisz=$?; backup=$(echo $backup | cut -d "|" -f 1)
 
@@ -573,12 +573,24 @@ if [ "$klawisz" = "0" ]; then
 			
 			let n=n+1
 		done < lista_ppa.txt
-		usunppa=$(yad-netext --center --always-print-result --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --separator="" --list --width=600 --height=500 --title="$nazwa_skryptu" --search-column="1" --regex-search --text="<span color=\"$kolor_textu\"><b>$TEXT_PPAPURGE</b></span>" --column "PPA" --list $(cat lista.txt) --button="$TEXT_USUN:0" --button="$TEXT_ZAMKNIJ:1")
+		usunppa=$(yad-netext --center --always-print-result --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --separator="" --list --width=600 --height=500 --title=" $nazwa_skryptu" --search-column="1" --regex-search --text="<span color=\"$kolor_textu\"><b>$TEXT_PPAPURGE</b></span>" --column "PPA" --list $(cat lista.txt) --button="$TEXT_ADD:3" --button="$TEXT_PURGE:0" --button="$TEXT_USUN:2" --button="$TEXT_ZAMKNIJ:1")
 		klawisz=$?
 		if [ "$klawisz" = "0" ]; then
 			naglowek > instaluj.sh
 			echo "sudo ppa-purge -y $(echo $usunppa | cut -d ' ' -f 1)" >> instaluj.sh
 			instalacja
+		elif [ "$klawisz" = "2" ]; then
+			naglowek > instaluj.sh
+			echo "sudo add-apt-repository --remove $(echo $usunppa | cut -d ' ' -f 1)" >> instaluj.sh
+			instalacja
+		elif [ "$klawisz" = "3" ]; then
+			DODAJ_PPA=$(yad-netext --center --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --width=350 --entry --title="  $nazwa_skryptu" --text="$TEXT_ADD $TEXT_NP\n<span color=\"$kolor_textu\"><b>ppa:netext/netext73 </b></span>\n" --entry-label="PPA:"  --button="$TEXT_ZAMKNIJ:1"  --button="gtk-ok:0")
+			klawisz=$?
+			if [ "$klawisz" = "0" ]; then
+				naglowek > instaluj.sh
+				echo "sudo add-apt-repository $(echo $DODAJ_PPA | cut -d ' ' -f 1)" >> instaluj.sh
+				instalacja
+			fi
 		fi
 		rm *.txt *.sh -f
 		
