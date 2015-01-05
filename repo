@@ -582,6 +582,11 @@ if [ "$klawisz" = "0" ]; then
 		elif [ "$klawisz" = "2" ]; then
 			naglowek > instaluj.sh
 			echo "sudo add-apt-repository --remove $(echo $usunppa | cut -d ' ' -f 1)" >> instaluj.sh
+			echo "for plik in /etc/apt/sources.list.d/* ; do" >> instaluj.sh
+			echo "if [ ! -s \$plik ] && [ -f \$plik ] && [ ! -L \$plik ]; then" >> instaluj.sh
+			echo "sudo rm \$plik -f" >> instaluj.sh
+			echo "fi" >> instaluj.sh
+			echo "done" >> instaluj.sh
 			instalacja
 		elif [ "$klawisz" = "3" ]; then
 			DODAJ_PPA=$(yad-netext --center --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --width=350 --entry --title="  $nazwa_skryptu" --text="$TEXT_ADD $TEXT_NP\n<span color=\"$kolor_textu\"><b>ppa:netext/netext73 </b></span>\n" --entry-label="PPA:"  --button="$TEXT_ZAMKNIJ:1"  --button="gtk-ok:0")
