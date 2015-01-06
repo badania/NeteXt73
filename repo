@@ -36,7 +36,7 @@
 source /opt/NeteXt73/procedury
 
 sofcik(){
-	echo "audacity avidemux clementine compizconfig-settings-manager digikam dropbox ffmulticonverter gimp google-chrome-stable grsync guake gufw homebank htop i-nex kadu kget kodi kubuntu-restricted-extras language-pack-gnome-pl libnss3-tools libreoffice-gtk libreoffice-kde libreoffice-style-sifr lubuntu-restricted-extras mc network-manager-openvpn openssh-client openssl oracle-java8-installer pidgin plasma-scriptengines plasma-widget-homerun-kicker plasma widget-yawp ppa-purge radiotray saidar showfoto shutter spotify-client synaptic tomahawk ubuntu-restricted-extras ufw-kde unetbootin unity-tweak-tool vlc wakeonlan wine1.7 wmctrl x2goclient x2goserver xubuntu-restricted-extras yakuake youtube-dl" > ~/.netext73/soft
+	echo "audacity avidemux clementine compizconfig-settings-manager digikam dropbox ffmulticonverter gimp google-chrome-stable grsync guake gufw homebank htop i-nex kadu kget kodi kubuntu-restricted-extras language-pack-gnome-pl libnss3-tools libreoffice-gtk libreoffice-kde libreoffice-style-sifr lubuntu-restricted-extras mc network-manager-openvpn openssh-client openssl oracle-java8-installer pidgin plasma plasma-scriptengines plasma-widget-homerun-kicker plasma-widget-yawp ppa-purge radiotray saidar showfoto shutter spotify-client synaptic tomahawk ubuntu-restricted-extras ufw-kde unetbootin unity-tweak-tool vlc wakeonlan widget-yawp wine1.7 wmctrl x2goclient x2goserver xubuntu-restricted-extras yakuake youtube-dl" > ~/.netext73/soft
 }
 
 baza=(	
@@ -496,7 +496,7 @@ if [ "$klawisz" = "0" ]; then
 				
 				let n=n+1
 			done < lista_ppa.txt
-			usunppa=$(yad-netext --center --always-print-result --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --separator="" --list --width=600 --height=500 --title=" $nazwa_skryptu" --search-column="1" --regex-search --text="<span color=\"$kolor_textu\"><b>$TEXT_PPAPURGE</b></span>" --column "PPA" --list $(cat lista.txt) --button="$TEXT_ADD:3" --button="$TEXT_PURGE:0" --button="$TEXT_USUN:2" --button="$TEXT_ZAMKNIJ:1")
+			usunppa=$(yad-netext --center --always-print-result --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --separator="" --list --height=600 --title=" $nazwa_skryptu" --search-column="1" --regex-search --text="<span color=\"$kolor_textu\"><b>$TEXT_PPAPURGE</b></span>" --column "PPA" --list $(cat lista.txt) --button="$TEXT_ADD:3" --button="$TEXT_PURGE:0" --button="$TEXT_USUN:2" --button="$TEXT_ZAMKNIJ:1")
 			klawisz=$?
 			if [ "$klawisz" = "0" ]; then
 				naglowek > instaluj.sh
