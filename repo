@@ -35,6 +35,24 @@
 
 source /opt/NeteXt73/procedury
 
+lista_ppa(){
+cat /etc/apt/sources.list.d/*.list > lista.txt
+cat /etc/apt/sources.list >> lista.txt
+cat lista.txt | sed -e 's/^deb-src.*//g' -e '/^$/d' | grep -v "^[[:space:]]*\(#.*\)\?$" | grep "http://ppa.launchpad.net" > lista_ppa.txt
+rm lista.txt
+IFS=$'\n'
+n=1
+while read linia; do
+	ppanazwa=$(echo "$linia" | grep "^deb http://ppa.launchpad.net" | sed -e 's/.*ppa.launchpad.net//g' -e 's/$ main//g' | cut -d '/' -f2)
+	nazwa=$(echo "$linia" | grep "^deb http://ppa.launchpad.net" | sed -e 's/.*ppa.launchpad.net//g' -e 's/$ main//g' | cut -d '/' -f3)
+	wersja=$(echo "$linia" | grep "^deb http://ppa.launchpad.net" | sed -e 's/.*ppa.launchpad.net//g' -e 's/$ main//g' | cut -d ' ' -f2)
+	if [[ $ppanazwa ]]; then
+		echo "ppa:$ppanazwa/$nazwa ($wersja)" | tee -a lista.txt > /dev/null 2>&1;
+	fi
+	
+	let n=n+1
+done < lista_ppa.txt
+}
 sofcik(){
 	echo "audacity avidemux clementine compizconfig-settings-manager digikam dropbox ffmulticonverter gimp google-chrome-stable grsync guake gufw homebank htop i-nex kadu kget kodi kubuntu-restricted-extras language-pack-gnome-pl libnss3-tools libreoffice-gtk libreoffice-kde libreoffice-style-sifr lubuntu-restricted-extras mc network-manager-openvpn openssh-client openssl oracle-java8-installer pidgin plasma plasma-scriptengines plasma-widget-homerun-kicker plasma-widget-yawp ppa-purge radiotray saidar showfoto shutter spotify-client synaptic tomahawk ubuntu-restricted-extras ufw-kde unetbootin unity-tweak-tool vlc wakeonlan widget-yawp wine1.7 wmctrl x2goclient x2goserver xubuntu-restricted-extras yakuake youtube-dl" > ~/.netext73/soft
 }
@@ -224,394 +242,424 @@ baza=(
 	"LinSSID - Graphical Wireless Scanner"
 	"linssid"
 	)
-#########################################################################################################################################################################
-#backuprepo
 
 cd /tmp/netext73
-if [ "$(cat /etc/apt/sources.list | grep 'deb' | grep 'partner' | grep '#')" = "" ];then
-	menu="$a6!$a7!$TEXT_BACKUP1!$MENU2"
-else
-	menu="$a6!$a7!$TEXT_BACKUP1!$MENU1"
-fi
-backup=$(yad-netext --center --title="$nazwa_skryptu   " --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --text="<span color=\"$kolor_textu\"><b>$TEXT_BACKUP1</b></span>" --form --field=" :CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
-klawisz=$?; backup=$(echo $backup | cut -d "|" -f 1)
-
-if [ "$klawisz" = "0" ]; then
 #########################################################################################################################################################################
+#backuprepo
+if [ "$1" = "GPG" ]; then
 #Przywróć repozytorium z kopii zapasowej
-	if [ "$backup" = "$TEXT_BACKUP1" ]; then  
-		menu="$a1!$a2!$a3!$a4!$a5"
-		gpg=$(yad-netext --center --title="$nazwa_skryptu   " --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --text="<span color=\"$kolor_textu\"><b>$TEXT_BACKUP1</b></span>"  --form --field=" :CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
-		klawisz=$?; gpg=$(echo $gpg | cut -d "|" -f 1)
-		if [ "$klawisz" = "0" ]; then
+      
+	menu="$a3!$a4!$a5"
+	gpg=$(yad-netext --center --title="$nazwa_skryptu   " --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/pgp.png" --text="<span color=\"$kolor_textu\"><b>$TEXT_BACKUP1</b></span>"  --form --field=" :CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+	klawisz=$?; gpg=$(echo $gpg | cut -d "|" -f 1)
+	if [ "$klawisz" = "0" ]; then
+		
+		#Pobieranie brakujących kluczy GPG
+		if [ "$gpg" = "$a3" ]; then
+			rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f
+			naglowek > instaluj.sh
+			klucze >> instaluj.sh
+			instalacja	
+		elif [ "$gpg" = "$a4" ]; then
+			xterm -e bash -c "echo -e \"$a4\n\"; sudo apt-get clean; sudo mv /var/lib/apt/lists /tmp/netext73; sudo mkdir /var/lib/apt/lists; sudo apt-get update; echo -e \"$TEXT_INSTALACJA\"; read ent"			
+		#Moduł usuwania zbędnych kluczy
+		elif [ "$gpg" = "$a5" ]; then
+			rm *.txt -f
+			sprawdz_klucze
+			if [ "$(cat klucze1.txt)" != "" ]; then
+				grep 'pub' klucze1.txt | cut -d '/' -f 2 | cut -d ' ' -f 1 > klucz.txt
+				for i in $(cat klucz.txt); do
+					cat klucze1.txt | grep $i -n | cut -d ':' -f 1 | head -n 1 >> linie.txt
+				done
+				for i in $(cat linie.txt); do
+					a=$(($i + 1))
+					head -n $a klucze1.txt | tail -n 1 | sed 's/uid//' | sed 's/^[[:space:]]*//' | tr ' ' '_' >> nazwa.txt
+				done
+				paste -d "]" klucz.txt nazwa.txt  > lista.txt
+				sed -i 's/_/ /g' lista.txt
+				echo $(sed -e '/^[^#]/s:^:FALSE]:' lista.txt) > lista.txt
+				sed -i 's/FALSE/]FALSE/g' lista.txt
+				sed -i 's/]//' lista.txt
+				petla="tak"
+				while [ $petla = "tak" ]; do
+				IFS=]
+				wybor=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/klucze.png" --image="/opt/NeteXt73/ikony/klucze.png" --height=420 --width=690  --column="" --column="$TEXT_KLUCZ" --column="$TEXT_DOSTAWCA_KLUCZA" --text="<span color=\"$kolor_textu\">$TEXT_ZAZNACZ_KLUCZE</span>" --list --checklist $(cat lista.txt)  --separator="]" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+				klawisz=$?
+				if [ "$klawisz" = "0" ]; then 
+					if [ "$(echo $wybor)" != "" ]; then
+						petla="nie"
+						echo $wybor | sed -e 's/TRUE|/\n/g' | cut -d '|' -f 1 | sed -e '/^\ *$/d' | awk '{print $2}' > usun.txt
+						usun_klucze
+					else
+						yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_NIC_NIE_ZAZNACZYLES"
+					fi
+				elif [ "$klawisz" = "1" ]; then 
+					petla="nie"
+				fi
+				done | tr '\n' ']'
+			else
+				yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_NIE_POBRALES_KLUCZY"
+			fi
+			rm *.txt -f
+		fi
+	fi
+
+else
+	if [ "$(cat /etc/apt/sources.list | grep 'deb' | grep 'partner' | grep '#')" = "" ];then
+		menu="$a6!$a7!$MENU2!$a1!$TEXT_ZMIEN_WYDANIA"
+	else
+		menu="$a6!$a7!$MENU1!$a1!$TEXT_ZMIEN_WYDANIA"
+	fi
+	backup=$(yad-netext --center --title="$nazwa_skryptu   " --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --text="<span color=\"$kolor_textu\"><b>$TEXT_BACKUP1A</b></span>" --form --field=" :CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+	klawisz=$?; backup=$(echo $backup | cut -d "|" -f 1)
+
+	if [ "$klawisz" = "0" ]; then
+	#########################################################################################################################################################################
+	#instalator repozytoriów
+
+		if [ "$backup" = "$a6" ]; then
+			    
+			rm *.txt -f
+			ile=$(echo $(( ( ${#baza[*]} ) / 4 )))
+			#przepisanie tablicy do osobnych tablic
+			for (( i=0; i<=$ile ; i++ ))
+			do
+				  #nazwa[$i]=${baza[4*$i+0]}
+				  repo[$i]=${baza[4*$i+0]}
+				  repo_opis[$i]=${baza[4*$i+2]}
+				  jezyczek;case $jezyk in pol*)
+				      repo_opis[$i]=${baza[4*$i+1]}
+				  ;;
+				  esac
+				  paczka[$i]=${baza[4*$i+3]}
+			
+			done
+			#sprawdzanie które repo mamy w systemie
+			ilosc_repo=$(( ${#repo[*]} - 2 ))
+			cat /etc/apt/sources.list > repo.txt
+			cat /etc/apt/sources.list.d/*.list >> repo.txt
+			sed -i '/^#/d' repo.txt; sed -i '/^[ \t]*$/ d' repo.txt
+			#zaznaczanie co mieliśmy przed instalacją
+			for (( i=0; i<=$ilosc_repo; i++ )); do
+				  echo ${repo[$i]} | sed 's/ppa://'  > dane.txt
+				  if [ "$(cat repo.txt | grep -f dane.txt)" != "" ] ; then
+					r[$i]="TRUE"
+				  else
+					r[$i]="FALSE"
+				  fi
+				  echo ${repo_opis[$i]} >> 0.txt
+				  echo ${r[$i]} >> 1.txt
+				
+			done
+			paste -d "@" 1.txt 0.txt | tr "\n" "@" > lista_repo.txt
+			grep TRUE lista_repo.txt | sed 's/TRUE@//g' > lista_przed.txt
+			IFS=@
+			instalka=$(yad-netext --center --height=640 --width=940 --separator="@"  --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --button="$a9:2" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Add Repo - automat</b></span>\n$TEXT_MENU_USLUGI2" \
+			--column="$TEXT_ZAZNACZ"  --column="opis"  --checklist --list $(cat lista_repo.txt))
+			klawisz="$?"
+			if [ "$klawisz" = "0" ]; then
+				echo $instalka | sed 's/TRUE//g' > lista_po.txt
+				#zaznaczanie co wybraliśmy
+				for (( i=0; i<=$ilosc_repo; i++ )); do
+					if [ "$(grep $(echo ${repo_opis[$i]}) lista_po.txt )" != "" ] ; then
+					      z[$i]="TRUE"
+					else
+					      z[$i]="FALSE"
+					fi
+				done
+				naglowek > instaluj.sh
+				#sprawdzanie różnic przed i po
+				for (( i=0; i<=$ilosc_repo; i++ )); do
+					if [ "${r[$i]}" = "TRUE" ] && [ "${z[$i]}" = "TRUE" ]; then
+					      echo "nie ma zmiany" > /dev/null
+					elif [ "${r[$i]}" = "FALSE" ] && [ "${z[$i]}" = "FALSE" ]; then
+					    echo "nie ma zmiany" > /dev/null
+					elif [ "${r[$i]}" = "TRUE" ] && [ "${z[$i]}" = "FALSE" ]; then
+					# "kasujemy"
+						if [ "${repo[$i]}" = "ppa:i-nex-development-team/daily" ]; then
+						      echo "sudo ppa-purge -y ${repo[$i]}" >> instaluj.sh
+						      echo "sudo ppa-purge -y ppa:nemh/gambas3" >> instaluj.sh
+						elif [ "${repo[$i]}" = "deb http://repository.spotify.com stable non-free" ]; then
+						      echo "sudo sed -i '/repository.spotify.com stable/ d' /etc/apt/sources.list"  >> instaluj.sh
+						      echo "sudo sed -i '/repository.spotify.com stable/ d' /etc/apt/sources.list.d/*"  >> instaluj.sh
+						      echo "sudo apt-get purge -y ${paczka[$i]}" >> instaluj.txt
+						elif [ "${repo[$i]}" = "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free" ]; then
+						      echo "sudo sed -i '/virtualbox/d' /etc/apt/sources.list"  >> instaluj.sh
+						      echo "sudo sed -i '/virtualbox/d' /etc/apt/sources.list.d/*"  >> instaluj.sh
+						      echo "sudo apt-get purge -y ${paczka[$i]}" >> instaluj.txt
+						elif [ "${repo[$i]}" = "ownCloud" ]; then
+						      echo "sudo sed -i '/download.opensuse.org\/repositories\/isv:\/ownCloud/d' /etc/apt/sources.list.d/*"  >> instaluj.sh
+						      echo "sudo apt-get purge -y ${paczka[$i]}" >> instaluj.txt
+						elif [ "${repo[$i]}" = "deb http://dl.google.com/linux/chrome/deb/ stable main" ]; then
+						      echo "sudo sed -i '/deb.*dl.google.com\/linux\/chrome\/deb\/ stable main/ d' /etc/apt/sources.list"  >> instaluj.sh
+						      echo "sudo sed -i '/deb.*dl.google.com\/linux\/chrome\/deb\/ stable main/ d' /etc/apt/sources.list.d/*"  >> instaluj.sh
+						      echo "sudo apt-get purge -y ${paczka[$i]}" >> instaluj.txt
+						elif [ "${repo[$i]}" = "ppa:kubuntu-ppa/backports" ]; then
+						      echo "sudo ppa-purge -y ${repo[$i]}" >> instaluj.sh
+						else
+						      echo "sudo ppa-purge -y ${repo[$i]}" >> instaluj.sh
+						fi
+					elif [ "${r[$i]}" = "FALSE" ] && [ "${z[$i]}" = "TRUE" ]; then
+					# "instalujemy"
+						if [ "${repo[$i]}" = "ppa:i-nex-development-team/daily" ]; then
+						      echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
+						      echo "sudo add-apt-repository -y ppa:nemh/gambas3" >> instaluj.sh
+						      echo "sudo apt-get install -y  ${paczka[$i]}" >> instaluj.txt
+						elif [ "${repo[$i]}" = "deb http://repository.spotify.com stable non-free" ]; then
+						      echo "sudo add-apt-repository -y 'deb http://repository.spotify.com stable non-free'" >> instaluj.sh
+						      echo "sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 94558F59"  >> instaluj.sh
+						      echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
+						elif [ "${repo[$i]}" = "ppa:pipelight/stable" ]; then
+						      echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
+						      echo "sudo apt-get install --install-recommends pipelight-multi" >> instaluj.txt
+						      echo "sudo pipelight-plugin --update" >> instaluj.txt
+						      echo "sudo pipelight-plugin --enable silverlight" >> instaluj.txt
+						elif [ "${repo[$i]}" = "ownCloud" ]; then
+						      echo "sudo sh -c \"echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/xUbuntu_$(lsb_release -rs)/ /' >> /etc/apt/sources.list.d/owncloud-client.list\"" >> instaluj.sh
+						      echo "wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/xUbuntu_$(lsb_release -rs)/Release.key" >> instaluj.txt
+						      echo "sudo apt-key add - < Release.key" >> instaluj.txt
+						      echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
+						elif [ "${repo[$i]}" = "ppa:leolik/leolik" ]; then
+							if [ ! -e ~/.notify-osd ]; then
+								echo "slot-allocation = dynamic" > ~/.notify-osd
+								echo "bubble-expire-timeout = 10sec" >> ~/.notify-osd
+								echo "bubble-vertical-gap = 5px" >> ~/.notify-osd
+								echo "bubble-horizontal-gap = 5px" >> ~/.notify-osd
+								echo "bubble-corner-radius = 37,5%" >> ~/.notify-osd
+								echo "bubble-icon-size = 30px" >> ~/.notify-osd
+								echo "bubble-gauge-size = 6px" >> ~/.notify-osd
+								echo "bubble-width = 240px" >> ~/.notify-osd
+								echo "bubble-background-color = 131313" >> ~/.notify-osd
+								echo "bubble-background-opacity = 90%" >> ~/.notify-osd
+								echo "text-margin-size = 10px" >> ~/.notify-osd
+								echo "text-title-size = 100%" >> ~/.notify-osd
+								echo "text-title-weight = bold" >> ~/.notify-osd
+								echo "text-title-color = ffffff" >> ~/.notify-osd
+								echo "text-title-opacity = 100%" >> ~/.notify-osd
+								echo "text-body-size = 90%" >> ~/.notify-osd
+								echo "text-body-weight = normal" >> ~/.notify-osd
+								echo "text-body-color = eaeaea" >> ~/.notify-osd
+								echo "text-body-opacity = 100%" >> ~/.notify-osd
+								echo "text-shadow-opacity = 100%" >> ~/.notify-osd
+								echo "bubble-prevent-fade = 0" >> ~/.notify-osd
+								echo "bubble-close-on-click = 1" >> ~/.notify-osd
+								echo "bubble-as-desktop-bg = 0" >> ~/.notify-osd
+							fi
+							echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
+							echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
+						elif [ "${repo[$i]}" = "deb http://dl.google.com/linux/chrome/deb/ stable main" ]; then
+							echo "echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list" >> instaluj.sh
+							echo "wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -" >> instaluj.sh
+							echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
+						elif [ "${repo[$i]}" = "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free" ]; then
+							echo "sudo sh -c 'wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | apt-key add -' && sudo sh -c 'echo \"deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free\" >> /etc/apt/sources.list.d/virtualbox.list' " >> instaluj.sh
+							echo "sudo apt-get install -y ${paczka[$i]} && sudo usermod -aG vboxusers $(cat /tmp/netext73/userek)" >> instaluj.txt
+							jezyczek;case $jezyk in pol*)
+							      #dodanie języka polskiego
+							      echo "wget http://admc.ubuntu-pomoc.org/files/vbox-langpack-pl/qt_pl.qm && wget http://admc.ubuntu-pomoc.org/files/vbox-langpack-pl/VirtualBox_pl.qm && sudo mv qt_pl.qm /usr/share/virtualbox/nls/ && sudo mv VirtualBox_pl.qm /usr/share/virtualbox/nls/" >> instaluj.txt
+							  ;;
+							  esac
+						elif [ "${repo[$i]}" = "ppa:bumblebee/stable" ]; then
+							echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
+							if [ "$(lsb_release -r | grep 12.04)" != "" ] || [ "$(lsb_release -r | grep 13.04)" != "" ];then
+							      echo "sudo apt-get install bumblebee bumblebee-nvidia virtualgl" >> instaluj.txt
+							elif [ "$(lsb_release -r | grep 13.10)" != "" ] || [ "$(lsb_release -r | grep 14.04)" != "" ]; then
+							      echo "sudo apt-get install bumblebee bumblebee-nvidia primus" >> instaluj.txt
+							fi
+						elif [ "${repo[$i]}" = "ppa:kubuntu-ppa/backports" ]; then
+							echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
+						else
+							echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
+							echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
+						fi
+					fi
+				done
+				
+				
+				if [ "$(grep 'sudo' instaluj.sh)" != "" ]; then
+					echo "sudo apt-get update" >> instaluj.sh
+					cat instaluj.txt >> instaluj.sh
+					echo "sudo apt-get install -f && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y" >> instaluj.sh
+				fi
+				instalacja
+			elif [ "$klawisz" = "2" ]; then
+			#PPA PURGE
+				lista_ppa
+				usunppa=$(yad-netext --center --always-print-result --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --separator="" --list --height=600 --title=" $nazwa_skryptu" --search-column="1" --regex-search --text="<span color=\"$kolor_textu\"><b>$TEXT_PPAPURGE</b></span>" --column "PPA" --list $(cat lista.txt) --button="$TEXT_ADD:3" --button="$TEXT_PURGE:0" --button="$TEXT_USUN:2" --button="$TEXT_ZAMKNIJ:1")
+				klawisz=$?
+				if [ "$klawisz" = "0" ]; then
+					naglowek > instaluj.sh
+					echo "sudo ppa-purge -y $(echo $usunppa | cut -d ' ' -f 1)" >> instaluj.sh
+					instalacja
+				elif [ "$klawisz" = "2" ]; then
+					naglowek > instaluj.sh
+					echo "sudo add-apt-repository --remove $(echo $usunppa | cut -d ' ' -f 1)" >> instaluj.sh
+					echo "for plik in /etc/apt/sources.list.d/* ; do" >> instaluj.sh
+					echo "if [ ! -s \$plik ] && [ -f \$plik ] && [ ! -L \$plik ]; then" >> instaluj.sh
+					echo "sudo rm \$plik -f" >> instaluj.sh
+					echo "fi" >> instaluj.sh
+					echo "done" >> instaluj.sh
+					instalacja
+				elif [ "$klawisz" = "3" ]; then
+					DODAJ_PPA=$(yad-netext --center --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --width=350 --entry --title="  $nazwa_skryptu" --text="$TEXT_ADD $TEXT_NP\n<span color=\"$kolor_textu\"><b>ppa:netext/netext73 </b></span>\n" --entry-label="PPA:"  --button="$TEXT_ZAMKNIJ:1"  --button="gtk-ok:0")
+					klawisz=$?
+					if [ "$klawisz" = "0" ]; then
+						naglowek > instaluj.sh
+						echo "sudo add-apt-repository $(echo $DODAJ_PPA | cut -d ' ' -f 1)" >> instaluj.sh
+						instalacja
+					fi
+				fi
+				rm *.txt *.sh -f
+			
+			fi
+			
+			rm *.txt instaluj.sh -f
+	#########################################################################################################################################################################
+	#instalator pakietów
+		elif [ "$backup" = "$a7" ]; then
+			petla="tak"
+			while [ $petla = "tak" ]; do
+				rm *.txt -f
+				#zbiór aplikacji
+				ilosc=0
+				#sortowanie tablicy programów
+				#ilosc=$(( ${#soft[*]} ))
+				if [ -e ~/.netext73/soft ]; then
+					for a in $(cat ~/.netext73/soft); do
+						((ilosc++))
+						soft1[$ilosc]=$a
+					done
+				else
+					sofcik
+					for a in $(cat ~/.netext73/soft); do
+						((ilosc++))
+						soft1[$ilosc]=$a
+					done
+				fi
+				soft=( $(for el in "${soft1[@]}" 
+				do
+					echo "$el" 
+				done | sort )) 
+				ilosc_softu=$(( ${#soft[*]} - 1 ))
+				dpkg -l | awk '{print $2}'| sed 's/:.*//g' > programy.txt
+				for (( i=0; i<=$ilosc_softu; i++ )); do
+					if [ "$(cat programy.txt | grep ${soft[$i]} -x )" != "" ] ; then
+						r[$i]="TRUE"
+					else
+						r[$i]="FALSE"
+					fi
+					echo ${r[$i]} >> 1.txt
+					echo ${soft[$i]} >> 2.txt
+				done   2>&1 | pobieranie
+				paste -d " " 1.txt 2.txt > lista_softu.txt
+				grep TRUE lista_softu.txt | awk '{print $2}' > lista_przed.txt
+
+				instalka=$(yad-netext --center --height=540 --width=640 --image="/opt/NeteXt73/ikony/backuprepo.png" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --button="$a8:2" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Add Soft - automat</b></span>\n$TEXT_MENU_USLUGI2" \
+				--column="$TEXT_ZAZNACZ" --column="$TEXT_MENU_USLUGI3"  --checklist --list $(cat lista_softu.txt))
+				klawisz=$?
+				if [ "$klawisz" = "0" ]; then		 
+					echo $instalka | sed 's/|/\n/g' > lista_po.txt
+
+					naglowek > instaluj.sh
+					echo "sudo apt-get update"  >> instaluj.sh
+					for a in $(cat 2.txt)
+					do
+						grep $a lista_przed.txt
+						if [ "$(grep $a lista_przed.txt)" != "" ] && [ "$(grep $a lista_po.txt)" != "" ]; then
+							echo "echo \"nie ma zmiany w $a\"" > /dev/null
+						elif [ "$(grep $a lista_przed.txt)" = "" ] && [ "$(grep $a lista_po.txt)" = "" ]; then
+							echo "echo \"nie ma zmiany w $a\"" > /dev/null
+						elif [ "$(grep $a lista_przed.txt)" != "" ] && [ "$(grep $a lista_po.txt)" = "" ]; then
+							echo "sudo apt-get purge $a -y" >> instaluj.sh
+						elif [ "$(grep $a lista_przed.txt)" = "" ] && [ "$(grep $a lista_po.txt)" != "" ]; then
+							echo "sudo apt-get install $a -y" >> instaluj.sh
+						fi
+					done
+					if [ "$(grep 'sudo' instaluj.sh)" != "" ]; then
+						echo "sudo apt-get install -f && sudo apt-get autoremove -y" >> instaluj.sh
+					fi
+					instalacja
+				elif [ "$klawisz" = "2" ]; then
+				#edytor instalatora pakietów
+					if [ ! -e ~/.netext73/soft ]; then
+						sofcik
+					fi
+					nowa_lista=$(yad-netext  --title="$nazwa_skryptu  " --center --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --width=400 --height=600 --form --field="<span color=\"$kolor_textu\"><b>$MENU_OPIS</b></span>:TXT" "$(cat -e ~/.netext73/soft | tr ' ' '\n' | sed 's/\$//g' | sort)" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+					if [ $? = "0" ]; then
+						echo -e $nowa_lista | sed 's/|//g'| tr ' ' '\n' | sed 's/\$//g' | sort | uniq > ~/.netext73/soft
+						sed -i '/^[ \t]*$/ d' ~/.netext73/soft
+					fi
+				elif [ "$klawisz" = "1" ]; then
+					petla="nie"
+				fi
+			done
+
+	#########################################################################################################################################################################
+		#dodajemy repo partnerów
+		elif [ "$backup" = "$MENU1" ]; then
+			xterm -e bash -c "echo -e \"$MENU1\n\"; sudo sed -i '/partner/ s/#//' /etc/apt/sources.list;sudo apt-get update"
+	#########################################################################################################################################################################
+		#usuwamy repo partnerów
+		elif [ "$backup" = "$MENU2" ]; then
+			xterm -e bash -c "echo -e \"$MENU2\n\"; sudo sed -i '/partner/ s/^/#/' /etc/apt/sources.list;sudo apt-get update"
+	#########################################################################################################################################################################
+		#backup repo
+		elif [ "$backup" = "$a1" ]; then
 			#Stwórz kopię zapasową repozytorium wraz z kluczami GPG
-			if [ "$gpg" = "$a1" ]; then
+			yad-netext --center --width=400 --text="<span color=\"$kolor_textu\"><b>$a1</b></span>" --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --button="Backup:2" --button="Restore:3" --button="$TEXT_ZAMKNIJ:1"
+			klawisz=$?
+			if [ "$klawisz" = "2" ]; then
 				xterm -e bash -c "echo -e \"$TEXT_BACKUP7\";cd /etc; sudo tar -zcvf $download/source.list.backup_$(date +"%d-%m-%y")_$(lsb_release -irs | tr '\n' '_').tar.gz apt; echo -e \"\n\nBackup:$download/source.list.backup_$(date +'%d-%m-%y')_$(lsb_release -irs | tr '\n' '_').tar.gz\"; echo -e \"$TEXT_INSTALACJA\"; read ent"
 			#Przywróć repozytorium z kopii zapasowej
-			elif [ "$gpg" = "$a2" ]; then
+			elif [ "$klawisz" = "3" ]; then
 				a=$(yad-netext --center --file-selection --filename="$download/" --title="$TEXT_BACKUP2" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --width=550 --height=450)
 				if [ "$(echo $a | grep source.list.backu | grep tar.gz)" != "" ]; then
 					echo "nie" > /tmp/netext73/ok.txt
 					xterm -T backup_repo -e bash -c "echo \"$TEXT_BACKUP3\";sudo mv -f /etc/apt /etc/apt~; sudo tar -xvzf $a -C /etc/; echo "tak" > /tmp/netext73/ok.txt; echo -e \"$TEXT_INSTALACJA\"; read ent"
 					if [ "$(cat /tmp/netext73/ok.txt)" = "tak" ]; then
-					      dymek "$TEXT_INFORMACJA" "$TEXT_BACKUP4"
+						dymek "$TEXT_INFORMACJA" "$TEXT_BACKUP4"
 					else
-					      dymek "$TEXT_INFORMACJA" "$TEXT_BACKUP5"
+						dymek "$TEXT_INFORMACJA" "$TEXT_BACKUP5"
 					fi
 				else
 					dymek "$TEXT_UWAGA" "$TEXT_BACKUP6"
 				fi
-			#Pobieranie brakujących kluczy GPG
-			elif [ "$gpg" = "$a3" ]; then
-				rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f
-				naglowek > instaluj.sh
-				klucze >> instaluj.sh
-				instalacja	
-			elif [ "$gpg" = "$a4" ]; then
-				xterm -e bash -c "echo -e \"$a4\n\"; sudo apt-get clean; sudo mv /var/lib/apt/lists /tmp/netext73; sudo mkdir /var/lib/apt/lists; sudo apt-get update; echo -e \"$TEXT_INSTALACJA\"; read ent"			
-			#Moduł usuwania zbędnych kluczy
-			elif [ "$gpg" = "$a5" ]; then
-				rm *.txt -f
-				sprawdz_klucze
-				if [ "$(cat klucze1.txt)" != "" ]; then
-					grep 'pub' klucze1.txt | cut -d '/' -f 2 | cut -d ' ' -f 1 > klucz.txt
-					for i in $(cat klucz.txt); do
-						cat klucze1.txt | grep $i -n | cut -d ':' -f 1 | head -n 1 >> linie.txt
-					done
-					for i in $(cat linie.txt); do
-						a=$(($i + 1))
-						head -n $a klucze1.txt | tail -n 1 | sed 's/uid//' | sed 's/^[[:space:]]*//' | tr ' ' '_' >> nazwa.txt
-					done
-					paste -d "]" klucz.txt nazwa.txt  > lista.txt
-					sed -i 's/_/ /g' lista.txt
-					echo $(sed -e '/^[^#]/s:^:FALSE]:' lista.txt) > lista.txt
-					sed -i 's/FALSE/]FALSE/g' lista.txt
-					sed -i 's/]//' lista.txt
-					petla="tak"
-					while [ $petla = "tak" ]; do
-					IFS=]
-					wybor=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/klucze.png" --image="/opt/NeteXt73/ikony/klucze.png" --height=420 --width=690  --column="" --column="$TEXT_KLUCZ" --column="$TEXT_DOSTAWCA_KLUCZA" --text="<span color=\"$kolor_textu\">$TEXT_ZAZNACZ_KLUCZE</span>" --list --checklist $(cat lista.txt)  --separator="]" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
-					klawisz=$?
-					if [ "$klawisz" = "0" ]; then 
-						if [ "$(echo $wybor)" != "" ]; then
-							petla="nie"
-							echo $wybor | sed -e 's/TRUE|/\n/g' | cut -d '|' -f 1 | sed -e '/^\ *$/d' | awk '{print $2}' > usun.txt
-							usun_klucze
-						else
-							yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_NIC_NIE_ZAZNACZYLES"
-						fi
-					elif [ "$klawisz" = "1" ]; then 
-						petla="nie"
-					fi
-					done | tr '\n' ']'
-				else
-					yad-netext --center --error --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_NIE_POBRALES_KLUCZY"
-				fi
-				rm *.txt -f
 			fi
-		fi
-#########################################################################################################################################################################
-#instalator repozytoriów
-
-	elif [ "$backup" = "$a6" ]; then
-		    
-		rm *.txt -f
-		ile=$(echo $(( ( ${#baza[*]} ) / 4 )))
-		#przepisanie tablicy do osobnych tablic
-		for (( i=0; i<=$ile ; i++ ))
-		do
-			  #nazwa[$i]=${baza[4*$i+0]}
-			  repo[$i]=${baza[4*$i+0]}
-			  repo_opis[$i]=${baza[4*$i+2]}
-			  jezyczek;case $jezyk in pol*)
-			      repo_opis[$i]=${baza[4*$i+1]}
-			  ;;
-			  esac
-			  paczka[$i]=${baza[4*$i+3]}
-		
-		done
-		#sprawdzanie które repo mamy w systemie
-		ilosc_repo=$(( ${#repo[*]} - 2 ))
-		cat /etc/apt/sources.list > repo.txt
-		cat /etc/apt/sources.list.d/*.list >> repo.txt
-		sed -i '/^#/d' repo.txt; sed -i '/^[ \t]*$/ d' repo.txt
-		#zaznaczanie co mieliśmy przed instalacją
-		for (( i=0; i<=$ilosc_repo; i++ )); do
-			  echo ${repo[$i]} | sed 's/ppa://'  > dane.txt
-			  if [ "$(cat repo.txt | grep -f dane.txt)" != "" ] ; then
-				r[$i]="TRUE"
-			  else
-				r[$i]="FALSE"
-			  fi
-			  echo ${repo_opis[$i]} >> 0.txt
-			  echo ${r[$i]} >> 1.txt
-			
-		done
-		paste -d "@" 1.txt 0.txt | tr "\n" "@" > lista_repo.txt
-		grep TRUE lista_repo.txt | sed 's/TRUE@//g' > lista_przed.txt
-		IFS=@
-		instalka=$(yad-netext --center --height=640 --width=940 --separator="@"  --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --button="$a9:2" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Add Repo - automat</b></span>\n$TEXT_MENU_USLUGI2" \
-		--column="$TEXT_ZAZNACZ"  --column="opis"  --checklist --list $(cat lista_repo.txt))
-		klawisz="$?"
-		if [ "$klawisz" = "0" ]; then
-			echo $instalka | sed 's/TRUE//g' > lista_po.txt
-			#zaznaczanie co wybraliśmy
-			for (( i=0; i<=$ilosc_repo; i++ )); do
-				if [ "$(grep $(echo ${repo_opis[$i]}) lista_po.txt )" != "" ] ; then
-				      z[$i]="TRUE"
-				else
-				      z[$i]="FALSE"
-				fi
-			done
-			naglowek > instaluj.sh
-			#sprawdzanie różnic przed i po
-			for (( i=0; i<=$ilosc_repo; i++ )); do
-				if [ "${r[$i]}" = "TRUE" ] && [ "${z[$i]}" = "TRUE" ]; then
-				      echo "nie ma zmiany" > /dev/null
-				elif [ "${r[$i]}" = "FALSE" ] && [ "${z[$i]}" = "FALSE" ]; then
-				    echo "nie ma zmiany" > /dev/null
-				elif [ "${r[$i]}" = "TRUE" ] && [ "${z[$i]}" = "FALSE" ]; then
-				# "kasujemy"
-					if [ "${repo[$i]}" = "ppa:i-nex-development-team/daily" ]; then
-					      echo "sudo ppa-purge -y ${repo[$i]}" >> instaluj.sh
-					      echo "sudo ppa-purge -y ppa:nemh/gambas3" >> instaluj.sh
-					elif [ "${repo[$i]}" = "deb http://repository.spotify.com stable non-free" ]; then
-					      echo "sudo sed -i '/repository.spotify.com stable/ d' /etc/apt/sources.list"  >> instaluj.sh
-					      echo "sudo sed -i '/repository.spotify.com stable/ d' /etc/apt/sources.list.d/*"  >> instaluj.sh
-					      echo "sudo apt-get purge -y ${paczka[$i]}" >> instaluj.txt
-					elif [ "${repo[$i]}" = "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free" ]; then
-					      echo "sudo sed -i '/virtualbox/d' /etc/apt/sources.list"  >> instaluj.sh
-					      echo "sudo sed -i '/virtualbox/d' /etc/apt/sources.list.d/*"  >> instaluj.sh
-					      echo "sudo apt-get purge -y ${paczka[$i]}" >> instaluj.txt
-					elif [ "${repo[$i]}" = "ownCloud" ]; then
-					      echo "sudo sed -i '/download.opensuse.org\/repositories\/isv:\/ownCloud/d' /etc/apt/sources.list.d/*"  >> instaluj.sh
-					      echo "sudo apt-get purge -y ${paczka[$i]}" >> instaluj.txt
-					elif [ "${repo[$i]}" = "deb http://dl.google.com/linux/chrome/deb/ stable main" ]; then
-					      echo "sudo sed -i '/deb.*dl.google.com\/linux\/chrome\/deb\/ stable main/ d' /etc/apt/sources.list"  >> instaluj.sh
-					      echo "sudo sed -i '/deb.*dl.google.com\/linux\/chrome\/deb\/ stable main/ d' /etc/apt/sources.list.d/*"  >> instaluj.sh
-					      echo "sudo apt-get purge -y ${paczka[$i]}" >> instaluj.txt
-					elif [ "${repo[$i]}" = "ppa:kubuntu-ppa/backports" ]; then
-					      echo "sudo ppa-purge -y ${repo[$i]}" >> instaluj.sh
-					else
-					      echo "sudo ppa-purge -y ${repo[$i]}" >> instaluj.sh
-					fi
-				elif [ "${r[$i]}" = "FALSE" ] && [ "${z[$i]}" = "TRUE" ]; then
-				# "instalujemy"
-					if [ "${repo[$i]}" = "ppa:i-nex-development-team/daily" ]; then
-					      echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
-					      echo "sudo add-apt-repository -y ppa:nemh/gambas3" >> instaluj.sh
-					      echo "sudo apt-get install -y  ${paczka[$i]}" >> instaluj.txt
-					elif [ "${repo[$i]}" = "deb http://repository.spotify.com stable non-free" ]; then
-					      echo "sudo add-apt-repository -y 'deb http://repository.spotify.com stable non-free'" >> instaluj.sh
-					      echo "sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 94558F59"  >> instaluj.sh
-					      echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
-					elif [ "${repo[$i]}" = "ppa:pipelight/stable" ]; then
-					      echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
-					      echo "sudo apt-get install --install-recommends pipelight-multi" >> instaluj.txt
-					      echo "sudo pipelight-plugin --update" >> instaluj.txt
-					      echo "sudo pipelight-plugin --enable silverlight" >> instaluj.txt
-					elif [ "${repo[$i]}" = "ownCloud" ]; then
-					      echo "sudo sh -c \"echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/xUbuntu_$(lsb_release -rs)/ /' >> /etc/apt/sources.list.d/owncloud-client.list\"" >> instaluj.sh
-					      echo "wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/xUbuntu_$(lsb_release -rs)/Release.key" >> instaluj.txt
-					      echo "sudo apt-key add - < Release.key" >> instaluj.txt
-					      echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
-					elif [ "${repo[$i]}" = "ppa:leolik/leolik" ]; then
-						if [ ! -e ~/.notify-osd ]; then
-							echo "slot-allocation = dynamic" > ~/.notify-osd
-							echo "bubble-expire-timeout = 10sec" >> ~/.notify-osd
-							echo "bubble-vertical-gap = 5px" >> ~/.notify-osd
-							echo "bubble-horizontal-gap = 5px" >> ~/.notify-osd
-							echo "bubble-corner-radius = 37,5%" >> ~/.notify-osd
-							echo "bubble-icon-size = 30px" >> ~/.notify-osd
-							echo "bubble-gauge-size = 6px" >> ~/.notify-osd
-							echo "bubble-width = 240px" >> ~/.notify-osd
-							echo "bubble-background-color = 131313" >> ~/.notify-osd
-							echo "bubble-background-opacity = 90%" >> ~/.notify-osd
-							echo "text-margin-size = 10px" >> ~/.notify-osd
-							echo "text-title-size = 100%" >> ~/.notify-osd
-							echo "text-title-weight = bold" >> ~/.notify-osd
-							echo "text-title-color = ffffff" >> ~/.notify-osd
-							echo "text-title-opacity = 100%" >> ~/.notify-osd
-							echo "text-body-size = 90%" >> ~/.notify-osd
-							echo "text-body-weight = normal" >> ~/.notify-osd
-							echo "text-body-color = eaeaea" >> ~/.notify-osd
-							echo "text-body-opacity = 100%" >> ~/.notify-osd
-							echo "text-shadow-opacity = 100%" >> ~/.notify-osd
-							echo "bubble-prevent-fade = 0" >> ~/.notify-osd
-							echo "bubble-close-on-click = 1" >> ~/.notify-osd
-							echo "bubble-as-desktop-bg = 0" >> ~/.notify-osd
-						fi
-						echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
-						echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
-					elif [ "${repo[$i]}" = "deb http://dl.google.com/linux/chrome/deb/ stable main" ]; then
-						echo "echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list" >> instaluj.sh
-						echo "wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -" >> instaluj.sh
-						echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
-					elif [ "${repo[$i]}" = "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free" ]; then
-						echo "sudo sh -c 'wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | apt-key add -' && sudo sh -c 'echo \"deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free\" >> /etc/apt/sources.list.d/virtualbox.list' " >> instaluj.sh
-						echo "sudo apt-get install -y ${paczka[$i]} && sudo usermod -aG vboxusers $(cat /tmp/netext73/userek)" >> instaluj.txt
-						jezyczek;case $jezyk in pol*)
-						      #dodanie języka polskiego
-						      echo "wget http://admc.ubuntu-pomoc.org/files/vbox-langpack-pl/qt_pl.qm && wget http://admc.ubuntu-pomoc.org/files/vbox-langpack-pl/VirtualBox_pl.qm && sudo mv qt_pl.qm /usr/share/virtualbox/nls/ && sudo mv VirtualBox_pl.qm /usr/share/virtualbox/nls/" >> instaluj.txt
-						  ;;
-						  esac
-					elif [ "${repo[$i]}" = "ppa:bumblebee/stable" ]; then
-						echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
-						if [ "$(lsb_release -r | grep 12.04)" != "" ] || [ "$(lsb_release -r | grep 13.04)" != "" ];then
-						      echo "sudo apt-get install bumblebee bumblebee-nvidia virtualgl" >> instaluj.txt
-						elif [ "$(lsb_release -r | grep 13.10)" != "" ] || [ "$(lsb_release -r | grep 14.04)" != "" ]; then
-						      echo "sudo apt-get install bumblebee bumblebee-nvidia primus" >> instaluj.txt
-						fi
-					elif [ "${repo[$i]}" = "ppa:kubuntu-ppa/backports" ]; then
-						echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
-					else
-						echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
-						echo "sudo apt-get install -y ${paczka[$i]}" >> instaluj.txt
-					fi
-				fi
-			done
-			
-			
-			if [ "$(grep 'sudo' instaluj.sh)" != "" ]; then
-				echo "sudo apt-get update" >> instaluj.sh
-				cat instaluj.txt >> instaluj.sh
-				echo "sudo apt-get install -f && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y" >> instaluj.sh
-			fi
-			instalacja
-		elif [ "$klawisz" = "2" ]; then
-		#PPA PURGE
-			cat /etc/apt/sources.list.d/*.list > lista.txt
-			cat /etc/apt/sources.list >> lista.txt
-			cat lista.txt | sed -e 's/^deb-src.*//g' -e '/^$/d' | grep -v "^[[:space:]]*\(#.*\)\?$" | grep "http://ppa.launchpad.net" > lista_ppa.txt
-			rm lista.txt
-			IFS=$'\n'
-			n=1
-			while read linia; do
-				ppanazwa=$(echo "$linia" | grep "^deb http://ppa.launchpad.net" | sed -e 's/.*ppa.launchpad.net//g' -e 's/$ main//g' | cut -d '/' -f2)
-				nazwa=$(echo "$linia" | grep "^deb http://ppa.launchpad.net" | sed -e 's/.*ppa.launchpad.net//g' -e 's/$ main//g' | cut -d '/' -f3)
-				wersja=$(echo "$linia" | grep "^deb http://ppa.launchpad.net" | sed -e 's/.*ppa.launchpad.net//g' -e 's/$ main//g' | cut -d ' ' -f2)
-				if [[ $ppanazwa ]]; then
-					echo "ppa:$ppanazwa/$nazwa ($wersja)" | tee -a lista.txt > /dev/null 2>&1;
-				fi
-				
-				let n=n+1
-			done < lista_ppa.txt
-			usunppa=$(yad-netext --center --always-print-result --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --separator="" --list --height=600 --title=" $nazwa_skryptu" --search-column="1" --regex-search --text="<span color=\"$kolor_textu\"><b>$TEXT_PPAPURGE</b></span>" --column "PPA" --list $(cat lista.txt) --button="$TEXT_ADD:3" --button="$TEXT_PURGE:0" --button="$TEXT_USUN:2" --button="$TEXT_ZAMKNIJ:1")
+	#########################################################################################################################################################################
+		#zmień wydanie z/na
+		elif [ "$backup" = "$TEXT_ZMIEN_WYDANIA" ]; then	
+			lista_ppa
+			usunppa=$(yad-netext --center --always-print-result --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/backuprepo.png" --separator="" --list --height=600 --title=" $nazwa_skryptu" --search-column="1" --regex-search --text="<span color=\"$kolor_textu\"><b>$TEXT_ZMIEN_WYDANIA</b></span>" --column "PPA" --list $(cat lista.txt) --button="$TEXT_ZMIEN_CALOSC:2" --button="$TEXT_ZMIEN:0" --button="$TEXT_ZAMKNIJ:1")
 			klawisz=$?
-			if [ "$klawisz" = "0" ]; then
-				naglowek > instaluj.sh
-				echo "sudo ppa-purge -y $(echo $usunppa | cut -d ' ' -f 1)" >> instaluj.sh
-				instalacja
-			elif [ "$klawisz" = "2" ]; then
-				naglowek > instaluj.sh
-				echo "sudo add-apt-repository --remove $(echo $usunppa | cut -d ' ' -f 1)" >> instaluj.sh
-				echo "for plik in /etc/apt/sources.list.d/* ; do" >> instaluj.sh
-				echo "if [ ! -s \$plik ] && [ -f \$plik ] && [ ! -L \$plik ]; then" >> instaluj.sh
-				echo "sudo rm \$plik -f" >> instaluj.sh
-				echo "fi" >> instaluj.sh
-				echo "done" >> instaluj.sh
-				instalacja
-			elif [ "$klawisz" = "3" ]; then
-				DODAJ_PPA=$(yad-netext --center --class="NeteXt73" --name="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --width=350 --entry --title="  $nazwa_skryptu" --text="$TEXT_ADD $TEXT_NP\n<span color=\"$kolor_textu\"><b>ppa:netext/netext73 </b></span>\n" --entry-label="PPA:"  --button="$TEXT_ZAMKNIJ:1"  --button="gtk-ok:0")
+			if [ "$klawisz" = "2" ]; then
+				#zmień wszystkie repo
+				przed=$(cat /etc/apt/sources.list.d/* | grep "^deb http://ppa.launchpad.net" | sed -e 's/.*ppa.launchpad.net//g' -e 's/$ main//g' | cut -d ' ' -f2 | sort | uniq | tr '\n' '!' | sed '$s/!$//' |sed 's/^!//')
+				if [ "$przed" = "" ]; then
+					przed=$(lsb_release -cs)
+				fi
+				zmiana=$(yad-netext --center --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>$TEXT_ZMIEN_WYDANIA</b></span>" --width=410 --window-icon="/opt/NeteXt73/ikony/backuprepo.png"  --image="/opt/NeteXt73/ikony/backuprepo.png" --form --field="$TEXT_ZMIEN_Z:CB" "$przed" --field="$TEXT_ZMIEN_NA:CB" "$wersje_ubu" --button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1")
 				klawisz=$?
 				if [ "$klawisz" = "0" ]; then
+					export przed=$(echo $zmiana | cut -d "|" -f 1)
+					export po=$(echo $zmiana | cut -d "|" -f 2)
 					naglowek > instaluj.sh
-					echo "sudo add-apt-repository $(echo $DODAJ_PPA | cut -d ' ' -f 1)" >> instaluj.sh
+					echo "sudo sed -i \"s/$przed/$po/g\" /etc/apt/sources.list.d/*" >> instaluj.sh
 					instalacja
 				fi
+			elif [ "$klawisz" = "0" ]; then
+				#zmień wskazane repo
+				przed=$(echo $usunppa | cut -d '|' -f 1 | cut -d "(" -f 2 | sed 's/)//')
+				zmiana=$(yad-netext --center --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>$TEXT_ZMIEN_WYDANIA</b></span>" --width=410 --window-icon="/opt/NeteXt73/ikony/backuprepo.png"  --image="/opt/NeteXt73/ikony/backuprepo.png" --form --field="$TEXT_ZMIEN_Z:RO" "$przed" --field="$TEXT_ZMIEN_NA:CB" "$wersje_ubu" --button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1")
+				klawisz=$?
+				if [ "$klawisz" = "0" ]; then
+					export nazwa_pliku=$(echo $usunppa | cut -d '|' -f 1 | cut -d " " -f 1 | sed -e 's/ppa://' -e 's/\//-/g')
+					export po=$(echo $zmiana | cut -d "|" -f 2)
+					naglowek > instaluj.sh
+					echo "sudo sed -i \"s/$przed/$po/g\" /etc/apt/sources.list.d/*$nazwa_pliku*" >> instaluj.sh
+					instalacja
+				fi
+			
 			fi
-			rm *.txt *.sh -f
-		
 		fi
-		
-		rm *.txt instaluj.sh -f
-#########################################################################################################################################################################
-#instalator pakietów
-	elif [ "$backup" = "$a7" ]; then
-		petla="tak"
-		while [ $petla = "tak" ]; do
-			rm *.txt -f
-			#zbiór aplikacji
-			ilosc=0
-			#sortowanie tablicy programów
-			#ilosc=$(( ${#soft[*]} ))
-			if [ -e ~/.netext73/soft ]; then
-				for a in $(cat ~/.netext73/soft); do
-					((ilosc++))
-					soft1[$ilosc]=$a
-				done
-			else
-				sofcik
-				for a in $(cat ~/.netext73/soft); do
-					((ilosc++))
-					soft1[$ilosc]=$a
-				done
-			fi
-			soft=( $(for el in "${soft1[@]}" 
-			do
-				echo "$el" 
-			done | sort )) 
-			ilosc_softu=$(( ${#soft[*]} - 1 ))
-			dpkg -l | awk '{print $2}'| sed 's/:.*//g' > programy.txt
-			for (( i=0; i<=$ilosc_softu; i++ )); do
-				if [ "$(cat programy.txt | grep ${soft[$i]} -x )" != "" ] ; then
-					r[$i]="TRUE"
-				else
-					r[$i]="FALSE"
-				fi
-				echo ${r[$i]} >> 1.txt
-				echo ${soft[$i]} >> 2.txt
-			done   2>&1 | pobieranie
-			paste -d " " 1.txt 2.txt > lista_softu.txt
-			grep TRUE lista_softu.txt | awk '{print $2}' > lista_przed.txt
-
-			instalka=$(yad-netext --center --height=540 --width=640 --image="/opt/NeteXt73/ikony/backuprepo.png" --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --button="$a8:2" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>Add Soft - automat</b></span>\n$TEXT_MENU_USLUGI2" \
-			--column="$TEXT_ZAZNACZ" --column="$TEXT_MENU_USLUGI3"  --checklist --list $(cat lista_softu.txt))
-			klawisz=$?
-			if [ "$klawisz" = "0" ]; then		 
-				echo $instalka | sed 's/|/\n/g' > lista_po.txt
-
-				naglowek > instaluj.sh
-				echo "sudo apt-get update"  >> instaluj.sh
-				for a in $(cat 2.txt)
-				do
-					grep $a lista_przed.txt
-					if [ "$(grep $a lista_przed.txt)" != "" ] && [ "$(grep $a lista_po.txt)" != "" ]; then
-						echo "echo \"nie ma zmiany w $a\"" > /dev/null
-					elif [ "$(grep $a lista_przed.txt)" = "" ] && [ "$(grep $a lista_po.txt)" = "" ]; then
-						echo "echo \"nie ma zmiany w $a\"" > /dev/null
-					elif [ "$(grep $a lista_przed.txt)" != "" ] && [ "$(grep $a lista_po.txt)" = "" ]; then
-						echo "sudo apt-get purge $a -y" >> instaluj.sh
-					elif [ "$(grep $a lista_przed.txt)" = "" ] && [ "$(grep $a lista_po.txt)" != "" ]; then
-						echo "sudo apt-get install $a -y" >> instaluj.sh
-					fi
-				done
-				if [ "$(grep 'sudo' instaluj.sh)" != "" ]; then
-					echo "sudo apt-get install -f && sudo apt-get autoremove -y" >> instaluj.sh
-				fi
-				instalacja
-			elif [ "$klawisz" = "2" ]; then
-			#edytor instalatora pakietów
-				if [ ! -e ~/.netext73/soft ]; then
-					sofcik
-				fi
-				nowa_lista=$(yad-netext  --title="$nazwa_skryptu  " --center --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --width=400 --height=600 --form --field="<span color=\"$kolor_textu\"><b>$MENU_OPIS</b></span>:TXT" "$(cat -e ~/.netext73/soft | tr ' ' '\n' | sed 's/\$//g' | sort)" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
-				if [ $? = "0" ]; then
-					echo -e $nowa_lista | sed 's/|//g'| tr ' ' '\n' | sed 's/\$//g' | sort | uniq > ~/.netext73/soft
-					sed -i '/^[ \t]*$/ d' ~/.netext73/soft
-				fi
-			elif [ "$klawisz" = "1" ]; then
-				petla="nie"
-			fi
-		done
-
-#########################################################################################################################################################################
-	#dodajemy repo partnerów
-	elif [ "$backup" = "$MENU1" ]; then
-		xterm -e bash -c "echo -e \"$MENU1\n\"; sudo sed -i '/partner/ s/#//' /etc/apt/sources.list;sudo apt-get update"
-#########################################################################################################################################################################
-	#usuwamy repo partnerów
-	elif [ "$backup" = "$MENU2" ]; then
-	      xterm -e bash -c "echo -e \"$MENU2\n\"; sudo sed -i '/partner/ s/^/#/' /etc/apt/sources.list;sudo apt-get update"
 	fi
 fi

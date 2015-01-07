@@ -1,3 +1,9 @@
+netext73 (0.8.39) stable; urgency=medium
+
+  * dodanie możliwości zmiany wydania w repozytorium
+
+ -- NetBit73 <netbit73@gmail.com>  Wed, 07 Jan 2015 20:46:40 +0100
+
 netext73 (0.8.38) stable; urgency=medium
 
   * dodanie listowania i usuwania ppa

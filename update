@@ -74,6 +74,7 @@ konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.pn
 usun
 
 if [ "$1" = "first" ]; then
+	/opt/NeteXt73/./help & #odpalenie strony z opisem
 	a1="TRUE"
 	a2="TRUE"
 	a3="TRUE"

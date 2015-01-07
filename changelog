@@ -1,6 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.39
+-	rozdzielenie gpg od repo
+-	dodanie otwarcia strony z opisem programu przy opcji 'pierwsza instalacja'
+-	dodanie możliwości zmiany wydania w repozytorium
 v0.8.38
 -	dodanie listowania i usuwania ppa
 -	klepsydra podczas testów

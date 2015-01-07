@@ -92,6 +92,7 @@ export ikona_info1="dialog-information"
 export warning1="dialog-warning"
 export adres_opisu="http://www.netext73.pl/search/label/opis_netext73"
 
+export wersje_ubu="vivid!utopic!trusty!precise"
 
 #adres serwera
 export adres_glowny="ftp://37.59.165.105"

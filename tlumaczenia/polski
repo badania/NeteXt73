@@ -51,7 +51,7 @@ export TEXT_PLANISTA="Planista I/O [HDD]"
 
 #########################################################################################################################################################################
 #tlumaczenia_backuprepo
-export a1="Stwórz kopię zapasową repozytorium wraz z kluczami GPG"
+export a1="Stwórz lub przywróć kopię zapasową repozytorium wraz z kluczami GPG"
 export a2="Przywróć repozytorium z kopii zapasowej"
 export a3="Pobierz brakujące klucze GPG"
 export a4="Napraw błędne podpisy GPG"
@@ -63,7 +63,8 @@ export a9="Dodaj lub usuń repozytorium wraz z pakietami - PPA-Purge"
 export MENU1="Włącz repozytorium partnerów"
 export MENU2="Wyłącz repozytorium partnerów"
 export MENU_OPIS="Zmodyfikuj listę pakietów:"
-export TEXT_BACKUP1="Zbiór skryptów dotyczących kluczy GPG i repozytorium"
+export TEXT_BACKUP1="Zbiór skryptów dotyczących kluczy GPG"
+export TEXT_BACKUP1A="Zbiór skryptów dotyczących repozytorium"
 export TEXT_BACKUP2="Wskaż plik source.list.backup"
 export TEXT_BACKUP3="Za chwilę nastąpi podmiana repozytoriów"
 export TEXT_BACKUP4="Podmieniłeś pliki repozytorium."
@@ -76,6 +77,11 @@ export TEXT_DOSTAWCA_KLUCZA="dostawca klucza"
 export TEXT_ZAZNACZ_KLUCZE="Zaznacz klucze GPG, które chcesz usunąć:"
 export TEXT_NIC_NIE_ZAZNACZYLES="Nic nie zaznaczyłeś"
 export TEXT_NIE_POBRALES_KLUCZY="Nie pobrałeś listy kluczy"
+export TEXT_ZMIEN_CALOSC="zmień wszystkie"
+export TEXT_ZMIEN="zmień wskazane"
+export TEXT_ZMIEN_WYDANIA="Zmień wersję wydań dla repozytoriów PPA"
+export TEXT_ZMIEN_Z="Zmień z:"
+export TEXT_ZMIEN_NA="Zmień na:"
 
 #########################################################################################################################################################################
 #tlumaczenia_config
