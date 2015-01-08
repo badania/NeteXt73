@@ -299,9 +299,9 @@ export TEXT_BRAK="brak"
 
 #########################################################################################################################################################################
 #tlumaczenia_procedury
-export BRAKNETA="<span color=\"$kolor_textu\">Brak połączenia z internetem lub serwerem programu NeteXt'73. Spróbuj później.</span>"
+export BRAKNETA="Brak połączenia z internetem lub serwerem programu NeteXt'73. Spróbuj później."
 export TEXT_PROCEDURA_4="Czy chcesz zainstalować linux-firmware-nonfree ?"
-export TEXT_POBIERANIE="<span color=\"$kolor_textu\">Pobieranie informacji z serwera. Czekaj!</span>"
+export TEXT_POBIERANIE="Pobieranie informacji z serwera. Czekaj!"
 export TEXT_NETEXT2="optymalizator systemu"
 export TEXT_POB1="s/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Prędkość pobierania: \2\/s, pozostało \3/"
 export TEXT_POB2="Pobieram plik:"

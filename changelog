@@ -1,6 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.40
+-	sprawdzanie połączenia internetowego na starcie programu
+-	poprawki w zmieniarce wydań repozytoriów
+-	podświetlenie składni xterm
 v0.8.39
 -	rozdzielenie gpg od repo
 -	dodanie otwarcia strony z opisem programu przy opcji 'pierwsza instalacja'

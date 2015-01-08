@@ -569,20 +569,20 @@ echo "rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f"
 
 #instalacja za chwile nastąpi wprowadzenie zmian
 instalacja(){
-xterm -T instalator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh  && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt" 
+xterm -T instalator -e bash -c "tput setaf 1;echo \"$TEXT_INSTALACJA1\";tput sgr0; bash instaluj.sh  && rm instaluj.sh -f ;tput setaf 2; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt" 
 }
 
 instalacja_nativ(){
-x-terminal-emulator -e bash -c "echo \"$TEXT_INSTALACJA1\";sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
+x-terminal-emulator -e bash -c "tput setaf 1;echo \"$TEXT_INSTALACJA1\";tput sgr0; bash instaluj.sh && rm instaluj.sh -f ;tput setaf 2; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
 }
 
 #instalacja bez pytań
 instalacja2(){
-xterm -T instalator -e bash -c "sh instaluj.sh && rm instaluj.sh -f"
+xterm -T instalator -e bash -c "bash instaluj.sh && rm instaluj.sh -f"
 }
 #instalacja wciśnij enter
 instalacja3(){
-xterm -T instalator -e bash -c "sudo sh instaluj.sh && rm instaluj.sh -f ; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
+xterm -T instalator -e bash -c "sudo bash instaluj.sh && rm instaluj.sh -f ;tput setaf 2; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
 }
 
 lista_kerneli(){

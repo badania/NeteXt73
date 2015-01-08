@@ -35,9 +35,19 @@
 
 source /opt/NeteXt73/procedury
 
+
+backup_repo(){
+echo "GLOBAL_SOURCE=\"/etc/apt/sources.list\""
+echo "PPA_SOURCE=\"/etc/apt/sources.list.d\""
+echo "BACKUP_FOLDER=\"/etc/apt/sources_\""
+echo "BACKUP_FOLDER=\${BACKUP_FOLDER}\$(date +%Y%m%d-%T)"
+echo "sudo mkdir -p \"\$BACKUP_FOLDER\""
+echo "sudo cp \${GLOBAL_SOURCE} \"\$BACKUP_FOLDER\""
+echo "sudo cp -r \${PPA_SOURCE} \"\$BACKUP_FOLDER\""
+} >> instaluj.sh
+
 lista_ppa(){
 cat /etc/apt/sources.list.d/*.list > lista.txt
-cat /etc/apt/sources.list >> lista.txt
 cat lista.txt | sed -e 's/^deb-src.*//g' -e '/^$/d' | grep -v "^[[:space:]]*\(#.*\)\?$" | grep "http://ppa.launchpad.net" > lista_ppa.txt
 rm lista.txt
 IFS=$'\n'
@@ -643,7 +653,9 @@ else
 					export przed=$(echo $zmiana | cut -d "|" -f 1)
 					export po=$(echo $zmiana | cut -d "|" -f 2)
 					naglowek > instaluj.sh
+					backup_repo
 					echo "sudo sed -i \"s/$przed/$po/g\" /etc/apt/sources.list.d/*" >> instaluj.sh
+					echo "sudo rename 's/$przed/$po/' /etc/apt/sources.list.d/*" >> instaluj.sh
 					instalacja
 				fi
 			elif [ "$klawisz" = "0" ]; then
@@ -655,11 +667,14 @@ else
 					export nazwa_pliku=$(echo $usunppa | cut -d '|' -f 1 | cut -d " " -f 1 | sed -e 's/ppa://' -e 's/\//-/g')
 					export po=$(echo $zmiana | cut -d "|" -f 2)
 					naglowek > instaluj.sh
+					backup_repo
 					echo "sudo sed -i \"s/$przed/$po/g\" /etc/apt/sources.list.d/*$nazwa_pliku*" >> instaluj.sh
+					echo "sudo rename 's/$przed/$po/' /etc/apt/sources.list.d/*$nazwa_pliku*" >> instaluj.sh
 					instalacja
 				fi
 			
 			fi
+	#########################################################################################################################################################################
 		fi
 	fi
 fi

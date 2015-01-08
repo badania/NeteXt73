@@ -297,9 +297,9 @@ export TEXT_BRAK="none"
 
 #########################################################################################################################################################################
 #tlumaczenia_procedury
-export BRAKNETA="<span color=\"$kolor_textu\">Servers not available. Check your Internet connection or try again later.</span>"
+export BRAKNETA="Servers not available. Check your Internet connection or try again later."
 export TEXT_PROCEDURA_4="Install linux-firmware-nonfree?"
-export TEXT_POBIERANIE="<span color=\"$kolor_textu\">Connecting to server. Wait!</span>"
+export TEXT_POBIERANIE="Connecting to server. Wait!"
 export TEXT_NETEXT2="optimizer"
 export TEXT_POB1="s/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Speed: \2\/s, Remaining \3/"
 export TEXT_POB2="Downloading:"
