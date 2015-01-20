@@ -1,3 +1,9 @@
+netext73 (0.8.41) stable; urgency=medium
+
+  * intel turbo na AC
+
+ -- NetBit73 <netbit73@gmail.com>  Tue, 20 Jan 2015 19:33:30 +0100
+
 netext73 (0.8.40) stable; urgency=medium
 
   * sprawdzanie połączenia internetowego na starcie programu

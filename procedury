@@ -337,11 +337,17 @@ echo "sudo sed -i '/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo rmmod
 echo "else"
 echo "sudo sed -i '/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
-#intel turbo
+#intel turbo bateria
 echo "if [ \"\$turbooff\" != \"FALSE\" ];then"
 echo "sudo sed -i 's/echo 1 > \$intel/echo 0 > \$intel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
 echo "sudo sed -i 's/echo 0 > \$intel/echo 1 > \$intel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "fi"
+#intel turbo AC
+echo "if [ \"\$turboacoff\" != \"FALSE\" ];then"
+echo "sudo sed -i 's/echo 1 > \$intel/echo 0 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "else"
+echo "sudo sed -i 's/echo 0 > \$intel/echo 1 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 #HDD
 echo "if [ \"\$bfqfix\" = \"bfq\" ];then"
@@ -389,11 +395,17 @@ echo "else"
 echo "sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 
-#intel turbo
+#intel turbo bateria
 echo "if [ \"\$(grep turbooff ~/.netext73/apm_status | cut -d ' ' -f 2)\" != \"FALSE\" ];then"
 echo "sudo sed -i 's/echo 1 > \$intel/echo 0 > \$intel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
 echo "sudo sed -i 's/echo 0 > \$intel/echo 1 > \$intel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "fi"
+#intel turbo AC
+echo "if [ \"\$(grep turboacoff ~/.netext73/apm_status | cut -d ' ' -f 2)\" != \"FALSE\" ];then"
+echo "sudo sed -i 's/echo 1 > \$intel/echo 0 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "else"
+echo "sudo sed -i 's/echo 0 > \$intel/echo 1 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 
 echo "if [ \"\$(grep rts5139fix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"TRUE\" ];then"
@@ -504,11 +516,17 @@ stan_apm_config(){
 	else 
 	    export wifin="TRUE"
 	fi
-	#sprawdzenie intel turbo
+	#sprawdzenie intel turbo bateria
 	if [ "$(grep 'echo 1 > $intel' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ];then
 	    export turbooff="FALSE"
 	else 
 	    export turbooff="TRUE"
+	fi
+	#sprawdzenie intel turbo AC
+	if [ "$(grep 'echo 1 > $acintel' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ];then
+	    export turboacoff="FALSE"
+	else 
+	    export turboacoff="TRUE"
 	fi
 	#sprawdzenie BFQ/CFQ/deadline HDD
 	
@@ -544,6 +562,7 @@ stan_apm_config(){
 	export bfqfix_przed=$bfqfix
 	export ssdfix_przed=$ssdfix
 	export turbooff_przed=$turbooff
+	export turboacoff_przed=$turboacoff
 	
 	#wysłanie danych do configu 
 	if [ "$1" = "czeki" ]; then
@@ -556,6 +575,7 @@ stan_apm_config(){
 		echo "bfqfix $bfqfix" >> ~/.netext73/apm_status
 		echo "ssdfix $ssdfix" >> ~/.netext73/apm_status
 		echo "turbooff $turbooff" >> ~/.netext73/apm_status
+		echo "turboacoff $turboacoff" >> ~/.netext73/apm_status
 	fi
 }
 

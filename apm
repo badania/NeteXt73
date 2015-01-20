@@ -87,6 +87,7 @@ while [ $petla_duza = "tak" ]; do
 		--field="$TEXT_FIX4:CHK" "$rts5139fix" \
 		--field="$TEXT_FIX5:CHK" "$wifin" \
 		--field="$TEXT_FIX6:CHK" "$turbooff" \
+		--field="$TEXT_FIX7:CHK" "$turboacoff" \
 		--field="$TEXT_PLANISTA:CB" "$bfqfix_menu" \
 		--field="$(echo $TEXT_PLANISTA | sed 's/HDD/SSD\/FLASH/'):CB" "$ssdfix_menu" \
 		--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" )
@@ -100,11 +101,12 @@ while [ $petla_duza = "tak" ]; do
 			export rts5139fix=$(echo $aa | cut -d "|" -f 7)
 			export wifin=$(echo $aa | cut -d "|" -f 8)
 			export turbooff=$(echo $aa | cut -d "|" -f 9)
-			export bfqfix=$(echo $aa | cut -d "|" -f 10)
-			export ssdfix=$(echo $aa | cut -d "|" -f 11)
+			export turboacoff=$(echo $aa | cut -d "|" -f 10)
+			export bfqfix=$(echo $aa | cut -d "|" -f 11)
+			export ssdfix=$(echo $aa | cut -d "|" -f 12)
 					
 			#uruchomienie aktualizacji gdy zaszła jakś zmiana
-			if [ "$a" = "$aktualny_apm" ] && [ "$wififix_przed" = "$wififix" ] && [ "$wifionoff_przed" = "$wifionoff" ] && [ "$btfix_przed" = "$btfix" ] && [ "$rts5139fix_przed" = "$rts5139fix" ] && [ "$wifin_przed" = "$wifin" ] && [ "$bfqfix_przed" = "$bfqfix" ] && [ "$ssdfix_przed" = "$ssdfix" ] && [ "$turbooff_przed" = "$turbooff" ]; then
+			if [ "$a" = "$aktualny_apm" ] && [ "$wififix_przed" = "$wififix" ] && [ "$wifionoff_przed" = "$wifionoff" ] && [ "$btfix_przed" = "$btfix" ] && [ "$rts5139fix_przed" = "$rts5139fix" ] && [ "$wifin_przed" = "$wifin" ] && [ "$bfqfix_przed" = "$bfqfix" ] && [ "$ssdfix_przed" = "$ssdfix" ] && [ "$turbooff_przed" = "$turbooff" ] && [ "$turbacooff_przed" = "$turboacoff" ]; then
 			    petla_duza="nie"
 			    rm *.txt -f *.sh
 			else
