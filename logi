@@ -202,12 +202,11 @@ if [ "$klawisz" = "2" ]; then
 		klawisz=$?
 		if [ "$klawisz" = "0" ]; then
 			if [ "$USER" = "root" ]; then
-				sudo -u $userek bash << EOF
-				xdg-open $(cat netext.log dmesg.log kern.log | pastebinit)
-EOF
-			  else
-				xdg-open $(cat netext.log dmesg.log kern.log | pastebinit)
-			fi  
+				su $userek -c "bash /opt/NeteXt73/menu/root.sh logi"
+			else
+				bash /opt/NeteXt73/menu/root.sh logi
+			  
+			fi
 		fi
 		rm -f $res1 $res2 $res3 $res4 $res5
 	fi

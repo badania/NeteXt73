@@ -16,5 +16,6 @@ if [ "$1" = "kontakty" ]; then
 	if [ "$klawisz" = "2" ]; then
 		xdg-open "http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html"
 	fi
-
+elif [ "$1" = "logi" ]; then
+	xdg-open $(cat netext.log dmesg.log kern.log | pastebinit)  
 fi

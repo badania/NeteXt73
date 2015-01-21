@@ -3,6 +3,7 @@
 
 v0.8.41
 -	intel turbo na prądzie
+-	poprawki w wysyłaniu logów na serwer
 v0.8.40
 -	sprawdzanie połączenia internetowego na starcie programu
 -	poprawki w zmieniarce wydań repozytoriów
