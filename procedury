@@ -339,15 +339,15 @@ echo "sudo sed -i '/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo mo
 echo "fi"
 #intel turbo bateria
 echo "if [ \"\$turbooff\" != \"FALSE\" ];then"
-echo "sudo sed -i 's/echo 1 > \$intel/echo 0 > \$intel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i 's/echo 1 > \$batintel/echo 0 > \$batintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
-echo "sudo sed -i 's/echo 0 > \$intel/echo 1 > \$intel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i 's/echo 0 > \$batintel/echo 1 > \$batintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 #intel turbo AC
 echo "if [ \"\$turboacoff\" != \"FALSE\" ];then"
-echo "sudo sed -i 's/echo 1 > \$intel/echo 0 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i 's/echo 1 > \$acintel/echo 0 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
-echo "sudo sed -i 's/echo 0 > \$intel/echo 1 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i 's/echo 0 > \$acintel/echo 1 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 #HDD
 echo "if [ \"\$bfqfix\" = \"bfq\" ];then"
@@ -397,15 +397,15 @@ echo "fi"
 
 #intel turbo bateria
 echo "if [ \"\$(grep turbooff ~/.netext73/apm_status | cut -d ' ' -f 2)\" != \"FALSE\" ];then"
-echo "sudo sed -i 's/echo 1 > \$intel/echo 0 > \$intel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i 's/echo 1 > \$batintel/echo 0 > \$batintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
-echo "sudo sed -i 's/echo 0 > \$intel/echo 1 > \$intel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i 's/echo 0 > \$batintel/echo 1 > \$batintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 #intel turbo AC
 echo "if [ \"\$(grep turboacoff ~/.netext73/apm_status | cut -d ' ' -f 2)\" != \"FALSE\" ];then"
-echo "sudo sed -i 's/echo 1 > \$intel/echo 0 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i 's/echo 1 > \$actintel/echo 0 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "else"
-echo "sudo sed -i 's/echo 0 > \$intel/echo 1 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
+echo "sudo sed -i 's/echo 0 > \$acintel/echo 1 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 echo "fi"
 
 echo "if [ \"\$(grep rts5139fix ~/.netext73/apm_status | cut -d ' ' -f 2)\" = \"TRUE\" ];then"
@@ -517,7 +517,7 @@ stan_apm_config(){
 	    export wifin="TRUE"
 	fi
 	#sprawdzenie intel turbo bateria
-	if [ "$(grep 'echo 1 > $intel' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ];then
+	if [ "$(grep 'echo 1 > $batintel' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ];then
 	    export turbooff="FALSE"
 	else 
 	    export turbooff="TRUE"
