@@ -114,9 +114,12 @@ if [ "$klawisz" = 0 ]; then
 			sed -i '/^[ \t]*$/ d' ~/.netext73/$i
 		done
 
-		if [ "$root_mode" != "$(cat ~/.netext73/root_mode)" ]; then
+		if [ "$root_mode_przed" != "$(cat ~/.netext73/root_mode)" ]; then
+			echo $root_mode_przed > /tmp/przed
+			cat ~/.netext73/root_mode > /tmp/po
 			rm -fr /tmp/netext73
 			killall yad-netext
+			dymek -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_CONFIG13"
 		fi    
 	fi
 fi

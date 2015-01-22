@@ -99,6 +99,7 @@ export TEXT_CONFIG9="Profil APM:"
 export TEXT_CONFIG10="Profil Kernela:"
 export TEXT_CONFIG11="Automatycznie używaj wybrany Profil Kernela"
 export TEXT_CONFIG12="Pozostaw kopię plików *.deb w /var/cache/apt/archives"
+export TEXT_CONFIG13="Zmiana trybu ROOT wymaga ponownego ręcznego uruchomienia programu."
 
 #########################################################################################################################################################################
 #tlumaczenia_deinstalator

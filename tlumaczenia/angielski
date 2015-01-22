@@ -78,6 +78,12 @@ export TEXT_DOSTAWCA_KLUCZA="Software provider"
 export TEXT_ZAZNACZ_KLUCZE="Select GPG keys to remove:"
 export TEXT_NIC_NIE_ZAZNACZYLES="Nothing selected."
 export TEXT_NIE_POBRALES_KLUCZY="List of keys has not been downloaded."
+ 
+export TEXT_ZMIEN_CALOSC="Change all"
+export TEXT_ZMIEN="Chamge selected"
+export TEXT_ZMIEN_WYDANIA="Change Ubuntu version in PPA's"
+export TEXT_ZMIEN_Z="Change from:"
+export TEXT_ZMIEN_NA="Change to:"
 
 #########################################################################################################################################################################
 #tlumaczenia_config
@@ -94,6 +100,7 @@ export TEXT_CONFIG9="APM Profile:"
 export TEXT_CONFIG10="Kernel Profile:"
 export TEXT_CONFIG11="Automatically use selected Kernel Profile"
 export TEXT_CONFIG12="Keep a copy downloaded deb files in /var/cache/apt/archives"
+export TEXT_CONFIG13="Turn on the program again"
 
 #########################################################################################################################################################################
 #tlumaczenia_deinstalator
