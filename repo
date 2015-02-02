@@ -133,10 +133,15 @@ baza=(
 	"GIMP graphics package"
 	"gimp gimp-plugin-registry gimp-gmic gmic"
 	
+	"ppa:inkscape.dev/stable"
+	"Inkscape edytor grafiki wektorowej"
+	"Inkscape an open-source vector graphics editor"
+	"inkscape"
+	
 	"ppa:dhor/myway"
-	"rawtherapee delaboratory easyimagesizer fotoxx inkscape pinta pl"
-	"rawtherapee delaboratory easyimagesizer fotoxx inkscape pinta ang"
-	"rawtherapee delaboratory easyimagesizer fotoxx inkscape pinta"
+	"rawtherapee delaboratory easyimagesizer fotoxx pinta"
+	"rawtherapee delaboratory easyimagesizer fotoxx pinta"
+	"rawtherapee delaboratory easyimagesizer fotoxx pinta"
 	
 	"ppa:hugin/hugin-builds"
 	"Hugin - łatwy w użyciu, wieloplatformowy zestaw narzędzi do obrazowania panoramicznego - na podstawie Panorama Tools "
