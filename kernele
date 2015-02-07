@@ -47,8 +47,7 @@ menu2a="Brazos-PRO Piledriver, Steamroller"
 menu3=$TEXT_K8
 menu4="Atom - Intel Atom 64bit"
 
-
-if [ "$(cat ~/.netext73/kernel_automat)" = "TRUE" ]; then
+if [ -e ~/.netext73/kernel_automat ] && [ -e ~/.netext73/instalator_kerneli ] && [ "$(cat ~/.netext73/kernel_automat)" = "TRUE" ]; then
 	kern="$(cat ~/.netext73/instalator_kerneli)"
 else
 	if [ "$1" = "K8" ]; then

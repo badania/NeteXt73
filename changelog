@@ -1,6 +1,9 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.45
+-	naprawa konfiguratora - błąd wyłączania aplikacji przy przełączaniu czeków
+-	naprawa błędu przy sprawdzanu plików konfiguratora
 v0.8.44
 -	dodanie repo Inkscape
 v0.8.43
