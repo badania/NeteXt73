@@ -1,3 +1,9 @@
+netext73 (0.8.47) stable; urgency=medium
+
+  * dostosowanie APM do blk-mq
+
+ -- NetBit73 <netbit73@gmail.com>  Thu, 12 Feb 2015 13:17:16 +0100
+
 netext73 (0.8.46) stable; urgency=medium
 
   * zmiany w logach
