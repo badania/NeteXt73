@@ -1,3 +1,9 @@
+netext73 (0.8.46) stable; urgency=medium
+
+  * zmiany w logach
+
+ -- NetBit73 <netbit73@gmail.com>  Wed, 11 Feb 2015 09:40:03 +0100
+
 netext73 (0.8.45) stable; urgency=medium
 
   * poprawki logów,configu i błedów w terminalu

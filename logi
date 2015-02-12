@@ -63,6 +63,7 @@ else
       wifi="$(lspci | grep "Network controller:" |sed -e 's/'.*:'//g' -e 's/Network Connection//g' | head -n1 | sed -e 's/ //')"
 fi
 echo -e "$wifi" >> system$losowa.log
+echo -e "scheduler I/O :\n$(cat /sys/block/sd*/queue/scheduler)"  >> system$losowa.log
 echo -e "\n<span color=\"$kolor_textu\"><b>SYSTEM:</b></span> $(lsb_release -i | awk '{print $3}') $(lsb_release -r | awk '{print $2}') $(lsb_release -c | awk '{print $2}') $bit" >> system$losowa.log
 echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI6</b></span>" >> system$losowa.log
 if [ "$(dpkg -l intel-microcode | grep "ii" | awk '{print $1}'| head -n1)" = "ii" ];  then

@@ -1,6 +1,9 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.46
+-	zmiany w logach
+-	zmiany w sekcji GRUB dostosowanie do kerneli > 3.18
 v0.8.45
 -	naprawa konfiguratora - błąd wyłączania aplikacji przy przełączaniu czeków
 -	naprawa błędu przy sprawdzanu plików konfiguratora
