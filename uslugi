@@ -54,17 +54,17 @@ while [ $petla_duza = "tak" ]; do
 		 #włączone
 		 for i in $(cat uslugi.txt); do
 			if [ "$(sudo systemctl is-enabled $i | grep enable)" != "" ];then
-			      echo "FALSE "$i" on -" >> uslugi_on.txt
+				echo "FALSE "$i" on -" >> uslugi_on.txt
 			else
-			      echo "FALSE "$i" - off" >> uslugi_off.txt
+				echo "FALSE "$i" - off" >> uslugi_off.txt
 			fi
 		 done 2>&1 | pobieranie
 		 #wyłączone
 		 for i in $(cat uslugi_wyl.txt); do
 			if [ "$(sudo systemctl status $i | grep enable)" = "" ];then
-			      echo "FALSE "$i" on -" >> uslugi_on.txt
+				echo "FALSE "$i" on -" >> uslugi_on.txt
 			else
-			      echo "FALSE "$i" - off" >> uslugi_off.txt
+				echo "FALSE "$i" - off" >> uslugi_off.txt
 			fi
 		 done		 
 		 cat uslugi_on.txt uslugi_off.txt > uslugi.txt
@@ -84,8 +84,7 @@ while [ $petla_duza = "tak" ]; do
 			fi
 			rm *.txt -f
 		if [ -z "$a" ]; then
-			petla="nie"
-			rm *.txt -f
+			opusc__mala_petle
 		fi
 		done
 	    #menu="$TEXT_MENU_USLUGI0 upstart,sysV!$TEXT_MENU_USLUGI1B!$TEXT_MENU_USLUGI1C!$TEXT_MENU_USLUGI0 systemd"
@@ -119,9 +118,9 @@ while [ $petla_duza = "tak" ]; do
 				head sysv.txt -n$i | tail -n1 > 10.txt
 					if  [ "$(grep "X" 10.txt | head -n1)" != "" ]
 					then
-					      echo -e "on\t-">> stan_uslug.txt
+						echo -e "on\t-">> stan_uslug.txt
 					else
-					      echo -e "-\toff" >> stan_uslug.txt
+						echo -e "-\toff" >> stan_uslug.txt
 					fi
 				done  2>&1 | pobieranie
 				
@@ -177,8 +176,7 @@ while [ $petla_duza = "tak" ]; do
 					fi
 				fi
 				if [ -z "$a" ]; then
-					petla="nie"
-					rm *.txt -f
+					opusc__mala_petle
 				fi
 				done
 			#SysV - expert
@@ -218,45 +216,42 @@ while [ $petla_duza = "tak" ]; do
 								export usl1=$usl; export a1=$a
 								if [ "$usl" = "start" ]; then
 									if [ -e /etc/init/$a1.conf ]; then
-									      sudo service $a1 $usl1
+										sudo service $a1 $usl1
 									else
-									      sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start
+										sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start
 									fi
 								elif [ "$usl" = "stop" ]; then
 									if [ -e /etc/init/$a1.conf ]; then
-									      sudo service $a1 $usl1
+										sudo service $a1 $usl1
 									else
-									      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI34"
+										dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI34"
 									fi
 								elif [ "$usl" = "enable" ]; then
 									echo /etc/int/$a1.conf
 									if [ -e /etc/init/$a1.conf-disabled ]; then
-									      sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start
+										sudo  mv /etc/init/$a1.conf-disabled /etc/init/$a1.conf; sudo service $a1 start
 									else
-									      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI35"
+										dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI35"
 									fi
 									echo /etc/int/$a1.conf-disabed
 								elif [ "$usl" = "disable" ]; then
 									if [ -e /etc/init/$a1.conf ]; then
-									      sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled
+										sudo service $a1 stop; sudo mv /etc/init/$a1.conf /etc/init/$a1.conf-disabled
 									else
-									      dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI37"
+										dymek  -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_MENU_USLUGI37"
 									fi
 								fi
 							fi
 						fi
 					fi
 					if [ -z "$a" ]; then
-					    petla="nie"
-					    rm *.txt -f
+						opusc__mala_petle
 					fi
 				  done
 			fi
 		fi
 	fi
 	if [ -z "$uslugi" ]; then
-		petla_duza="nie"
-		rm *.txt -f
+		opusc_petle
 	fi
 done
-

@@ -35,6 +35,24 @@
 
 source /opt/NeteXt73/procedury
 
+zmiany_w_APM(){
+	naglowek > instaluj.sh
+	if [ "$a" != "-" ]; then
+		apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
+	elif [ "$a" = "-" ]; then
+		yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
+		naglowek > instaluj.sh
+		apm_inst >> instaluj.sh
+		if [ -e ~/.netext73/apm_status ]; then
+		    apm_zmiana_config >> instaluj.sh
+		fi
+	fi
+	instalacja2
+	#zapisanie stanu apm po zmianie
+	stan_apm_config czeki
+}
+
+
 #########################################################################################################################################################################
 #APM
 
@@ -60,13 +78,13 @@ while [ $petla_duza = "tak" ]; do
 		#instalacja APM
 		yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1" --text="$TEXT_APM1"
 		if [ $? = 0 ]; then
-		      naglowek > instaluj.sh
-		      apm_inst >> instaluj.sh
-		      if [ -e ~/.netext73/apm_status ]; then
-			  apm_zmiana_config >> instaluj.sh
-		      fi
-		      instalacja2
-		      stan_apm  #sprawdzenie stanu instalacji
+			naglowek > instaluj.sh
+			apm_inst >> instaluj.sh
+			if [ -e ~/.netext73/apm_status ]; then
+				apm_zmiana_config >> instaluj.sh
+			fi
+			instalacja2
+			stan_apm  #sprawdzenie stanu instalacji
 		fi
 	fi
 	
@@ -108,50 +126,21 @@ while [ $petla_duza = "tak" ]; do
 			#uruchomienie aktualizacji gdy zaszła jakaś zmiana
 			if [ "$bfqfix" = "blk-mq" ] || [ "$ssdfix" = "blk-mq" ]; then
 				if [ "$a" = "$aktualny_apm" ] && [ "$wififix_przed" = "$wififix" ] && [ "$wifionoff_przed" = "$wifionoff" ] && [ "$btfix_przed" = "$btfix" ] && [ "$rts5139fix_przed" = "$rts5139fix" ] && [ "$wifin_przed" = "$wifin" ] && [ "$turbooff_przed" = "$turbooff" ] && [ "$turboacoff_przed" = "$turboacoff" ]; then
-				      petla_duza="nie"
-				      rm *.txt -f *.sh
+					opusc_petle
 				else
-					naglowek > instaluj.sh
-					if [ "$a" != "-" ]; then
-						apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
-					elif [ "$a" = "-" ]; then
-						yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
-						naglowek > instaluj.sh
-						apm_inst >> instaluj.sh
-						if [ -e ~/.netext73/apm_status ]; then
-						    apm_zmiana_config >> instaluj.sh
-						fi
-					fi
-					instalacja2
-					#zapisanie stanu apm po zmianie
-					stan_apm_config czeki
+					zmiany_w_APM
 				fi
 			else
 				if [ "$a" = "$aktualny_apm" ] && [ "$wififix_przed" = "$wififix" ] && [ "$wifionoff_przed" = "$wifionoff" ] && [ "$btfix_przed" = "$btfix" ] && [ "$rts5139fix_przed" = "$rts5139fix" ] && [ "$wifin_przed" = "$wifin" ] && [ "$bfqfix_przed" = "$bfqfix" ] && [ "$ssdfix_przed" = "$ssdfix" ] && [ "$turbooff_przed" = "$turbooff" ] && [ "$turboacoff_przed" = "$turboacoff" ]; then
-					petla_duza="nie"
-					rm *.txt -f *.sh
+					opusc_petle
 				else
-					naglowek > instaluj.sh
-					if [ "$a" != "-" ]; then
-						apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
-					elif [ "$a" = "-" ]; then
-						yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
-						naglowek > instaluj.sh
-						apm_inst >> instaluj.sh
-						if [ -e ~/.netext73/apm_status ]; then
-						    apm_zmiana_config >> instaluj.sh
-						fi
-					fi
-					instalacja2
-					#zapisanie stanu apm po zmianie
-					stan_apm_config czeki
+					zmiany_w_APM
 				fi
 			fi
 		fi
 	fi
 	if [ -z "$aa" ]; then
-	      petla_duza="nie"
-	      rm *.txt -f *.sh
+		opusc_petle
 	fi
 done
 

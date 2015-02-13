@@ -202,16 +202,16 @@ if [ $klawisz = "0" ]; then
 	elif [ "$a" = "$TEXT_UPDATE1 Firmware/microcode" ]; then 
 		usun
 		if [ "$firm" = "$TEXT_UPDATE4" ]; then
-		      yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_MICROCODE1"
+			yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_MICROCODE1"
 		else
-		      cd /opt/NeteXt73 && ./microcode
+			cd /opt/NeteXt73 && ./microcode
 		fi
 	elif [ "$a" = "$TEXT_UPDATE1 Kernel" ]; then 
 		usun
 		if [ "$kernel_premium" = "tak" ] ; then
-		      cd /opt/NeteXt73 && ./kernele premium
+			cd /opt/NeteXt73 && ./kernele premium
 		else
-		      cd /opt/NeteXt73 && ./kernele
+			cd /opt/NeteXt73 && ./kernele
 		fi
 	elif [ "$a" = "$TEXT_UPDATE2" ]; then
 		x-terminal-emulator -e bash -c "echo 'sudo apt-get update && sudo apt-get dist-upgrade'; sudo apt-get update && sudo apt-get dist-upgrade -y;echo -e \"$TEXT_INSTALACJA2\"; read ent"
@@ -229,19 +229,19 @@ elif [ $klawisz = "3" ]; then  #lista zmian
     if [ "$stable" != "$TEXT_BRAK_DANYCH" ]; then
 	if [ "$(echo $nr | grep "......")" != "" ];then
 		if [ "$USER" = "root" ]; then
-		      sudo -u $userek bash << EOF
-		      xdg-open "https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable"
+			sudo -u $userek bash << EOF
+			xdg-open "https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable"
 EOF
 		else
-		      xdg-open "https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable"
+			xdg-open "https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-$stable"
 		fi
 	else
 		if [ "$USER" = "root" ]; then
-		      sudo -u $userek bash << EOF
-		      xdg-open "https://www.kernel.org"
+			sudo -u $userek bash << EOF
+			xdg-open "https://www.kernel.org"
 EOF
 		else
-		      xdg-open "https://www.kernel.org"
+			xdg-open "https://www.kernel.org"
 		fi
 	fi
     fi

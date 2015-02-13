@@ -101,7 +101,7 @@ if [ "$klawisz" = 0 ]; then
 		yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_CONFIG8" --timeout=5
 	else
 		if [ "$(cat $res1 | grep '@' | cut -d "|" -f 2)" != "" ];then
-		      cat $res1 | grep '@' | cut -d "|" -f 2 > ~/.netext73/kernel_premium
+			cat $res1 | grep '@' | cut -d "|" -f 2 > ~/.netext73/kernel_premium
 		fi
 		cat $res1 | cut -d "|" -f 3 > ~/.netext73/jezyk
 		cat $res1 | cut -d "|" -f 6 > ~/.netext73/kernel_automat

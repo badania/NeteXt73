@@ -1107,3 +1107,13 @@ if [ "$?" != "" ]; then
     petla_duza="nie"  
 fi
 }
+
+opusc_petle(){
+	petla_duza="nie"
+	rm *.txt -f *.sh
+}
+
+opusc__mala_petle(){
+	petla="nie"
+	rm *.txt -f *.sh
+}
