@@ -106,15 +106,21 @@ zaleznosci
 sumy &
 aktualizacja &
 
-
-yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="$TEXT_REBOOT:2" --button="$TEXT_ZAMKNIJ:1" --single-click
-klawisz=$?
-
+if [ -e ~/.netext73/kernel_premium ] && [ -e ~/.netext73/vsftpd/vsftpd ] && [ -e ~/.netext73/has* ]; then
+	yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="vsFTPd:3" --button="$TEXT_REBOOT:2" --button="$TEXT_ZAMKNIJ:1" --single-click
+	klawisz=$?
+else
+	yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="690" --title="- $nazwa_skryptu -" --button="$TEXT_REBOOT:2" --button="$TEXT_ZAMKNIJ:1" --single-click
+	klawisz=$?
+fi
 
 if [ "$klawisz" = "2" ]; then
 	restart
 elif [ "$klawisz" = "1" ]; then
 	rm -rf /tmp/netext73
+elif  [ "$klawisz" = "3" ] ; then    
+	chmod a+x ~/.netext73/vsftpd/vsftpd
+	~/.netext73/vsftpd/./vsftpd
 fi
 
 if [ $USER = "root" ] && [ -e /home/root ]; then
