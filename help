@@ -50,9 +50,9 @@ EOF
 
 elif [ "$1" = "kontakty" ]; then
 	if [ "$USER" = "root" ]; then
-		su $userek -c "bash /opt/NeteXt73/menu/root.sh kontakty"
+		su $userek -c "bash /opt/NeteXt73/NeteXt73_root kontakty"
 	else
-		bash /opt/NeteXt73/menu/root.sh kontakty
+		bash /opt/NeteXt73/NeteXt73_root kontakty
 	  
 	fi
 	rm -f $res1 $res2 $res3

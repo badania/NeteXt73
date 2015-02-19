@@ -34,16 +34,33 @@
 #start
 cd /opt/NeteXt73/
 source /opt/NeteXt73/procedury
+if [ "$1" = "kontakty" ]; then
+	KEY="$(echo $RANDOM)"
+	#zmienne losowe
+	res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
+	res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)
+	res3=$(mktemp --tmpdir=/tmp/netext73 netext73_3.XXXXXXXX)
 
-if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ] && [ -e /tmp/netext73/stan_netext ] && [ $(cat /tmp/netext73/stan_netext) = "root" ] && [ "$(echo $1 | grep 'NeteXt73')" = "" ]; then
-	sudo -S $1
+	yad-netext --plug=$KEY --tabnum=1 --icons --image-on-top --single-click --item-width=150 --read-dir=/opt/NeteXt73/kontakty &> $res1 &
+	yad-netext --plug=$KEY --tabnum=2 --text-info --filename=/opt/NeteXt73/changelog &> $res2 &
+	yad-netext --plug=$KEY --tabnum=3 --text-info --filename=/opt/NeteXt73/LICENSE &> $res3 &
+	yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_KONTAKT_Z_AUTORAMI" --tab="$TEXT_CHANGELOG" --tab="$TEXT_LICENCJA" --window-icon="/opt/NeteXt73/ikony/mail.png" --on-top --width=840 --height=400 --button="$TEXT_ZAMKNIJ:1" --button="$TEXT_BUG:2"
+	klawisz=$?
+
+	if [ "$klawisz" = "2" ]; then
+		xdg-open "http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html"
+	fi
 else
-	echo "root" > /tmp/netext73/stan_netext
-	while ! yad-netext --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S $1; do
-		if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
-			exit 0
-		fi
-	done
-	
+	if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ] && [ -e /tmp/netext73/stan_netext ] && [ $(cat /tmp/netext73/stan_netext) = "root" ] && [ "$(echo $1 | grep 'NeteXt73')" = "" ]; then
+		sudo -S $1
+	else
+		echo "root" > /tmp/netext73/stan_netext
+		while ! yad-netext --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S $1; do
+			if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
+				exit 0
+			fi
+		done
+		
+	fi
 fi
 sudo -K
