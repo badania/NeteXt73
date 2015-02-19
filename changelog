@@ -1,6 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.51
+-	dodanie do APM hibernacji
+-	przebudowa APM do obsługi hibernacji
+-	przebudowa APM do trybu root
 v0.8.50
 -	poprawki w module logów
 -	dodanie zakładki logi do konfiguratora programu

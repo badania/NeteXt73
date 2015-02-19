@@ -53,12 +53,12 @@ fi
 #informacje o systemie
 #GCC
 if [ "$(dmesg | grep gcc)" != "" ]; then
-	echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI0</b></span>\n$(dmesg | grep gcc  | sed 's/.*Linux/Linux/g' )" > system$losowa.log	
+	echo -e "<span color=\"$kolor_textu\"><b>$TEXT_LOGI0</b></span>\n$(dmesg | grep gcc  | sed 's/.*Linux/Linux/g' )" > system$losowa.log	
 else
-	echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI0</b></span>\n$(uname -a  | sed 's/.*Linux/Linux/g' )" > system$losowa.log	
+	echo -e "<span color=\"$kolor_textu\"><b>$TEXT_LOGI0</b></span>\n$(uname -a  | sed 's/.*Linux/Linux/g' )" > system$losowa.log	
 fi
 #procesor i wifi
-echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI2</b></span>" >> system$losowa.log
+echo -e "<span color=\"$kolor_textu\"><b>$TEXT_LOGI2</b></span>" >> system$losowa.log
 echo -e "$(grep 'model name' /proc/cpuinfo | head -n1 | sed -e 's/model name'[[:space:]]:'//g' | sed -e 's/ //')" >>system$losowa.log
 if [ "$(lspci | grep "Network controller:" |sed -e 's/'.*:'//g' -e 's/Network Connection//g' | head -n1 | sed -e 's/ //')" = "" ]; then
 	wifi="no wifi"
@@ -73,8 +73,8 @@ else
 	echo -e "scheduler I/O :\n$(cat /sys/block/sd*/queue/scheduler)"  >> system$losowa.log
 fi
 #system
-echo -e "\n<span color=\"$kolor_textu\"><b>SYSTEM:</b></span> $(lsb_release -i | awk '{print $3}') $(lsb_release -r | awk '{print $2}') $(lsb_release -c | awk '{print $2}') $bit" >> system$losowa.log
-echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI6</b></span>" >> system$losowa.log
+echo -e "<span color=\"$kolor_textu\"><b>SYSTEM:</b></span> $(lsb_release -i | awk '{print $3}') $(lsb_release -r | awk '{print $2}') $(lsb_release -c | awk '{print $2}') $bit" >> system$losowa.log
+echo -e "<span color=\"$kolor_textu\"><b>$TEXT_LOGI6</b></span>" >> system$losowa.log
 #microcode intel
 if [ "$(dpkg -l intel-microcode | grep "ii" | awk '{print $1}'| head -n1)" = "ii" ];  then
 	echo "microcode Intel - <b>ON</b>" >> system$losowa.log
@@ -89,30 +89,30 @@ else
 fi
 #apm status
 if [ -e /usr/lib/pm-utils/power.d/readahead ] ; then
-      if [ "$stan_apm" != "-" ]; then
-	  echo -e "$TEXT_SKRYPT APM - <b>ON</b>" >> system$losowa.log
-      else
-	  echo -e "$TEXT_SKRYPT APM - <b>$TEXT_LOGI7</b>" >> system$losowa.log
-      fi
+	if [ "$stan_apm" != "-" ]; then
+		echo -e "$TEXT_SKRYPT APM - <b>ON</b>" >> system$losowa.log
+	else
+		echo -e "$TEXT_SKRYPT APM - <b>$TEXT_LOGI7</b>" >> system$losowa.log
+	fi
 else
-      echo -e "$TEXT_SKRYPT APM - <b>OFF</b>" >> system$losowa.log
+	echo -e "$TEXT_SKRYPT APM - <b>OFF</b>" >> system$losowa.log
 fi
 if [ -e $wersja_apm ]; then
-      echo "$TEXT_LOGI8 APM: <b>$(ls -al /etc/default/grub | cut -d " " -f 3)</b>" >> system$losowa.log
+	echo "$TEXT_LOGI8 APM: <b>$(ls -al /etc/default/grub | cut -d " " -f 3)</b>" >> system$losowa.log
 fi
 if [ -e /lib/firmware/amd-ucode/microcode_amd.bin ]; then
-      echo "$TEXT_LOGI8 microcode_amd.bin: <b>$(ls -al /lib/firmware/amd-ucode/microcode_amd.bin | cut -d " " -f 3)</b>" >> system$losowa.log
+	echo "$TEXT_LOGI8 microcode_amd.bin: <b>$(ls -al /lib/firmware/amd-ucode/microcode_amd.bin | cut -d " " -f 3)</b>" >> system$losowa.log
 fi
 if [ -e /lib/firmware/amd-ucode/microcode_amd_fam15h.bin ]; then
-      echo "$TEXT_LOGI8 microcode_amd_fam15h.bin: <b>$(ls -al /lib/firmware/amd-ucode/microcode_amd_fam15h.bin | cut -d " " -f 3)</b>" >> system$losowa.log
+	echo "$TEXT_LOGI8 microcode_amd_fam15h.bin: <b>$(ls -al /lib/firmware/amd-ucode/microcode_amd_fam15h.bin | cut -d " " -f 3)</b>" >> system$losowa.log
 fi
 echo "$TEXT_LOGI8 GRUB: <b>$(ls -al /etc/default/grub | cut -d " " -f 3)</b>" >> system$losowa.log
-echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI9</b></span>" >> system$losowa.log
+echo -e "<span color=\"$kolor_textu\"><b>$TEXT_LOGI9</b></span>" >> system$losowa.log
 grep "GRUB_CMDLINE_LINUX=" /etc/default/grub >> system$losowa.log
-echo -e "\n<span color=\"$kolor_textu\"><b>$TEXT_LOGI10</b></span>" >> system$losowa.log
+echo -e "<span color=\"$kolor_textu\"><b>$TEXT_LOGI10</b></span>" >> system$losowa.log
 echo "GCC - $(gcc --version | head -n 1)" >> system$losowa.log
 echo "Powertop - $(dpkg -l | grep powertop | awk '{print $3}' | head -n 1)" >> system$losowa.log
-echo -e "\n<span color=\"$kolor_textu\"><b>OpenGL</b></span>" >> system$losowa.log
+echo -e "<span color=\"$kolor_textu\"><b>OpenGL</b></span>" >> system$losowa.log
 glxinfo | grep OpenGL | sed 's/OpenGL ext.*//g' | sed 's/OpenGL core profile extensions://g' | sed '/^[ \t]*$/ d' >> system$losowa.log
 mv system$losowa.log zakladka1.log
 #zakładka2
@@ -222,11 +222,12 @@ sed -i 's/<\/b>//g' system$losowa.log
 sed -i 's/<b>//g' system$losowa.log
 dmesg > dmesg.log
 mv system$losowa.log netext.log
-killall python 
+
 sudo ufw status verbose > firewall.log
 for i in $(seq 1 42); do sudo dmidecode --type $i >> dmidecode.log; done
 sudo tac /var/log/kern.log | sed -n 1,1000p > kern.log
 #system logi
+killall python 
 KEY="$(echo $RANDOM)"
 #zmienne losowe
 res0=$(mktemp --tmpdir=/tmp/netext73 netext73_0.XXXXXXXX)
@@ -255,9 +256,9 @@ yad-netext --plug=$KEY --tabnum=10 --text-info --filename="lspcisystem$losowa.lo
 yad-netext --plug=$KEY --tabnum=11 --text-info --filename="lsusbsystem$losowa.log"	&> $res10 &
 
 yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " \
---tab="logi.log" --tab="netext.log" --tab="dmesg.log" --tab="kern.log" --tab="firewall.log" --tab="dmidecode.log" \
---tab="glxinfo.log" --tab="APM-microcode.log" --tab="lsmod.log" --tab="lspci.log" --tab="lsusb.log" \
---window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --width=900 --height=900 --button="$TEXT_PASTEBIN:0" --button="$TEXT_ZAMKNIJ:1"
+--tab="main" --tab="netext" --tab="dmesg" --tab="kern" --tab="firewall" --tab="dmidecode" \
+--tab="glxinfo" --tab="APM-microcode" --tab="lsmod" --tab="lspci" --tab="lsusb" \
+--window-icon="/opt/NeteXt73/ikony/logi.png"  --width=600 --height=600 --on-top --button="$TEXT_PASTEBIN:0" --button="$TEXT_ZAMKNIJ:1"
 klawisz=$?
 if [ "$klawisz" = "0" ]; then
 	export userek=$(cat /tmp/netext73/userek)

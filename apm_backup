@@ -36,18 +36,18 @@
 source /opt/NeteXt73/procedury
 
 zmiany_w_APM(){
-	#naglowek > instaluj.sh
+	naglowek > instaluj.sh
 	if [ "$a" != "-" ]; then
-		apm_zmiana $a "advanced_power_management_by_ext73_$a*" # >> instaluj.sh
+		apm_zmiana $a "advanced_power_management_by_ext73_$a*" >> instaluj.sh
 	elif [ "$a" = "-" ]; then
 		yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
-		#naglowek > instaluj.sh
-		apm_inst #>> instaluj.sh
+		naglowek > instaluj.sh
+		apm_inst >> instaluj.sh
 		if [ -e ~/.netext73/apm_status ]; then
-		    apm_zmiana_config #>> instaluj.sh
+		    apm_zmiana_config >> instaluj.sh
 		fi
 	fi
-	#instalacja2
+	instalacja2
 	#zapisanie stanu apm po zmianie
 	stan_apm_config czeki
 }
@@ -64,9 +64,9 @@ stan_apm=""
 if [ -e  ~/.netext73/apm_status ] && [ "$(cat ~/.netext73/apm_status | wc -l)" != "11" ]; then
 	#sprawdzanie czy jest włączony jakiś APM
 	if [ "$(ls /etc/pm/power.d/)" != "" ] && [ "$(ls /etc/pm/power.d/advanced_power_management_by_ext73* -Fl | grep '*' | cut -d '_' -f 7)" = "" ];then
-		#naglowek > instaluj.sh
-		sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative*
-		#instalacja
+		naglowek > instaluj.sh
+		echo "sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative*" >> instaluj.sh
+		instalacja
 	fi
 	#sprawdzenie stanu czeków
 	stan_apm_config
@@ -78,12 +78,12 @@ while [ $petla_duza = "tak" ]; do
 		#instalacja APM
 		yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1" --text="$TEXT_APM1"
 		if [ $? = 0 ]; then
-			#naglowek > instaluj.sh
-			apm_inst #>> instaluj.sh
+			naglowek > instaluj.sh
+			apm_inst >> instaluj.sh
 			if [ -e ~/.netext73/apm_status ]; then
-				apm_zmiana_config #>> instaluj.sh
+				apm_zmiana_config >> instaluj.sh
 			fi
-			#instalacja2
+			instalacja2
 			stan_apm  #sprawdzenie stanu instalacji
 		fi
 	fi
