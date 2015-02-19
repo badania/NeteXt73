@@ -9,7 +9,7 @@ class MyWindow(Gtk.ApplicationWindow):
     # a window
 
     def __init__(self, app):
-        Gtk.Window.__init__(self, title="Test in progres", application=app)
+        Gtk.Window.__init__(self, title="Please Wait !", application=app)
         self.set_default_size(350, 350)
         self.set_border_width(30)
 	

@@ -285,15 +285,14 @@ sudo apt-get install ethtool
 sudo /etc/init.d/ondemand stop
 sudo update-rc.d -f ondemand remove
 #naprawa powerbtn
-if [ "$(uname -m)" = "x86_64" ]; then 
-	if [ "$(cat /etc/acpi/powerbtn.sh | grep '/usr/.../qdbus')" != "" ]; then
-		sudo cp /etc/acpi/powerbtn.sh /etc/acpi/powerbtn.sh.bak -f
-		sudo sed -i 's/\/usr\/...\/qdbus/\/usr\/lib\/x86_64-linux-gnu\/qt4\/bin\/qdbus/' /etc/acpi/powerbtn.sh
-		if [ "$(cat /etc/acpi/powerbtn.sh | grep '#\/sbin')" = "" ];then
-			sudo sed -i '/Power button pressed/ s/\/sbin/#\/sbin/' /etc/acpi/powerbtn.sh
-		fi
+if [ "$(cat /etc/acpi/powerbtn.sh | grep '/usr/.../qdbus')" != "" ]; then
+	sudo cp /etc/acpi/powerbtn.sh /etc/acpi/powerbtn.sh.bak -f
+	sudo sed -i 's/\/usr\/...\/qdbus/\/usr\/lib\/x86_64-linux-gnu\/qt4\/bin\/qdbus/' /etc/acpi/powerbtn.sh
+	if [ "$(cat /etc/acpi/powerbtn.sh | grep '#\/sbin')" = "" ];then
+		sudo sed -i '/Power button pressed/ s/\/sbin/#\/sbin/' /etc/acpi/powerbtn.sh
 	fi
 fi
+
 sudo sed -i '/apm_status_fix/d' /etc/rc.local
 sudo sed -i '/exit 0/d' /etc/rc.local
 echo 'bash /opt/NeteXt73/menu/apm_status_fix' | sudo tee -a /etc/rc.local
@@ -301,7 +300,6 @@ echo 'exit 0' | sudo tee -a /etc/rc.local
 }
 
 apm_zmiana(){
-#echo "$TEXT_PROCEDURA_8_1 $1 "
 sudo chmod a-x /etc/pm/power.d/*
 sudo chmod a+x /etc/pm/power.d/$2 /usr/lib/pm-utils/power.d/readahead
 sudo chown root:root /etc/pm/power.d/* /usr/lib/pm-utils/power.d/readahead
@@ -333,7 +331,6 @@ fi
 
 if [ "$rts5139fix" = "TRUE" ];then
 	sudo sed -i '/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*
-#sudo sed -i '1,/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*"
 else
 	sudo sed -i '/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*
 fi
@@ -453,7 +450,6 @@ fi
 }
 
 apm_usun(){
-#echo \"$TEXT_PROCEDURA_9\""
 sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/pm-utils/power.d/readahead
 if [ ! -e /usr/lib/pm-utils/power.d/laptop-mode ];then
 	wget $adres_skryptow/wireless
