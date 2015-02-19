@@ -100,6 +100,8 @@ export TEXT_CONFIG10="Profil Kernela:"
 export TEXT_CONFIG11="Automatycznie używaj wybrany Profil Kernela"
 export TEXT_CONFIG12="Pozostaw kopię plików *.deb w /var/cache/apt/archives"
 export TEXT_CONFIG13="Zmiana trybu ROOT wymaga ponownego ręcznego uruchomienia programu."
+export TEXT_PRZESLIJ_LOGI="Wysyłka logów"
+export TEXT_ZAZNACZ_LOGI="Zaznacz logi, które chcesz wysłać na serwer:"
 
 #########################################################################################################################################################################
 #tlumaczenia_deinstalator

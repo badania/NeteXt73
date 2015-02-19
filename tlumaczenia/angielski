@@ -102,6 +102,8 @@ export TEXT_CONFIG10="Kernel Profile:"
 export TEXT_CONFIG11="Automatically use selected Kernel Profile"
 export TEXT_CONFIG12="Keep a copy downloaded deb files in /var/cache/apt/archives"
 export TEXT_CONFIG13="Turn on the program again"
+export TEXT_PRZESLIJ_LOGI="Send a logs"
+export TEXT_ZAZNACZ_LOGI="Select the the logs, which you want to send to the server:"
 
 #########################################################################################################################################################################
 #tlumaczenia_deinstalator

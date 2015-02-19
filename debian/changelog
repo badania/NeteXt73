@@ -1,3 +1,9 @@
+netext73 (0.8.50) stable; urgency=medium
+
+  * logi, konfigurator i tłumaczenia
+
+ -- NetBit73 <netbit73@gmail.com>  Thu, 19 Feb 2015 09:39:58 +0100
+
 netext73 (0.8.49) stable; urgency=medium
 
   * zmiana w logach

@@ -223,73 +223,73 @@ sed -i 's/<b>//g' system$losowa.log
 dmesg > dmesg.log
 mv system$losowa.log netext.log
 killall python 
-	sudo ufw status verbose > firewall.log
-	for i in $(seq 1 42); do sudo dmidecode --type $i >> dmidecode.log; done
-	sudo tac /var/log/kern.log | sed -n 1,1000p > kern.log
-	#system logi
-	KEY="$(echo $RANDOM)"
-	#zmienne losowe
-	res0=$(mktemp --tmpdir=/tmp/netext73 netext73_0.XXXXXXXX)
-	res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
-	res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)
-	res3=$(mktemp --tmpdir=/tmp/netext73 netext73_3.XXXXXXXX)
-	res4=$(mktemp --tmpdir=/tmp/netext73 netext73_4.XXXXXXXX)
-	res5=$(mktemp --tmpdir=/tmp/netext73 netext73_5.XXXXXXXX)
-	res6=$(mktemp --tmpdir=/tmp/netext73 netext73_6.XXXXXXXX)
-	res7=$(mktemp --tmpdir=/tmp/netext73 netext73_7.XXXXXXXX)
-	res8=$(mktemp --tmpdir=/tmp/netext73 netext73_8.XXXXXXXX)
-	res9=$(mktemp --tmpdir=/tmp/netext73 netext73_9.XXXXXXXX)
-	res10=$(mktemp --tmpdir=/tmp/netext73 netext73_10.XXXXXXXX)
+sudo ufw status verbose > firewall.log
+for i in $(seq 1 42); do sudo dmidecode --type $i >> dmidecode.log; done
+sudo tac /var/log/kern.log | sed -n 1,1000p > kern.log
+#system logi
+KEY="$(echo $RANDOM)"
+#zmienne losowe
+res0=$(mktemp --tmpdir=/tmp/netext73 netext73_0.XXXXXXXX)
+res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
+res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)
+res3=$(mktemp --tmpdir=/tmp/netext73 netext73_3.XXXXXXXX)
+res4=$(mktemp --tmpdir=/tmp/netext73 netext73_4.XXXXXXXX)
+res5=$(mktemp --tmpdir=/tmp/netext73 netext73_5.XXXXXXXX)
+res6=$(mktemp --tmpdir=/tmp/netext73 netext73_6.XXXXXXXX)
+res7=$(mktemp --tmpdir=/tmp/netext73 netext73_7.XXXXXXXX)
+res8=$(mktemp --tmpdir=/tmp/netext73 netext73_8.XXXXXXXX)
+res9=$(mktemp --tmpdir=/tmp/netext73 netext73_9.XXXXXXXX)
+res10=$(mktemp --tmpdir=/tmp/netext73 netext73_10.XXXXXXXX)
 
-	#zakładki
-	yad-netext --plug=$KEY --tabnum=1 --text="$(cat zakladka1.log)" 	&> $res0 &
-	yad-netext --plug=$KEY --tabnum=2 --text-info --filename=netext.log 	&> $res1 &
-	yad-netext --plug=$KEY --tabnum=3 --text-info --filename=dmesg.log 	&> $res2 &
-	yad-netext --plug=$KEY --tabnum=4 --text-info --filename=kern.log 	&> $res3 &
-	yad-netext --plug=$KEY --tabnum=5 --text-info --filename=firewall.log 	&> $res4 &
-	yad-netext --plug=$KEY --tabnum=6 --text-info --filename=dmidecode.log 	&> $res5 &
-	yad-netext --plug=$KEY --tabnum=7 --text-info --filename=glxinfo$losowa.log &> $res6 &
-	yad-netext --plug=$KEY --tabnum=8 --text-info --filename=apmsystem$losowa.log &> $res7 &
-	yad-netext --plug=$KEY --tabnum=9 --text-info --filename=lsmodsystem$losowa.log &> $res8 &
-	yad-netext --plug=$KEY --tabnum=10 --text-info --filename=lspcisystem$losowa.log &> $res9 &
-	yad-netext --plug=$KEY --tabnum=11 --text-info --filename=lsusbsystem$losowa.log &> $res10 &
+#zakładki
+yad-netext --plug=$KEY --tabnum=1 --text="$(cat zakladka1.log)" 	&> $res0 &
+yad-netext --plug=$KEY --tabnum=2 --text-info --filename="netext.log"	&> $res1 &
+yad-netext --plug=$KEY --tabnum=3 --text-info --filename="dmesg.log"	&> $res2 &
+yad-netext --plug=$KEY --tabnum=4 --text-info --filename="kern.log"	&> $res3 &
+yad-netext --plug=$KEY --tabnum=5 --text-info --filename=firewall.log 	&> $res4 &
+yad-netext --plug=$KEY --tabnum=6 --text-info --filename=dmidecode.log 	&> $res5 &
+yad-netext --plug=$KEY --tabnum=7 --text-info --filename="glxinfo$losowa.log"	&> $res6 &
+yad-netext --plug=$KEY --tabnum=8 --text-info --filename="apmsystem$losowa.log"	&> $res7 &
+yad-netext --plug=$KEY --tabnum=9 --text-info --filename="lsmodsystem$losowa.log"	&> $res8 &
+yad-netext --plug=$KEY --tabnum=10 --text-info --filename="lspcisystem$losowa.log"	&> $res9 &
+yad-netext --plug=$KEY --tabnum=11 --text-info --filename="lsusbsystem$losowa.log"	&> $res10 &
 
-	yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " \
-	--tab="logi.log" --tab="netext.log" --tab="dmesg.log" --tab="kern.log" --tab="firewall.log" --tab="dmidecode.log" \
-	--tab="glxinfo.log" --tab="APM-microcode.log" --tab="lsmod.log" --tab="lspci.log" --tab="lsusb.log" \
-	--window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --width=900 --height=900 --button="$TEXT_PASTEBIN:0" --button="$TEXT_ZAMKNIJ:1"
-	klawisz=$?
-	if [ "$klawisz" = "0" ]; then
-		export userek=$(cat /tmp/netext73/userek)
-		sudo -u $userek bash << EOF
-		if [ -e ~/.netext73/wysylkalogow ]; then
-			if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 1p)" != "FALSE" ]; then
-				xdg-open $(cat netext.log 		| pastebinit)
-			fi
-			if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 2p)" != "FALSE" ]; then
-				xdg-open $(cat dmesg.log 		| pastebinit)  
-			fi
-			if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 3p)" != "FALSE" ]; then
-				xdg-open $(cat kern.log 		| pastebinit)  
-			fi
-			if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 4p)" != "FALSE" ]; then
-				xdg-open $(cat glxinfo$losowa.log     	| pastebinit)  
-			fi
-			if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 5p)" != "FALSE" ]; then
-				xdg-open $(cat apmsystem$losowa.log   	| pastebinit)  
-			fi
-			if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 6p)" != "FALSE" ]; then
-				xdg-open $(cat lsmodsystem$losowa.log 	| pastebinit)  
-			fi
-			if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 7p)" != "FALSE" ]; then
-				xdg-open $(cat lspcisystem$losowa.log 	| pastebinit)  
-			fi
-			if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 8p)" != "FALSE" ]; then
-				xdg-open $(cat lsusbsystem$losowa.log 	| pastebinit)  
-			fi
-		else
+yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " \
+--tab="logi.log" --tab="netext.log" --tab="dmesg.log" --tab="kern.log" --tab="firewall.log" --tab="dmidecode.log" \
+--tab="glxinfo.log" --tab="APM-microcode.log" --tab="lsmod.log" --tab="lspci.log" --tab="lsusb.log" \
+--window-icon="/opt/NeteXt73/ikony/logi.png" --on-top --width=900 --height=900 --button="$TEXT_PASTEBIN:0" --button="$TEXT_ZAMKNIJ:1"
+klawisz=$?
+if [ "$klawisz" = "0" ]; then
+	export userek=$(cat /tmp/netext73/userek)
+	sudo -u $userek bash << EOF
+	if [ -e ~/.netext73/wysylkalogow ]; then
+		if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 1p)" != "FALSE" ]; then
 			xdg-open $(cat netext.log | pastebinit)
 		fi
+		if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 2p)" != "FALSE" ]; then
+			xdg-open $(cat dmesg.log | pastebinit)
+		fi
+		if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 3p)" != "FALSE" ]; then
+			xdg-open $(cat kern.log | pastebinit)
+		fi
+		if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 4p)" != "FALSE" ]; then
+			xdg-open $(cat glxinfo$losowa.log | pastebinit)
+		fi
+		if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 5p)" != "FALSE" ]; then
+			xdg-open $(cat apmsystem$losowa.log | pastebinit)
+		fi
+		if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 6p)" != "FALSE" ]; then
+			xdg-open $(cat lsmodsystem$losowa.log | pastebinit)
+		fi
+		if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 7p)" != "FALSE" ]; then
+			xdg-open $(cat lspcisystem$losowa.log | pastebinit)
+		fi
+		if [ "$(cat  ~/.netext73/wysylkalogow | sed -n 8p)" != "FALSE" ]; then
+			xdg-open $(cat lsusbsystem$losowa.log | pastebinit)
+		fi
+	else
+		xdg-open $(cat netext.log | pastebinit)
+	fi
 EOF
 	fi
 	rm -f $res0 $res1 $res2 $res3 $res4 $res5 $res6 $res7 $res8 $res9 $res10
