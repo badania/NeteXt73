@@ -1,3 +1,9 @@
+netext73 (0.8.53) stable; urgency=medium
+
+  * lista udostępnianych plików wraz ze statusem instalcji
+
+ -- NetBit73 <netbit73@gmail.com>  Fri, 20 Feb 2015 19:29:11 +0100
+
 netext73 (0.8.52) stable; urgency=medium
 
   * zatwierdzenie zmian
