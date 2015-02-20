@@ -78,7 +78,7 @@ sumy(){
 		res8=$(mktemp --tmpdir=/tmp/netext73 netext73_8.XXXXXXXX)
 		res8=$(mktemp --tmpdir=/tmp/netext73 netext73_9.XXXXXXXX)
 		for i in $(cat /tmp/netext73/sumy/sumy_kontrolne.txt | awk '{print $2}' | grep -v -E 'image|amdcccle' -v); do 
-			if [ "$(dpkg -l | grep $(echo $i | sed 's/_amd64.deb//'))" = "" ]; then
+			if [ "$(dpkg -l | awk '{print $2}' | grep -x $(echo $i | sed 's/_amd64.deb//'))" = "" ]; then
 			      echo "FALSE $i" >> 1.txt
 			else
 			      echo "TRUE $i" >> 1.txt
