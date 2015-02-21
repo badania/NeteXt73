@@ -214,7 +214,7 @@ if [ $klawisz = "0" ]; then
 			cd /opt/NeteXt73 && ./kernele
 		fi
 	elif [ "$a" = "$TEXT_UPDATE2" ]; then
-		x-terminal-emulator -e bash -c "echo 'sudo apt-get update && sudo apt-get dist-upgrade'; sudo apt-get update && sudo apt-get dist-upgrade -y;echo -e \"$TEXT_INSTALACJA2\"; read ent"
+		xterm -T  "dist-upgrade" -e bash -c "echo 'sudo apt-get update && sudo apt-get dist-upgrade'; sudo apt-get update && sudo apt-get dist-upgrade -y;echo -e \"$TEXT_INSTALACJA2\"; read ent"
 	
 	elif [ "$a" = "$TEXT_UPDATE8" ]; then
 		aktualizuj_calosc

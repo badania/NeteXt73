@@ -621,10 +621,6 @@ instalacja(){
 xterm -T instalator -e bash -c "tput setaf 1;echo \"$TEXT_INSTALACJA1\";tput sgr0; bash instaluj.sh  && rm instaluj.sh -f ;tput setaf 2; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt" 
 }
 
-instalacja_nativ(){
-x-terminal-emulator -e bash -c "tput setaf 1;echo \"$TEXT_INSTALACJA1\";tput sgr0; bash instaluj.sh && rm instaluj.sh -f ;tput setaf 2; echo -e \"$TEXT_INSTALACJA2\"; read ent; echo 'tak' > /tmp/netext73/ok.txt"
-}
-
 #instalacja bez pytań
 instalacja2(){
 xterm -T instalator -e bash -c "bash instaluj.sh && rm instaluj.sh -f"
@@ -983,7 +979,7 @@ glxgears &
 for i in $(seq 1 $(grep 'model name' /proc/cpuinfo | wc -l )); do
 xterm -T "BurnTest $i" -e bash -c "echo'';echo'';echo '███╗   ██╗███████╗████████╗███████╗██╗  ██╗████████╗███████╗██████╗ ';echo '████╗  ██║██╔════╝╚══██╔══╝██╔════╝╚██╗██╔╝╚══██╔══╝╚════██║╚════██╗';echo '██╔██╗ ██║█████╗     ██║   █████╗   ╚███╔╝    ██║       ██╔╝ █████╔╝';echo '██║╚██╗██║██╔══╝     ██║   ██╔══╝   ██╔██╗    ██║      ██╔╝  ╚═══██╗';echo '██║ ╚████║███████╗   ██║   ███████╗██╔╝ ██╗   ██║      ██║  ██████╔╝';echo '╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝  ╚═════╝ ';echo'';echo'';echo '███╗   ██╗███████╗████████╗███████╗██╗  ██╗████████╗███████╗██████╗ ';echo '████╗  ██║██╔════╝╚══██╔══╝██╔════╝╚██╗██╔╝╚══██╔══╝╚════██║╚════██╗';echo '██╔██╗ ██║█████╗     ██║   █████╗   ╚███╔╝    ██║       ██╔╝ █████╔╝';echo '██║╚██╗██║██╔══╝     ██║   ██╔══╝   ██╔██╗    ██║      ██╔╝  ╚═══██╗';echo '██║ ╚████║███████╗   ██║   ███████╗██╔╝ ██╗   ██║      ██║  ██████╔╝';echo '╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝  ╚═════╝ ';echo'';echo'';echo '███╗   ██╗███████╗████████╗███████╗██╗  ██╗████████╗███████╗██████╗ ';echo '████╗  ██║██╔════╝╚══██╔══╝██╔════╝╚██╗██╔╝╚══██╔══╝╚════██║╚════██╗';echo '██╔██╗ ██║█████╗     ██║   █████╗   ╚███╔╝    ██║       ██╔╝ █████╔╝';echo '██║╚██╗██║██╔══╝     ██║   ██╔══╝   ██╔██╗    ██║      ██╔╝  ╚═══██╗';echo '██║ ╚████║███████╗   ██║   ███████╗██╔╝ ██╗   ██║      ██║  ██████╔╝';echo '╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝  ╚═════╝ ';python -c \"while True: pass\"" &
 done
-x-terminal-emulator -e bash -c "htop"
+xterm -T "htop" -e bash -c "htop"
 }
 
 yad_wget(){

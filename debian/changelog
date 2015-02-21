@@ -1,3 +1,9 @@
+netext73 (0.8.54) stable; urgency=medium
+
+  * usunięcie x-terminal-emulator
+
+ -- NetBit73 <netbit73@gmail.com>  Sat, 21 Feb 2015 12:55:11 +0100
+
 netext73 (0.8.53) stable; urgency=medium
 
   * lista udostępnianych plików wraz ze statusem instalcji

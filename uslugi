@@ -181,7 +181,7 @@ while [ $petla_duza = "tak" ]; do
 				done
 			#SysV - expert
 			elif [ "$uslugi" = "$TEXT_MENU_USLUGI1B" ] ; then
-				x-terminal-emulator -e bash -c "echo -e \"$TEXT_MENU_USLUGI7 sysv-rc-conf\n\"; sudo sysv-rc-conf"
+				xterm -T "sysv-rc-conf" -e bash -c "echo -e \"$TEXT_MENU_USLUGI7 sysv-rc-conf\n\"; sudo sysv-rc-conf"
 				exit 0
 			#elif  [ "$uslugi" = "$TEXT_MENU_USLUGI0 systemd" ]; then
 				

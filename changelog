@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.54
+-	usunięcie x-terminal-emulator z uwagi na brak kompatybilności w lubuntu
 v0.8.53
 -	lista udostępnianych plików wraz ze statusem instalcji
 - 	dociąganie zależności w radeonie

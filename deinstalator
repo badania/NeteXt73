@@ -61,7 +61,7 @@ elif [ "$usun" = "$TEXT_MENU_DEINSTALATOR5" ]; then
 	fi
 #usuwanie netexta
 elif [  "$usun" = "$TEXT_MENU_DEINSTALATOR7" ]; then
-	x-terminal-emulator -e bash -c "echo \"$TEXT_INSTALACJA1\";sudo apt-get purge netext73; sudo rm -rf /opt/NeteXt73 /usr/share/applications/NeteXt73.desktop /usr/share/pixmaps/NeteXt73.png /usr/local/bin/install_netext; echo -e \"$TEXT_INSTALACJA2\";killall -9 yad-netext"
+	xterm -T "deinstalator" -e bash -c "echo \"$TEXT_INSTALACJA1\";sudo apt-get purge netext73; sudo rm -rf /opt/NeteXt73 /usr/share/applications/NeteXt73.desktop /usr/share/pixmaps/NeteXt73.png /usr/local/bin/install_netext; echo -e \"$TEXT_INSTALACJA2\";killall -9 yad-netext"
 #usuwanie kerneli
 elif [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINSTALATOR2" ]; then
 	petla="tak"
