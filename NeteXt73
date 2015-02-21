@@ -64,41 +64,6 @@ sumy(){
 	if [ "$(cat $sumy_kontrolne)" = "" ]; then
 		yad-netext --center --info --title="$nazwa_skryptu   " --text="<span color=\"$kolor_textu\"><b>$BRAKNETA</b></span>" --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --on-top
 		exit 1
-	else
-		KEY="$(echo $RANDOM)"
-		#zmienne losowe
-		res0=$(mktemp --tmpdir=/tmp/netext73 netext73_0.XXXXXXXX)
-		res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
-		res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)
-		res3=$(mktemp --tmpdir=/tmp/netext73 netext73_3.XXXXXXXX)
-		res4=$(mktemp --tmpdir=/tmp/netext73 netext73_4.XXXXXXXX)
-		res5=$(mktemp --tmpdir=/tmp/netext73 netext73_5.XXXXXXXX)
-		res6=$(mktemp --tmpdir=/tmp/netext73 netext73_6.XXXXXXXX)
-		res7=$(mktemp --tmpdir=/tmp/netext73 netext73_7.XXXXXXXX)
-		res8=$(mktemp --tmpdir=/tmp/netext73 netext73_8.XXXXXXXX)
-		res8=$(mktemp --tmpdir=/tmp/netext73 netext73_9.XXXXXXXX)
-		for i in $(cat /tmp/netext73/sumy/sumy_kontrolne.txt | awk '{print $2}' | grep -v -E 'image|amdcccle' -v); do 
-			if [ "$(dpkg -l | awk '{print $2}' | grep -x $(echo $i | sed 's/_amd64.deb//'))" = "" ]; then
-			      echo "FALSE $i" >> 1.txt
-			else
-			      echo "TRUE $i" >> 1.txt
-			fi
-		done	
-		sed -i 's/_amd64.deb//g' 1.txt
-		sed -i 's/-headers//g' 1.txt
-		#zakładki
-		yad-netext --plug=$KEY --tabnum=1 --checklist --list $(cat 1.txt | grep fglrx_     | sort -r) --column "$TEXT_ZNITY1" --column "catalist" &> $res0 &
-		yad-netext --plug=$KEY --tabnum=2 --checklist --list $(cat 1.txt | grep nvidia     | grep -v -E "nvidia-settings.*|libnvidia-"| sort -r) --column "$TEXT_ZNITY1" --column "nvidia" &> $res1 &
-		yad-netext --plug=$KEY --tabnum=3 --checklist --list $(cat 1.txt | grep k8 	   | sort -r) --column "$TEXT_ZNITY1" --column "kernel k8" &> $res2 &
-		yad-netext --plug=$KEY --tabnum=4 --checklist --list $(cat 1.txt | grep atom	   | sort -r) --column "$TEXT_ZNITY1" --column "kernel atom" &> $res3 &
-		yad-netext --plug=$KEY --tabnum=5 --checklist --list $(cat 1.txt | grep i7 	   | egrep -v pro | sort -r) --column "$TEXT_ZNITY1" --column "kernel i7" &> $res4 &
-		yad-netext --plug=$KEY --tabnum=6 --checklist --list $(cat 1.txt | grep i7-pro     | sort -r) --column "$TEXT_ZNITY1" --column "kernel i7-pro" &> $res5 &
-		yad-netext --plug=$KEY --tabnum=7 --checklist --list $(cat 1.txt | grep brazos     | egrep -v pro | sort -r) --column "$TEXT_ZNITY1" --column "kernel brazos" &> $res6 &
-		yad-netext --plug=$KEY --tabnum=8 --checklist --list $(cat 1.txt | grep brazos-pro | sort -r) --column "$TEXT_ZNITY1" --column "kernel brazos-pro" &> $res7 &
-
-		yad-netext --notebook --key=$KEY --on-top --title=" $nazwa_skryptu   " --width=570 --height=300 --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" \
-		--tab="catalyst" --tab="nvidia" --tab="k8" --tab="atom" --tab="i7" --tab="i7-pro" --tab="brazos" --tab="brazos-pro" --button="gtk-ok:0" --text="lista udostępnianych plików wraz ze statusem instalacji:"
-		rm 1.txt -f
 	fi
 }
 
