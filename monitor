@@ -110,7 +110,7 @@ if [ "$klawisz" = "0" ]; then
 		xterm -T "PowerTop" -e bash -c "sudo powertop" &
 	fi
 	if [ "$(echo $konfiguracja | grep HTOP)" != "" ]; then
-		xtermv-T "HTop" -e bash -c "htop" &
+		xterm -T "HTop" -e bash -c "htop" &
 	fi
 	if [ "$(echo $konfiguracja | grep saidar)" != "" ]; then
 		xterm -T "Saidar" -e bash -c "saidar -c" &
