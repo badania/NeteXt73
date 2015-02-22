@@ -2,7 +2,8 @@
 -------------------------------------
 
 v0.8.55
--	wyłączenie z zależności glmark2 - brak rozwoju od roku
+-	wyłączenie z zależności glmark2 - brak rozwoju od roku grafik
+-	poprawa sprawdzania zainstalowanych sterowników
 v0.8.54
 -	usunięcie x-terminal-emulator z uwagi na brak kompatybilności w lubuntu
 v0.8.53

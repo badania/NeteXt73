@@ -37,24 +37,24 @@ source /opt/NeteXt73/procedury
 if [ "$1" = "kontakty" ]; then
 	#przygotowanie informacji o zainstalowanych plikach
 	rm /tmp/netext73/sumy/pliki.txt -f
-	dpkg -l | grep linux-header	| awk '{print $2}'  	> /tmp/netext73/sumy/lista.txt
-	dpkg -l | grep nvidia 		| awk '{print $2"_"$3}' >> /tmp/netext73/sumy/lista.txt
-	dpkg -l | grep fglrx 		| sed 's/.://g' 	| awk '{print $3}' >> /tmp/netext73/sumy/lista.txt
-	for i in $(cat /tmp/netext73/sumy/sumy_kontrolne.txt | awk '{print $2}' | grep -v -E 'image|amdcccle' -v | sed 's/_amd64.deb//g'); do 
-		if [ "$(grep fglrx $i)" = "" ];then
+	dpkg -l | grep ii | grep linux-header	  | awk '{print $2}'  	> /tmp/netext73/sumy/lista.txt
+	dpkg -l | grep ii | grep nvidia 	  | awk '{print $2"_"$3}' >> /tmp/netext73/sumy/lista.txt
+	dpkg -l | grep ii | awk '{print $2"_"$3}' | sed 's/.://g' | grep fglrx_ >> /tmp/netext73/sumy/lista.txt
+	for i in $(cat /tmp/netext73/sumy/sumy_kontrolne.txt | awk '{print $2}' | grep -v -E 'image|amdcccle' -v | sed 's/_amd64.deb//g' ); do 
+		if [ "$(echo $i | grep fglrx )" = "" ];then
 			if [ "$(cat /tmp/netext73/sumy/lista.txt | grep -x $i)" = "" ]; then
 				echo "FALSE $i" >> /tmp/netext73/sumy/pliki.txt
 			else
 				echo "TRUE $i" >> /tmp/netext73/sumy/pliki.txt
 			fi
 		else
-			if [ "$(cat /tmp/netext73/sumy/lista.txt | cut -d '_' -f3 | grep -x $i)" = "" ]; then
+			if [ "$(cat /tmp/netext73/sumy/lista.txt | grep -x $(echo $i | sed 's/.*_fglrx/fglrx/g'))" = "" ]; then
 				echo "FALSE $i" >> /tmp/netext73/sumy/pliki.txt
 			else
 				echo "TRUE $i" >> /tmp/netext73/sumy/pliki.txt
 			fi
 		fi
-	done	
+	done
 	sed -i 's/_amd64.deb//g' /tmp/netext73/sumy/pliki.txt
 	sed -i 's/-headers//g' /tmp/netext73/sumy/pliki.txt
 	KEY="$(echo $RANDOM)"
