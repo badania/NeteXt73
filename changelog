@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.55
+-	wyłączenie z zależności glmark2 - brak rozwoju od roku
 v0.8.54
 -	usunięcie x-terminal-emulator z uwagi na brak kompatybilności w lubuntu
 v0.8.53

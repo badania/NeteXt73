@@ -31,7 +31,6 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
   initramfs-tools, 
   lm-sensors, 
   sysbench, 
-  glmark2, 
   python-gtk2, 
   python, 
   gcc  
