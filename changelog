@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.56
+-	dodane repozytorium Homebank
 v0.8.55
 -	wyłączenie z zależności glmark2 - brak rozwoju od roku grafik
 -	poprawa sprawdzania zainstalowanych sterowników

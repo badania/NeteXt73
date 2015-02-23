@@ -1,3 +1,9 @@
+netext73 (0.8.56) stable; urgency=medium
+
+  * dodane repo homebank
+
+ -- NetBit73 <netbit73@gmail.com>  Mon, 23 Feb 2015 15:54:14 +0100
+
 netext73 (0.8.55) stable; urgency=medium
 
   * wyłączenie glmark2 z zależności - brak wsparcia od roku

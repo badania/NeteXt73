@@ -256,6 +256,11 @@ baza=(
 	"LinSSID - graficzny skaner sieci wifi"
 	"LinSSID - Graphical Wireless Scanner"
 	"linssid"
+	
+	"ppa:mdoyen/homebank"
+	"Homebank - domowa księgowość"
+	"Homebank - money management"
+	"homebank"
 	)
 
 cd /tmp/netext73
