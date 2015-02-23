@@ -60,7 +60,7 @@ konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.pn
 				/opt/NeteXt73/./grub
 			fi
 			if [ "$(echo $konfiguracja | grep apm)" != "" ]; then
-				/opt/NeteXt73/./apm
+				/opt/NeteXt73/./NeteXt73_root ./apm
 			fi
 			if [ "$(echo $konfiguracja | grep kernel)" != "" ]; then
 				if [ "$kernel_premium" = "tak" ]; then
@@ -198,7 +198,7 @@ klawisz=$?; a=$(echo $a | cut -d "|" -f 5)
 if [ $klawisz = "0" ]; then 
 	if [ "$a" = "$TEXT_UPDATE1 APM" ]; then 
 		usun
-		cd /opt/NeteXt73 && ./apm
+		/opt/NeteXt73/./NeteXt73_root ./apm
 	elif [ "$a" = "$TEXT_UPDATE1 Firmware/microcode" ]; then 
 		usun
 		if [ "$firm" = "$TEXT_UPDATE4" ]; then

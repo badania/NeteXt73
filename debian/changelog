@@ -1,3 +1,9 @@
+netext73 (0.8.57) stable; urgency=medium
+
+  * naprawa pierwszej instalacji i usuwania APM
+
+ -- NetBit73 <netbit73@gmail.com>  Mon, 23 Feb 2015 21:41:22 +0100
+
 netext73 (0.8.56) stable; urgency=medium
 
   * dodane repo homebank

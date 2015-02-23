@@ -450,34 +450,35 @@ fi
 }
 
 apm_usun(){
-sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/pm-utils/power.d/readahead
-if [ ! -e /usr/lib/pm-utils/power.d/laptop-mode ];then
-	wget $adres_skryptow/wireless
-sudo mv wireless /usr/lib/pm-utils/power.d/
-fi
+echo "echo \"$TEXT_PROCEDURA_9\""
+echo "sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/pm-utils/power.d/readahead"
+echo "if [ ! -e /usr/lib/pm-utils/power.d/laptop-mode ];then"
+echo "wget $adres_skryptow/wireless"
+echo "sudo mv wireless /usr/lib/pm-utils/power.d/"
+echo "fi"
 
-if [ ! -e /usr/lib/pm-utils/power.d/wireless ];then
-	wget $adres_skryptow/laptop-mode
-	sudo mv laptop-mode /usr/lib/pm-utils/power.d/
-fi
+echo "if [ ! -e /usr/lib/pm-utils/power.d/wireless ];then"
+echo "wget $adres_skryptow/laptop-mode"
+echo "sudo mv laptop-mode /usr/lib/pm-utils/power.d/"
+echo "fi"
 
-sudo chmod a+x /usr/lib/pm-utils/power.d/*
-sudo chown root:root /usr/lib/pm-utils/power.d/*
+echo "sudo chmod a+x /usr/lib/pm-utils/power.d/*"
+echo "sudo chown root:root /usr/lib/pm-utils/power.d/*" 
 #przywrócenie powerbtn
-if [ -e /etc/acpi/powerbtn.sh.bak ]; then
-	sudo mv /etc/acpi/powerbtn.sh.bak /etc/acpi/powerbtn.sh -f
-	sudo chmod a+x /etc/acpi/powerbtn.sh
-	sudo chown root:root /etc/acpi/powerbtn.sh
-	sudo rm /etc/modprobe.d/rts5139.conf -f
-	sudo rm /etc/modprobe.d/ums-realtek.conf -f
-fi
-sudo update-rc.d -f ondemand defaults
-sudo /etc/init.d/ondemand start
-sudo sed -i '/apm_status_fix/d' /etc/rc.local
+echo "if [ -e /etc/acpi/powerbtn.sh.bak ]; then"
+echo "sudo mv /etc/acpi/powerbtn.sh.bak /etc/acpi/powerbtn.sh -f"
+echo "sudo chmod a+x /etc/acpi/powerbtn.sh"
+echo "sudo chown root:root /etc/acpi/powerbtn.sh"
+echo "sudo rm /etc/modprobe.d/rts5139.conf -f"
+echo "sudo rm /etc/modprobe.d/ums-realtek.conf -f"
+echo "fi"
+echo "sudo update-rc.d -f ondemand defaults"
+echo "sudo /etc/init.d/ondemand start"
+echo "sudo sed -i '/apm_status_fix/d' /etc/rc.local"
 #usunięcie hibernacji
-if [ -e /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla ]; then
-	sudo rm -f /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla
-fi
+echo "if [ -e /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla ]; then"
+echo "sudo rm -f /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla"
+echo "fi"
 }
 
 stan_apm(){
