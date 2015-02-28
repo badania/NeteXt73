@@ -674,7 +674,7 @@ else
 				zmiana=$(yad-netext --center --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\"><b>$TEXT_ZMIEN_WYDANIA</b></span>" --width=410 --window-icon="/opt/NeteXt73/ikony/backuprepo.png"  --image="/opt/NeteXt73/ikony/backuprepo.png" --form --field="$TEXT_ZMIEN_Z:RO" "$przed" --field="$TEXT_ZMIEN_NA:CB" "$wersje_ubu" --button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1")
 				klawisz=$?
 				if [ "$klawisz" = "0" ]; then
-					export nazwa_pliku=$(echo $usunppa | cut -d '|' -f 1 | cut -d " " -f 1 | sed -e 's/ppa://' -e 's/\//-/g')
+					export nazwa_pliku=$(echo $usunppa | cut -d '|' -f 1 | cut -d " " -f 1 | sed -e 's/ppa://' -e 's/\//-/g' | cut -d '-' -f 1)
 					export po=$(echo $zmiana | cut -d "|" -f 2)
 					naglowek > instaluj.sh
 					backup_repo
