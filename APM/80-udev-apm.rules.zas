@@ -1,0 +1,3 @@
+RUN+="/etc/apm-ext73/advanced_power_management_by_ext73_performance-ondemand_v5.0 ac" 
+RUN+="/etc/apm-ext73/xfs_buffer ac" 
+RUN+="/etc/apm-ext73/wol ac" 

@@ -1,0 +1,6 @@
+SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="0", RUN+="/etc/apm-ext73/advanced_power_management_by_ext73_performance-ondemand_v5.0 bateria"
+SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="1", RUN+="/etc/apm-ext73/advanced_power_management_by_ext73_performance-ondemand_v5.0 ac"
+SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="0", RUN+="/etc/apm-ext73/xfs_buffer bateria"
+SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="1", RUN+="/etc/apm-ext73/xfs_buffer ac"
+SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="0", RUN+="/etc/apm-ext73/wol bateria"
+SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="1", RUN+="/etc/apm-ext73/wol ac" 

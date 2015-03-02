@@ -23,17 +23,17 @@
 #
 #########################################################################################################################################################################
 #sprawdzanie i naprawa stanu APM
-if [ "$(ls /etc/pm/power.d/ | wc | awk '{print $1}')" = "6" ] && [ $( ls /usr/lib/pm-utils/power.d/ -la | grep rwxr | wc | awk '{print $1}') != "6" ]; then 
-    sudo chmod a-x /usr/lib/pm-utils/power.d/*
-    sudo chmod a+x /usr/lib/pm-utils/power.d/xfs_buffer /usr/lib/pm-utils/power.d/anacron /usr/lib/pm-utils/power.d/disable_wol /usr/lib/pm-utils/power.d/readahead
-    sudo chown root:root /usr/lib/pm-utils/power.d/*
-    sudo chown root:root /etc/pm/power.d/*
-fi 
-if [ "$(ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//')" = "" ];then
-    sudo chmod a-x /etc/pm/power.d/*
-    sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative-conservative*
-fi
+#if [ "$(ls /etc/pm/power.d/ | wc | awk '{print $1}')" = "6" ] && [ $( ls /usr/lib/pm-utils/power.d/ -la | grep rwxr | wc | awk '{print $1}') != "6" ]; then 
+#    sudo chmod a-x /usr/lib/pm-utils/power.d/*
+#    sudo chmod a+x /usr/lib/pm-utils/power.d/xfs_buffer /usr/lib/pm-utils/power.d/anacron /usr/lib/pm-utils/power.d/disable_wol /usr/lib/pm-utils/power.d/readahead
+#    sudo chown root:root /usr/lib/pm-utils/power.d/*
+#    sudo chown root:root /etc/pm/power.d/*
+#fi 
+#if [ "$(ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//')" = "" ];then
+#    sudo chmod a-x /etc/pm/power.d/*
+#    sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative-conservative*
+#fi
 #wyłączenie bfq jak kernel go nie posiada
 if [ "$(grep bfq /sys/block/sd*/queue/scheduler)" = "" ]; then
-    sudo sed -i '/#HDD/ s/bfq/cfq/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+    sudo sed -i '/#HDD/ s/bfq/cfq/g' /etc/apm_ext73/advanced_power_management_by_ext73_*
 fi

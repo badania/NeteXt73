@@ -164,9 +164,6 @@ cat /etc/init/mounted-proc.conf >> system$losowa.log
 echo -e "\n\nureadahead.conf  " >> system$losowa.log
 echo -e "##############################################################################################" >> system$losowa.log
 cat /etc/init/ureadahead.conf >> system$losowa.log
-echo -e "\n\nreadahead  " >> system$losowa.log
-echo -e "##############################################################################################" >> system$losowa.log
-cat /usr/lib/pm-utils/power.d/readahead >> system$losowa.log
 
 
 
@@ -187,11 +184,21 @@ dpkg -l | grep linux-firmware | awk '{print $2" "$3}' | head -n 1 | sed 's/~.*//
 
 echo -e "\n\nwersja APM  " >> apmsystem$losowa.log
 echo -e "##############################################################################################" >> apmsystem$losowa.log
-ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed 's/*//' >> apmsystem$losowa.log
-echo -e "\n" >> apmsystem$losowa.log
-ls /usr/lib/pm-utils/power.d/ -la | grep rwxr | grep -v drwxr-xr-x >> apmsystem$losowa.log
-echo -e "\n" >> apmsystem$losowa.log
-ls /etc/pm/power.d/ -la | grep -v drwxr-xr-x | sed '1s/.*//' >>  apmsystem$losowa.log
+if [ -e /etc/udev/rules.d/80-udev-apm.rules ];then
+	cat /etc/udev/rules.d/80-udev-apm.rules | grep advanced_power_management | head -n 1 | cut -d '_' -f 7 | awk '{print $1}' >> apmsystem$losowa.log
+	cat /etc/udev/rules.d/80-udev-apm.rules | grep advanced_power_management | head -n 1 | sed 's/.*\///' | cut -d '_' -f 6  >> apmsystem$losowa.log
+	echo -e "\nls -la /etc/apm-ext73"  >> apmsystem$losowa.log
+	ls -la /etc/apm-ext73 | grep -v drwxr | sed '1s/.*//' >> apmsystem$losowa.log
+elif [ -e /etc/pm/power.d/* ]; then
+	ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1 >> apmsystem$losowa.log
+	echo -e "\n" >> apmsystem$losowa.log
+	ls /usr/lib/pm-utils/power.d/ -la | grep rwxr | grep -v drwxr-xr-x >> apmsystem$losowa.log
+	ls /etc/pm/power.d/ -la | grep -v drwxr-xr-x | sed '1s/.*//' >>  apmsystem$losowa.log
+fi
+echo -e "\nls /usr/lib/pm-utils/power.d/ -la" >> apmsystem$losowa.log
+ls /usr/lib/pm-utils/power.d/ -la | grep -v drwxr-xr-x | sed '1s/.*//' >> apmsystem$losowa.log
+echo -e "\nls /etc/apm/event.d/ -la" >> apmsystem$losowa.log
+ls -la /etc/apm/event.d/ | grep -v drwxr-xr-x | sed '1s/.*//' >> apmsystem$losowa.log
 echo -e "\n\napm_status " >> apmsystem$losowa.log
 echo -e "##############################################################################################" >> apmsystem$losowa.log
 cat ~/.netext73/apm_status >> apmsystem$losowa.log

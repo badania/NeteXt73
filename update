@@ -114,7 +114,11 @@ else
 fi
 
 #APM
-twoj_apm=$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)
+if [ -e /etc/udev/rules.d/80-udev-apm.rules ];then
+	twoj_apm=$(cat /etc/udev/rules.d/80-udev-apm.rules | grep advanced_power_management | head -n 1 | cut -d '_' -f 7 | awk '{print $1}')
+elif [ -e /etc/pm/power.d/* ]; then
+	twoj_apm=$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)
+fi
 if [ "$twoj_apm" = "$wersja_apm" ]  ; then
 	apm="$TEXT_UPDATE4"
 	a3="FALSE"
