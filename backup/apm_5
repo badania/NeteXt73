@@ -37,7 +37,7 @@ source /opt/NeteXt73/procedury
 
 zmiany_w_APM(){
 if [ "$a" != "-" ]; then
-	apm_zmiana $a "advanced_power_management_by_ext73_$a*" # >> instaluj.sh
+	apm_zmiana $a
 elif [ "$a" = "-" ]; then
 	yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
 	apm_inst
@@ -58,10 +58,6 @@ rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f
 stan_apm=""
 #zapamiętanie configu jeżeli był niepełen config
 if [ -e  ~/.netext73/apm_status ] && [ "$(cat ~/.netext73/apm_status | wc -l)" != "11" ]; then
-	#sprawdzanie czy jest włączony jakiś APM
-	if [ "$(ls /etc/pm/power.d/)" != "" ] && [ "$(ls /etc/pm/power.d/advanced_power_management_by_ext73* -Fl | grep '*' | cut -d '_' -f 7)" = "" ];then
-		sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative*
-	fi
 	#sprawdzenie stanu czeków
 	stan_apm_config
 fi
@@ -86,11 +82,15 @@ while [ $petla_duza = "tak" ]; do
 	aktualny_apm=$(echo $stan_apm | awk '{print $1}')
 	menu_apm=$(echo "!conservative-conservative!ondemand-ondemand!intel-performance!intel-powersave!performance-conservative!performance-ondemand" | sed -e "s/$aktualny_apm//" -e 's/!!/!/')
 	menu=$(echo "$aktualny_apm$menu_apm" | sed 's/!!/!/')
-	
+	if [ -e /etc/udev/rules.d/80-udev-apm.rules ];then
+		twoj_apm=$(cat /etc/udev/rules.d/80-udev-apm.rules | grep advanced_power_management | head -n 1 | cut -d '_' -f 7 | awk '{print $1}')
+	elif [ -e /etc/pm/power.d/* ]; then
+		twoj_apm=$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)
+	fi
 	if [ "$stan_apm" != "-" ]; then
 		aa=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png"  --image="/opt/NeteXt73/ikony/apm.png" --form \
 		--field="$TEXT_WERSJA_APM:RO" --field="$TEXT_AKTUALNY_PROFIL_APM:RO" --field="$TEXT_ZMIEN_PROFIL_APM:CB" \
-		"$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)" "$aktualny_apm" "$menu" \
+		"$twoj_apm" "$aktualny_apm" "$menu" \
 		--field="$TEXT_FIX1:CHK" "$wififix" \
 		--field="$TEXT_FIX2:CHK" "$wifionoff" \
 		--field="$TEXT_FIX3:CHK" "$btfix" \
@@ -136,4 +136,3 @@ while [ $petla_duza = "tak" ]; do
 		opusc_petle
 	fi
 done
-

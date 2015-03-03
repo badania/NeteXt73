@@ -46,13 +46,13 @@ rm -f /tmp/netext73/*.txt
 
 aktualizuj_calosc(){
 konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_UPDATE1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
-		"$a1" "microcode" \
-		"$a2" "grub" \
-		"$a3" "apm" \
-		"$a4" "kernel" \
-		--button="gtk-ok:0" --button="$TEXT_POWROT:1" )
-		klawisz=$?
-		if [ "$klawisz" = "0" ]; then
+		  "$a1" "microcode" \
+		  "$a2" "grub" \
+		  "$a3" "apm" \
+		  "$a4" "kernel" \
+		  --button="gtk-ok:0" --button="$TEXT_POWROT:1" )
+		  klawisz=$?
+		  if [ "$klawisz" = "0" ]; then
 			if [ "$(echo $konfiguracja | grep microcode)" != "" ]; then
 				/opt/NeteXt73/./microcode
 			fi
@@ -69,7 +69,7 @@ konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.pn
 				      /opt/NeteXt73/./kernele
 				fi
 			fi
-		fi
+		  fi
 }
 usun
 
@@ -114,7 +114,11 @@ else
 fi
 
 #APM
-twoj_apm=$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)
+if [ -e /etc/udev/rules.d/80-udev-apm.rules ];then
+	twoj_apm=$(cat /etc/udev/rules.d/80-udev-apm.rules | grep advanced_power_management | head -n 1 | cut -d '_' -f 7 | awk '{print $1}')
+elif [ -e /etc/pm/power.d/* ]; then
+	twoj_apm=$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)
+fi
 if [ "$twoj_apm" = "$wersja_apm" ]  ; then
 	apm="$TEXT_UPDATE4"
 	a3="FALSE"

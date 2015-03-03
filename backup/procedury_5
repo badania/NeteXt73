@@ -254,7 +254,9 @@ echo "sudo apt-get autoremove -y"
 
 apm_inst(){
 #echo "echo \"$TEXT_PROCEDURA_6\""
-sudo rm -fr /etc/pm/power.d/* /usr/lib/pm-utils/power.d/readahead /usr/lib/pm-utils/power.d/journal-commit
+#usunięcie AMP v4.x
+sudo rm -fr /etc/pm/power.d/* 
+#/usr/lib/pm-utils/power.d/readahead /usr/lib/pm-utils/power.d/journal-commit
 if [ ! -e /usr/lib/pm-utils/power.d/wireless ];then
 	sudo cp /opt/NeteXt73/APM/wireless /usr/lib/pm-utils/power.d/
 fi
@@ -265,25 +267,35 @@ fi
 #usunięcie wcześniej tworzonych configów niepotrzebynych od APM 3.7
 sudo rm -f /etc/modprobe.d/ums-realtek.conf
 sudo rm -f /etc/modprobe.d/rts5139.conf
+#wyłączenie PM-Utils
 sudo chmod a-x /usr/lib/pm-utils/power.d/*
-sudo tar -xvzf /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz -C /etc/pm/power.d/
-sudo mv /etc/pm/power.d/readahead /usr/lib/pm-utils/power.d/
-sudo chmod a-x /etc/pm/power.d/*
-if [ -e ~/.netext73/apm_status ]; then
-	if [ "$(ls /etc/pm/power.d/* | grep $(cat  ~/.netext73/apm_status | head -n 1))" != "" ]; then #zaznaczanie aktywnego APM wg configu
-		sudo chmod a+x $(ls /etc/pm/power.d/* | grep $(cat  ~/.netext73/apm_status | head -n 1)) /usr/lib/pm-utils/power.d/readahead
-	else
-		sudo chmod a+x /etc/pm/power.d/$wersja_apm1*$wersja_apm /usr/lib/pm-utils/power.d/readahead
-	fi
-else
-	sudo chmod a+x /etc/pm/power.d/$wersja_apm1*$wersja_apm /usr/lib/pm-utils/power.d/readahead
-fi
-sudo chmod a+x /usr/lib/pm-utils/power.d/xfs_buffer /usr/lib/pm-utils/power.d/anacron /usr/lib/pm-utils/power.d/disable_wol /usr/lib/pm-utils/power.d/readahead
 sudo chown root:root /usr/lib/pm-utils/power.d/*
-sudo chown root:root /etc/pm/power.d/*
+sudo chmod a-x /etc/apm/event.d/20hdparm
+#rozpakownie nowego APM
+sudo tar -xvzf /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz -C /etc/
+sudo chmod a+x /etc/apm-ext73/*
+sudo chown root:root /etc/apm-ext73
+sudo chown root:root /etc/apm-ext73/*
+
+#sprawdzanie notebook/stacjonarny
+if [ -e /sys/class/power_supply/ADP1/online ]; then
+	sudo cp /opt/NeteXt73/APM/80-udev-apm.rules.batt /etc/udev/rules.d/80-udev-apm.rules -f
+else
+	sudo cp /opt/NeteXt73/APM/80-udev-apm.rules.zas /etc/udev/rules.d/80-udev-apm.rules -f
+fi
+
+if [ -e ~/.netext73/apm_status ] && [ "$(ls /etc/udev/rules.d/80-udev-apm.rules | grep $(cat  ~/.netext73/apm_status | head -n 1))" != "" ]; then 
+	#zaznaczanie aktywnego APM wg configu
+	sudo sed -i "s/advanced_power_management_by_ext73_* /advanced_power_management_by_ext73_$(cat  ~/.netext73/apm_status | head -n 1)_$wersja_apm /g" /etc/udev/rules.d/80-udev-apm.rules
+
+fi
 sudo apt-get install ethtool
+#przeładownie ustawień
 sudo /etc/init.d/ondemand stop
 sudo update-rc.d -f ondemand remove
+sudo udevadm control --reload-rules
+cd /etc/apm-ext73/ && sudo ./advanced_power_management_by_ext73_*$wersja_apm
+
 #naprawa powerbtn
 if [ "$(cat /etc/acpi/powerbtn.sh | grep '/usr/.../qdbus')" != "" ]; then
 	sudo cp /etc/acpi/powerbtn.sh /etc/acpi/powerbtn.sh.bak -f
@@ -300,20 +312,25 @@ echo 'exit 0' | sudo tee -a /etc/rc.local
 }
 
 apm_zmiana(){
-sudo chmod a-x /etc/pm/power.d/*
-sudo chmod a+x /etc/pm/power.d/$2 /usr/lib/pm-utils/power.d/readahead
-sudo chown root:root /etc/pm/power.d/* /usr/lib/pm-utils/power.d/readahead
+#zmiana trybu APM
+sudo sed -i "s/conservative-conservative/$1/g" /etc/udev/rules.d/80-udev-apm.rules
+sudo sed -i "s/ondemand-ondemand/$1/g" /etc/udev/rules.d/80-udev-apm.rules
+sudo sed -i "s/intel-performance/$1/g" /etc/udev/rules.d/80-udev-apm.rules
+sudo sed -i "s/intel-powersave/$1/g" /etc/udev/rules.d/80-udev-apm.rules
+sudo sed -i "s/performance-conservative/$1/g" /etc/udev/rules.d/80-udev-apm.rules
+sudo sed -i "s/performance-ondemand/$1/g" /etc/udev/rules.d/80-udev-apm.rules
+
 
 if [ "$wififix" = "FALSE" ];then
-	sudo sed -i 's/echo auto > \$ii/echo on > \$ii/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo auto > \$ii/echo on > \$ii/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 else
-	sudo sed -i 's/echo on > \$ii/echo auto > \$ii/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo on > \$ii/echo auto > \$ii/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 
 if [ "$btfix" = "FALSE" ];then
-	sudo sed -i 's/echo 1 > \$bt/echo 0 > \$bt/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 1 > \$bt/echo 0 > \$bt/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 else
-	sudo sed -i 's/echo 0 > \$bt/echo 1 > \$bt/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 0 > \$bt/echo 1 > \$bt/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 
 if [ "$wifin" = "TRUE" ];then
@@ -324,44 +341,44 @@ else
 fi
 
 if [ "$wifionoff" = "FALSE" ];then
-	sudo sed -i 's/echo 1 > \$wifi/echo 0 > \$wifi/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 1 > \$wifi/echo 0 > \$wifi/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 else
-	sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 
 if [ "$rts5139fix" = "TRUE" ];then
-	sudo sed -i '/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/apm-ext73/advanced_power_management_by_ext73_*
 else
-	sudo sed -i '/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 #intel turbo bateria
 if [ "$turbooff" != "FALSE" ];then
-	sudo sed -i 's/echo 1 > \$batintel/echo 0 > \$batintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 1 > \$batintel/echo 0 > \$batintel/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 else
-	sudo sed -i 's/echo 0 > \$batintel/echo 1 > \$batintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 0 > \$batintel/echo 1 > \$batintel/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 #intel turbo AC
 if [ "$turboacoff" != "FALSE" ];then
-	sudo sed -i 's/echo 1 > \$acintel/echo 0 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 1 > \$acintel/echo 0 > \$acintel/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 else
-	sudo sed -i 's/echo 0 > \$acintel/echo 1 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 0 > \$acintel/echo 1 > \$acintel/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 #HDD
 if [ "$bfqfix" = "bfq" ];then
-	sudo sed -i '/#HDD/ s/cfq/bfq/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
-	sudo sed -i '/#HDD/ s/deadline/bfq/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/#HDD/ s/cfq/bfq/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
+	sudo sed -i '/#HDD/ s/deadline/bfq/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 elif [ "$bfqfix" = "cfq" ];then
-	sudo sed -i '/#HDD/ s/bfq/cfq/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
-	sudo sed -i '/#HDD/ s/deadline/cfq/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/#HDD/ s/bfq/cfq/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
+	sudo sed -i '/#HDD/ s/deadline/cfq/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 elif [ "$bfqfix" = "deadline" ];then
-	sudo sed -i '/#HDD/ s/bfq/deadline/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
-	sudo sed -i '/#HDD/ s/cfq/deadline/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/#HDD/ s/bfq/deadline/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
+	sudo sed -i '/#HDD/ s/cfq/deadline/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 #SSD
 if [ "$ssdfix" = "deadline" ];then
-	sudo sed -i '/#SSD/ s/noop/deadline/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/#SSD/ s/noop/deadline/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 elif [ "$ssdfix" = "noop" ];then
-	sudo sed -i '/#SSD/ s/deadline/noop/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/#SSD/ s/deadline/noop/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 #hibernacja
 if [ "$hibernacja_menu" = "TRUE" ];then
@@ -371,20 +388,24 @@ else
 		sudo rm -f /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla
 	fi
 fi
+
+#przeładownie ustawień
+sudo udevadm control --reload-rules
+cd /etc/apm-ext73/ && sudo ./advanced_power_management_by_ext73_*$wersja_apm
 }
 
 apm_zmiana_config(){
 
 if [ "$(grep wififix ~/.netext73/apm_status | cut -d ' ' -f 2)" = "FALSE" ];then
-	sudo sed -i 's/echo auto > \$ii/echo on > \$ii/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo auto > \$ii/echo on > \$ii/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 else
-	sudo sed -i 's/echo on > \$ii/echo auto > \$ii/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo on > \$ii/echo auto > \$ii/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 
 if [ "$(grep btfix ~/.netext73/apm_status | cut -d ' ' -f 2)" = "FALSE" ];then
-	sudo sed -i 's/echo 1 > \$bt/echo 0 > \$bt/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 1 > \$bt/echo 0 > \$bt/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 else
-	sudo sed -i 's/echo 0 > \$bt/echo 1 > \$bt/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 0 > \$bt/echo 1 > \$bt/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 
 if [ "$(grep wifin ~/.netext73/apm_status | cut -d ' ' -f 2)" = "TRUE" ];then
@@ -395,49 +416,49 @@ else
 fi
 
 if [ "$(grep wifionoff ~/.netext73/apm_status | cut -d ' ' -f 2)" = "FALSE" ];then
-	sudo sed -i 's/echo 1 > \$wifi/echo 0 > \$wifi/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 1 > \$wifi/echo 0 > \$wifi/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 else
-	sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 0 > \$wifi/echo 1 > \$wifi/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 
 #intel turbo bateria
 if [ "$(grep turbooff ~/.netext73/apm_status | cut -d ' ' -f 2)" != "FALSE" ];then
-	sudo sed -i 's/echo 1 > \$batintel/echo 0 > \$batintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 1 > \$batintel/echo 0 > \$batintel/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 else
-	sudo sed -i 's/echo 0 > \$batintel/echo 1 > \$batintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 0 > \$batintel/echo 1 > \$batintel/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 #intel turbo AC
 if [ "$(grep turboacoff ~/.netext73/apm_status | cut -d ' ' -f 2)" != "FALSE" ];then
-	sudo sed -i 's/echo 1 > \$actintel/echo 0 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 1 > \$actintel/echo 0 > \$acintel/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 else
-	sudo sed -i 's/echo 0 > \$acintel/echo 1 > \$acintel/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i 's/echo 0 > \$acintel/echo 1 > \$acintel/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 
 if [ "$(grep rts5139fix ~/.netext73/apm_status | cut -d ' ' -f 2)" = "TRUE" ];then
-	sudo sed -i '/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*
-	sudo sed -i '1,/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/apm-ext73/advanced_power_management_by_ext73_*
+	sudo sed -i '1,/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/apm-ext73/advanced_power_management_by_ext73_*
 else
-	sudo sed -i '/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/ s/sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/sudo rmmod rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb/' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 #HDD
 if [ "$(grep bfqfix ~/.netext73/apm_status | cut -d ' ' -f 2)" = "bfq" ];then
-	sudo sed -i '/#HDD/ s/cfq/bfq/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
-	sudo sed -i '/#HDD/ s/deadline/bfq/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/#HDD/ s/cfq/bfq/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
+	sudo sed -i '/#HDD/ s/deadline/bfq/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 
 elif [ "$(grep bfqfix ~/.netext73/apm_status | cut -d ' ' -f 2)" = "cfq" ];then
-	sudo sed -i '/#HDD/ s/bfq/cfq/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
-	sudo sed -i '/#HDD/ s/deadline/cfq/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/#HDD/ s/bfq/cfq/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
+	sudo sed -i '/#HDD/ s/deadline/cfq/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 
 elif [ "$(grep bfqfix ~/.netext73/apm_status | cut -d ' ' -f 2)" = "deadline" ];then
-	sudo sed -i '/#HDD/ s/bfq/deadline/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
-	sudo sed -i '/#HDD/ s/cfq/deadline/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/#HDD/ s/bfq/deadline/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
+	sudo sed -i '/#HDD/ s/cfq/deadline/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 #SSD
 if [ "$(grep ssdfix ~/.netext73/apm_status | cut -d ' ' -f 2)" = "deadline" ];then
-	sudo sed -i '/#SSD/ s/noop/deadline/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/#SSD/ s/noop/deadline/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 
 elif [ "$(grep ssdfix ~/.netext73/apm_status | cut -d ' ' -f 2)" = "noop" ];then
-	sudo sed -i '/#SSD/ s/deadline/noop/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
+	sudo sed -i '/#SSD/ s/deadline/noop/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 fi
 #zmiana hibernacji
 if [ "$(grep hibernacja ~/.netext73/apm_status | cut -d ' ' -f 2)" = "TRUE" ];then
@@ -451,7 +472,7 @@ fi
 
 apm_usun(){
 echo "echo \"$TEXT_PROCEDURA_9\""
-echo "sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/pm-utils/power.d/readahead"
+echo "sudo rm -fr /etc/pm/power.d/* /usr/lib/pm-utils/power.d/readahead /etc/apm-ext73"
 echo "if [ ! -e /usr/lib/pm-utils/power.d/laptop-mode ];then"
 echo "sudo cp -f /opt/NeteXt73/APM/wireless /usr/lib/pm-utils/power.d/"
 echo "fi"
@@ -462,6 +483,8 @@ echo "fi"
 
 echo "sudo chmod a+x /usr/lib/pm-utils/power.d/*"
 echo "sudo chown root:root /usr/lib/pm-utils/power.d/*" 
+echo "sudo chmod a+x /etc/apm/event.d/20hdparm"
+echo "sudo chown root:root /etc/apm/event.d/20hdparm"
 #przywrócenie powerbtn
 echo "if [ -e /etc/acpi/powerbtn.sh.bak ]; then"
 echo "sudo mv /etc/acpi/powerbtn.sh.bak /etc/acpi/powerbtn.sh -f"
@@ -480,19 +503,17 @@ echo "fi"
 }
 
 stan_apm(){
-if [ "$(ls /etc/pm/power.d/ | wc -l)" != "6" ]; then
+
+if [ -e /etc/apm-ext73/ ] && [ "$(ls /etc/apm-ext73/ | wc -l)" != "8" ]; then
 	stan_apm="-"
 else
-	if [ -e /etc/pm/power.d/$wersja_apm1*$wersja_apm ]; then
-		stan_apm=$(ls /etc/pm/power.d/advanced_power_management_by_ext73* -Fl | grep '*' | cut -d '_' -f 6)
+	if [ -e /etc/udev/rules.d/80-udev-apm.rules ]; then
+		stan_apm=$(cat /etc/udev/rules.d/80-udev-apm.rules | grep advanced_power_management | head -n 1 | sed 's/.*\///' | cut -d '_' -f 6)
 	else
 		stan_apm="-"
 	fi
 fi
 
-if [ "$(ls /etc/pm/power.d/ | wc -l)" = "6" ] && [ $( ls /usr/lib/pm-utils/power.d/ -la | grep rwxr | wc -l) != "6" ]; then 
-	    stan_apm="-"
-fi
 if [ "$(grep apm_status_fix /etc/rc.local)" = "" ]; then
 	    stan_apm="-"
 fi
@@ -500,27 +521,27 @@ fi
 
 stan_apm_config(){
 	#sprawdzenie stanu APM wifi FIX
-	if [ "$(grep 'echo auto > $ii' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
+	if [ "$(grep 'echo auto > $ii' /etc/apm-ext73/advanced_power_management_by_ext73_*)" = "" ];then
 		export wififix="FALSE"
 	else
 		export wififix="TRUE"
 	fi
 	#włączenie wyłączenie wifi
-	if [ "$(grep 'echo 1 > $wifi' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
+	if [ "$(grep 'echo 1 > $wifi' /etc/apm-ext73/advanced_power_management_by_ext73_*)" = "" ];then
 		export wifionoff="FALSE"
 	else
 		export wifionoff="TRUE"
 	fi
 
 	#sprawdzenie stanu bt FIX
-	if [ "$(grep 'echo 1 > $bt' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
+	if [ "$(grep 'echo 1 > $bt' /etc/apm-ext73/advanced_power_management_by_ext73_*)" = "" ];then
 		export btfix="FALSE"
 	else
 		export btfix="TRUE"
 	fi
 
 	#sprawdzenie stanu APM rts5139 FIX
-	if [ "$(grep 'sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb' /etc/pm/power.d/advanced_power_management_by_ext73_*)" = "" ];then
+	if [ "$(grep 'sudo modprobe rtsx_usb_sdmmc rtsx_usb_ms rtsx_usb' /etc/apm-ext73/advanced_power_management_by_ext73_*)" = "" ];then
 		export rts5139fix="FALSE"
 	else
 		export rts5139fix="TRUE"
@@ -532,13 +553,13 @@ stan_apm_config(){
 		export wifin="TRUE"
 	fi
 	#sprawdzenie intel turbo bateria
-	if [ "$(grep 'echo 1 > $batintel' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ];then
+	if [ "$(grep 'echo 1 > $batintel' /etc/apm-ext73/advanced_power_management_by_ext73_*)" != "" ];then
 		export turbooff="FALSE"
 	else 
 		export turbooff="TRUE"
 	fi
 	#sprawdzenie intel turbo AC
-	if [ "$(grep 'echo 1 > $acintel' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ];then
+	if [ "$(grep 'echo 1 > $acintel' /etc/apm-ext73/advanced_power_management_by_ext73_*)" != "" ];then
 		export turboacoff="FALSE"
 	else 
 		export turboacoff="TRUE"
@@ -550,27 +571,27 @@ stan_apm_config(){
 		ssdfix_menu="blk-mq"
 	else
 		if [ "$(grep bfq /sys/block/sda/queue/scheduler)" != "" ]; then
-			if [ "$(grep 'bfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ] ;then
+			if [ "$(grep 'bfq' /etc/apm-ext73/advanced_power_management_by_ext73_*)" != "" ] ;then
 				export bfqfix="bfq"; export bfqfix_menu="bfq!cfq!deadline"
-			elif [ "$(grep 'cfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ]; then
+			elif [ "$(grep 'cfq' /etc/apm-ext73/advanced_power_management_by_ext73_*)" != "" ]; then
 				export bfqfix="cfq"; export bfqfix_menu="cfq!bfq!deadline"
-			elif [ "$(grep 'deadline' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ]; then
+			elif [ "$(grep 'deadline' /etc/apm-ext73/advanced_power_management_by_ext73_*)" != "" ]; then
 				export bfqfix="deadline"; export bfqfix_menu="deadline!bfq!cfq"
 			fi
 		else
-			if [ "$(grep 'bfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ] ;then
+			if [ "$(grep 'bfq' /etc/apm-ext73/advanced_power_management_by_ext73_*)" != "" ] ;then
 				export bfqfix="bfq"; export bfqfix_menu="cfq!deadline"
-			elif [ "$(grep 'cfq' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ]; then
+			elif [ "$(grep 'cfq' /etc/apm-ext73/advanced_power_management_by_ext73_*)" != "" ]; then
 				export bfqfix="cfq"; export bfqfix_menu="cfq!deadline"
-			elif [ "$(grep 'deadline' /etc/pm/power.d/advanced_power_management_by_ext73_*)" != "" ]; then
+			elif [ "$(grep 'deadline' /etc/apm-ext73/advanced_power_management_by_ext73_*)" != "" ]; then
 				export bfqfix="deadline"; export bfqfix_menu="deadline!cfq"
 			fi
 		fi
 		
 		#sprawdzenie noop/deadline SSD
-		if [ "$(grep 'noop' /etc/pm/power.d/advanced_power_management_by_ext73_* | grep '#SSD' )" != "" ] ;then
+		if [ "$(grep 'noop' /etc/apm-ext73/advanced_power_management_by_ext73_* | grep '#SSD' )" != "" ] ;then
 			export ssdfix="noop"; export ssdfix_menu="noop!deadline"
-		elif [ "$(grep 'deadline' /etc/pm/power.d/advanced_power_management_by_ext73_* | grep '#SSD')" != "" ]; then
+		elif [ "$(grep 'deadline' /etc/apm-ext73/advanced_power_management_by_ext73_* | grep '#SSD')" != "" ]; then
 			export ssdfix="deadline"; export ssdfix_menu="deadline!noop"
 		fi	
 	fi
@@ -593,7 +614,7 @@ stan_apm_config(){
 	
 	#wysłanie danych do configu 
 	if [ "$1" = "czeki" ]; then
-		ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed -e 's/*//' -e 's/advanced_power_management_by_ext73_//' -e 's/_v.*//' > ~/.netext73/apm_status
+		cat /etc/udev/rules.d/80-udev-apm.rules | grep advanced_power_management | head -n 1 | sed 's/.*\///' | cut -d '_' -f 6 > ~/.netext73/apm_status
 		echo "wififix $wififix" >> ~/.netext73/apm_status
 		echo "wifionoff $wifionoff" >> ~/.netext73/apm_status
 		echo "btfix $btfix">> ~/.netext73/apm_status
