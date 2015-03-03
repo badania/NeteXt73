@@ -281,7 +281,6 @@ fi
 sudo chmod a+x /usr/lib/pm-utils/power.d/xfs_buffer /usr/lib/pm-utils/power.d/anacron /usr/lib/pm-utils/power.d/disable_wol /usr/lib/pm-utils/power.d/readahead
 sudo chown root:root /usr/lib/pm-utils/power.d/*
 sudo chown root:root /etc/pm/power.d/*
-sudo apt-get install ethtool
 sudo /etc/init.d/ondemand stop
 sudo update-rc.d -f ondemand remove
 #naprawa powerbtn
