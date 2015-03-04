@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.59
+-	dodanie sprawdzania połączenie z serwerem na starcie programu
 v0.8.58
 -	poprawka w repo dla 15.04
 v0.8.57

@@ -112,6 +112,7 @@ fi
 
 #sumy sumy kontrolne
 export sumy_kontrolne='/tmp/netext73/sumy/sumy_kontrolne.txt'
+export test_serwera='/tmp/netext73/sumy/test_serwera.txt'
 export adres_sum_kontrolnych='http://dl.dropboxusercontent.com/u/2936246/weryfikacja/sumy.txt'
 
 #kolor textu
@@ -254,7 +255,7 @@ echo "sudo apt-get autoremove -y"
 
 apm_inst(){
 #echo "echo \"$TEXT_PROCEDURA_6\""
-sudo rm -fr /etc/pm/power.d/* /usr/lib/pm-utils/power.d/readahead /usr/lib/pm-utils/power.d/journal-commit
+sudo rm -fr /etc/pm/power.d/* /usr/lib/pm-utils/power.d/readahead #/usr/lib/pm-utils/power.d/journal-commit
 if [ ! -e /usr/lib/pm-utils/power.d/wireless ];then
 	sudo cp /opt/NeteXt73/APM/wireless /usr/lib/pm-utils/power.d/
 fi
