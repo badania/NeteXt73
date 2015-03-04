@@ -37,12 +37,12 @@ source /opt/NeteXt73/procedury
 
 zmiany_w_APM(){
 if [ "$a" != "-" ]; then
-	apm_zmiana $a "advanced_power_management_by_ext73_$a*" # >> instaluj.sh
+	apm_zmiana $a "advanced_power_management_by_ext73_$a*" 
 elif [ "$a" = "-" ]; then
 	yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
 	apm_inst
 	if [ -e ~/.netext73/apm_status ]; then
-		apm_zmiana_config
+		apm_zmiana_config "advanced_power_management_by_ext73_$(cat ~/.netext73/apm_status | sed 's/.* //' | head -n 1)*"
 	fi
 fi
 stan_apm_config czeki
@@ -74,7 +74,7 @@ while [ $petla_duza = "tak" ]; do
 		if [ $? = 0 ]; then
 			apm_inst
 			if [ -e ~/.netext73/apm_status ]; then
-				apm_zmiana_config
+				apm_zmiana_config "advanced_power_management_by_ext73_$(cat ~/.netext73/apm_status | sed 's/.* //' | head -n 1)*"
 			fi
 			stan_apm
 		fi

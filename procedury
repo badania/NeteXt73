@@ -374,6 +374,9 @@ fi
 
 apm_zmiana_config(){
 
+sudo chmod a-x /etc/pm/power.d/*
+sudo chmod a+x /etc/pm/power.d/$1 /usr/lib/pm-utils/power.d/readahead
+sudo chown root:root /etc/pm/power.d/* /usr/lib/pm-utils/power.d/readahead
 if [ "$(grep wififix ~/.netext73/apm_status | cut -d ' ' -f 2)" = "FALSE" ];then
 	sudo sed -i 's/echo auto > \$ii/echo on > \$ii/g' /etc/pm/power.d/advanced_power_management_by_ext73_*
 else
