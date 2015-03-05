@@ -22,6 +22,21 @@
 #  \___| /_/\_\  \__|  /_/    |____/     \___/\/ |_| \_|\___|\__|____/|_|\__/_/  |____/
 #
 #########################################################################################################################################################################
+#wyłączenie historycznych elementów apm_ext73
+if [ ! -e /usr/lib/pm-utils/power.d/wireless ];then
+	sudo cp /opt/NeteXt73/APM/wireless /usr/lib/pm-utils/power.d/
+fi
+
+if [ ! -e /usr/lib/pm-utils/power.d/laptop-mode ];then
+	sudo cp /opt/NeteXt73/APM/laptop-mode /usr/lib/pm-utils/power.d/
+fi
+#usunięcie wcześniej tworzonych configów niepotrzebynych od APM 3.7
+if [ -e /etc/modprobe.d/ums-realtek.conf ];then
+	sudo rm -f /etc/modprobe.d/ums-realtek.conf
+fi
+if [ -e /etc/modprobe.d/rts5139.conf ]; then
+	sudo rm -f /etc/modprobe.d/rts5139.conf
+fi
 #sprawdzanie i naprawa stanu APM
 if [ "$(ls /etc/pm/power.d/ | wc | awk '{print $1}')" = "6" ] && [ $( ls /usr/lib/pm-utils/power.d/ -la | grep rwxr | wc | awk '{print $1}') != "6" ]; then 
     sudo chmod a-x /usr/lib/pm-utils/power.d/*

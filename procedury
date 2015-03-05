@@ -256,16 +256,6 @@ echo "sudo apt-get autoremove -y"
 apm_inst(){
 #echo "echo \"$TEXT_PROCEDURA_6\""
 sudo rm -fr /etc/pm/power.d/* /usr/lib/pm-utils/power.d/readahead
-if [ ! -e /usr/lib/pm-utils/power.d/wireless ];then
-	sudo cp /opt/NeteXt73/APM/wireless /usr/lib/pm-utils/power.d/
-fi
-
-if [ ! -e /usr/lib/pm-utils/power.d/laptop-mode ];then
-	sudo cp /opt/NeteXt73/APM/laptop-mode /usr/lib/pm-utils/power.d/
-fi
-#usunięcie wcześniej tworzonych configów niepotrzebynych od APM 3.7
-sudo rm -f /etc/modprobe.d/ums-realtek.conf
-sudo rm -f /etc/modprobe.d/rts5139.conf
 sudo chmod a-x /usr/lib/pm-utils/power.d/*
 sudo chmod a-x /etc/apm/event.d/20hdparm
 sudo tar -xvzf /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz -C /etc/pm/power.d/
@@ -292,10 +282,10 @@ if [ "$(cat /etc/acpi/powerbtn.sh | grep '/usr/.../qdbus')" != "" ]; then
 		sudo sed -i '/Power button pressed/ s/\/sbin/#\/sbin/' /etc/acpi/powerbtn.sh
 	fi
 fi
-
+#dodanie apm fixa do rc.local
 sudo sed -i '/apm_status_fix/d' /etc/rc.local
 sudo sed -i '/exit 0/d' /etc/rc.local
-echo 'bash /opt/NeteXt73/menu/apm_status_fix' | sudo tee -a /etc/rc.local
+echo 'bash /opt/NeteXt73/APM/apm_status_fix' | sudo tee -a /etc/rc.local
 echo 'exit 0' | sudo tee -a /etc/rc.local
 }
 
@@ -365,7 +355,7 @@ elif [ "$ssdfix" = "noop" ];then
 fi
 #hibernacja
 if [ "$hibernacja_menu" = "TRUE" ];then
-	sudo cp /opt/NeteXt73/menu/com.ubuntu.enable-hibernate.pkla /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla -f
+	sudo cp /opt/NeteXt73/APM/com.ubuntu.enable-hibernate.pkla /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla -f
 else
 	if [ -e /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla ]; then
 		sudo rm -f /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla
@@ -444,7 +434,7 @@ elif [ "$(grep ssdfix ~/.netext73/apm_status | cut -d ' ' -f 2)" = "noop" ];then
 fi
 #zmiana hibernacji
 if [ "$(grep hibernacja ~/.netext73/apm_status | cut -d ' ' -f 2)" = "TRUE" ];then
-	sudo cp /opt/NeteXt73/menu/com.ubuntu.enable-hibernate.pkla /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla -f
+	sudo cp /opt/NeteXt73/APM/com.ubuntu.enable-hibernate.pkla /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla -f
 else
 	if [ -e /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla ]; then
 		sudo rm -f /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla
@@ -455,24 +445,15 @@ fi
 apm_usun(){
 echo "echo \"$TEXT_PROCEDURA_9\""
 echo "sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/pm-utils/power.d/readahead"
-echo "if [ ! -e /usr/lib/pm-utils/power.d/laptop-mode ];then"
-echo "sudo cp -f /opt/NeteXt73/APM/wireless /usr/lib/pm-utils/power.d/"
-echo "fi"
-
-echo "if [ ! -e /usr/lib/pm-utils/power.d/wireless ];then"
-echo "sudo cp -f /opt/NeteXt73/APM/laptop-mode /usr/lib/pm-utils/power.d/"
-echo "fi"
-
 echo "sudo chmod a+x /usr/lib/pm-utils/power.d/*"
-sudo "sudo chmod a+x /etc/apm/event.d/20hdparm"
+echo "sudo chmod a+x /etc/apm/event.d/20hdparm"
 echo "sudo chown root:root /usr/lib/pm-utils/power.d/*" 
+echo "sudo chown root:root /etc/apm/event.d/20hdparm" 
 #przywrócenie powerbtn
 echo "if [ -e /etc/acpi/powerbtn.sh.bak ]; then"
 echo "sudo mv /etc/acpi/powerbtn.sh.bak /etc/acpi/powerbtn.sh -f"
 echo "sudo chmod a+x /etc/acpi/powerbtn.sh"
 echo "sudo chown root:root /etc/acpi/powerbtn.sh"
-echo "sudo rm /etc/modprobe.d/rts5139.conf -f"
-echo "sudo rm /etc/modprobe.d/ums-realtek.conf -f"
 echo "fi"
 echo "sudo update-rc.d -f ondemand defaults"
 echo "sudo /etc/init.d/ondemand start"
@@ -494,7 +475,7 @@ else
 	fi
 fi
 
-if [ "$(ls /etc/pm/power.d/ | wc -l)" = "6" ] && [ $( ls /usr/lib/pm-utils/power.d/ -la | grep rwxr | wc -l) != "4" ]; then 
+if [ "$(ls /etc/pm/power.d/ | wc -l)" = "6" ] && [ $( ls /usr/lib/pm-utils/power.d/ -la | grep rwxr | grep -v drwxr-xr-x | wc -l) != "2" ]; then 
 	    stan_apm="-"
 fi
 if [ "$(grep apm_status_fix /etc/rc.local)" = "" ]; then
