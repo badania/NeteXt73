@@ -42,7 +42,10 @@ elif [ "$a" = "-" ]; then
 	yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_APM2"
 	apm_inst
 	if [ -e ~/.netext73/apm_status ]; then
-		apm_zmiana_config "advanced_power_management_by_ext73_$(cat ~/.netext73/apm_status | sed 's/.* //' | head -n 1)*"
+		apm_program="$(cat ~/.netext73/apm_status | sed 's/.* //' | head -n 1)"
+		if [ "$apm_program" = "conservative-conservative" ] || [ "$apm_program" = "ondemand-ondemand" ] || [ "$apm_program" = "intel-performance" ] || [ "$apm_program" = "intel-powersave" ] || [ "$apm_program" = "performance-conservative" ] || [ "$apm_program" = "performance-ondemand" ] ; then
+			apm_zmiana_config "advanced_power_management_by_ext73_$apm_program*"
+		fi
 	fi
 fi
 stan_apm_config czeki
@@ -59,14 +62,18 @@ stan_apm=""
 #zapamiętanie configu jeżeli był niepełen config
 if [ -e  ~/.netext73/apm_status ] && [ "$(cat ~/.netext73/apm_status | wc -l)" != "11" ]; then
 	#sprawdzanie czy jest włączony jakiś APM
-	if [ "$(ls /etc/pm/power.d/)" != "" ] && [ "$(ls /etc/pm/power.d/advanced_power_management_by_ext73* -Fl | grep '*' | cut -d '_' -f 7)" = "" ];then
-		sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative*
+	if [ "$apmik" = "stary" ]; then
+		if [ "$(ls /etc/pm/power.d/)" != "" ] && [ "$(ls /etc/pm/power.d/advanced_power_management_by_ext73* -Fl | grep '*' | cut -d '_' -f 7)" = "" ];then
+			sudo chmod a+x /etc/pm/power.d/advanced_power_management_by_ext73_conservative*
+		fi
+		#sprawdzenie stanu czeków
+		stan_apm_config
 	fi
-	#sprawdzenie stanu czeków
-	stan_apm_config
 fi
 petla_duza="tak"
 while [ $petla_duza = "tak" ]; do
+	#stan apm config
+	
 	stan_apm #sprawdzenie stanu instalacji
 	if [ "$stan_apm" = "-" ]; then
 		#instalacja APM
@@ -74,7 +81,10 @@ while [ $petla_duza = "tak" ]; do
 		if [ $? = 0 ]; then
 			apm_inst
 			if [ -e ~/.netext73/apm_status ]; then
-				apm_zmiana_config "advanced_power_management_by_ext73_$(cat ~/.netext73/apm_status | sed 's/.* //' | head -n 1)*"
+				apm_program="$(cat ~/.netext73/apm_status | sed 's/.* //' | head -n 1)"
+				if [ "$apm_program" = "conservative-conservative" ] || [ "$apm_program" = "ondemand-ondemand" ] || [ "$apm_program" = "intel-performance" ] || [ "$apm_program" = "intel-powersave" ] || [ "$apm_program" = "performance-conservative" ] || [ "$apm_program" = "performance-ondemand" ] ; then
+					apm_zmiana_config "advanced_power_management_by_ext73_$apm_program*"
+				fi
 			fi
 			stan_apm
 		fi
@@ -90,7 +100,7 @@ while [ $petla_duza = "tak" ]; do
 	if [ "$stan_apm" != "-" ]; then
 		aa=$(yad-netext --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png"  --image="/opt/NeteXt73/ikony/apm.png" --form \
 		--field="$TEXT_WERSJA_APM:RO" --field="$TEXT_AKTUALNY_PROFIL_APM:RO" --field="$TEXT_ZMIEN_PROFIL_APM:CB" \
-		"$(ls /etc/pm/power.d/ | cut -d "_" -f 7 | head -n 1)" "$aktualny_apm" "$menu" \
+		"$(ls $katalog_apm | cut -d "_" -f 7 | head -n 1)" "$aktualny_apm" "$menu" \
 		--field="$TEXT_FIX1:CHK" "$wififix" \
 		--field="$TEXT_FIX2:CHK" "$wifionoff" \
 		--field="$TEXT_FIX3:CHK" "$btfix" \
