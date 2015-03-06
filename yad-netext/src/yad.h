@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with YAD. If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2008-2014, Victor Ananjevsky <ananasik@gmail.com>
+ * Copyright (C) 2008-2015, Victor Ananjevsky <ananasik@gmail.com>
  */
 
 #ifndef _YAD_H_
@@ -53,6 +53,9 @@ typedef enum {
   YAD_MODE_FILE,
   YAD_MODE_FONT,
   YAD_MODE_FORM,
+#ifdef HAVE_HTML
+  YAD_MODE_HTML,
+#endif
   YAD_MODE_ICONS,
   YAD_MODE_LIST,
   YAD_MODE_MULTI_PROGRESS,
@@ -63,13 +66,19 @@ typedef enum {
   YAD_MODE_SCALE,
   YAD_MODE_TEXTINFO,
   YAD_MODE_ABOUT,
-  YAD_MODE_VERSION,
+  YAD_MODE_VERSION
 } YadDialogMode;
+
+typedef enum {
+  YAD_COLOR_HEX,
+  YAD_COLOR_RGB
+} YadColorMode;
 
 typedef enum {
   YAD_FIELD_SIMPLE = 0,
   YAD_FIELD_HIDDEN,
   YAD_FIELD_READ_ONLY,
+  YAD_FIELD_COMPLETE,
   YAD_FIELD_NUM,
   YAD_FIELD_CHECK,
   YAD_FIELD_COMBO,
@@ -87,7 +96,7 @@ typedef enum {
   YAD_FIELD_BUTTON,
   YAD_FIELD_FULL_BUTTON,
   YAD_FIELD_LABEL,
-  YAD_FIELD_TEXT,
+  YAD_FIELD_TEXT
 } YadFieldType;
 
 typedef enum {
@@ -100,24 +109,24 @@ typedef enum {
   YAD_COLUMN_HIDDEN,
   YAD_COLUMN_ATTR_FORE,
   YAD_COLUMN_ATTR_BACK,
-  YAD_COLUMN_ATTR_FONT,
+  YAD_COLUMN_ATTR_FONT
 } YadColumnType;
 
 typedef enum {
   YAD_PRINT_TEXT = 0,
   YAD_PRINT_IMAGE,
-  YAD_PRINT_RAW,
+  YAD_PRINT_RAW
 } YadPrintType;
 
 typedef enum {
   YAD_PROGRESS_NORMAL = 0,
   YAD_PROGRESS_RTL,
-  YAD_PROGRESS_PULSE,
+  YAD_PROGRESS_PULSE
 } YadProgressType;
 
 typedef enum {
   YAD_BIG_ICON = 0,
-  YAD_SMALL_ICON,
+  YAD_SMALL_ICON
 } YadIconSize;
 
 typedef struct {
@@ -194,6 +203,8 @@ typedef struct {
   gboolean use_palette;
   gchar *palette;
   gboolean extra;
+  gboolean alpha;
+  YadColorMode mode;
 } YadColorData;
 
 typedef struct {
@@ -228,7 +239,18 @@ typedef struct {
   GSList *fields;
   guint columns;
   gboolean scroll;
+  gboolean output_by_row;
 } YadFormData;
+
+#ifdef HAVE_HTML
+typedef struct {
+  gchar *uri;
+  gboolean browser;
+  gboolean print_uri;
+  gchar *mime;
+  gchar *encoding;
+} YadHtmlData;
+#endif
 
 typedef struct {
   gchar *directory;
@@ -348,6 +370,9 @@ typedef struct {
   YadFileData file_data;
   YadFontData font_data;
   YadFormData form_data;
+#ifdef HAVE_HTML
+  YadHtmlData html_data;
+#endif
   YadIconsData icons_data;
   YadListData list_data;
   YadMultiProgressData multi_progress_data;
@@ -424,6 +449,9 @@ GtkWidget *entry_create_widget (GtkWidget * dlg);
 GtkWidget *file_create_widget (GtkWidget * dlg);
 GtkWidget *font_create_widget (GtkWidget * dlg);
 GtkWidget *form_create_widget (GtkWidget * dlg);
+#ifdef HAVE_HTML
+GtkWidget *html_create_widget (GtkWidget * dlg);
+#endif
 GtkWidget *icons_create_widget (GtkWidget * dlg);
 GtkWidget *list_create_widget (GtkWidget * dlg);
 GtkWidget *multi_progress_create_widget (GtkWidget * dlg);
