@@ -114,7 +114,7 @@ else
 fi
 
 #APM
-#twoj_apm=$(ls $katalog_apm | cut -d "_" -f 7 | head -n 1)
+twoj_apm=$(ls $katalog_apm | cut -d "_" -f 7 | head -n 1)
 if [ "$twoj_apm" = "$wersja_apm" ]  ; then
 	apm="$TEXT_UPDATE4"
 	a3="FALSE"

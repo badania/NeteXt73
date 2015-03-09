@@ -1,6 +1,9 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.63
+-	poprawka w logach APM
+-	porawki z APM 5.0
 v0.8.62
 -	APM 5.0 dla Ubuntu 15.04 wzwyż
 -	dostosowanie APM, logów i sekcji update do 2 wersji APM

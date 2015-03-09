@@ -88,15 +88,11 @@ else
 	echo "microcode AMD - <b>OFF</b>" >> system$losowa.log
 fi
 #apm status
-if [ -e /usr/lib/pm-utils/power.d/readahead ] ; then
 	if [ "$stan_apm" != "-" ]; then
 		echo -e "$TEXT_SKRYPT APM - <b>ON</b>" >> system$losowa.log
 	else
 		echo -e "$TEXT_SKRYPT APM - <b>$TEXT_LOGI7</b>" >> system$losowa.log
 	fi
-else
-	echo -e "$TEXT_SKRYPT APM - <b>OFF</b>" >> system$losowa.log
-fi
 if [ -e $wersja_apm ]; then
 	echo "$TEXT_LOGI8 APM: <b>$(ls -al /etc/default/grub | cut -d " " -f 3)</b>" >> system$losowa.log
 fi

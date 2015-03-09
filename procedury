@@ -99,7 +99,7 @@ else
 	export apmik="stary"
 	export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 fi
-twoj_apm=$(ls $katalog_apm | cut -d "_" -f 7 | head -n 1)
+
 
 
 
@@ -282,6 +282,7 @@ if [ "$apmik" = "stary" ]; then
 	else
 		sudo chmod a+x /etc/pm/power.d/$wersja_apm1*$wersja_apm
 	fi
+	sudo chown root:root /etc/pm/power.d/*
 elif [ "$apmik" = "nowy" ]; then
       sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service
       sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service
@@ -289,16 +290,20 @@ elif [ "$apmik" = "nowy" ]; then
       sudo rm -f /etc/udev/rules.d/50-udev-apm.rules
       sudo rm -rf /etc/apm-ext73
 	sudo tar -xvzf /opt/NeteXt73/APM/advanced_power_management2_by_ext73_$wersja_apm.tar.gz -C /etc/
-	if [ -e ~/.netext73/apm_status ] && [ "$(ls /etc/udev/rules.d/50-udev-apm-ext73.rules | grep $(cat  ~/.netext73/apm_status | head -n 1))" != "" ]; then 
+	if [ -e ~/.netext73/apm_status ] && [ "$(cat /etc/udev/rules.d/50-udev-apm-ext73.rules | grep $(cat  ~/.netext73/apm_status | head -n 1))" = "" ]; then 
 		#zaznaczanie aktywnego APM wg configu
-		sudo sed -i "s/advanced_power_management_by_ext73_* /advanced_power_management_by_ext73_$(cat  ~/.netext73/apm_status | head -n 1)_$wersja_apm /g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-
+		a=$(cat  ~/.netext73/apm_status | head -n 1)
+		sudo sed -i "s/conservative-conservative/$a/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
+		sudo sed -i "s/ondemand-ondemand/$a/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
+		sudo sed -i "s/intel-performance/$a/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
+		sudo sed -i "s/intel-powersave/$a/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
+		sudo sed -i "s/performance-conservative/$a/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
+		sudo sed -i "s/performance-ondemand/$a/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
 	fi
 fi
 
 
 sudo chown root:root /usr/lib/pm-utils/power.d/*
-sudo chown root:root /etc/pm/power.d/*
 sudo /etc/init.d/ondemand stop
 sudo update-rc.d -f ondemand remove
 #naprawa powerbtn
@@ -328,7 +333,6 @@ elif [ "$apmik" = "nowy" ]; then
 	sudo sed -i "s/intel-powersave/$1/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
 	sudo sed -i "s/performance-conservative/$1/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
 	sudo sed -i "s/performance-ondemand/$1/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-	sudo udevadm control --reload-rules
 fi
 if [ "$wififix" = "FALSE" ];then
 	sudo sed -i 's/echo auto > \$ii/echo on > \$ii/g' $katalog_apm
@@ -398,19 +402,20 @@ else
 	fi
 fi
 if [ "$apmik" = "nowy" ]; then
-	cd /etc/apm-ext73/ && sudo ./advanced_power_management_by_ext73_$1*
+	sudo udevadm control --reload-rules
+	sudo /etc/apm-ext73/./$(cat /etc/udev/rules.d/50-udev-apm-ext73.rules | sed 's/.*\///g' | grep adv | head -n 1 | awk '{print $1}')
 fi
 }
 
 apm_zmiana_config(){
-if [ "$apmik" = "stary" ]; then
-	sudo chmod a-x /etc/pm/power.d/*
-	sudo chmod a+x /etc/pm/power.d/$2 
-	sudo chown root:root /etc/pm/power.d/*
-elif [ "$apmik" = "nowy" ]; then
-	sudo sed -i "s/advanced_power_management_by_ext73_* /$1/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-	sudo udevadm control --reload-rules
-fi
+#if [ "$apmik" = "stary" ]; then
+#	sudo chmod a-x /etc/pm/power.d/*
+#	sudo chmod a+x /etc/pm/power.d/$2 
+#	sudo chown root:root /etc/pm/power.d/*
+#elif [ "$apmik" = "nowy" ]; then
+#	sudo sed -i "s/advanced_power_management_by_ext73_* /$1/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
+#	sudo udevadm control --reload-rules
+#fi
 if [ "$(grep wififix ~/.netext73/apm_status | cut -d ' ' -f 2)" = "FALSE" ];then
 	sudo sed -i 's/echo auto > \$ii/echo on > \$ii/g' $katalog_apm
 else
@@ -484,36 +489,9 @@ else
 	fi
 fi
 if [ "$apmik" = "nowy" ]; then
-	cd /etc/apm-ext73/ && sudo ./advanced_power_management_by_ext73_$1*
+	sudo udevadm control --reload-rules
+	sudo /etc/apm-ext73/./$(cat /etc/udev/rules.d/50-udev-apm-ext73.rules | sed 's/.*\///g' | grep adv | head -n 1 | awk '{print $1}')
 fi
-}
-
-apm_usun(){
-echo "echo \"$TEXT_PROCEDURA_9\""
-echo "sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/pm-utils/power.d/readahead"
-echo "sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service"
-echo "sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service"
-echo "sudo rm -f /etc/systemd/system/suspend.target.wants/apm_ext73-resume.service"
-echo "sudo rm -f /etc/udev/rules.d/50-udev-apm.rules"
-echo "sudo rm -rf /etc/apm-ext73"
-echo "sudo chmod a+x /usr/lib/pm-utils/power.d/*"
-echo "sudo chmod a+x /etc/apm/event.d/20hdparm"
-echo "sudo chown root:root /usr/lib/pm-utils/power.d/*" 
-echo "sudo chown root:root /etc/apm/event.d/20hdparm" 
-#przywrócenie powerbtn
-echo "if [ -e /etc/acpi/powerbtn.sh.bak ]; then"
-echo "sudo mv /etc/acpi/powerbtn.sh.bak /etc/acpi/powerbtn.sh -f"
-echo "sudo chmod a+x /etc/acpi/powerbtn.sh"
-echo "sudo chown root:root /etc/acpi/powerbtn.sh"
-echo "fi"
-echo "sudo update-rc.d -f ondemand defaults"
-echo "sudo /etc/init.d/ondemand start"
-echo "sudo sed -i '/apm_status_fix/d' /etc/rc.local"
-#usunięcie hibernacji
-echo "if [ -e /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla ]; then"
-echo "sudo rm -f /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla"
-echo "fi"
-echo "rm -f ~/.netext73/apm_status"
 }
 
 stan_apm(){
@@ -532,6 +510,7 @@ if [ "$apmik" = "stary" ]; then
 		stan_apm="-"
 	fi
 elif [ "$apmik" = "nowy" ]; then
+	twoj_apm=$(ls $katalog_apm | cut -d "_" -f 7 | head -n 1)
 	if [ -e /etc/apm-ext73/ ] && [ "$(ls /etc/apm-ext73/ | wc -l)" != "10" ] || [ "$twoj_apm" != "$wersja_apm" ] ; then
 		stan_apm="-"
 	else
@@ -641,8 +620,12 @@ stan_apm_config(){
 	export hibernacja_menu_przed=$hibernacja_menu
 	
 	#wysłanie danych do configu 
-	if [ "$1" = "czeki" ]; then
-		ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed -e 's/*//' -e 's/advanced_power_management_by_ext73_//' -e 's/_v.*//' > ~/.netext73/apm_status
+	if [ "$1" = "czeki" ]; then 
+		if [ "$apmik" = "stary" ]; then
+			ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed -e 's/*//' -e 's/advanced_power_management_by_ext73_//' -e 's/_v.*//' > ~/.netext73/apm_status
+		elif [ "$apmik" = "nowy" ]; then
+			cat /etc/udev/rules.d/50-udev-apm-ext73.rules | grep advanced_power_management_by_ext73_ | head -n 1 | cut -d '_' -f 9 > ~/.netext73/apm_status
+		fi
 		echo "wififix $wififix" >> ~/.netext73/apm_status
 		echo "wifionoff $wifionoff" >> ~/.netext73/apm_status
 		echo "btfix $btfix">> ~/.netext73/apm_status
@@ -654,6 +637,34 @@ stan_apm_config(){
 		echo "turboacoff $turboacoff" >> ~/.netext73/apm_status
 		echo "hibernacja $hibernacja_menu" >> ~/.netext73/apm_status
 	fi
+}
+
+apm_usun(){
+echo "echo \"$TEXT_PROCEDURA_9\""
+echo "sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/pm-utils/power.d/readahead"
+echo "sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service"
+echo "sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service"
+echo "sudo rm -f /etc/systemd/system/suspend.target.wants/apm_ext73-resume.service"
+echo "sudo rm -f /etc/udev/rules.d/50-udev-apm.rules"
+echo "sudo rm -rf /etc/apm-ext73"
+echo "sudo chmod a+x /usr/lib/pm-utils/power.d/*"
+echo "sudo chmod a+x /etc/apm/event.d/20hdparm"
+echo "sudo chown root:root /usr/lib/pm-utils/power.d/*" 
+echo "sudo chown root:root /etc/apm/event.d/20hdparm" 
+#przywrócenie powerbtn
+echo "if [ -e /etc/acpi/powerbtn.sh.bak ]; then"
+echo "sudo mv /etc/acpi/powerbtn.sh.bak /etc/acpi/powerbtn.sh -f"
+echo "sudo chmod a+x /etc/acpi/powerbtn.sh"
+echo "sudo chown root:root /etc/acpi/powerbtn.sh"
+echo "fi"
+echo "sudo update-rc.d -f ondemand defaults"
+echo "sudo /etc/init.d/ondemand start"
+echo "sudo sed -i '/apm_status_fix/d' /etc/rc.local"
+#usunięcie hibernacji
+echo "if [ -e /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla ]; then"
+echo "sudo rm -f /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla"
+echo "fi"
+#echo "rm -f ~/.netext73/apm_status"
 }
 
 usun_kernel(){
