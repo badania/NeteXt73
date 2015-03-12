@@ -406,7 +406,7 @@ uninstall-binPROGRAMS:
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
 
-yad$(EXEEXT): $(yad_OBJECTS) $(yad_DEPENDENCIES) $(EXTRA_yad_DEPENDENCIES) 
+yad-netext$(EXEEXT): $(yad_OBJECTS) $(yad_DEPENDENCIES) $(EXTRA_yad_DEPENDENCIES) 
 	@rm -f yad-netext$(EXEEXT)
 	$(AM_V_CCLD)$(yad_LINK) $(yad_OBJECTS) $(yad_LDADD) $(LIBS)
 
