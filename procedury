@@ -93,13 +93,12 @@ export adres_opisu="http://www.netext73.pl/search/label/opis_netext73"
 if [ "$(lsb_release -a | grep 15.04)" != "" ] || [ "$(lsb_release -a | grep vivd)" != "" ]; then
 	export apmik="nowy"
 	export katalog_apm="/etc/apm-ext73/advanced_power_management_by_ext73_*"
-	export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management2_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 else
-	export katalog_apm="/etc/pm/power.d/advanced_power_management_by_ext73_*"
 	export apmik="stary"
-	export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
+	export katalog_apm="/etc/pm/power.d/advanced_power_management_by_ext73_*"
+	
 fi
-
+export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 
 
 
@@ -284,21 +283,47 @@ if [ "$apmik" = "stary" ]; then
 	fi
 	sudo chown root:root /etc/pm/power.d/*
 elif [ "$apmik" = "nowy" ]; then
-      sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service
-      sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service
-      sudo rm -f /etc/systemd/system/suspend.target.wants/apm_ext73-resume.service
-      sudo rm -f /etc/udev/rules.d/50-udev-apm.rules
-      sudo rm -rf /etc/apm-ext73
-	sudo tar -xvzf /opt/NeteXt73/APM/advanced_power_management2_by_ext73_$wersja_apm.tar.gz -C /etc/
-	if [ -e ~/.netext73/apm_status ] && [ "$(cat /etc/udev/rules.d/50-udev-apm-ext73.rules | grep $(cat  ~/.netext73/apm_status | head -n 1))" = "" ]; then 
+	sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service
+	sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service
+	sudo rm -f /etc/systemd/system/suspend.target.wants/apm_ext73-resume.service
+	sudo rm -f /etc/udev/rules.d/40-wol-udev-apm-ext73.rules
+	sudo rm -f /etc/udev/rules.d/50-udev-apm-ext73.rules
+	sudo rm -f /etc/udev/rules.d/70-brightness-udev-apm-ext73.rules
+	sudo rm -f /etc/udev/rules.d/80-xfs-udev-apm-ext73.rules
+	sudo rm -rf /etc/apm-ext73
+	sudo mkdir -p /etc/apm-ext73
+	#APM podstawa
+	sudo tar -xvzf /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz -C /etc/apm-ext73
+	#APM reszta
+	sudo tar -xvzf /opt/NeteXt73/APM/apm-ext73.tar.gz -C /etc/
+	#APM systemd
+	sudo tar -xvzf /opt/NeteXt73/APM/systemd.tar.gz -C /etc/
+	#udev jeżeli notebook
+	if [ "$(ls /sys/class/power_supply/*)" != "" ]; then 
+		sudo tar -xvzf /opt/NeteXt73/APM/udev.tar.gz -C /etc/
+		katalog="/etc/udev/rules.d/50-udev-apm-ext73.rules"
+	else
+	#dodanie apm fixa do rc.local
+		katalog="/etc/rc.local"
+		sudo sed -i '/apm-ext73/d' /etc/rc.local
+		sudo sed -i '/apm_status_fix/d' /etc/rc.local
+		sudo sed -i '/exit 0/d' /etc/rc.local
+		echo '/etc/apm-ext73/wol false'  | sudo tee -a /etc/rc.local
+		echo '/etc/apm-ext73/advanced_power_management_by_ext73_performance-ondemand_v5.0 false' | sudo tee -a /etc/rc.local
+		echo '/etc/apm-ext73/brightness false' | sudo tee -a /etc/rc.local
+		echo '/etc/apm-ext73/xfs_buffer false' | sudo tee -a /etc/rc.local
+		echo 'bash /opt/NeteXt73/APM/apm_status_fix' | sudo tee -a /etc/rc.local
+		echo 'exit 0' | sudo tee -a /etc/rc.local
+	fi
+	if [ -e ~/.netext73/apm_status ] && [ "$(cat $katalog | grep $(cat  ~/.netext73/apm_status | head -n 1))" = "" ]; then 
 		#zaznaczanie aktywnego APM wg configu
 		a=$(cat  ~/.netext73/apm_status | head -n 1)
-		sudo sed -i "s/conservative-conservative/$a/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-		sudo sed -i "s/ondemand-ondemand/$a/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-		sudo sed -i "s/intel-performance/$a/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-		sudo sed -i "s/intel-powersave/$a/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-		sudo sed -i "s/performance-conservative/$a/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-		sudo sed -i "s/performance-ondemand/$a/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
+		sudo sed -i "s/conservative-conservative/$a/g" $katalog
+		sudo sed -i "s/ondemand-ondemand/$a/g" $katalog
+		sudo sed -i "s/intel-performance/$a/g" $katalog
+		sudo sed -i "s/intel-powersave/$a/g" $katalog
+		sudo sed -i "s/performance-conservative/$a/g" $katalog
+		sudo sed -i "s/performance-ondemand/$a/g" $katalog
 	fi
 fi
 
@@ -327,12 +352,18 @@ if [ "$apmik" = "stary" ]; then
 	sudo chmod a+x /etc/pm/power.d/$2 
 	sudo chown root:root /etc/pm/power.d/*
 elif [ "$apmik" = "nowy" ]; then
-	sudo sed -i "s/conservative-conservative/$1/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-	sudo sed -i "s/ondemand-ondemand/$1/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-	sudo sed -i "s/intel-performance/$1/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-	sudo sed -i "s/intel-powersave/$1/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-	sudo sed -i "s/performance-conservative/$1/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
-	sudo sed -i "s/performance-ondemand/$1/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
+	if [ "$(ls /sys/class/power_supply/*)" != "" ]; then 
+		katalog="/etc/udev/rules.d/50-udev-apm-ext73.rules"
+	else
+	#dodanie apm fixa do rc.local
+		katalog="/etc/rc.local"
+	fi
+	sudo sed -i "s/conservative-conservative/$1/g" $katalog
+	sudo sed -i "s/ondemand-ondemand/$1/g" $katalog
+	sudo sed -i "s/intel-performance/$1/g" $katalog
+	sudo sed -i "s/intel-powersave/$1/g" $katalog
+	sudo sed -i "s/performance-conservative/$1/g" $katalog
+	sudo sed -i "s/performance-ondemand/$1/g" $katalog
 fi
 if [ "$wififix" = "FALSE" ];then
 	sudo sed -i 's/echo auto > \$ii/echo on > \$ii/g' $katalog_apm
@@ -645,7 +676,11 @@ echo "sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/p
 echo "sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service"
 echo "sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service"
 echo "sudo rm -f /etc/systemd/system/suspend.target.wants/apm_ext73-resume.service"
-echo "sudo rm -f /etc/udev/rules.d/50-udev-apm.rules"
+echo "sudo rm -f /etc/udev/rules.d/40-wol-udev-apm-ext73.rules"
+echo "sudo rm -f /etc/udev/rules.d/50-udev-apm-ext73.rules"
+echo "sudo rm -f /etc/udev/rules.d/60-persistent-net.rules"
+echo "sudo rm -f /etc/udev/rules.d/70-brightness-udev-apm-ext73.rules"
+echo "sudo rm -f /etc/udev/rules.d/80-xfs-udev-apm-ext73.rules"
 echo "sudo rm -rf /etc/apm-ext73"
 echo "sudo chmod a+x /usr/lib/pm-utils/power.d/*"
 echo "sudo chmod a+x /etc/apm/event.d/20hdparm"

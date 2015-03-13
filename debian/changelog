@@ -1,3 +1,9 @@
+netext73 (0.8.65) stable; urgency=medium
+
+  * ujednolicenie APM do 5.0
+
+ -- NetBit73 <netbit73@gmail.com>  Fri, 13 Mar 2015 19:37:36 +0100
+
 netext73 (0.8.64) stable; urgency=medium
 
   * YAD 0.28.1

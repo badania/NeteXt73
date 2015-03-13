@@ -29,11 +29,11 @@ yad_SOURCES = 			\
 	calendar.xpm
 
 if HTML
-yad_SOURCES += html.c
+yad_netext_SOURCES += html.c
 endif
 
-yad_CFLAGS = $(GTK_CFLAGS) $(HTML_CFLAGS)
-yad_LDADD = $(GTK_LIBS) $(HTML_LIBS)
+yad_netext_CFLAGS = $(GTK_CFLAGS) $(HTML_CFLAGS)
+yad_netext_LDADD = $(GTK_LIBS) $(HTML_LIBS)
 
 if BUILD_IB
 bin_PROGRAMS += yad-icon-browser

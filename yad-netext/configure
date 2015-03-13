@@ -579,7 +579,7 @@ MAKEFLAGS=
 
 # Identity of this package.
 PACKAGE_NAME='YAD'
-PACKAGE_TARNAME='yad-netext'
+PACKAGE_TARNAME='yad'
 PACKAGE_VERSION='0.28.1'
 PACKAGE_STRING='YAD 0.28.1'
 PACKAGE_BUGREPORT='https://sourceforge.net/p/yad-dialog/tickets/'
@@ -2759,7 +2759,7 @@ fi
 
 
 # Define the identity of the package.
- PACKAGE='yad-netext'
+ PACKAGE='yad'
  VERSION='0.28.1'
 
 
