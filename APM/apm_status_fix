@@ -50,7 +50,7 @@ fi
 #fi
 #wyłączenie bfq jak kernel go nie posiada
 if [ "$(grep bfq /sys/block/sd*/queue/scheduler)" = "" ]; then
-	if [ -e /etc/apm-ext73/advanced_power_management_by_ext73_* ]; then
+	if [ -e /etc/apm-ext73 ]; then
 		sudo sed -i '/#HDD/ s/bfq/cfq/g' /etc/apm-ext73/advanced_power_management_by_ext73_*
 	else
 		sudo sed -i '/#HDD/ s/bfq/cfq/g' /etc/pm/power.d/advanced_power_management_by_ext73_*

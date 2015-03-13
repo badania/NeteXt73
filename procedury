@@ -281,7 +281,6 @@ if [ "$apmik" = "stary" ]; then
 	else
 		sudo chmod a+x /etc/pm/power.d/$wersja_apm1*$wersja_apm
 	fi
-	sudo chown root:root /etc/pm/power.d/*
 elif [ "$apmik" = "nowy" ]; then
 	sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service
 	sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service
@@ -295,12 +294,15 @@ elif [ "$apmik" = "nowy" ]; then
 	#APM podstawa
 	sudo tar -xvzf /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz -C /etc/apm-ext73
 	#APM reszta
-	sudo tar -xvzf /opt/NeteXt73/APM/apm-ext73.tar.gz -C /etc/
+	sudo tar -xvzf /opt/NeteXt73/APM/apm-ext73.tar.gz -C /etc/apm-ext73
 	#APM systemd
-	sudo tar -xvzf /opt/NeteXt73/APM/systemd.tar.gz -C /etc/
+	sudo cp /opt/NeteXt73/APM/apm_ext73-resume.service /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service
+	sudo cp /opt/NeteXt73/APM/apm_ext73-resume.service /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service
+	sudo cp /opt/NeteXt73/APM/apm_ext73-resume.service /etc/systemd/system/suspend.target.wants/apm_ext73-resume.service
+	
 	#udev jeżeli notebook
 	if [ "$(ls /sys/class/power_supply/*)" != "" ]; then 
-		sudo tar -xvzf /opt/NeteXt73/APM/udev.tar.gz -C /etc/
+		sudo tar -xvzf /opt/NeteXt73/APM/udev-ext73.tar.gz -C /etc/udev/rules.d/
 		katalog="/etc/udev/rules.d/50-udev-apm-ext73.rules"
 	else
 	#dodanie apm fixa do rc.local
@@ -325,6 +327,8 @@ elif [ "$apmik" = "nowy" ]; then
 		sudo sed -i "s/performance-conservative/$a/g" $katalog
 		sudo sed -i "s/performance-ondemand/$a/g" $katalog
 	fi
+	sudo chown root:root /etc -R
+
 fi
 
 
@@ -672,16 +676,16 @@ stan_apm_config(){
 
 apm_usun(){
 echo "echo \"$TEXT_PROCEDURA_9\""
-echo "sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/pm-utils/power.d/readahead"
 echo "sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service"
 echo "sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service"
 echo "sudo rm -f /etc/systemd/system/suspend.target.wants/apm_ext73-resume.service"
 echo "sudo rm -f /etc/udev/rules.d/40-wol-udev-apm-ext73.rules"
 echo "sudo rm -f /etc/udev/rules.d/50-udev-apm-ext73.rules"
-echo "sudo rm -f /etc/udev/rules.d/60-persistent-net.rules"
 echo "sudo rm -f /etc/udev/rules.d/70-brightness-udev-apm-ext73.rules"
 echo "sudo rm -f /etc/udev/rules.d/80-xfs-udev-apm-ext73.rules"
 echo "sudo rm -rf /etc/apm-ext73"
+echo "sudo sed -i '/apm_status_fix/d' /etc/rc.local"
+echo "sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/pm-utils/power.d/readahead"
 echo "sudo chmod a+x /usr/lib/pm-utils/power.d/*"
 echo "sudo chmod a+x /etc/apm/event.d/20hdparm"
 echo "sudo chown root:root /usr/lib/pm-utils/power.d/*" 
