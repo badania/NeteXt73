@@ -268,10 +268,30 @@ apm_inst(){
 sudo rm -fr /etc/pm/power.d/* /usr/lib/pm-utils/power.d/readahead
 sudo chmod a-x /usr/lib/pm-utils/power.d/*
 sudo chmod a-x /etc/apm/event.d/20hdparm
+sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service
+sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service
+sudo rm -f /etc/systemd/system/suspend.target.wants/apm_ext73-resume.service
+sudo rm -f /etc/udev/rules.d/40-wol-udev-apm-ext73.rules
+sudo rm -f /etc/udev/rules.d/50-udev-apm-ext73.rules
+sudo rm -f /etc/udev/rules.d/70-brightness-udev-apm-ext73.rules
+sudo rm -f /etc/udev/rules.d/80-xfs-udev-apm-ext73.rules
+sudo mkdir -p /etc/apm-ext73
+sudo rm -f /etc/apm-ext73/*
+mkdir /tmp/apm-ext73 -p
+rm /tmp/apm-ext73/*
+sudo tar -xvzf /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz -C /tmp/apm-ext73/
 if [ "$apmik" = "stary" ]; then
-	sudo tar -xvzf /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz -C /etc/pm/power.d/
+	#przegrywanie plików APM`
+	sudo cp /tmp/apm-ext73/advanced_power_management* /etc/pm/power.d/
+	sudo cp /tmp/apm-ext73/brightness /etc/apm-ext73/
 	sudo chmod a+x /usr/lib/pm-utils/power.d/xfs_buffer /usr/lib/pm-utils/power.d/disable_wol 
 	sudo chmod a-x /etc/pm/power.d/*
+	sudo chown root:root /etc/pm/power.d/*
+	sudo chown root:root /etc/apm-ext73/*
+	#przegrywanie udev dla jasności
+	sudo cp /tmp/apm-ext73/60-brightness-udev-apm-ext73.rules /etc/udev/rules.d/
+	sudo chown root:root /etc/udev/rules.d/*
+	
 	if [ -e ~/.netext73/apm_status ]; then
 		if [ "$(ls /etc/pm/power.d/* | grep $(cat  ~/.netext73/apm_status | head -n 1))" != "" ]; then #zaznaczanie aktywnego APM wg configu
 			sudo chmod a+x $(ls /etc/pm/power.d/* | grep $(cat  ~/.netext73/apm_status | head -n 1)) 
@@ -282,24 +302,23 @@ if [ "$apmik" = "stary" ]; then
 		sudo chmod a+x /etc/pm/power.d/$wersja_apm1*$wersja_apm
 	fi
 elif [ "$apmik" = "nowy" ]; then
-	sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service
-	sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service
-	sudo rm -f /etc/systemd/system/suspend.target.wants/apm_ext73-resume.service
-	sudo rm -f /etc/udev/rules.d/40-wol-udev-apm-ext73.rules
-	sudo rm -f /etc/udev/rules.d/50-udev-apm-ext73.rules
-	sudo rm -f /etc/udev/rules.d/70-brightness-udev-apm-ext73.rules
-	sudo rm -f /etc/udev/rules.d/80-xfs-udev-apm-ext73.rules
-	sudo rm -rf /etc/apm-ext73
-	sudo mkdir -p /etc/apm-ext73
-	#APM podstawa
-	sudo tar -xvzf /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz -C /etc/apm-ext73
-	#APM reszta
-	sudo tar -xvzf /opt/NeteXt73/APM/apm-ext73.tar.gz -C /etc/apm-ext73
+	sudo cp /tmp/apm-ext73/advanced_power_management* /etc/apm-ext73/
+	sudo cp /tmp/apm-ext73/brightness /etc/apm-ext73/
+	sudo cp /tmp/apm-ext73/apm_before /etc/apm-ext73/
+	sudo cp /tmp/apm-ext73/apm_resume /etc/apm-ext73/
+	sudo cp /tmp/apm-ext73/wol /etc/apm-ext73/
+	sudo cp /tmp/apm-ext73/xfs_buffer /etc/apm-ext73/
+	sudo chown root:root /etc/apm-ext73/*	
+	sudo chmod a+x /usr/lib/pm-utils/power.d/xfs_buffer /usr/lib/pm-utils/power.d/disable_wol 
+	sudo cp /tmp/apm-ext73/*.rules /etc/udev/rules.d/
+	sudo chown root:root /etc/udev/rules.d/*
 	#APM systemd
-	sudo cp /opt/NeteXt73/APM/apm_ext73-resume.service /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service
-	sudo cp /opt/NeteXt73/APM/apm_ext73-resume.service /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service
-	sudo cp /opt/NeteXt73/APM/apm_ext73-resume.service /etc/systemd/system/suspend.target.wants/apm_ext73-resume.service
-	
+	sudo cp /opt/NeteXt73/APM/*.sevice /etc/systemd/system/hibernate.target.wants/
+	sudo cp /opt/NeteXt73/APM/*.sevice /etc/systemd/system/hybrid-sleep.target.wants/
+	sudo cp /opt/NeteXt73/APM/*.sevice /etc/systemd/system/suspend.target.wants/
+	sudo chown root:root /etc/systemd/system/hibernate.target.wants/*
+	sudo chown root:root /etc/systemd/system/hybrid-sleep.target.wants/*
+	sudo chown root:root /etc/systemd/system/suspend.target.wants/*
 	#udev jeżeli notebook
 	if [ "$(ls /sys/class/power_supply/*)" != "" ]; then 
 		sudo tar -xvzf /opt/NeteXt73/APM/udev-ext73.tar.gz -C /etc/udev/rules.d/
@@ -327,11 +346,8 @@ elif [ "$apmik" = "nowy" ]; then
 		sudo sed -i "s/performance-conservative/$a/g" $katalog
 		sudo sed -i "s/performance-ondemand/$a/g" $katalog
 	fi
-	sudo chown root:root /etc -R
 
 fi
-
-
 sudo chown root:root /usr/lib/pm-utils/power.d/*
 sudo /etc/init.d/ondemand stop
 sudo update-rc.d -f ondemand remove
@@ -348,6 +364,7 @@ sudo sed -i '/apm_status_fix/d' /etc/rc.local
 sudo sed -i '/exit 0/d' /etc/rc.local
 echo 'bash /opt/NeteXt73/APM/apm_status_fix' | sudo tee -a /etc/rc.local
 echo 'exit 0' | sudo tee -a /etc/rc.local
+rm -Rf /tmp/apm-ext73
 }
 
 apm_zmiana(){
@@ -546,7 +563,7 @@ if [ "$apmik" = "stary" ]; then
 	fi
 elif [ "$apmik" = "nowy" ]; then
 	twoj_apm=$(ls $katalog_apm | cut -d "_" -f 7 | head -n 1)
-	if [ -e /etc/apm-ext73/ ] && [ "$(ls /etc/apm-ext73/ | wc -l)" != "10" ] || [ "$twoj_apm" != "$wersja_apm" ] ; then
+	if [ -e /etc/apm-ext73/ ] && [ "$(ls /etc/apm-ext73/ | wc -l)" != "11" ] || [ "$twoj_apm" != "$wersja_apm" ] ; then
 		stan_apm="-"
 	else
 		if [ -e /etc/udev/rules.d/50-udev-apm-ext73.rules ]; then
@@ -676,9 +693,9 @@ stan_apm_config(){
 
 apm_usun(){
 echo "echo \"$TEXT_PROCEDURA_9\""
-echo "sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service"
-echo "sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service"
-echo "sudo rm -f /etc/systemd/system/suspend.target.wants/apm_ext73-resume.service"
+echo "sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-*"
+echo "sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-*"
+echo "sudo rm -f /etc/systemd/system/suspend.target.wants/apm_ext73-*"
 echo "sudo rm -f /etc/udev/rules.d/40-wol-udev-apm-ext73.rules"
 echo "sudo rm -f /etc/udev/rules.d/50-udev-apm-ext73.rules"
 echo "sudo rm -f /etc/udev/rules.d/70-brightness-udev-apm-ext73.rules"

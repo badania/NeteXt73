@@ -1,3 +1,9 @@
+netext73 (0.8.66) stable; urgency=medium
+
+  * zmiany w instalatorze APM 5.0
+
+ -- NetBit73 <netbit73@gmail.com>  Mon, 16 Mar 2015 19:23:21 +0100
+
 netext73 (0.8.65) stable; urgency=medium
 
   * ujednolicenie APM do 5.0

@@ -1,6 +1,9 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.66
+-	zmiana w instalatorze APM 
+-	dodanie kontroli jasności
 v0.8.65
 -	ujednolicenie APM do wersji 5.0
 -	poprawka APM fix 
