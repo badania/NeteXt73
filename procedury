@@ -312,7 +312,6 @@ elif [ "$apmik" = "nowy" ]; then
 	sudo cp /tmp/apm-ext73/wol /etc/apm-ext73/
 	sudo cp /tmp/apm-ext73/xfs_buffer /etc/apm-ext73/
 	sudo chown root:root /etc/apm-ext73/*	
-	sudo chmod a+x /usr/lib/pm-utils/power.d/xfs_buffer /usr/lib/pm-utils/power.d/disable_wol 
 	sudo cp /tmp/apm-ext73/*.rules /etc/udev/rules.d/
 	sudo chown root:root /etc/udev/rules.d/*
 	#APM systemd
