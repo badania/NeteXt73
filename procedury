@@ -271,6 +271,9 @@ sudo chmod a-x /etc/apm/event.d/20hdparm
 sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-resume.service
 sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-resume.service
 sudo rm -f /etc/systemd/system/suspend.target.wants/apm_ext73-resume.service
+sudo rm -f /etc/systemd/system/hibernate.target.wants/apm_ext73-before.service
+sudo rm -f /etc/systemd/system/hybrid-sleep.target.wants/apm_ext73-before.service
+sudo rm -f /etc/systemd/system/suspend.target.wants/apm_ext73-before.service
 sudo rm -f /etc/udev/rules.d/40-wol-udev-apm-ext73.rules
 sudo rm -f /etc/udev/rules.d/50-udev-apm-ext73.rules
 sudo rm -f /etc/udev/rules.d/70-brightness-udev-apm-ext73.rules
@@ -278,8 +281,8 @@ sudo rm -f /etc/udev/rules.d/80-xfs-udev-apm-ext73.rules
 sudo mkdir -p /etc/apm-ext73
 sudo rm -f /etc/apm-ext73/*
 mkdir /tmp/apm-ext73 -p
-rm /tmp/apm-ext73/*
-sudo tar -xvzf /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz -C /tmp/apm-ext73/
+rm /tmp/apm-ext73/* -f
+tar -xvzf /opt/NeteXt73/APM/advanced_power_management_by_ext73_$wersja_apm.tar.gz -C /tmp/apm-ext73/
 if [ "$apmik" = "stary" ]; then
 	#przegrywanie plików APM`
 	sudo cp /tmp/apm-ext73/advanced_power_management* /etc/pm/power.d/
@@ -313,15 +316,16 @@ elif [ "$apmik" = "nowy" ]; then
 	sudo cp /tmp/apm-ext73/*.rules /etc/udev/rules.d/
 	sudo chown root:root /etc/udev/rules.d/*
 	#APM systemd
-	sudo cp /opt/NeteXt73/APM/*.sevice /etc/systemd/system/hibernate.target.wants/
-	sudo cp /opt/NeteXt73/APM/*.sevice /etc/systemd/system/hybrid-sleep.target.wants/
-	sudo cp /opt/NeteXt73/APM/*.sevice /etc/systemd/system/suspend.target.wants/
+	sudo cp /tmp/apm-ext73/apm_ext73*.service /etc/systemd/system/hibernate.target.wants/
+	sudo cp /tmp/apm-ext73/apm_ext73*.service /etc/systemd/system/hybrid-sleep.target.wants/
+	sudo cp /tmp/apm-ext73/apm_ext73*.service /etc/systemd/system/suspend.target.wants/
 	sudo chown root:root /etc/systemd/system/hibernate.target.wants/*
 	sudo chown root:root /etc/systemd/system/hybrid-sleep.target.wants/*
 	sudo chown root:root /etc/systemd/system/suspend.target.wants/*
 	#udev jeżeli notebook
 	if [ "$(ls /sys/class/power_supply/*)" != "" ]; then 
-		sudo tar -xvzf /opt/NeteXt73/APM/udev-ext73.tar.gz -C /etc/udev/rules.d/
+		sudo cp /tmp/apm-ext73/udev-ext73.tar.gz -C /etc/udev/rules.d/
+		sudo chown root:root /etc/udev/rules.d/*
 		katalog="/etc/udev/rules.d/50-udev-apm-ext73.rules"
 	else
 	#dodanie apm fixa do rc.local
@@ -351,6 +355,12 @@ fi
 sudo chown root:root /usr/lib/pm-utils/power.d/*
 sudo /etc/init.d/ondemand stop
 sudo update-rc.d -f ondemand remove
+#ustawienie jasności wg aktualnej
+katalog_jasnosc=$(ls /sys/class/backlight | head -n 1)
+wartsc_bright=$(cat /sys/class/backlight/$katalog_jasnosc/brightness)
+sudo sed -i "/#ac/ s/echo.*>/echo $wartsc_bright >/" /etc/apm-ext73/brightness
+sudo sed -i "/#bateria/ s/echo.*>/echo $wartsc_bright >/" /etc/apm-ext73/brightness
+sudo sed -i "s/jasnosc/$katalog_jasnosc/g" /etc/apm-ext73/brightness
 #naprawa powerbtn
 if [ "$(cat /etc/acpi/powerbtn.sh | grep '/usr/.../qdbus')" != "" ]; then
 	sudo cp /etc/acpi/powerbtn.sh /etc/acpi/powerbtn.sh.bak -f
