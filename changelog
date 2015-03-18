@@ -1,6 +1,12 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.68
+-	zmiany w apm_before
+v0.8.67
+-	sterowanie jasnością z poziomu APM
+-	dodanie możliwości wyłączenia sterowania jasnością
+-	wyłączenie na starcie zarządzania jasnościa
 v0.8.66
 -	zmiana w instalatorze APM 
 -	dodanie kontroli jasności

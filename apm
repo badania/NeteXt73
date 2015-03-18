@@ -105,7 +105,7 @@ while [ $petla_duza = "tak" ]; do
 		--field="$TEXT_PLANISTA:CB" "$bfqfix_menu" \
 		--field="$(echo $TEXT_PLANISTA | sed 's/HDD/SSD\/FLASH/'):CB" "$ssdfix_menu" \
 		--field="$TEXT_HIBERNACJA:CHK" "$hibernacja_menu" \
-		--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" )
+		--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" --button="brightness:2" )
 		
 		klawisz=$?
 		if [ $klawisz = 0 ]; then 
@@ -133,6 +133,73 @@ while [ $petla_duza = "tak" ]; do
 				else
 					zmiany_w_APM
 				fi
+			fi
+		elif [ $klawisz = 2 ]; then
+			#ustawienie jasności wg aktualnej
+			katalog_jasnosc=$(ls /sys/class/backlight | head -n 1)
+			if [ "$katalog_jasnosc" != "" ];then
+				wartsc_bright=$(cat /sys/class/backlight/$katalog_jasnosc/brightness)
+				wartosc_max=$(cat /sys/class/backlight/$katalog_jasnosc/max_brightness)
+				skala=$wartosc_max
+				wartosc_min=$(($(echo $wartosc_max)/ 8))
+				KEY="$(echo $RANDOM)"
+				#zmienne losowe
+				mkdir -p /tmp/netext73 
+				res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
+				res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)
+				res3=$(mktemp --tmpdir=/tmp/netext73 netext73_3.XXXXXXXX)
+				wartosc_batt=$(cat /etc/apm-ext73/brightness | grep 'echo' | awk '{print $2}' | head -n 1)
+				wartosc_ac=$(tac /etc/apm-ext73/brightness | grep 'echo' | awk '{print $2}' | head -n 1)
+				#walidacja
+				if [ $wartosc_batt -lt $wartosc_min ]; then
+					wartosc_batt=$wartosc_min
+				elif [ $wartosc_batt -gt $wartosc_max ]; then
+					wartosc_batt=$wartosc_max
+				fi
+				if [ $wartosc_ac -lt $wartosc_min ]; then
+					wartosc_ac=$wartosc_min
+				elif [ $wartosc_ac -gt $wartosc_max ]; then
+					wartosc_ac=$wartosc_max
+				fi
+				#przeliczenie skali na 0-100
+				wartosc_min=$((100*$(echo $wartosc_min)/$(echo $skala)))
+				wartosc_max=100
+				wartosc_ac=$((100*$(echo $wartosc_ac)/$(echo $skala)))
+				wartosc_batt=$((100*$(echo $wartosc_batt)/$(echo $skala)))
+				#zakładki skali bateria/ac
+				if [ -e /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules ] && [ "$(grep '#SUBSYSTEM' /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules)" = "" ]; then
+					jasnosc_dziala="TRUE"
+				else
+					jasnosc_dziala="FALSE"
+				fi	
+				yad-netext --plug=$KEY --tabnum=1 --form  --field="Sterowanie_jasnością:CHK" "$jasnosc_dziala" &> $res1 &
+				yad-netext --plug=$KEY --tabnum=2 --scale --min-value=$wartosc_min --max-value=$wartosc_max --value=$wartosc_batt &> $res2 &
+				yad-netext --plug=$KEY --tabnum=3 --scale --min-value=$wartosc_min --max-value=$wartosc_max --value=$wartosc_ac   &> $res3 &
+
+				yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu" --tab="sterowanie" --tab="jasność na baterii" --tab="jasność na zasilaczu"  --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=340 --height=50 --button="gtk-ok:0"
+				klawisz=$?
+				if [ $klawisz = 0 ]; then 
+					wart_batt=$(($(cat $res2)*$(echo $skala)/100))
+					wart_ac=$(($(cat $res3)*$(echo $skala)/100))
+					sudo sed -i "/#ac/ s/echo.*>/echo $wart_ac >/" /etc/apm-ext73/brightness
+					sudo sed -i "/#bateria/ s/echo.*>/echo $wart_batt >/" /etc/apm-ext73/brightness
+					if [ "$(cat /sys/class/power_supply/*/online)" = "0" ];then
+						sudo /etc/apm-ext73/./brightness true
+					else
+						sudo /etc/apm-ext73/./brightness false
+					fi
+					if [ "$(cat $res1 | cut -d "|" -f 1)" != "$jasnosc_dziala" ]; then
+						if [ "$(cat $res1 | cut -d "|" -f 1)" = "TRUE" ];then
+							sudo sed -i 's/#SUBSYSTEM/SUBSYSTEM/g' /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules
+						elif [ "$(cat $res1 | cut -d "|" -f 1)" = "FALSE" ];then
+							sudo sed -i 's/SUBSYSTEM/#SUBSYSTEM/g' /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules
+						fi
+					fi
+
+				fi
+				rm $res1 $res2 $res3 -f
+			else
+				dymek -i $ikona_info1 "$TEXT_INFORMACJA" "Brak możliwości zarządzania podświetleniem matrycy"
 			fi
 		fi
 	fi

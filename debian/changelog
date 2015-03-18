@@ -1,3 +1,15 @@
+netext73 (0.8.68) stable; urgency=medium
+
+  * zmiany w APM_before
+
+ -- NetBit73 <netbit73@gmail.com>  Wed, 18 Mar 2015 10:01:58 +0100
+
+netext73 (0.8.67) stable; urgency=medium
+
+  * sterowanie jasnością z poziomu APM
+
+ -- NetBit73 <netbit73@gmail.com>  Tue, 17 Mar 2015 14:32:45 +0100
+
 netext73 (0.8.66) stable; urgency=medium
 
   * zmiany w instalatorze APM 5.0
