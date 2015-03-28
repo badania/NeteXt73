@@ -162,10 +162,10 @@ while [ $petla_duza = "tak" ]; do
 					wartosc_ac=$wartosc_max
 				fi
 				#przeliczenie skali na 0-100
-				wartosc_min=$((100*$(echo $wartosc_min)/$(echo $skala)))
-				wartosc_max=100
-				wartosc_ac=$((100*$(echo $wartosc_ac)/$(echo $skala)))
-				wartosc_batt=$((100*$(echo $wartosc_batt)/$(echo $skala)))
+				wartosc_min=$((10*$(echo $wartosc_min)/$(echo $skala)))
+				wartosc_max=10
+				wartosc_ac=$((10*$(echo $wartosc_ac)/$(echo $skala)))
+				wartosc_batt=$((10*$(echo $wartosc_batt)/$(echo $skala)))
 				#zakładki skali bateria/ac
 				if [ -e /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules ] && [ "$(grep '#SUBSYSTEM' /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules)" = "" ]; then
 					jasnosc_dziala="TRUE"
@@ -179,8 +179,8 @@ while [ $petla_duza = "tak" ]; do
 				yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu" --tab="sterowanie" --tab="jasność na baterii" --tab="jasność na zasilaczu"  --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=340 --height=50 --button="gtk-ok:0"
 				klawisz=$?
 				if [ $klawisz = 0 ]; then 
-					wart_batt=$(($(cat $res2)*$(echo $skala)/100))
-					wart_ac=$(($(cat $res3)*$(echo $skala)/100))
+					wart_batt=$(($(cat $res2)*$(echo $skala)/10))
+					wart_ac=$(($(cat $res3)*$(echo $skala)/10))
 					sudo sed -i "/#ac/ s/echo.*>/echo $wart_ac >/" /etc/apm-ext73/brightness
 					sudo sed -i "/#bateria/ s/echo.*>/echo $wart_batt >/" /etc/apm-ext73/brightness
 					if [ "$(cat /sys/class/power_supply/*/online)" = "0" ];then
