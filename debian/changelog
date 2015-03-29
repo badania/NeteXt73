@@ -1,3 +1,9 @@
+netext73 (0.8.70) stable; urgency=medium
+
+  * jasność skala 20-stopniowa
+
+ -- NetBit73 <netbit73@gmail.com>  Sun, 29 Mar 2015 20:47:57 +0200
+
 netext73 (0.8.69) stable; urgency=medium
 
   * restart połączenia sieciowego po wzbudzeniu gdy nie ma IP

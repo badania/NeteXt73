@@ -54,7 +54,6 @@ export TEXT_BRIGHTNES="Backlight"
 export TEXT_STEROWANIE_JASNOSCIA="Backlight brightness control"
 export TEXT_JASNOSC_NA_BATT="Backlight on the battery"
 export TEXT_JASNOSC_NA_AC="Backlight on the AC"
-export TEXT_BRAK_STEROWANIA="Inability to control backlight"
 
 #########################################################################################################################################################################
 #tlumaczenia_backuprepo

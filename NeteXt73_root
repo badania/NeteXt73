@@ -81,8 +81,8 @@ if [ "$1" = "kontakty" ]; then
 	yad-netext --plug=$KEY --tabnum=9 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep i7-pro     | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel i7-pro" &> $res9 &
 	yad-netext --plug=$KEY --tabnum=10 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt | grep brazos     | egrep -v pro | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel brazos" &> $res10 &
 	yad-netext --plug=$KEY --tabnum=11 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt | grep brazos-pro | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel brazos-pro" &> $res11 &
-	
-	
+
+
 	yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_KONTAKT_Z_AUTORAMI" --tab="$TEXT_CHANGELOG" --tab="$TEXT_LICENCJA" \
 	--tab="catalyst" --tab="nvidia" --tab="k8" --tab="atom" --tab="i7" --tab="i7-pro" --tab="brazos" --tab="brazos-pro"  \
 	--window-icon="/opt/NeteXt73/ikony/mail.png" --on-top --width=840 --height=400 --button="$TEXT_ZAMKNIJ:1" --button="$TEXT_BUG:2"
@@ -92,7 +92,7 @@ if [ "$1" = "kontakty" ]; then
 		xdg-open "http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html"
 	fi
 else
-	if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ] && [ -e /tmp/netext73/stan_netext ] && [ $(cat /tmp/netext73/stan_netext) = "root" ] && [ "$(echo $1 | grep 'NeteXt73')" = "" ]; then
+	if [ -e ~/.netext73/root_mode ] && [ "$(cat ~/.netext73/root_mode)" = "TRUE" ] && [ -e /tmp/netext73/stan_netext ] && [ "$(cat /tmp/netext73/stan_netext)" = "root" ] && [ "$(echo $1 | grep 'NeteXt73')" = "" ]; then
 		sudo -S $1
 	else
 		echo "root" > /tmp/netext73/stan_netext
@@ -101,7 +101,7 @@ else
 				exit 0
 			fi
 		done
-		
+
 	fi
 fi
 sudo -K

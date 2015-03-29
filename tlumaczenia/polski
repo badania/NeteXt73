@@ -54,8 +54,6 @@ export TEXT_BRIGHTNES="Podświetlenie"
 export TEXT_STEROWANIE_JASNOSCIA="Sterowanie jasnością"
 export TEXT_JASNOSC_NA_BATT="Jasność ekranu na baterii"
 export TEXT_JASNOSC_NA_AC="Jasność ekranu na zasilaczu"
-export TEXT_BRAK_STEROWANIA="Brak możliwości zarządzania podświetleniem matrycy"
-
 
 #########################################################################################################################################################################
 #tlumaczenia_backuprepo

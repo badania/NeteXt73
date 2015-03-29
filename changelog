@@ -1,10 +1,15 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.70
+-	porpawki przeliczania skali jasności
+-	klawisz jasności aktywny tylko dla notebooków
+-	zmiana skali jasności na 20-stoponiową
 v0.8.69
 -	restartowanie networ-managera gdy po wzbudzeniu z uśpienia brak IP
 -	zmiana w pobieraniu sum kontrolnych
 -	dodanie tłumaczeń dla jasności podświetlenia ekranu
+-	naprawa NeteXt73.desktop
 v0.8.68
 -	zmiany w apm_before
 v0.8.67
