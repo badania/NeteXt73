@@ -179,7 +179,7 @@ while [ $petla_duza = "tak" ]; do
 			yad-netext --plug=$KEY --tabnum=2 --scale --min-value=$wartosc_min --max-value=$wartosc_max --value=$wartosc_batt &> $res2 &
 			yad-netext --plug=$KEY --tabnum=3 --scale --min-value=$wartosc_min --max-value=$wartosc_max --value=$wartosc_ac   &> $res3 &
 
-			yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu" --tab="$TEXT_STEROWANIE_JASNOSCIA" --tab="$TEXT_JASNOSC_NA_BATT" --tab="$TEXT_JASNOSC_NA_BATT"  --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=340 --height=50 --button="gtk-ok:0"
+			yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu" --tab="$TEXT_STEROWANIE_JASNOSCIA" --tab="$TEXT_JASNOSC_NA_BATT" --tab="$TEXT_JASNOSC_NA_AC"  --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=340 --height=50 --button="gtk-ok:0"
 			klawisz=$?
 			if [ $klawisz = 0 ]; then 
 				wart_batt=$(awk "BEGIN{print int(($(cat $res2)*$skala/$wartosc_max)+0.5)}")
