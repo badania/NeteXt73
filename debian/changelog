@@ -1,3 +1,9 @@
+netext73 (0.8.69) stable; urgency=medium
+
+  * restart połączenia sieciowego po wzbudzeniu gdy nie ma IP
+
+ -- NetBit73 <netbit73@gmail.com>  Sun, 29 Mar 2015 11:21:09 +0200
+
 netext73 (0.8.68) stable; urgency=medium
 
   * zmiany w APM_before
