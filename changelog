@@ -1,6 +1,9 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.71
+-	przywrócenie yad 0.27
+-	skala podświetlenia zależna od max wartości
 v0.8.70
 -	porpawki przeliczania skali jasności
 -	klawisz jasności aktywny tylko dla notebooków

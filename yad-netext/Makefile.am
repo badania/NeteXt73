@@ -1,5 +1,5 @@
 
-SUBDIRS = src po data
+SUBDIRS = src po
 
 EXTRA_DIST = COPYING ChangeLog NEWS README AUTHORS TODO THANKS
 

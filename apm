@@ -165,7 +165,11 @@ while [ $petla_duza = "tak" ]; do
 				wartosc_ac=$wartosc_max
 			fi
 			#przeliczenie skali na 0-wartosc_max
-			wartosc_max=20
+			if [ "$skala" -lt "20" ]; then
+				wartosc_max=10
+			else
+				wartosc_max=20
+			fi
 			wartosc_min=$(awk "BEGIN{print int(($wartosc_max*$wartosc_min/$skala)+0.5)}")
 			wartosc_ac=$(awk "BEGIN{print int(($wartosc_max*$wartosc_ac/$skala)+0.5)}")
 			wartosc_batt=$(awk "BEGIN{print int(($wartosc_max*$wartosc_batt/$skala)+0.5)}")

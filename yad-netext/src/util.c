@@ -292,7 +292,7 @@ get_label (gchar *str, guint border)
   gchar **vals;
 
   if (!str)
-    return gtk_label_new (NULL);
+    return gtk_label_new ("");
 
   l = i = NULL;
 
