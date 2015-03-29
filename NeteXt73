@@ -60,8 +60,7 @@ fi
 sumy(){
 #pobranie sum kontrolnych i sprawdzanie połączenia z netem
 	cd /tmp
-	wget $adres_sum_kontrolnych 2>&1 | pobieranie 
-	wget $adres_glowny/test_serwera.txt
+	yad_wget $adres_sum_kontrolnych2 $adres_sum_kontrolnych
 	mv sumy.txt $sumy_kontrolne
 	mv test_serwera.txt $test_serwera
 	if [ "$(cat $sumy_kontrolne)" = "" ] || [ "$(grep 'OK' $test_serwera)" = "" ]; then

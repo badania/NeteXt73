@@ -3,6 +3,7 @@
 
 v0.8.69
 -	restartowanie networ-managera gdy po wzbudzeniu z uśpienia brak IP
+-	zmiana w pobieraniu sum kontrolnych
 v0.8.68
 -	zmiany w apm_before
 v0.8.67
