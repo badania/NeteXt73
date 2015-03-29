@@ -105,7 +105,7 @@ while [ $petla_duza = "tak" ]; do
 		--field="$TEXT_PLANISTA:CB" "$bfqfix_menu" \
 		--field="$(echo $TEXT_PLANISTA | sed 's/HDD/SSD\/FLASH/'):CB" "$ssdfix_menu" \
 		--field="$TEXT_HIBERNACJA:CHK" "$hibernacja_menu" \
-		--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" --button="brightness:2" )
+		--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" --button="$TEXT_BRIGHTNES:2" )
 		
 		klawisz=$?
 		if [ $klawisz = 0 ]; then 
@@ -172,11 +172,11 @@ while [ $petla_duza = "tak" ]; do
 				else
 					jasnosc_dziala="FALSE"
 				fi	
-				yad-netext --plug=$KEY --tabnum=1 --form  --field="Sterowanie_jasnością:CHK" "$jasnosc_dziala" &> $res1 &
+				yad-netext --plug=$KEY --tabnum=1 --form  --field="$TEXT_STEROWANIE_JASNOSCIA:CHK" "$jasnosc_dziala" &> $res1 &
 				yad-netext --plug=$KEY --tabnum=2 --scale --min-value=$wartosc_min --max-value=$wartosc_max --value=$wartosc_batt &> $res2 &
 				yad-netext --plug=$KEY --tabnum=3 --scale --min-value=$wartosc_min --max-value=$wartosc_max --value=$wartosc_ac   &> $res3 &
 
-				yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu" --tab="sterowanie" --tab="jasność na baterii" --tab="jasność na zasilaczu"  --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=340 --height=50 --button="gtk-ok:0"
+				yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu" --tab="$TEXT_STEROWANIE_JASNOSCIA" --tab="$TEXT_JASNOSC_NA_BATT" --tab="$TEXT_JASNOSC_NA_BATT"  --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=340 --height=50 --button="gtk-ok:0"
 				klawisz=$?
 				if [ $klawisz = 0 ]; then 
 					wart_batt=$(($(cat $res2)*$(echo $skala)/10))
@@ -199,7 +199,7 @@ while [ $petla_duza = "tak" ]; do
 				fi
 				rm $res1 $res2 $res3 -f
 			else
-				dymek -i $ikona_info1 "$TEXT_INFORMACJA" "Brak możliwości zarządzania podświetleniem matrycy"
+				dymek -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_BRAK_STEROWANIA"
 			fi
 		fi
 	fi

@@ -50,6 +50,12 @@ export TEXT_FIX6="Intel CPU Turbo Boost na baterii"
 export TEXT_FIX7="Intel CPU Turbo Boost na AC"
 export TEXT_PLANISTA="Planista I/O [HDD]"
 export TEXT_HIBERNACJA="Hibernacja"
+export TEXT_BRIGHTNES="Podświetlenie"
+export TEXT_STEROWANIE_JASNOSCIA="Sterowanie jasnością"
+export TEXT_JASNOSC_NA_BATT="Jasność ekranu na baterii"
+export TEXT_JASNOSC_NA_AC="Jasność ekranu na zasilaczu"
+export TEXT_BRAK_STEROWANIA="Brak możliwości zarządzania podświetleniem matrycy"
+
 
 #########################################################################################################################################################################
 #tlumaczenia_backuprepo
