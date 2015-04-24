@@ -1,17 +1,20 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.73
+-	yad 0.28.1
+-	poprawki w deinstalatorze kerneli
 v0.8.72
 -	zatwierdzenie zmian
 v0.8.71
 -	przywrócenie yad 0.27
 -	skala podświetlenia zależna od max wartości
 v0.8.70
--	porpawki przeliczania skali jasności
+-	poprawki przeliczania skali jasności
 -	klawisz jasności aktywny tylko dla notebooków
--	zmiana skali jasności na 20-stoponiową
+-	zmiana skali jasności na 20-stopniową
 v0.8.69
--	restartowanie networ-managera gdy po wzbudzeniu z uśpienia brak IP
+-	restartowanie network-managera gdy po wzbudzeniu z uśpienia brak IP
 -	zmiana w pobieraniu sum kontrolnych
 -	dodanie tłumaczeń dla jasności podświetlenia ekranu
 -	naprawa NeteXt73.desktop
@@ -20,7 +23,7 @@ v0.8.68
 v0.8.67
 -	sterowanie jasnością z poziomu APM
 -	dodanie możliwości wyłączenia sterowania jasnością
--	wyłączenie na starcie zarządzania jasnościa
+-	wyłączenie na starcie zarządzania jasnością
 v0.8.66
 -	zmiana w instalatorze APM 
 -	dodanie kontroli jasności
@@ -54,11 +57,11 @@ v0.8.55
 v0.8.54
 -	usunięcie x-terminal-emulator z uwagi na brak kompatybilności w lubuntu
 v0.8.53
--	lista udostępnianych plików wraz ze statusem instalcji
+-	lista udostępnianych plików wraz ze statusem instalacji
 - 	dociąganie zależności w radeonie
 -	przeniesienie listy udostępnianych plików do 'o netext73'
 v0.8.52
--	zatwierdzenie zmin, drobne poprawki
+-	zatwierdzenie zmian, drobne poprawki
 v0.8.51
 -	dodanie do APM hibernacji
 -	przebudowa APM do obsługi hibernacji
@@ -78,7 +81,7 @@ v0.8.46
 -	zmiany w sekcji GRUB dostosowanie do kerneli > 3.18
 v0.8.45
 -	naprawa konfiguratora - błąd wyłączania aplikacji przy przełączaniu czeków
--	naprawa błędu przy sprawdzanu plików konfiguratora
+-	naprawa błędu przy sprawdzaniu plików konfiguratora
 v0.8.44
 -	dodanie repo Inkscape
 v0.8.43

@@ -82,22 +82,22 @@ handle_stdin (GIOChannel * channel, GIOCondition condition, gpointer data)
           pb = GTK_PROGRESS_BAR (g_slist_nth_data (progress_bars, num));
           b = (YadProgressBar *) g_slist_nth_data (options.multi_progress_data.bars, num);
 
-          if (b->type == YAD_PROGRESS_PULSE)
-            gtk_progress_bar_pulse (pb);
+          if (value[1] && value[1][0] == '#')
+            {
+              gchar *match, *p;
+
+              /* We have a comment, so let's try to change the label */
+              match = g_strcompress (value[1] + 1);
+              p = g_strrstr (match, "\n");
+              if (p)
+                *p = '\0';
+              gtk_progress_bar_set_text (pb, match);
+              g_free (match);
+            }
           else
             {
-              if (value[1] && value[1][0] == '#')
-                {
-                  gchar *match, *p;
-
-                  /* We have a comment, so let's try to change the label */
-                  match = g_strcompress (value[1] + 1);
-                  p = g_strrstr (match, "\n");
-                  if (p)
-                    *p = '\0';
-                  gtk_progress_bar_set_text (pb, match);
-                  g_free (match);
-                }
+              if (value[1] && b->type == YAD_PROGRESS_PULSE)
+                gtk_progress_bar_pulse (pb);
               else
                 {
                   if (!value[1] || !g_ascii_isdigit (*value[1]))
@@ -173,10 +173,10 @@ multi_progress_create_widget (GtkWidget * dlg)
 
       /* add label */
       l = gtk_label_new (NULL);
-      if (!options.data.no_markup)
-        gtk_label_set_markup (GTK_LABEL (l), p->name);
-      else
+      if (options.data.no_markup)
         gtk_label_set_text (GTK_LABEL (l), p->name);
+      else
+        gtk_label_set_markup (GTK_LABEL (l), p->name);
       gtk_misc_set_alignment (GTK_MISC (l), options.common_data.align, 0.5);
       if (options.common_data.vertical)
 #if !GTK_CHECK_VERSION(3,0,0)

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with YAD. If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2008-2014, Victor Ananjevsky <ananasik@gmail.com>
+ * Copyright (C) 2008-2015, Victor Ananjevsky <ananasik@gmail.com>
  */
 
 #include <stdlib.h>
@@ -30,6 +30,7 @@ static gboolean add_tab (const gchar *, const gchar *, gpointer, GError **);
 static gboolean add_scale_mark (const gchar *, const gchar *, gpointer, GError **);
 static gboolean add_palette (const gchar *, const gchar *, gpointer, GError **);
 static gboolean add_confirm_overwrite (const gchar *, const gchar *, gpointer, GError **);
+static gboolean set_color_mode (const gchar *, const gchar *, gpointer, GError **);
 static gboolean set_buttons_layout (const gchar *, const gchar *, gpointer, GError **);
 static gboolean set_align (const gchar *, const gchar *, gpointer, GError **);
 static gboolean set_justify (const gchar *, const gchar *, gpointer, GError **);
@@ -53,6 +54,9 @@ static gboolean entry_mode = FALSE;
 static gboolean file_mode = FALSE;
 static gboolean font_mode = FALSE;
 static gboolean form_mode = FALSE;
+#ifdef HAVE_HTML
+static gboolean html_mode = FALSE;
+#endif
 static gboolean icons_mode = FALSE;
 static gboolean list_mode = FALSE;
 static gboolean multi_progress_mode = FALSE;
@@ -347,11 +351,23 @@ static GOptionEntry color_options[] = {
    add_palette,
    N_("Set path to palette file. Default - " RGB_FILE),
    N_("FILENAME")},
+  {"mode", 0,
+   0,
+   G_OPTION_ARG_CALLBACK,
+   set_color_mode,
+   N_("Set output mode to MODE. Values are hex (default) or rgb"),
+   N_("MODE")},
   {"extra", 0,
    0,
    G_OPTION_ARG_NONE,
    &options.color_data.extra,
    N_("Use #rrrrggggbbbb format instead of #rrggbb"),
+   NULL},
+  {"alpha", 0,
+   0,
+   G_OPTION_ARG_NONE,
+   &options.color_data.alpha,
+   N_("Add opacity to output color value"),
    NULL},
   {NULL}
 };
@@ -558,7 +574,7 @@ static GOptionEntry form_options[] = {
    G_OPTION_ARG_CALLBACK,
    add_field,
    N_
-   ("Add field to form (TYPE - H, RO, NUM, CHK, CB, CBE, FL, SFL, MFL, DIR, CDIR, MDIR, FN, DT, SCL, CLR, BTN, FBTN, LBL or TXT)"),
+   ("Add field to form (TYPE - H, RO, NUM, CHK, CB, CBE, CE, FL, SFL, MFL, DIR, CDIR, MDIR, FN, DT, SCL, CLR, BTN, FBTN, LBL or TXT)"),
    N_("LABEL[:TYPE]")},
   {"align", 0,
    G_OPTION_FLAG_NOALIAS,
@@ -602,8 +618,56 @@ static GOptionEntry form_options[] = {
    &options.common_data.quoted_output,
    N_("Quote dialogs output"),
    NULL},
+  {"output-by-row", 0,
+   0,
+   G_OPTION_ARG_NONE,
+   &options.form_data.output_by_row,
+   N_("Order output fields by rows"),
+   NULL},
   {NULL}
 };
+
+#ifdef HAVE_HTML
+static GOptionEntry html_options[] = {
+  {"html", 0,
+   G_OPTION_FLAG_IN_MAIN,
+   G_OPTION_ARG_NONE,
+   &html_mode,
+   N_("Display HTML dialog"),
+   NULL},
+  {"uri", 0,
+   0,
+   G_OPTION_ARG_STRING,
+   &options.html_data.uri,
+   N_("Open specified location"),
+   N_("URI")},
+  {"browser", 0,
+   0,
+   G_OPTION_ARG_NONE,
+   &options.html_data.browser,
+   N_("Turn on browser mode"),
+   NULL},
+  {"print-uri", 0,
+   0,
+   G_OPTION_ARG_NONE,
+   &options.html_data.print_uri,
+   N_("Print clicked uri to stdout"),
+   NULL},
+  {"mime", 0,
+   0,
+   G_OPTION_ARG_STRING,
+   &options.html_data.mime,
+   N_("Set mime type of input stream data"),
+   N_("MIME")},
+  {"encoding", 0,
+   0,
+   G_OPTION_ARG_STRING,
+   &options.html_data.encoding,
+   N_("Set encoding of input stream data"),
+   N_("ENCODING")},
+  {NULL}
+};
+#endif
 
 static GOptionEntry icons_options[] = {
   {"icons", 0,
@@ -1330,6 +1394,8 @@ add_field (const gchar * option_name, const gchar * value, gpointer data, GError
         fld->type = YAD_FIELD_COMBO;
       else if (strcasecmp (fstr[1], "CBE") == 0)
         fld->type = YAD_FIELD_COMBO_ENTRY;
+      else if (strcasecmp (fstr[1], "CE") == 0)
+        fld->type = YAD_FIELD_COMPLETE;
       else if (strcasecmp (fstr[1], "FL") == 0)
         fld->type = YAD_FIELD_FILE;
       else if (strcasecmp (fstr[1], "SFL") == 0)
@@ -1441,6 +1507,19 @@ add_confirm_overwrite (const gchar * option_name, const gchar * value, gpointer 
   options.file_data.confirm_overwrite = TRUE;
   if (value)
     options.file_data.confirm_text = g_strdup (value);
+
+  return TRUE;
+}
+
+static gboolean
+set_color_mode (const gchar * option_name, const gchar * value, gpointer data, GError ** err)
+{
+  if (strcasecmp (value, "hex") == 0)
+    options.color_data.mode = YAD_COLOR_HEX;
+  else if(strcasecmp (value, "rgb") == 0)
+    options.color_data.mode = YAD_COLOR_RGB;
+  else
+    g_printerr (_("Unknown color mode: %s\n"), value);
 
   return TRUE;
 }
@@ -1703,6 +1782,10 @@ yad_set_mode (void)
     options.mode = YAD_MODE_FONT;
   else if (form_mode)
     options.mode = YAD_MODE_FORM;
+#ifdef HAVE_HTML
+  else if (html_mode)
+    options.mode = YAD_MODE_HTML;
+#endif
   else if (icons_mode)
     options.mode = YAD_MODE_ICONS;
   else if (list_mode)
@@ -1806,6 +1889,8 @@ yad_options_init (void)
   options.color_data.use_palette = FALSE;
   options.color_data.palette = NULL;
   options.color_data.extra = FALSE;
+  options.color_data.alpha = FALSE;
+  options.color_data.mode = YAD_COLOR_HEX;
 
   /* Initialize DND data */
   options.dnd_data.tooltip = FALSE;
@@ -1834,6 +1919,17 @@ yad_options_init (void)
   /* Initialize form data */
   options.form_data.fields = NULL;
   options.form_data.columns = 1;
+  options.form_data.scroll = FALSE;
+  options.form_data.output_by_row = FALSE;
+
+#ifdef HAVE_HTML
+  /* Initialize html data */
+  options.html_data.uri = NULL;
+  options.html_data.browser = FALSE;
+  options.html_data.print_uri = FALSE;
+  options.html_data.mime = NULL;
+  options.html_data.encoding = NULL;
+#endif
 
   /* Initialize icons data */
   options.icons_data.directory = NULL;
@@ -1920,7 +2016,7 @@ yad_create_context (void)
   GOptionContext *tmp_ctx;
   GOptionGroup *a_group;
 
-  tmp_ctx = g_option_context_new (_("Yet another dialoging program"));
+  tmp_ctx = g_option_context_new (_("- Yet another dialoging program"));
   g_option_context_add_main_entries (tmp_ctx, rest_options, GETTEXT_PACKAGE);
 
   /* Adds general option entries */
@@ -1970,6 +2066,14 @@ yad_create_context (void)
   g_option_group_add_entries (a_group, form_options);
   g_option_group_set_translation_domain (a_group, GETTEXT_PACKAGE);
   g_option_context_add_group (tmp_ctx, a_group);
+
+#ifdef HAVE_HTML
+  /* Add html options entries */
+  a_group = g_option_group_new ("html", _("HTML options"), _("Show HTML options"), NULL, NULL);
+  g_option_group_add_entries (a_group, html_options);
+  g_option_group_set_translation_domain (a_group, GETTEXT_PACKAGE);
+  g_option_context_add_group (tmp_ctx, a_group);
+#endif
 
   /* Add icons option entries */
   a_group = g_option_group_new ("icons", _("Icons box options"), _("Show icons box options"), NULL, NULL);
