@@ -1,3 +1,9 @@
+netext73 (0.8.74) stable; urgency=medium
+
+  * dodanie wily do instalatora kerneli ppa
+
+ -- NetBit73 <netbit73@gmail.com>  Tue, 12 May 2015 14:59:20 +0200
+
 netext73 (0.8.73) stable; urgency=medium
 
   * yad 0.28.1

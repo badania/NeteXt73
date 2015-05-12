@@ -102,7 +102,7 @@ export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | 
 
 
 
-export wersje_ubu="vivid!utopic!trusty!precise"
+export wersje_ubu="wily!vivid!utopic!trusty!precise"
 
 #adres serwera
 export adres_glowny="ftp://37.59.165.105"

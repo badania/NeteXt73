@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.74
+-	dodanie wily do instalatora kerneli ppa
 v0.8.73
 -	yad 0.28.1
 -	poprawki w deinstalatorze kerneli
