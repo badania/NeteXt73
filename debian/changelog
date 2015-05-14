@@ -1,3 +1,9 @@
+netext73 (0.8.76) stable; urgency=medium
+
+  * naprawa zależności
+
+ -- NetBit73 <netbit73@gmail.com>  Thu, 14 May 2015 18:25:08 +0200
+
 netext73 (0.8.75) stable; urgency=medium
 
   * usunięcie z paczki NeteXt73 YAD
