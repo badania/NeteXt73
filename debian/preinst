@@ -1,4 +1,3 @@
 #!/bin/bash
-apt-get purge netext73 -y
 rm -rf /opt/NeteXt73/*
 exit 0
