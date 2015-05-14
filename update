@@ -45,7 +45,7 @@ rm -f /tmp/netext73/*.txt
 }
 
 aktualizuj_calosc(){
-konfiguracja=$(yad-netext --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_UPDATE1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
+konfiguracja=$(yad --center --window-icon="/opt/NeteXt73/ikony/monitor.png" --title="$nazwa_skryptu" --text="<span color=\"$kolor_textu\">$TEXT_UPDATE1</span>" --column="$TEXT_ZAZNACZ" --column="program" --width="355" --height="230" --checklist --list \
 		"$a1" "microcode" \
 		"$a2" "grub" \
 		"$a3" "apm" \
@@ -184,7 +184,7 @@ if [ "$ilosc_aktualizacji" -gt "1" ]; then
       menu="$TEXT_UPDATE8"
 fi
 
-a=$(yad-netext --center --title="$nazwa_skryptu" --width=610 --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" --form \
+a=$(yad --center --title="$nazwa_skryptu" --width=610 --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" --form \
 --field="Firmware/microcode:RO" "$firm" \
 --field="Kernel $twoj_kernel:RO" "$kern" \
 --field="APM $twoj_apm:RO" "$apm" \
@@ -202,7 +202,7 @@ if [ $klawisz = "0" ]; then
 	elif [ "$a" = "$TEXT_UPDATE1 Firmware/microcode" ]; then 
 		usun
 		if [ "$firm" = "$TEXT_UPDATE4" ]; then
-			yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_MICROCODE1"
+			yad --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --text="$TEXT_MICROCODE1"
 		else
 			cd /opt/NeteXt73 && ./microcode
 		fi

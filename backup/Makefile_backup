@@ -26,6 +26,11 @@ make: nothing_to_make
 nothing_to_make:
 	
 	@echo -e '\033[1;32mNie będę budował NeteXt73 :)...\033[0m'
+		
+make_yad_netext:
+	
+	@echo -e '\033[1;32mBuild Yad-netext...\033[0m'
+	$(MAKE) -C yad-netext
 	
 install: install_desktopfiles \
 	 install_desktopicons \
@@ -34,6 +39,7 @@ install: install_desktopfiles \
 	 install_contacts \
 	 install_menu \
 	 install_translations_files \
+	 install_yad_netext \
 	 install_APM \
 	 install_launcher \
 	 install_file_LICENSE \
@@ -57,6 +63,13 @@ install: install_desktopfiles \
 	 install_file_uslugi 
 	 
 	 $(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
+clean:
+	
+	if test -f "yad-netext/Makefile" ; then $(MAKE) -C yad-netext distclean ; fi
+	
+install_yad_netext:
+	
+	$(MAKE) -C yad-netext install
 	
 install_desktopfiles:
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(DESKTOPFILES_DIR)/

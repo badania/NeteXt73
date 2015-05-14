@@ -70,20 +70,20 @@ if [ "$1" = "kontakty" ]; then
 	res9=$(mktemp --tmpdir=/tmp/netext73 netext73_9.XXXXXXXX)
 	res10=$(mktemp --tmpdir=/tmp/netext73 netext73_10.XXXXXXXX)
 	res11=$(mktemp --tmpdir=/tmp/netext73 netext73_11.XXXXXXXX)
-	yad-netext --plug=$KEY --tabnum=1 --icons --image-on-top --single-click --item-width=150 --read-dir=/opt/NeteXt73/kontakty &> $res1 &
-	yad-netext --plug=$KEY --tabnum=2 --text-info --filename=/opt/NeteXt73/changelog &> $res2 &
-	yad-netext --plug=$KEY --tabnum=3 --text-info --filename=/opt/NeteXt73/LICENSE &> $res3 &
-	yad-netext --plug=$KEY --tabnum=4 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep fglrx_     | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "catalist" &> $res4 &
-	yad-netext --plug=$KEY --tabnum=5 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep nvidia     | grep -v -E "nvidia-settings.*|libnvidia-"| sort -r | uniq ) --column "$TEXT_ZNITY1" --column "nvidia" &> $res5 &
-	yad-netext --plug=$KEY --tabnum=6 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep k8 	   | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel k8" &> $res6 &
-	yad-netext --plug=$KEY --tabnum=7 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep atom	   | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel atom" &> $res7 &
-	yad-netext --plug=$KEY --tabnum=8 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep i7 	   | egrep -v pro | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel i7" &> $res8 &
-	yad-netext --plug=$KEY --tabnum=9 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep i7-pro     | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel i7-pro" &> $res9 &
-	yad-netext --plug=$KEY --tabnum=10 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt | grep brazos     | egrep -v pro | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel brazos" &> $res10 &
-	yad-netext --plug=$KEY --tabnum=11 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt | grep brazos-pro | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel brazos-pro" &> $res11 &
+	yad --plug=$KEY --tabnum=1 --icons --image-on-top --single-click --item-width=150 --read-dir=/opt/NeteXt73/kontakty &> $res1 &
+	yad --plug=$KEY --tabnum=2 --text-info --filename=/opt/NeteXt73/changelog &> $res2 &
+	yad --plug=$KEY --tabnum=3 --text-info --filename=/opt/NeteXt73/LICENSE &> $res3 &
+	yad --plug=$KEY --tabnum=4 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep fglrx_     | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "catalist" &> $res4 &
+	yad --plug=$KEY --tabnum=5 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep nvidia     | grep -v -E "nvidia-settings.*|libnvidia-"| sort -r | uniq ) --column "$TEXT_ZNITY1" --column "nvidia" &> $res5 &
+	yad --plug=$KEY --tabnum=6 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep k8 	   | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel k8" &> $res6 &
+	yad --plug=$KEY --tabnum=7 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep atom	   | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel atom" &> $res7 &
+	yad --plug=$KEY --tabnum=8 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep i7 	   | egrep -v pro | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel i7" &> $res8 &
+	yad --plug=$KEY --tabnum=9 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep i7-pro     | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel i7-pro" &> $res9 &
+	yad --plug=$KEY --tabnum=10 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt | grep brazos     | egrep -v pro | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel brazos" &> $res10 &
+	yad --plug=$KEY --tabnum=11 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt | grep brazos-pro | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel brazos-pro" &> $res11 &
 
 
-	yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_KONTAKT_Z_AUTORAMI" --tab="$TEXT_CHANGELOG" --tab="$TEXT_LICENCJA" \
+	yad --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_KONTAKT_Z_AUTORAMI" --tab="$TEXT_CHANGELOG" --tab="$TEXT_LICENCJA" \
 	--tab="catalyst" --tab="nvidia" --tab="k8" --tab="atom" --tab="i7" --tab="i7-pro" --tab="brazos" --tab="brazos-pro"  \
 	--window-icon="/opt/NeteXt73/ikony/mail.png" --on-top --width=840 --height=400 --button="$TEXT_ZAMKNIJ:1" --button="$TEXT_BUG:2"
 	klawisz=$?
@@ -96,8 +96,8 @@ else
 		sudo -S $1
 	else
 		echo "root" > /tmp/netext73/stan_netext
-		while ! yad-netext --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S $1; do
-			if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
+		while ! yad --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S $1; do
+			if $(yad --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
 				exit 0
 			fi
 		done

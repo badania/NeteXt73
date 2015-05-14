@@ -60,7 +60,7 @@ fi
 sciezka="/etc/default"
 echo "nie" > /tmp/netext73/ok.txt
 
-grub=$(yad-netext --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --image="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_SKRYPTEXT_10:TXT" --field="$TEXT_SKRYPTEXT_11:CB" "$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | sed 's/GRUB_CMDLINE_LINUX=//' | cut -d '"' -f 2 | sed "s/ /\\n/g")" "$TEXT_GRUB6A!$TEXT_GRUB4A!$TEXT_GRUB5A!$TEXT_GRUB7A" --button="gtk-ok:0" --button="$TEXT_POWROT:1" \
+grub=$(yad --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --image="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_SKRYPTEXT_10:TXT" --field="$TEXT_SKRYPTEXT_11:CB" "$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | sed 's/GRUB_CMDLINE_LINUX=//' | cut -d '"' -f 2 | sed "s/ /\\n/g")" "$TEXT_GRUB6A!$TEXT_GRUB4A!$TEXT_GRUB5A!$TEXT_GRUB7A" --button="gtk-ok:0" --button="$TEXT_POWROT:1" \
 --width=300 --height=250 )
 klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 	if [ $klawisz = 0 ]; then 
@@ -158,7 +158,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			#rozdzielczość plymouth
 			aktualna=$(cat /etc/default/grub | grep 'GRUB_GFXPAYLOAD_LINUX' | head -n 1 | sed 's/.*GRUB_GFXPAYLOAD_LINUX=//')
 			if [ "$(echo $aktualna | grep 'x')" = "" ]; then
-				acpi_wpis=$( yad-netext --window-icon="/opt/NeteXt73/ikony/grub.png" --image="/opt/NeteXt73/ikony/grub.png" --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --form  --item-separator="@" \
+				acpi_wpis=$( yad --window-icon="/opt/NeteXt73/ikony/grub.png" --image="/opt/NeteXt73/ikony/grub.png" --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --form  --item-separator="@" \
 				--field="$TEXT_SKRYPTEXT_10:TXT" \
 				--field="ACPI:CB" --field="$TEXT_GRUB14:CB" --field="$TEXT_GRUB17:CB" \
 				--field="$TEXT_NETBIT_MENU18:NUM" \
@@ -182,7 +182,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 			else
 				menu_rozdz=$(echo $menu_rozdzielczosci | sed "s/$aktualna//" | sed 's/@@/@/')
 				menu5=$(echo "$aktualna$menu_rozdz" | sed 's/@@/@/')
-				acpi_wpis=$( yad-netext --window-icon="/opt/NeteXt73/ikony/grub.png" --image="/opt/NeteXt73/ikony/grub.png" --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --form  --item-separator="@" \
+				acpi_wpis=$( yad --window-icon="/opt/NeteXt73/ikony/grub.png" --image="/opt/NeteXt73/ikony/grub.png" --center --height=240 --width=610 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --form  --item-separator="@" \
 				--field="$TEXT_SKRYPTEXT_10:TXT" \
 				--field="ACPI:CB" --field="$TEXT_GRUB14:CB" --field="$TEXT_GRUB17:CB" \
 				--field="$TEXT_NETBIT_MENU18:NUM" \
@@ -260,10 +260,10 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 				fi
 				
 				if [ "$w5" != "" ];then
-					wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6$w7" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_ROZDZIELCZOSC Plymouth:RO" --field="$TEXT_BOOT_START:RO" "$w4" "$w5" "$starter")
+					wpis_grub=$(yad --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6$w7" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_ROZDZIELCZOSC Plymouth:RO" --field="$TEXT_BOOT_START:RO" "$w4" "$w5" "$starter")
 					wpis_grub=$(echo $wpis_grub | cut -d "|" -f 1)
 				else
-					wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6$w7" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_BOOT_START:RO" "$w4" "$starter")
+					wpis_grub=$(yad --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_GRUB22:TXT" "$w0$w1$w2$w6$w7" --field="$TEXT_ROZDZIELCZOSC GRUB:RO" --field="$TEXT_BOOT_START:RO" "$w4" "$starter")
 					wpis_grub=$(echo $wpis_grub | cut -d "|" -f 1)
 				fi
 				if [ "$wpis_grub" != "" ];then
@@ -274,7 +274,7 @@ klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 	#ręczna edycja wpisów w pliku grub
 	elif [ "$grub" = "$TEXT_GRUB7A" ]; then
 		echo "nie" > /tmp/netext73/ok.txt
-		wpis_grub=$(yad-netext --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --form --field="$TEXT_GRUB23:TXT" --window-icon="/opt/NeteXt73/ikony/pytanie.png" "$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | cut -d "\"" -f 2)")
+		wpis_grub=$(yad --center --height=240 --width=600 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --form --field="$TEXT_GRUB23:TXT" --window-icon="/opt/NeteXt73/ikony/pytanie.png" "$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | cut -d "\"" -f 2)")
 		if [ $? = 0 ]; then
 			wpis_grub=$(echo $wpis_grub | sed 's/|//g')
 			export grub_pro="tak" #sprawdzenie czy ma robić rozdzielczość itp

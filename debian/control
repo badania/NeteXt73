@@ -4,8 +4,8 @@ Priority: extra
 Maintainer: NetBit73 <netbit73@gmail.com>
 Uploaders: NetBit73 <netbit73@gmail.com>
 Homepage: http://www.netext73.pl
-Build-Depends: debhelper (>= 7), autotools-dev, mime-support, gettext, intltool, libgtk2.0-dev, libcroco3, libxml-parser-perl, libxml2, libexpat1, gawk
-Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), autotools-dev, mime-support, gettext, intltool, libgtk2.0-dev, libcroco3, libxml-parser-perl, libxml2, libexpat1, gawk
+Standards-Version: 3.9.5
 Vcs-Browser: https://github.com/NetBit73/NeteXt73
 Vcs-Git: https://github.com/NetBit73/NeteXt73.git
 
@@ -34,8 +34,8 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
   ethtool, 
   python-gtk2, 
   python, 
-  gcc  
+  gcc, 
+  yad
 Replaces: netext73
-Recommends:
 Description: NeteXt'73 - optymalizator systemu
   NeteXt'73 to rozbudowane narzedzie do wprowadzania optymalizacji systemow opartych o Ubuntu. Modyfikacje maja na celu podwyzszenie responsywnosci systemu przy jednoczesnym obnizeniu zuzycia energii.

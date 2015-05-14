@@ -46,7 +46,7 @@ fi
 #życzenia świąteczne
 DATA=$(date +"%m-%d")
 if [ "$DATA" = "12-24" ] ||  [ "$DATA" = "12-25" ] ||  [ "$DATA" = "12-26" ]; then
-	yad-netext --center --info --title="$nazwa_skryptu   "  --text="Zespół NeteXt'73 życzy\n<span color=\"$kolor_textu\"><b>Wesołych Świąt Bożego Narodzenia!</b></span>\n\n\nNeteXt'73 team\n<span color=\"$kolor_textu\"><b>wishes Merry Christmas!</b></span>" --window-icon="/opt/NeteXt73/ikony/tux_santa.png" --image="/opt/NeteXt73/ikony/tux_santa.png" --button="gtk-ok:0" --on-top
+	yad --center --info --title="$nazwa_skryptu   "  --text="Zespół NeteXt'73 życzy\n<span color=\"$kolor_textu\"><b>Wesołych Świąt Bożego Narodzenia!</b></span>\n\n\nNeteXt'73 team\n<span color=\"$kolor_textu\"><b>wishes Merry Christmas!</b></span>" --window-icon="/opt/NeteXt73/ikony/tux_santa.png" --image="/opt/NeteXt73/ikony/tux_santa.png" --button="gtk-ok:0" --on-top
 fi
 #życzenia noworoczne
 if [ "$DATA" = "12-31" ]; then
@@ -64,7 +64,7 @@ sumy(){
 	mv sumy.txt $sumy_kontrolne
 	mv test_serwera.txt $test_serwera
 	if [ "$(cat $sumy_kontrolne)" = "" ] || [ "$(grep 'OK' $test_serwera)" = "" ]; then
-		yad-netext --center --info --title="$nazwa_skryptu   " --text="<span color=\"$kolor_textu\"><b>$BRAKNETA</b></span>" --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --on-top
+		yad --center --info --title="$nazwa_skryptu   " --text="<span color=\"$kolor_textu\"><b>$BRAKNETA</b></span>" --window-icon="/opt/NeteXt73/ikony/error.png" --image="/opt/NeteXt73/ikony/error.png" --button="gtk-ok:0" --on-top
 		exit 1
 	fi
 }
@@ -79,7 +79,7 @@ if [ "$(dpkg -l | awk '{print $2}' | grep $i -x)" != "" ];then
 fi
 done
 if [ "$plik" != "" ]; then
-	if yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1" --text="$TEXT_WARRING_DEP1\n$plik"; then
+	if yad --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_POWROT:1" --text="$TEXT_WARRING_DEP1\n$plik"; then
 		naglowek > instaluj.sh
 		echo "sudo apt-get purge $plik" >> instaluj.sh
 		echo "sudo apt-get autoremove" >> instaluj.sh
@@ -114,7 +114,7 @@ else
 	klawisze_aktywne="--button="$TEXT_REBOOT:2" --button="$TEXT_ZAMKNIJ:1" --single-click"
 fi
 
-yad-netext --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="700" --title="- $nazwa_skryptu -" $klawisze_aktywne
+yad --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="190" --read-dir="/opt/NeteXt73/desktopfiles" --width="830" --height="700" --title="- $nazwa_skryptu -" $klawisze_aktywne
 klawisz=$?
 
 if [ "$klawisz" = "2" ]; then

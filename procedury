@@ -142,7 +142,7 @@ if [ "$(uname -m)" = "x86_64" ]; then
 	bit="64bit"
 	bit2="amd64"
 else 
-	yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/netext.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_STEROWNIKI1"
+	yad --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/netext.png" --button="gtk-ok:0" --title="$nazwa_skryptu"  --text="$TEXT_STEROWNIKI1"
 	exit 1
 fi
 
@@ -165,7 +165,7 @@ fi
 
 #pasek postępu pobierania pulsujący gdy coś długo trwa
 pobieranie(){
-yad-netext --center --width=560 --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
+yad --center --width=560 --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
 }
 
 #pobieranie plików do instalacji kerneli
@@ -226,7 +226,7 @@ fi
 microcode_firmware(){
 #nonfree
 if [ "$(dpkg -l | grep linux-firmware-nonfree | grep ii )" = "" ]; then
-      yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_PROCEDURA_4"
+      yad --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_PROCEDURA_4"
       if [ $? = 0 ]; then
 	    echo "tak" > /tmp/netext73/ok.txt
       else
@@ -771,7 +771,7 @@ else
 		else
 			str=""
 			##
-			strona=$(yad-netext --center --entry --width=610 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_STRONA1" --entry-text="$str" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+			strona=$(yad --center --entry --width=610 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_STRONA1" --entry-text="$str" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 			klawisz=$?
 			if [ "$klawisz" = "1" ]; then
 				exit 1
@@ -816,10 +816,10 @@ else
 	a1="-"
 	blad=0
 	if [ "$(echo $lista)" = "TRUE" ]; then
-		yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_SERVER_ERROR"
+		yad --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_SERVER_ERROR"
 		blad=1
 	else
-		aa=$(yad-netext --center --height=340 --width=690 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_PLATFORMA1 <b><span color=\"$kolor_textu\">$rodzaj</span></b>$TEXT_PLATFORMA2" --column="$TEXT_ZAZNACZ" --column="$TEXT_WYBIERZ_KERNEL" --column="$TEXT_ZNITY1" --button="$TEXT_POWROT:1" --button="gtk-ok:0" --list --radiolist $lista)
+		aa=$(yad --center --height=340 --width=690 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_PLATFORMA1 <b><span color=\"$kolor_textu\">$rodzaj</span></b>$TEXT_PLATFORMA2" --column="$TEXT_ZAZNACZ" --column="$TEXT_WYBIERZ_KERNEL" --column="$TEXT_ZNITY1" --button="$TEXT_POWROT:1" --button="gtk-ok:0" --list --radiolist $lista)
 		klawisz=$?
 		a=$(echo $aa | cut -d "|" -f 2)	 #wybrany kernel
 		a1=$(echo $aa | cut -d "|" -f 3) #czy zainstalowany jeżeli '-' można instalować
@@ -874,7 +874,7 @@ fi
 
 wywal_pobrane_pliki_kernela(){
 if [ "$(cat /tmp/netext73/ok.txt)" = "tak" ]; then
-    yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_KERNEL2"
+    yad --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_KERNEL2"
     rm -rf $PWD
 elif  [ "$(cat /tmp/netext73/ok.txt)" = "nie" ]; then
     dymek -i $ikona_info1 "$TEXT_UWAGA" "$TEXT_INFO2<br>/tmp/netext73/$a"
@@ -966,10 +966,10 @@ echo "fi"
 }
      
 restart(){
-yad-netext --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_RESTART"
+yad --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_RESTART"
       if [ $? = 0 ]; then
-      while ! yad-netext --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S reboot; do
-	  if $(yad-netext --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
+      while ! yad --center --on-top --title="$nazwa_skryptu1" --entry --hide-text --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --text="NeteXt'73\n\nRoot-mode\n\n$TEXT_PASSWD1" --button="gtk-ok:0" | sudo -S reboot; do
+	  if $(yad --center --question --title="$nazwa_skryptu1" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="$TEXT_TAK:0" --button="$TEXT_NIE:1" --text="$TEXT_PASSWD"); then
 	      exit 0
 	  fi
       done
@@ -1064,7 +1064,7 @@ echo "8:#${stan[8]} V"; echo "8:${stan[8]}" # V baterii
 echo "9:#${stan[9]} %        $bateria_teraz"; echo "9:${stan[9]}" # % baterii
 echo "10:#${stan[10]} %        $bateria_full"; echo "10:${stan[10]}" # % baterii
 
-done | yad-netext --center --multi-progress  --title="$nazwa_skryptu" --bar="$(echo ${bar[1]})" --bar="$(echo ${bar[2]})" --bar="$(echo ${bar[3]})" --bar="$(echo ${bar[4]})" --bar="$(echo ${bar[5]})" --bar="$(echo ${bar[6]})" --bar="$(echo ${bar[7]})" --bar="$(echo ${bar[8]})" --bar="$(echo ${bar[9]})"  --bar="$(echo ${bar[10]})" --auto-kill --window-icon="/opt/NeteXt73/ikony/apm.png" --image="/opt/NeteXt73/ikony/apm.png" --text="$Stan_baterii:\n" --button="gtk-ok:0"
+done | yad --center --multi-progress  --title="$nazwa_skryptu" --bar="$(echo ${bar[1]})" --bar="$(echo ${bar[2]})" --bar="$(echo ${bar[3]})" --bar="$(echo ${bar[4]})" --bar="$(echo ${bar[5]})" --bar="$(echo ${bar[6]})" --bar="$(echo ${bar[7]})" --bar="$(echo ${bar[8]})" --bar="$(echo ${bar[9]})"  --bar="$(echo ${bar[10]})" --auto-kill --window-icon="/opt/NeteXt73/ikony/apm.png" --image="/opt/NeteXt73/ikony/apm.png" --text="$Stan_baterii:\n" --button="gtk-ok:0"
 }
 
 ipv6_off(){
@@ -1089,7 +1089,7 @@ dymek(){
 if [ "$(which notify-send)" != "" ];then
     notify-send "$1" "$2" "$3" "$4"
 else
-    yad-netext --center --info --title="$3"  --window-icon="$2" --image="$2" --text="$4" --button="gtk-ok:0"
+    yad --center --info --title="$3"  --window-icon="$2" --image="$2" --text="$4" --button="gtk-ok:0"
 fi
 }
 
@@ -1207,7 +1207,7 @@ for URI in $URILIST; do
           DYNAMIC_COUNTER="$[$DYNAMIC_COUNTER+1]"
     fi
     COUNTER="$[$COUNTER+1]"                 # increment counter
-done | yad-netext --center --multi-progress --auto-kill --auto-close $YADBARS --title "$nazwa_skryptu" \
+done | yad --center --multi-progress --auto-kill --auto-close $YADBARS --title "$nazwa_skryptu" \
 --text "<b>$TEXT_POB2</b>" --window-icon="/opt/NeteXt73/ikony/download.png" --image="/opt/NeteXt73/ikony/download.png" --button="$TEXT_ZAMKNIJ:1"
 # ↑ launch yad multi progress-bar window 
 }
@@ -1248,7 +1248,7 @@ while [ "$petla_duza" = "tak" ]; do
 	  echo "$i:$(($(cat /proc/cpuinfo | grep MHz | cut -d ' ' -f 3 | sed -n $(($i-9))'p' | sed 's/\..*//' )/60))" # * 6000MHZ/100 
 	  echo "$i:#$(cat /proc/cpuinfo | grep MHz | cut -d ' ' -f 3 | sed -n $(($i-9))'p' | sed 's/\..*//' ) MHz"
       done 
-done | yad-netext --title "$nazwa_skryptu" --center --multi-progress $barek --text="$(cat /proc/cpuinfo | grep 'model name' | head -n 1 | sed 's/.*: //')\nFree Memory, Cpu Core Frequency:\n" --auto-kill  --button="$TEXT_ZAMKNIJ:1" --on-top --window-icon="/opt/NeteXt73/ikony/monitor.png" --image="/opt/NeteXt73/ikony/monitor.png"
+done | yad --title "$nazwa_skryptu" --center --multi-progress $barek --text="$(cat /proc/cpuinfo | grep 'model name' | head -n 1 | sed 's/.*: //')\nFree Memory, Cpu Core Frequency:\n" --auto-kill  --button="$TEXT_ZAMKNIJ:1" --on-top --window-icon="/opt/NeteXt73/ikony/monitor.png" --image="/opt/NeteXt73/ikony/monitor.png"
 if [ "$?" != "" ]; then
     petla_duza="nie"  
 fi

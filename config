@@ -109,16 +109,16 @@ KEY="$(echo $RANDOM)"
 res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
 res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)
 res3=$(mktemp --tmpdir=/tmp/netext73 netext73_3.XXXXXXXX)
-yad-netext --plug=$KEY --tabnum=1 --form \
+yad --plug=$KEY --tabnum=1 --form \
 --field="$TEXT_CONFIG7:CB" --field="$TEXT_CONFIG4" --field="$TEXT_CONFIG6:CB" --field="$TEXT_CONFIG9:RO" --field="$TEXT_CONFIG10:RO" --field="$TEXT_CONFIG11:CHK" --field="$TEXT_CONFIG12:CHK" --field="NeteXt'73 -root mode:CHK" "$TEXT_NIE!$TEXT_TAK" "" "$lang1" "$apm_stat" "$ik" "$automatyczna_instalacja" "$archiwum_deb" "$root_mode" --button="$TEXT_CONFIG3:2" &> $res1 &
-yad-netext --plug=$KEY --tabnum=2 --color --init-color=$kolor_textu &> $res2 &
-yad-netext --plug=$KEY --tabnum=3 --form --text="$TEXT_ZAZNACZ_LOGI" --field="netext.log:CHK" --field="dmesg.log:CHK" --field="kern.log:CHK" --field="glxinfo.log:CHK" --field="apm-microcode.log:CHK" --field="lsmod.log:CHK" --field="lspci.log:CHK" --field="lsusb.log:CHK" $s1 $s2 $s3 $s4 $s5 $s6 $s7 $s8 &> $res3 &
-yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_CONFIG2" --tab="$TEXT_CONFIG3" --tab="$TEXT_PRZESLIJ_LOGI" --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=540 --height=400 --button="gtk-ok:0" --button="$TEXT_POWROT:1"
+yad --plug=$KEY --tabnum=2 --color --init-color=$kolor_textu &> $res2 &
+yad --plug=$KEY --tabnum=3 --form --text="$TEXT_ZAZNACZ_LOGI" --field="netext.log:CHK" --field="dmesg.log:CHK" --field="kern.log:CHK" --field="glxinfo.log:CHK" --field="apm-microcode.log:CHK" --field="lsmod.log:CHK" --field="lspci.log:CHK" --field="lsusb.log:CHK" $s1 $s2 $s3 $s4 $s5 $s6 $s7 $s8 &> $res3 &
+yad --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_CONFIG2" --tab="$TEXT_CONFIG3" --tab="$TEXT_PRZESLIJ_LOGI" --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=540 --height=400 --button="gtk-ok:0" --button="$TEXT_POWROT:1"
 klawisz=$?
 if [ "$klawisz" = 0 ]; then 
 	if [ "$(grep "$TEXT_TAK" $res1)" != "" ]; then
 		#rm ~/.netext73/* -f
-		yad-netext --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_CONFIG8" --timeout=5
+		yad --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --text="$TEXT_CONFIG8" --timeout=5
 	else
 		if [ "$(cat $res1 | grep '@' | cut -d "|" -f 2)" != "" ];then
 			cat $res1 | grep '@' | cut -d "|" -f 2 > ~/.netext73/kernel_premium
@@ -138,13 +138,13 @@ if [ "$klawisz" = 0 ]; then
 		cat $res3 | cut -d "|" -f 8 >> ~/.netext73/wysylkalogow
 		#kasowanie śmieci w configach
 		for i in $(echo jezyk kernel_automat archiwum_deb root_mode kernel_premium kolor_textu); do
-			sed -i '/.*yad-netext.*/ d' ~/.netext73/$i
+			sed -i '/.*yad.*/ d' ~/.netext73/$i
 			sed -i '/^[ \t]*$/ d' ~/.netext73/$i
 		done
 
 		if [ "$root_mode" != "$(cat ~/.netext73/root_mode)" ]; then
 			rm -fr /tmp/netext73
-			killall yad-netext
+			killall yad
 			dymek -i $ikona_info1 "$TEXT_INFORMACJA" "$TEXT_CONFIG13"
 		fi    
 	fi

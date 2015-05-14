@@ -250,19 +250,19 @@ res9=$(mktemp --tmpdir=/tmp/netext73 netext73_9.XXXXXXXX)
 res10=$(mktemp --tmpdir=/tmp/netext73 netext73_10.XXXXXXXX)
 
 #zakładki
-yad-netext --plug=$KEY --tabnum=1 --text="$(cat zakladka1.log)" 	&> $res0 &
-yad-netext --plug=$KEY --tabnum=2 --text-info --filename="netext.log"	&> $res1 &
-yad-netext --plug=$KEY --tabnum=3 --text-info --filename="dmesg.log"	&> $res2 &
-yad-netext --plug=$KEY --tabnum=4 --text-info --filename="kern.log"	&> $res3 &
-yad-netext --plug=$KEY --tabnum=5 --text-info --filename=firewall.log 	&> $res4 &
-yad-netext --plug=$KEY --tabnum=6 --text-info --filename=dmidecode.log 	&> $res5 &
-yad-netext --plug=$KEY --tabnum=7 --text-info --filename="glxinfo$losowa.log"	&> $res6 &
-yad-netext --plug=$KEY --tabnum=8 --text-info --filename="apmsystem$losowa.log"	&> $res7 &
-yad-netext --plug=$KEY --tabnum=9 --text-info --filename="lsmodsystem$losowa.log"	&> $res8 &
-yad-netext --plug=$KEY --tabnum=10 --text-info --filename="lspcisystem$losowa.log"	&> $res9 &
-yad-netext --plug=$KEY --tabnum=11 --text-info --filename="lsusbsystem$losowa.log"	&> $res10 &
+yad --plug=$KEY --tabnum=1 --text="$(cat zakladka1.log)" 	&> $res0 &
+yad --plug=$KEY --tabnum=2 --text-info --filename="netext.log"	&> $res1 &
+yad --plug=$KEY --tabnum=3 --text-info --filename="dmesg.log"	&> $res2 &
+yad --plug=$KEY --tabnum=4 --text-info --filename="kern.log"	&> $res3 &
+yad --plug=$KEY --tabnum=5 --text-info --filename=firewall.log 	&> $res4 &
+yad --plug=$KEY --tabnum=6 --text-info --filename=dmidecode.log 	&> $res5 &
+yad --plug=$KEY --tabnum=7 --text-info --filename="glxinfo$losowa.log"	&> $res6 &
+yad --plug=$KEY --tabnum=8 --text-info --filename="apmsystem$losowa.log"	&> $res7 &
+yad --plug=$KEY --tabnum=9 --text-info --filename="lsmodsystem$losowa.log"	&> $res8 &
+yad --plug=$KEY --tabnum=10 --text-info --filename="lspcisystem$losowa.log"	&> $res9 &
+yad --plug=$KEY --tabnum=11 --text-info --filename="lsusbsystem$losowa.log"	&> $res10 &
 
-yad-netext --notebook --key=$KEY --center --title="$nazwa_skryptu1 " \
+yad --notebook --key=$KEY --center --title="$nazwa_skryptu1 " \
 --tab="main" --tab="netext" --tab="dmesg" --tab="kern" --tab="firewall" --tab="dmidecode" \
 --tab="glxinfo" --tab="APM-microcode" --tab="lsmod" --tab="lspci" --tab="lsusb" \
 --window-icon="/opt/NeteXt73/ikony/logi.png"  --width=600 --height=600 --on-top --button="$TEXT_PASTEBIN:0" --button="$TEXT_ZAMKNIJ:1"
