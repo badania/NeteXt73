@@ -204,6 +204,27 @@ echo "if [ -e ~/.netext73/archiwum_deb ] && [ \"\$(cat ~/.netext73/archiwum_deb)
 echo "sudo cp *.deb /var/cache/apt/archives/ -f"
 echo "fi"
 echo "echo 'tak' > /tmp/netext73/ok.txt"
+#wyłączenie LPT dla premium
+echo "if [ \"\$(ls | grep i7)\" != \"\" ] || [ \"\$(ls | grep brazos)\" != \"\" ];then"
+echo "if [ \"\$(grep '#lp' /etc/modules)\" = \"\" ]; then"
+echo "sudo sed -i 's/lp/#lp/g' /etc/modules"
+echo "fi"
+echo "if [ \"\$(grep '#lp' /etc/modules-load.d/cups-filters.conf)\" = \"\" ]; then"
+echo "sudo sed -i 's/lp/#lp/g' /etc/modules-load.d/cups-filters.conf"
+echo "fi"
+echo "if [ \"\$(grep '#ppdev' /etc/modules-load.d/cups-filters.conf)\" = \"\" ]; then"
+echo "sudo sed -i 's/ppdev/#ppdev/g' /etc/modules-load.d/cups-filters.conf"
+echo "fi"
+echo "if [ \"\$(grep '#parport_pc' /etc/modules-load.d/cups-filters.conf)\" = \"\" ]; then"
+echo "sudo sed -i 's/parport_pc/#parport_pc/g' /etc/modules-load.d/cups-filters.conf"
+echo "fi"
+echo "elif [ \"\$(ls | grep k8)\" != \"\" ] || [ \"\$(ls | grep atom)\" != \"\" ];then"
+echo "sudo sed -i 's/#lp/lp/g' /etc/modules"
+echo "sudo sed -i 's/#lp/lp/g' /etc/modules-load.d/cups-filters.conf"
+echo "sudo sed -i 's/#ppdev/ppdev/g' /etc/modules-load.d/cups-filters.conf"
+echo "sudo sed -i 's/#parport_pc/parport_pc/g' /etc/modules-load.d/cups-filters.conf"
+echo "fi"
+
 }
 
 stan_firmware(){

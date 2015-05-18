@@ -1,3 +1,9 @@
+netext73 (0.8.77) stable; urgency=medium
+
+  * wyłączenie LPT dla kerneli premium
+
+ -- NetBit73 <netbit73@gmail.com>  Mon, 18 May 2015 09:41:54 +0200
+
 netext73 (0.8.76) stable; urgency=medium
 
   * naprawa zależności
