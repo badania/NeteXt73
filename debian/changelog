@@ -1,3 +1,9 @@
+netext73 (0.8.78) stable; urgency=medium
+
+  * ustawianie LPT przy deinstalacji
+
+ -- NetBit73 <netbit73@gmail.com>  Mon, 18 May 2015 10:52:30 +0200
+
 netext73 (0.8.77) stable; urgency=medium
 
   * wyłączenie LPT dla kerneli premium
