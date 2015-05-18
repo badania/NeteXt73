@@ -97,6 +97,7 @@ elif [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINS
 					#proces kasowania kerneli
 					naglowek > instaluj.sh
 					usun_kernel >> instaluj.sh
+					usun_lpt >> instaluj.sh
 					instalacja2
 				else
 					petla="nie"
