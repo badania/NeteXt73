@@ -239,6 +239,8 @@ echo "sudo apt-get update"
 echo "sudo apt-get install gcc-5 -y"
 echo "sudo apt-get install -f"
 echo "sudo ln -sf /usr/bin/gcc-5 /usr/bin/gcc"
+echo "sudo ln -sf /usr/bin/bin/gcc-ar-5 /usr/bin/gcc-ar"
+echo "sudo ln -sf /usr/bin/bin/cpp-5 /usr/bin/cpp"
 echo "fi"
 
 
