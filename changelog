@@ -4,6 +4,8 @@
 v0.8.80
 -	dodanie do zależności gcc-5
 -	zmiana kolejności instalacji gcc->kernel
+-	automatyzacja instalacji gcc-5
+-	zmiana sposobu sprawdzania gcc-5
 v0.8.79
 -	Czyszczenie kodu
 v0.8.78

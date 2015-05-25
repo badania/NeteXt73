@@ -232,10 +232,11 @@ echo "fi"
 }
 
 sprawdz_gcc(){
-echo "if [ \"\$(dpkg -l | grep gcc-5)\" = \"\" ]; then"
-echo "sudo add-apt-repository ppa:ubuntu-toolchain-r/test"
+
+echo "if [ \"\$(gcc --version | grep 5)\" = \"\" ]; then"
+echo "sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y"
 echo "sudo apt-get update"
-echo "sudo apt-get install gcc-5"
+echo "sudo apt-get install gcc-5 -y"
 echo "sudo ln -sf /usr/bin/gcc-5 /usr/bin/gcc"
 echo "fi"
 
