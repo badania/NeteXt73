@@ -108,6 +108,7 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 				naglowek > instaluj.sh
 				instaluj_kernel >> instaluj.sh
 				usun_lpt >> instaluj.sh
+				sprawdz_gcc >> instaluj.sh
 				instalacja2
 				cd /tmp/netext73; rm -rf kernel
 				restart
@@ -179,6 +180,7 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 								naglowek > instaluj.sh
 								instaluj_kernel >> instaluj.sh
 								usun_lpt >> instaluj.sh
+								sprawdz_gcc >> instaluj.sh
 								instalacja2
 								#wywalenie plików po instalacji
 								wywal_pobrane_pliki_kernela

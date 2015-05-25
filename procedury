@@ -231,6 +231,16 @@ echo "sudo sed -i 's/#parport_pc/parport_pc/g' /etc/modules-load.d/cups-filters.
 echo "fi"
 }
 
+sprawdz_gcc(){
+echo "if [ \"\$(dpkg -l | grep gcc-5)\" = \"\" ]; then"
+echo "sudo add-apt-repository ppa:ubuntu-toolchain-r/test"
+echo "sudo apt-get update"
+echo "sudo apt-get install gcc-5"
+echo "sudo ln -sf /usr/bin/gcc-5 /usr/bin/gcc"
+echo "fi"
+
+
+}
 stan_firmware(){
 twoj_firmware=$(dpkg -l | grep linux-firmware | awk '{print $3}' | head -n 1 | sed 's/~.*//')
 if [ "$(cat /proc/cpuinfo | grep Intel)" != "" ]; then

@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.80
+-	dodanie do zależności gcc-5
 v0.8.79
 -	Czyszczenie kodu
 v0.8.78
