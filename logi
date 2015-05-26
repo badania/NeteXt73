@@ -39,7 +39,7 @@ source /opt/NeteXt73/procedury
 #Logi systemowe
 
 cd /tmp/netext73
-python /opt/NeteXt73/menu/czas.py &
+please_wait
 
 if [ -e losowa ];then
 	export losowa=$(cat losowa)
@@ -234,6 +234,7 @@ sudo ufw status verbose > firewall.log
 for i in $(seq 1 42); do sudo dmidecode --type $i >> dmidecode.log; done
 sudo tac /var/log/kern.log | sed -n 1,1000p > kern.log
 #system logi
+export koniec="TRUE"
 killall python 
 KEY="$(echo $RANDOM)"
 #zmienne losowe

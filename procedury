@@ -186,6 +186,10 @@ fi
 rm ./index.html -f
 }
 
+please_wait(){
+python /opt/NeteXt73/czekaj.py &
+}
+
 wersja(){
 dymek -i "preferences-other" "$nazwa_skryptu" "$TEXT_INFO1"
 }

@@ -33,6 +33,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
   sysbench, 
   ethtool, 
   python-gtk2, 
+  gir1.2-gtksource-3.0,
   python, 
   gcc, 
   yad

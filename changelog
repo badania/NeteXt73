@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.81
+-	zmiana srypu czas.py na czekaj.py
 v0.8.80
 -	dodanie do zależności gcc-5
 -	zmiana kolejności instalacji gcc->kernel

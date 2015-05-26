@@ -36,6 +36,7 @@ cd /opt/NeteXt73/
 source /opt/NeteXt73/procedury
 if [ "$1" = "kontakty" ]; then
 	#przygotowanie informacji o zainstalowanych plikach
+	please_wait
 	rm /tmp/netext73/sumy/pliki.txt -f
 	dpkg -l | grep ii | grep linux-header	  | awk '{print $2}'  	> /tmp/netext73/sumy/lista.txt
 	dpkg -l | grep ii | grep nvidia 	  | awk '{print $2"_"$3}' >> /tmp/netext73/sumy/lista.txt
@@ -57,6 +58,7 @@ if [ "$1" = "kontakty" ]; then
 	done
 	sed -i 's/_amd64.deb//g' /tmp/netext73/sumy/pliki.txt
 	sed -i 's/-headers//g' /tmp/netext73/sumy/pliki.txt
+	killall python
 	KEY="$(echo $RANDOM)"
 	#zmienne losowe
 	res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
@@ -85,7 +87,7 @@ if [ "$1" = "kontakty" ]; then
 
 	yad --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_KONTAKT_Z_AUTORAMI" --tab="$TEXT_CHANGELOG" --tab="$TEXT_LICENCJA" \
 	--tab="catalyst" --tab="nvidia" --tab="k8" --tab="atom" --tab="i7" --tab="i7-pro" --tab="brazos" --tab="brazos-pro"  \
-	--window-icon="/opt/NeteXt73/ikony/mail.png" --on-top --width=840 --height=400 --button="$TEXT_ZAMKNIJ:1" --button="$TEXT_BUG:2"
+	--window-icon="/opt/NeteXt73/ikony/mail.png" --on-top --width=860 --height=350 --button="$TEXT_ZAMKNIJ:1" --button="$TEXT_BUG:2"
 	klawisz=$?
 	rm /tmp/netext73/sumy/pliki.txt $res1 $res2 $res3 $res4 $res5 $res6 $res7 $res8 $res9 $res10 $res11 -f
 	if [ "$klawisz" = "2" ]; then

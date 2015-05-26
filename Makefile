@@ -136,5 +136,7 @@ install_file_update:
 	$(INSTALL) 0755 update $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 install_file_uslugi:	
 	$(INSTALL) 0755 uslugi $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
-	
+install_file_uslugi:	
+	$(INSTALL) 0755 czekaj.py $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
+		
 	
