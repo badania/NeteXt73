@@ -36,7 +36,7 @@ cd /opt/NeteXt73/
 source /opt/NeteXt73/procedury
 if [ "$1" = "kontakty" ]; then
 	#przygotowanie informacji o zainstalowanych plikach
-	please_wait
+
 	rm /tmp/netext73/sumy/pliki.txt -f
 	dpkg -l | grep ii | grep linux-header	  | awk '{print $2}'  	> /tmp/netext73/sumy/lista.txt
 	dpkg -l | grep ii | grep nvidia 	  | awk '{print $2"_"$3}' >> /tmp/netext73/sumy/lista.txt
@@ -58,7 +58,7 @@ if [ "$1" = "kontakty" ]; then
 	done
 	sed -i 's/_amd64.deb//g' /tmp/netext73/sumy/pliki.txt
 	sed -i 's/-headers//g' /tmp/netext73/sumy/pliki.txt
-	killall python
+
 	KEY="$(echo $RANDOM)"
 	#zmienne losowe
 	res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)

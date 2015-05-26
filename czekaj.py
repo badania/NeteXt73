@@ -5,7 +5,7 @@ class ProgressBarWindow(Gtk.Window):
 
     def __init__(self):
         Gtk.Window.__init__(self, title="NeteXt'73 - Please Wait")
-        self.set_default_size(350, 50)
+        self.set_default_size(350, 35)
         self.set_border_width(10)
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)

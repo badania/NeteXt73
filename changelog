@@ -2,7 +2,9 @@
 -------------------------------------
 
 v0.8.81
--	zmiana srypu czas.py na czekaj.py
+-	zmiana skryptu czas.py na czekaj.py
+-	dodanie zależności do skrypu pythona
+-	modyfikacja makefile
 v0.8.80
 -	dodanie do zależności gcc-5
 -	zmiana kolejności instalacji gcc->kernel
@@ -14,7 +16,7 @@ v0.8.78
 -	ustawianie LPT przy deinstalacji
 -	poprawki kodu
 v0.8.77
--	wyłączenie LPT przy instalacji herneli premium
+-	wyłączenie LPT przy instalacji kerneli premium
 v0.8.76
 -	naprawa zależności
 v0.8.75
