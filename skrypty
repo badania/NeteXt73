@@ -162,7 +162,7 @@ if [ $klawisz = 0 ]; then
 			      sysbench --num-threads=$1 --test=memory run >> memory_$(uname -r)_$DATE-sysbench.log 
 			      echo "test_time : " $DATE >> memory_$(uname -r)_$DATE-sysbench.log  
 			fi
-			killall python
+			please_wait kill
 		}
 
 

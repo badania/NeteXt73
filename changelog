@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.82
+-	poprawki kodu
 v0.8.81
 -	zmiana skryptu czas.py na czekaj.py
 -	dodanie zależności do skrypu pythona

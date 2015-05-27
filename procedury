@@ -187,7 +187,11 @@ rm ./index.html -f
 }
 
 please_wait(){
-python /opt/NeteXt73/czekaj.py &
+if [ "$1" = "kill" ]; then
+	ps aux | awk '$11" "$12 == "python /opt/NeteXt73/czekaj.py" { system("kill " $2) }'
+else 
+	python /opt/NeteXt73/czekaj.py &
+fi
 }
 
 wersja(){

@@ -3,27 +3,30 @@ from gi.repository import Gtk, GObject
 
 class ProgressBarWindow(Gtk.Window):
 
-    def __init__(self):
-        Gtk.Window.__init__(self, title="NeteXt'73 - Please Wait")
-        self.set_default_size(350, 35)
-        self.set_border_width(10)
-
+    def __init__(okno):
+        Gtk.Window.__init__(okno, title="NeteXt'73 - Please Wait")
+        okno.set_default_size(450, 35)
+        okno.set_border_width(10)
+        okno.set_position(Gtk.WindowPosition.CENTER)
+	okno.set_icon_from_file('/opt/NeteXt73/menu/NeteXt73.png')
+        
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        self.add(vbox)
+        okno.add(vbox)
+	
+        okno.progressbar = Gtk.ProgressBar()
+        vbox.pack_start(okno.progressbar, True, True, 0)
 
-        self.progressbar = Gtk.ProgressBar()
-        vbox.pack_start(self.progressbar, True, True, 0)
+        okno.timeout_id = GObject.timeout_add(50, okno.on_timeout, None)
 
-        self.timeout_id = GObject.timeout_add(50, self.on_timeout, None)
-        self.activity_mode = False
-
-    def on_timeout(self, user_data):
-        self.progressbar.pulse()
+    def on_timeout(okno, user_data):
+	text = "Work in progress - please wait!"
+	okno.progressbar.set_text(text)
+	okno.progressbar.set_show_text(text)
+        okno.progressbar.pulse()
 	return True
 
 win = ProgressBarWindow()
 win.connect("delete-event", Gtk.main_quit)
-win.set_position(Gtk.WindowPosition.CENTER)
 win.show_all()
 Gtk.main()
 

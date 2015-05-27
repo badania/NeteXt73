@@ -1,3 +1,9 @@
+netext73 (0.8.82) stable; urgency=medium
+
+  * poprawki kodu
+
+ -- NetBit73 <netbit73@gmail.com>  Wed, 27 May 2015 08:51:27 +0200
+
 netext73 (0.8.81) stable; urgency=medium
 
   * zmiana skryptu czas.py na czekaj.py

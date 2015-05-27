@@ -234,8 +234,7 @@ sudo ufw status verbose > firewall.log
 for i in $(seq 1 42); do sudo dmidecode --type $i >> dmidecode.log; done
 sudo tac /var/log/kern.log | sed -n 1,1000p > kern.log
 #system logi
-export koniec="TRUE"
-killall python 
+please_wait kill
 KEY="$(echo $RANDOM)"
 #zmienne losowe
 res0=$(mktemp --tmpdir=/tmp/netext73 netext73_0.XXXXXXXX)
