@@ -37,8 +37,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
   python, 
   gcc, 
   yad, 
-  lsb-core
-  
+  lsb-core 
 Replaces: netext73
 Description: NeteXt'73 - optymalizator systemu
   NeteXt'73 to rozbudowane narzedzie do wprowadzania optymalizacji systemow opartych o Ubuntu. Modyfikacje maja na celu podwyzszenie responsywnosci systemu przy jednoczesnym obnizeniu zuzycia energii.
