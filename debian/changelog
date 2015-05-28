@@ -1,3 +1,9 @@
+netext73 (0.8.83) stable; urgency=medium
+
+  * naprawa błędu - brak modułu usługi
+
+ -- NetBit73 <netbit73@gmail.com>  Thu, 28 May 2015 08:16:26 +0200
+
 netext73 (0.8.82) stable; urgency=medium
 
   * poprawki kodu

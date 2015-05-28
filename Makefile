@@ -54,7 +54,8 @@ install: install_desktopfiles \
 	 install_file_repo \
 	 install_file_skrypty \
 	 install_file_update \
-	 install_file_uslugi 
+	 install_file_uslugi \
+	 install_file_czekaj
 	 
 	 $(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 	
@@ -136,7 +137,7 @@ install_file_update:
 	$(INSTALL) 0755 update $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 install_file_uslugi:	
 	$(INSTALL) 0755 uslugi $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
-install_file_uslugi:	
+install_file_czekaj:	
 	$(INSTALL) 0755 czekaj.py $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)
 		
 	
