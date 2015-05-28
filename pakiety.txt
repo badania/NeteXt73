@@ -1,5 +1,0 @@
-ii  linux-headers-3.16.0-38                     3.16.0-38.52~14.04.1                       all          Header files related to Linux kernel version 3.16.0
-ii  linux-headers-3.16.0-38-generic             3.16.0-38.52~14.04.1                       amd64        Linux kernel headers for version 3.16.0 on 64 bit x86 SMP
-ii  linux-headers-4.0.3-ext73-40.3-i7           4.0.3-ext73-40.3-i7                        amd64        Header files related to Linux kernel, specifically,
-ii  linux-headers-4.0.4-ext73-40.4-i7           4.0.4-ext73-40.4-i7                        amd64        Header files related to Linux kernel, specifically,
-ii  linux-headers-generic-lts-utopic            3.16.0.38.30                               amd64        Generic Linux kernel headers

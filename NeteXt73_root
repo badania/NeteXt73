@@ -37,11 +37,11 @@ source /opt/NeteXt73/procedury
 if [ "$1" = "kontakty" ]; then
 	#przygotowanie informacji o zainstalowanych plikach
 	rm /tmp/netext73/sumy/pliki.txt -f
-	dpkg -l | grep -wE "linux-headers|nvidia|fglrx" | grep ii > pakiety.txt
-	cat pakiety.txt | grep linux-headers	| awk '{print $2}'  	> /tmp/netext73/sumy/lista.txt
-	cat pakiety.txt | grep nvidia 	  	| awk '{print $2"_"$3}' >> /tmp/netext73/sumy/lista.txt
-	cat pakiety.txt | awk '{print $2"_"$3}' | sed 's/.://g' | grep fglrx_ >> /tmp/netext73/sumy/lista.txt
-	cat /tmp/netext73/sumy/sumy_kontrolne.txt | awk '{print $2}' | grep -v -E 'image|amdcccle' -v | sed 's/_amd64.deb//g' > /tmp/netext73/sumy/pakiety.txt
+	dpkg -l | grep -wE "linux-headers|nvidia|fglrx" | grep ii > /tmp/netext73/sumy/pakiety.txt
+	cat /tmp/netext73/sumy/pakiety.txt | grep linux-headers		| awk '{print $2}'  	> /tmp/netext73/sumy/lista.txt
+	cat /tmp/netext73/sumy/pakiety.txt | grep nvidia 	  	| awk '{print $2"_"$3}' >> /tmp/netext73/sumy/lista.txt
+	cat /tmp/netext73/sumy/pakiety.txt | awk '{print $2"_"$3}' 	| sed 's/.://g' | grep fglrx_ >> /tmp/netext73/sumy/lista.txt
+	cat /tmp/netext73/sumy/sumy_kontrolne.txt | awk '{print $2}' 	| grep -v -E 'image|amdcccle' -v | sed 's/_amd64.deb//g' > /tmp/netext73/sumy/pakiety.txt
 	
 	for i in $(cat /tmp/netext73/sumy/pakiety.txt); do 
 		if [ "$(echo $i | grep fglrx )" = "" ];then
