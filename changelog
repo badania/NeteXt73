@@ -3,6 +3,7 @@
 
 v0.8.83
 -	naprawa błędu - brak modułu usługi
+-	dodanie do zależności lsb-core
 v0.8.82
 -	poprawki kodu
 v0.8.81

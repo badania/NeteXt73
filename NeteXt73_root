@@ -36,12 +36,14 @@ cd /opt/NeteXt73/
 source /opt/NeteXt73/procedury
 if [ "$1" = "kontakty" ]; then
 	#przygotowanie informacji o zainstalowanych plikach
-
 	rm /tmp/netext73/sumy/pliki.txt -f
-	dpkg -l | grep ii | grep linux-header	  | awk '{print $2}'  	> /tmp/netext73/sumy/lista.txt
-	dpkg -l | grep ii | grep nvidia 	  | awk '{print $2"_"$3}' >> /tmp/netext73/sumy/lista.txt
-	dpkg -l | grep ii | awk '{print $2"_"$3}' | sed 's/.://g' | grep fglrx_ >> /tmp/netext73/sumy/lista.txt
-	for i in $(cat /tmp/netext73/sumy/sumy_kontrolne.txt | awk '{print $2}' | grep -v -E 'image|amdcccle' -v | sed 's/_amd64.deb//g' ); do 
+	dpkg -l | grep -wE "linux-headers|nvidia|fglrx" | grep ii > pakiety.txt
+	cat pakiety.txt | grep linux-headers	| awk '{print $2}'  	> /tmp/netext73/sumy/lista.txt
+	cat pakiety.txt | grep nvidia 	  	| awk '{print $2"_"$3}' >> /tmp/netext73/sumy/lista.txt
+	cat pakiety.txt | awk '{print $2"_"$3}' | sed 's/.://g' | grep fglrx_ >> /tmp/netext73/sumy/lista.txt
+	cat /tmp/netext73/sumy/sumy_kontrolne.txt | awk '{print $2}' | grep -v -E 'image|amdcccle' -v | sed 's/_amd64.deb//g' > /tmp/netext73/sumy/pakiety.txt
+	
+	for i in $(cat /tmp/netext73/sumy/pakiety.txt); do 
 		if [ "$(echo $i | grep fglrx )" = "" ];then
 			if [ "$(cat /tmp/netext73/sumy/lista.txt | grep -x $i)" = "" ]; then
 				echo "FALSE $i" >> /tmp/netext73/sumy/pliki.txt
@@ -56,10 +58,13 @@ if [ "$1" = "kontakty" ]; then
 			fi
 		fi
 	done
+	rm -f /tmp/netext73/sumy/pakiety.txt 
 	sed -i 's/_amd64.deb//g' /tmp/netext73/sumy/pliki.txt
 	sed -i 's/-headers//g' /tmp/netext73/sumy/pliki.txt
-
+	cat /tmp/netext73/sumy/pliki.txt | sort -r | uniq > /tmp/netext73/sumy/pakiety.txt
+	rm -f /tmp/netext73/sumy/pliki.txt
 	KEY="$(echo $RANDOM)"
+
 	#zmienne losowe
 	res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
 	res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)
@@ -75,14 +80,14 @@ if [ "$1" = "kontakty" ]; then
 	yad --plug=$KEY --tabnum=1 --icons --image-on-top --single-click --item-width=150 --read-dir=/opt/NeteXt73/kontakty &> $res1 &
 	yad --plug=$KEY --tabnum=2 --text-info --filename=/opt/NeteXt73/changelog &> $res2 &
 	yad --plug=$KEY --tabnum=3 --text-info --filename=/opt/NeteXt73/LICENSE &> $res3 &
-	yad --plug=$KEY --tabnum=4 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep fglrx_     | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "catalist" &> $res4 &
-	yad --plug=$KEY --tabnum=5 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep nvidia     | grep -v -E "nvidia-settings.*|libnvidia-"| sort -r | uniq ) --column "$TEXT_ZNITY1" --column "nvidia" &> $res5 &
-	yad --plug=$KEY --tabnum=6 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep k8 	   | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel k8" &> $res6 &
-	yad --plug=$KEY --tabnum=7 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep atom	   | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel atom" &> $res7 &
-	yad --plug=$KEY --tabnum=8 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep i7 	   | egrep -v pro | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel i7" &> $res8 &
-	yad --plug=$KEY --tabnum=9 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt  | grep i7-pro     | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel i7-pro" &> $res9 &
-	yad --plug=$KEY --tabnum=10 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt | grep brazos     | egrep -v pro | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel brazos" &> $res10 &
-	yad --plug=$KEY --tabnum=11 --checklist --list $(cat /tmp/netext73/sumy/pliki.txt | grep brazos-pro | sort -r | uniq ) --column "$TEXT_ZNITY1" --column "kernel brazos-pro" &> $res11 &
+	yad --plug=$KEY --tabnum=4 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep fglrx_ ) --column "$TEXT_ZNITY1" --column "catalist" &> $res4 &
+	yad --plug=$KEY --tabnum=5 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep nvidia | grep -v -E "nvidia-settings.*|libnvidia-") --column "$TEXT_ZNITY1" --column "nvidia" &> $res5 &
+	yad --plug=$KEY --tabnum=6 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep k8 	  ) --column "$TEXT_ZNITY1" --column "kernel k8" &> $res6 &
+	yad --plug=$KEY --tabnum=7 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep atom	  ) --column "$TEXT_ZNITY1" --column "kernel atom" &> $res7 &
+	yad --plug=$KEY --tabnum=8 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep i7 	  | egrep -v pro ) --column "$TEXT_ZNITY1" --column "kernel i7" &> $res8 &
+	yad --plug=$KEY --tabnum=9 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep i7-pro ) --column "$TEXT_ZNITY1" --column "kernel i7-pro" &> $res9 &
+	yad --plug=$KEY --tabnum=10 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep brazos | egrep -v pro ) --column "$TEXT_ZNITY1" --column "kernel brazos" &> $res10 &
+	yad --plug=$KEY --tabnum=11 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep brazos-pro) --column "$TEXT_ZNITY1" --column "kernel brazos-pro" &> $res11 &
 
 
 	yad --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_KONTAKT_Z_AUTORAMI" --tab="$TEXT_CHANGELOG" --tab="$TEXT_LICENCJA" \
