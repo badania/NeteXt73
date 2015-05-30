@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.85
+-	przeniesienie wyboru wysyłanych logów z configu do logów
 v0.8.84
 -	zmiana wyglądu okna APM
 v0.8.83

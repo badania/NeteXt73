@@ -1,3 +1,9 @@
+netext73 (0.8.85) stable; urgency=medium
+
+  * przeniesienie wyboru wysyłanych logów z configu do logów
+
+ -- NetBit73 <netbit73@gmail.com>  Sat, 30 May 2015 20:34:52 +0200
+
 netext73 (0.8.84) stable; urgency=medium
 
   * zmiana wyglądu okna APM

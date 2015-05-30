@@ -61,7 +61,7 @@ sciezka="/etc/default"
 echo "nie" > /tmp/netext73/ok.txt
 
 grub=$(yad --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/grub.png" --image="/opt/NeteXt73/ikony/grub.png" --form --field="$TEXT_SKRYPTEXT_10:TXT" --field="$TEXT_SKRYPTEXT_11:CB" "$(grep GRUB_CMDLINE_LINUX=\" /etc/default/grub | sed 's/GRUB_CMDLINE_LINUX=//' | cut -d '"' -f 2 | sed "s/ /\\n/g")" "$TEXT_GRUB6A!$TEXT_GRUB4A!$TEXT_GRUB5A!$TEXT_GRUB7A" --button="gtk-ok:0" --button="$TEXT_POWROT:1" \
---width=300 --height=250 )
+--width=300 --height=280 )
 klawisz=$?; grub=$(echo $grub | cut -d "|" -f 2)
 	if [ $klawisz = 0 ]; then 
 	#backup pliku grub
