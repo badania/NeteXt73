@@ -271,7 +271,7 @@ res9=$(mktemp --tmpdir=/tmp/netext73 netext73_9.XXXXXXXX)
 res10=$(mktemp --tmpdir=/tmp/netext73 netext73_10.XXXXXXXX)
 
 #zakładki
-yad --plug=$KEY --tabnum=1 --text="$(cat zakladka1.log)\n\n<span color=\"$kolor_textu\"><b>$TEXT_ZAZNACZ_LOGI</b></span>" --form --columns=5 --field="netext.log:CHK" --field="dmesg.log:CHK" --field="kern.log:CHK" --field="glxinfo.log:CHK" --field="apm-microcode.log:CHK" --field="lsmod.log:CHK" --field="lspci.log:CHK" --field="lsusb.log:CHK" $s1 $s2 $s3 $s4 $s5 $s6 $s7 $s8	&> $res0 &
+yad --plug=$KEY --tabnum=1 --text="$(cat zakladka1.log)\n\n<span color=\"$kolor_textu\"><b>$TEXT_ZAZNACZ_LOGI</b></span>" --form --columns=4 --field="netext.log:CHK" --field="dmesg.log:CHK" --field="kern.log:CHK" --field="glxinfo.log:CHK" --field="apm-microcode.log:CHK" --field="lsmod.log:CHK" --field="lspci.log:CHK" --field="lsusb.log:CHK" $s1 $s2 $s3 $s4 $s5 $s6 $s7 $s8	&> $res0 &
 yad --plug=$KEY --tabnum=2 --text-info --filename="netext.log"	&> $res1 &
 yad --plug=$KEY --tabnum=3 --text-info --filename="dmesg.log"	&> $res2 &
 yad --plug=$KEY --tabnum=4 --text-info --filename="kern.log"	&> $res3 &
