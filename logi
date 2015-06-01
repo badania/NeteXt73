@@ -269,9 +269,10 @@ res7=$(mktemp --tmpdir=/tmp/netext73 netext73_7.XXXXXXXX)
 res8=$(mktemp --tmpdir=/tmp/netext73 netext73_8.XXXXXXXX)
 res9=$(mktemp --tmpdir=/tmp/netext73 netext73_9.XXXXXXXX)
 res10=$(mktemp --tmpdir=/tmp/netext73 netext73_10.XXXXXXXX)
+res11=$(mktemp --tmpdir=/tmp/netext73 netext73_11.XXXXXXXX)
 
 #zakładki
-yad --plug=$KEY --tabnum=1 --text="$(cat zakladka1.log)\n\n<span color=\"$kolor_textu\"><b>$TEXT_ZAZNACZ_LOGI</b></span>" --form --columns=4 --field="netext.log:CHK" --field="dmesg.log:CHK" --field="kern.log:CHK" --field="glxinfo.log:CHK" --field="apm-microcode.log:CHK" --field="lsmod.log:CHK" --field="lspci.log:CHK" --field="lsusb.log:CHK" $s1 $s2 $s3 $s4 $s5 $s6 $s7 $s8	&> $res0 &
+yad --plug=$KEY --tabnum=1 --text="$(cat zakladka1.log)"	&> $res0 &
 yad --plug=$KEY --tabnum=2 --text-info --filename="netext.log"	&> $res1 &
 yad --plug=$KEY --tabnum=3 --text-info --filename="dmesg.log"	&> $res2 &
 yad --plug=$KEY --tabnum=4 --text-info --filename="kern.log"	&> $res3 &
@@ -282,21 +283,21 @@ yad --plug=$KEY --tabnum=8 --text-info --filename="apmsystem$losowa.log"	&> $res
 yad --plug=$KEY --tabnum=9 --text-info --filename="lsmodsystem$losowa.log"	&> $res8 &
 yad --plug=$KEY --tabnum=10 --text-info --filename="lspcisystem$losowa.log"	&> $res9 &
 yad --plug=$KEY --tabnum=11 --text-info --filename="lsusbsystem$losowa.log"	&> $res10 &
-
+yad --plug=$KEY --tabnum=12 --text="<span color=\"$kolor_textu\"><b>$TEXT_ZAZNACZ_LOGI</b></span>" --form --columns=4 --field="netext.log:CHK" --field="dmesg.log:CHK" --field="kern.log:CHK" --field="glxinfo.log:CHK" --field="apm-microcode.log:CHK" --field="lsmod.log:CHK" --field="lspci.log:CHK" --field="lsusb.log:CHK" $s1 $s2 $s3 $s4 $s5 $s6 $s7 $s8	&> $res11 &
 yad --notebook --key=$KEY --center --title="$nazwa_skryptu1 " \
 --tab="main" --tab="netext" --tab="dmesg" --tab="kern" --tab="firewall" --tab="dmidecode" \
---tab="glxinfo" --tab="APM-microcode" --tab="lsmod" --tab="lspci" --tab="lsusb" \
+--tab="glxinfo" --tab="APM-microcode" --tab="lsmod" --tab="lspci" --tab="lsusb" --tab="$TEXT_ZAZNACZ_LOGI" \
 --window-icon="/opt/NeteXt73/ikony/logi.png"  --width=600 --height=600 --on-top --button="$TEXT_PASTEBIN:0" --button="$TEXT_ZAMKNIJ:1"
 klawisz=$?
 if [ "$klawisz" = "0" ]; then
-	cat $res0 | cut -d "|" -f 1 > ~/.netext73/wysylkalogow
-	cat $res0 | cut -d "|" -f 2 >> ~/.netext73/wysylkalogow
-	cat $res0 | cut -d "|" -f 3 >> ~/.netext73/wysylkalogow
-	cat $res0 | cut -d "|" -f 4 >> ~/.netext73/wysylkalogow
-	cat $res0 | cut -d "|" -f 5 >> ~/.netext73/wysylkalogow
-	cat $res0 | cut -d "|" -f 6 >> ~/.netext73/wysylkalogow
-	cat $res0 | cut -d "|" -f 7 >> ~/.netext73/wysylkalogow
-	cat $res0 | cut -d "|" -f 8 >> ~/.netext73/wysylkalogow
+	cat $res11 | cut -d "|" -f 1 > ~/.netext73/wysylkalogow
+	cat $res11 | cut -d "|" -f 2 >> ~/.netext73/wysylkalogow
+	cat $res11 | cut -d "|" -f 3 >> ~/.netext73/wysylkalogow
+	cat $res11 | cut -d "|" -f 4 >> ~/.netext73/wysylkalogow
+	cat $res11 | cut -d "|" -f 5 >> ~/.netext73/wysylkalogow
+	cat $res11 | cut -d "|" -f 6 >> ~/.netext73/wysylkalogow
+	cat $res11 | cut -d "|" -f 7 >> ~/.netext73/wysylkalogow
+	cat $res11 | cut -d "|" -f 8 >> ~/.netext73/wysylkalogow
 	      
 	export userek=$(cat /tmp/netext73/userek)
 	sudo -u $userek bash << EOF
@@ -330,6 +331,6 @@ if [ "$klawisz" = "0" ]; then
 	fi
 EOF
 	fi
-	rm -f $res0 $res1 $res2 $res3 $res4 $res5 $res6 $res7 $res8 $res9 $res10
+	rm -f $res0 $res1 $res2 $res3 $res4 $res5 $res6 $res7 $res8 $res9 $res10 $res11
 	
 rm *.log losowa -f
