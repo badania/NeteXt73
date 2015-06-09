@@ -85,13 +85,19 @@ else
 	root_mode="FALSE"
 fi
 
+if [ -e ~/.netext73/HiDPI ] && [ "$(cat ~/.netext73/HiDPI)" = "TRUE" ]; then
+	HiDPI="TRUE"
+else
+	HiDPI="FALSE"
+fi
+
 KEY="$(echo $RANDOM)"
 #zmienne losowe
 res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
 res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)
 res3=$(mktemp --tmpdir=/tmp/netext73 netext73_3.XXXXXXXX)
 yad --plug=$KEY --tabnum=1 --form \
---field="$TEXT_CONFIG7:CB" --field="$TEXT_CONFIG4" --field="$TEXT_CONFIG6:CB" --field="$TEXT_CONFIG9:RO" --field="$TEXT_CONFIG10:RO" --field="$TEXT_CONFIG11:CHK" --field="$TEXT_CONFIG12:CHK" --field="NeteXt'73 -root mode:CHK" "$TEXT_NIE!$TEXT_TAK" "" "$lang1" "$apm_stat" "$ik" "$automatyczna_instalacja" "$archiwum_deb" "$root_mode" --button="$TEXT_CONFIG3:2" &> $res1 &
+--field="$TEXT_CONFIG7:CB" --field="$TEXT_CONFIG4" --field="$TEXT_CONFIG6:CB" --field="$TEXT_CONFIG9:RO" --field="$TEXT_CONFIG10:RO" --field="$TEXT_CONFIG11:CHK" --field="$TEXT_CONFIG12:CHK" --field="NeteXt'73 -root mode:CHK" --field="HiDPI:CHK" "$TEXT_NIE!$TEXT_TAK" "" "$lang1" "$apm_stat" "$ik" "$automatyczna_instalacja" "$archiwum_deb" "$root_mode" "$HiDPI" --button="$TEXT_CONFIG3:2" &> $res1 &
 yad --plug=$KEY --tabnum=2 --color --init-color=$kolor_textu &> $res2 &
 yad --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_CONFIG2" --tab="$TEXT_CONFIG3" --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=$((540*$skala)) --height=$((400*$skala)) --button="gtk-ok:0" --button="$TEXT_POWROT:1"
 klawisz=$?
@@ -107,6 +113,7 @@ if [ "$klawisz" = 0 ]; then
 		cat $res1 | cut -d "|" -f 6 > ~/.netext73/kernel_automat
 		cat $res1 | cut -d "|" -f 7 > ~/.netext73/archiwum_deb
 		cat $res1 | cut -d "|" -f 8 > ~/.netext73/root_mode
+		cat $res1 | cut -d "|" -f 9 > ~/.netext73/HiDPI
 		cat $res2 > ~/.netext73/kolor_textu
 		#kasowanie śmieci w configach
 		for i in $(echo jezyk kernel_automat archiwum_deb root_mode kernel_premium kolor_textu); do

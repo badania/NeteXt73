@@ -160,7 +160,13 @@ if [ ! -e $download ]; then
       mkdir -p $download
 fi
 
-export skala=1
+
+if [ -e ~/.netext73/HiDPI ] && [ "$(cat ~/.netext73/HiDPI)" = "TRUE" ]; then
+	export skala=2
+else
+	export skala=1
+fi
+
 
 #########################################################################################################################################################################
 #procedury

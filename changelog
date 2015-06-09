@@ -3,6 +3,7 @@
 
 v0.8.87
 -	przygotowanie okien do HiDPI
+-	dodanie do configu czeka HiDPI
 v0.8.86
 -	instalacja GCC-5 z repo NeteXt73
 v0.8.85
