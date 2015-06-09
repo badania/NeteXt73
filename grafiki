@@ -65,7 +65,7 @@ if [ "$1" = "nvidia" ]; then
 	if [ -e index.html ]; then
 		cat index.html | grep "href=" ./index.html   | cut -d '"' -f 2 | sed 's/.*\///g' | grep 'nvidia-' | sed 's/.deb//' | grep -v -E "nvidia-settings.*|libnvidia-"  | sort -r > 2a.txt
 		lista=$(cat 2a.txt | tr '\n' '!' | sed -e '$s/!$//g' )
-		ster=$(yad --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/nvidia.png" --image="/opt/NeteXt73/ikony/nvidia.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Nvidia</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		ster=$(yad --center --title="$nazwa_skryptu" --width=$((410*$skala)) --window-icon="/opt/NeteXt73/ikony/nvidia.png" --image="/opt/NeteXt73/ikony/nvidia.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Nvidia</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
 		if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 			if  [ "$(echo $ster | cut -d '_' -f 2 | cut -d "." -f1 )" -ge "340" ]; then
@@ -91,7 +91,7 @@ elif [ "$1" = "radeon" ]; then
 		if [ -e index.html ]; then
 		    cat index.html | grep "href=" ./index.html   | cut -d '"' -f 2 | sed 's/.*\///g' | grep 'fglrx_' | grep $bit2 | sed 's/.deb//' | sort -r >> 2a.txt
 		    lista=$(cat 2a.txt | tr '\n' '!' | sed -e '$s/!$//g' )
-		    ster=$(yad --center --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/radeon.png" --image="/opt/NeteXt73/ikony/radeon.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Radeon</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		    ster=$(yad --center --title="$nazwa_skryptu" --width=$((410*$skala)) --window-icon="/opt/NeteXt73/ikony/radeon.png" --image="/opt/NeteXt73/ikony/radeon.png" --text="$TEXT_STEROWNIKI2 <span color=\"$kolor_textu\"><b>Radeon</b></span>" --form --field="$TEXT_STEROWNIK:CB" "$lista" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 			klawisz=$?; ster=$(echo $ster | cut -d "|" -f 1)
 			if [ "$ster" != "" ] && [ "$klawisz" = "0" ]; then
 				ster1=$(echo $ster.deb | sed "s/fglrx/fglrx-amdcccle/")

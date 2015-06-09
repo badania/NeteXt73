@@ -76,7 +76,7 @@ else
 	fi
 	if [ "$kern" = "" ]; then
 		yad --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/$ikona" \
-		--image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="200" --read-dir="$pliki" --width="860" --height="300" \
+		--image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="$((200*$skala))" --read-dir="$pliki" --width="$((860*$skala))" --height="$((300*$skala))" \
 		--title="$nazwa_skryptu " --button="$TEXT_MENU_INSTALATOR5:4"  --button="$TEXT_ZAMKNIJ:1" --single-click
 		klawisz=$?   
 	fi
@@ -90,7 +90,7 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 
 	#lokalne
 	if [ "$kern" = "$TEXT_MENU_INSTALATOR3" ]; then
-		a=$(yad --center --file-selection --filename="$download/" --title="$(echo $TEXT_DEB1 | sed 's/headers/headers ext73 /' | sed 's/image/image ext73 /')" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		a=$(yad --center --file-selection --filename="$download/" --title="$(echo $TEXT_DEB1 | sed 's/headers/headers ext73 /' | sed 's/image/image ext73 /')" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=$((650*$skala)) --height=$((450*$skala)) --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		if [ $? = 0 ]; then
 			if [ "$(echo $a | grep 'linux-image' | grep 'ext' | grep '.deb')" != "" ]; then
 				cd $(echo $a | sed -e 's/linux.*//g');     b=$(echo $a | sed -e 's/linux-image/linux-headers/g')
@@ -116,7 +116,7 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 		fi
 	#tylko nagłówki
 	elif [ "$kern" = "$TEXT_MENU_INSTALATOR4" ]; then
-		a=$(yad --center --file-selection --filename="$download/" --title="$(echo $TEXT_DEB1 | sed 's/lub linux-image//' | sed 's/headers/headers ext73/')" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=650 --height=450 --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		a=$(yad --center --file-selection --filename="$download/" --title="$(echo $TEXT_DEB1 | sed 's/lub linux-image//' | sed 's/headers/headers ext73/')" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --width=$((650*$skala)) --height=$((450*$skala)) --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		if [ $? = 0 ]; then
 		if [ "$(echo $a | grep 'linux-image' | grep 'ext' | grep '.deb')" != "" ]; then
 			cd $(echo $a | sed -e 's/linux.*//g');	b=$(echo $a | sed -e 's/linux-image/linux-headers/g')
@@ -138,11 +138,11 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 	elif [ "$kern" = "$TEXT_MENU_INSTALATOR5" ]; then
 		cd /tmp/netext73; rm *.html -f
 		strona="http://kernel.ubuntu.com/~kernel-ppa/mainline/"
-		WERSJA_DISTRO=$(yad --center --title="$nazwa_skryptu" --width=420 --window-icon="/opt/NeteXt73/ikony/linux.png" --text="$TEXT_PPA_1 <span color=\"$kolor_textu\">$(lsb_release -cs)</span>" --form --field="$TEXT_RODZAJ_SYSTEMU:CB"  "$wersje_ubu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+		WERSJA_DISTRO=$(yad --center --title="$nazwa_skryptu" --width=$((420*$skala)) --window-icon="/opt/NeteXt73/ikony/linux.png" --text="$TEXT_PPA_1 <span color=\"$kolor_textu\">$(lsb_release -cs)</span>" --form --field="$TEXT_RODZAJ_SYSTEMU:CB"  "$wersje_ubu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 		klawisz=$?; export WERSJA_DISTRO=$(echo $WERSJA_DISTRO | cut -d "|" -f 1)
 		if [ "$klawisz" = 0 ];then
 			wget $strona  2>&1 | pobieranie 
-			a=$(yad --center --height=630 --width=410 --button="gtk-ok:0" --button="$TEXT_POWROT:1" --window-icon="/opt/NeteXt73/ikony/linux.png" --list $(grep 'href=' ./index.html | cut -d '"' -f 8 | grep $WERSJA_DISTRO | sed -e "s/-$WERSJA_DISTRO//g" -e 's/v//g' -e 's/\(.*\)./\1/' | grep -v -E "3.8.13.28" | sort -r  | awk 'ORS=NR%3?"\t\t\t":"\n"') --column="" --text="$TEXT_LISTA_KERNELI <b><span color=\"$kolor_textu\">$WERSJA_DISTRO</span></b> \n\n$TEXT_ZAZNACZ_KERNEL" --title="Kernel instalator")
+			a=$(yad --center --height=$((630*$skala)) --width=$((410*$skala)) --button="gtk-ok:0" --button="$TEXT_POWROT:1" --window-icon="/opt/NeteXt73/ikony/linux.png" --list $(grep 'href=' ./index.html | cut -d '"' -f 8 | grep $WERSJA_DISTRO | sed -e "s/-$WERSJA_DISTRO//g" -e 's/v//g' -e 's/\(.*\)./\1/' | grep -v -E "3.8.13.28" | sort -r  | awk 'ORS=NR%3?"\t\t\t":"\n"') --column="" --text="$TEXT_LISTA_KERNELI <b><span color=\"$kolor_textu\">$WERSJA_DISTRO</span></b> \n\n$TEXT_ZAZNACZ_KERNEL" --title="Kernel instalator")
 			klawisz=$?
 			if [ "$klawisz" = 0 ] && [ "$a" != "" ];then
 				a="v"$(echo $a | cut -d '|' -f 1)"-"$WERSJA_DISTRO
@@ -176,7 +176,7 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 					if [ "$(grep $(md5sum linux-image*) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum linux-headers*) $sumy_kontrolne)" != "" ]; then
 						echo "nie" > /tmp/netext73/ok.txt
 						if [ -e linux-headers* ] && [ -e linux-image* ]; then
-							if yad --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --height=280 --width=590 --text="$TEST_INSTALOWAC_KERNEL3 $rodzaj $TEST_INSTALOWAC_KERNEL4\n\n$(ls *.deb)\n\n$TEXT_INSTALOWAC ?\n\n" ; then
+							if yad --center --question --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/pytanie.png" --image="/opt/NeteXt73/ikony/pytanie.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --height=$((280*$skala)) --width=$((590*$skala)) --text="$TEST_INSTALOWAC_KERNEL3 $rodzaj $TEST_INSTALOWAC_KERNEL4\n\n$(ls *.deb)\n\n$TEXT_INSTALOWAC ?\n\n" ; then
 								naglowek > instaluj.sh
 								sprawdz_gcc >> instaluj.sh
 								instaluj_kernel >> instaluj.sh

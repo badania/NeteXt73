@@ -79,7 +79,7 @@ if [ $klawisz = 0 ]; then
 		else
 			sed -i 1d procesy.txt
 			sed -i '/^[^#]/s:^:FALSE :' procesy.txt
-			a=$(yad --center --height=540 --width=440 --window-icon="/opt/NeteXt73/ikony/skrypty.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="$TEXT_ZOMBIE1" --column="" --column="STAT" --column="PPID" --column="PID" --column="COMMAND" --checklist --list $(cat procesy.txt))
+			a=$(yad --center --height=$((540*$skala)) --width=$((440*$skala)) --window-icon="/opt/NeteXt73/ikony/skrypty.png" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --title="$nazwa_skryptu" --text="$TEXT_ZOMBIE1" --column="" --column="STAT" --column="PPID" --column="PID" --column="COMMAND" --checklist --list $(cat procesy.txt))
 			echo $a > zabij
 			sed -i 's/TRUE/\n/g' zabij; sed -i '/^\ *$/d' zabij
 			for i in $(cat zabij  | cut -d '|' -f 3)
@@ -168,7 +168,7 @@ if [ $klawisz = 0 ]; then
 
 
 		wynik_testu(){
-			yad --center --title="$nazwa_skryptu" --width=610 --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" --button="gtk-ok:0" --form \
+			yad --center --title="$nazwa_skryptu" --width=$((610*$skala)) --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" --button="gtk-ok:0" --form \
 			--field="uname -r:RO" "$(grep "uname" $1 | cut -d " " -f 2 )" \
 			--field="$(grep "$a0" $1 | sed 's/Doing //'):RO" "YES" \
 			--field="$a1:RO" "$(grep "$a1" $1 | sed 's/.*: *//')" \
@@ -211,10 +211,10 @@ if [ $klawisz = 0 ]; then
 				ikona="/opt/NeteXt73/ikony/microcode.png"
 			fi
 			if [ "$2" = "usun" ]; then
-				pliczek=$(yad --center --title="$nazwa_skryptu" --text="$skrypt" --width=1024 --height=450 --window-icon=$ikona --image=$ikona \
+				pliczek=$(yad --center --title="$nazwa_skryptu" --text="$skrypt" --width=$((1024*$skala)) --height=$((450*$skala)) --window-icon=$ikona --image=$ikona \
 			--column="uname -r" --column="test dates:" --column="$(echo $a1 | sed 's/ of/\nof/')" --column="$a2" --column="$(echo $a3 | sed 's/ of/\nof/')" --column="$(echo $a4 | sed 's/ event/\nevent/' | sed 's/ taken/\ntaken/' )" --column="$a5"  --column="$a6" --column="$a7" --column="$(echo $a8 | sed 's/ 95/\n95/')" --column="$(echo $a9 | sed 's/(/\n(/')" --column="$(echo $a10 | sed 's/(/\n(/')" --list $(cat pliki)  --button="$TEXT_USUN_WYNIK:0" --button="$TEXT_ZAMKNIJ:1")
 			else
-				pliczek=$(yad --center --title="$nazwa_skryptu" --text="$skrypt" --width=1024 --height=450 --window-icon=$ikona --image=$ikona \
+				pliczek=$(yad --center --title="$nazwa_skryptu" --text="$skrypt" --width=$((1024*$skala)) --height=$((450*$skala)) --window-icon=$ikona --image=$ikona \
 			--column="uname -r" --column="test dates:" --column="$(echo $a1 | sed 's/ of/\nof/')" --column="$a2" --column="$(echo $a3 | sed 's/ of/\nof/')" --column="$(echo $a4 | sed 's/ event/\nevent/' | sed 's/ taken/\ntaken/' )" --column="$a5"  --column="$a6" --column="$a7" --column="$(echo $a8 | sed 's/ 95/\n95/')" --column="$(echo $a9 | sed 's/(/\n(/')" --column="$(echo $a10 | sed 's/(/\n(/')" --list $(cat pliki)   --button="$TEXT_ZAMKNIJ:1")
 			fi
 			klawisz=$?; pliczek=$(echo $pliczek | cut -d "|" -f 2)
@@ -266,7 +266,7 @@ if [ $klawisz = 0 ]; then
 			cat $1 | tr -d "\015" | grep '\[' | sed 's/.*FrameTime://g' | sed 's/ //g' |awk '{print $1}' > kolumna3.txt
 			paste -d " " kolumna1.txt kolumna2.txt kolumna3.txt > kolumny.txt
 			wynik="$(grep "glmark2 Score:" $1 | sed "s/glmark2 Score:[[:space:]]*//g" | sed "s/[[:space:]]//g")"
-			yad --center --title="$nazwa_skryptu" --text="glmark2 score: $wynik" --width=880 --height=780 --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" --button="gtk-ok:0" --list $(cat kolumny.txt) \
+			yad --center --title="$nazwa_skryptu" --text="glmark2 score: $wynik" --width=$((880*$skala)) --height=$((780*$skala)) --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" --button="gtk-ok:0" --list $(cat kolumny.txt) \
 			--column="Name" --column="FPS:" --column="FrameTime:"
 				rm *.txt -f
 		}
@@ -296,7 +296,7 @@ if [ $klawisz = 0 ]; then
 				done
 				sed -i '/^[ \t]*$/ d' tymczasowy.txt
 				IFS=$'\n'
-				pliczek=$(yad --center --title="$nazwa_skryptu" --text="$MENU16" --width=1024 --height=450 --window-icon="/opt/NeteXt73/ikony/glmark.png" --image="/opt/NeteXt73/ikony/glmark.png" \
+				pliczek=$(yad --center --title="$nazwa_skryptu" --text="$MENU16" --width=$((1024*$skala)) --height=$((450*$skala)) --window-icon="/opt/NeteXt73/ikony/glmark.png" --image="/opt/NeteXt73/ikony/glmark.png" \
 				--column="uname -r" --column="test dates:" --column="GL_VENDOR:" --column="GL_RENDERER:" --column="GL_VERSION:" --column="Total score:" --column="glmark2 version:" --separator=$'\n' --list $(cat tymczasowy.txt) --button="$TEXT_USUN_WYNIK:0"  --button="$TEXT_ZAMKNIJ:1" )
 				klawisz=$?; pliczek=$(echo $pliczek | cut -d " " -f 2)
 				if [ "$klawisz" = "0" ]; then

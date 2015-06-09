@@ -287,7 +287,7 @@ yad --plug=$KEY --tabnum=12 --text="<span color=\"$kolor_textu\"><b>$TEXT_ZAZNAC
 yad --notebook --key=$KEY --center --title="$nazwa_skryptu1 " \
 --tab="main" --tab="netext" --tab="dmesg" --tab="kern" --tab="firewall" --tab="dmidecode" \
 --tab="glxinfo" --tab="APM-microcode" --tab="lsmod" --tab="lspci" --tab="lsusb" --tab="$TEXT_ZAZNACZ_LOGI" \
---window-icon="/opt/NeteXt73/ikony/logi.png"  --width=600 --height=600 --on-top --button="$TEXT_PASTEBIN:0" --button="$TEXT_ZAMKNIJ:1"
+--window-icon="/opt/NeteXt73/ikony/logi.png"  --width=$((600*$skala)) --height=$((600*$skala)) --on-top --button="$TEXT_PASTEBIN:0" --button="$TEXT_ZAMKNIJ:1"
 klawisz=$?
 if [ "$klawisz" = "0" ]; then
 	cat $res11 | cut -d "|" -f 1 > ~/.netext73/wysylkalogow

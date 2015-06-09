@@ -77,7 +77,7 @@ if [ "$1" = "kontakty" ]; then
 	res9=$(mktemp --tmpdir=/tmp/netext73 netext73_9.XXXXXXXX)
 	res10=$(mktemp --tmpdir=/tmp/netext73 netext73_10.XXXXXXXX)
 	res11=$(mktemp --tmpdir=/tmp/netext73 netext73_11.XXXXXXXX)
-	yad --plug=$KEY --tabnum=1 --icons --image-on-top --single-click --item-width=150 --read-dir=/opt/NeteXt73/kontakty &> $res1 &
+	yad --plug=$KEY --tabnum=1 --icons --image-on-top --single-click --item-width=$((150*$skala)) --read-dir=/opt/NeteXt73/kontakty &> $res1 &
 	yad --plug=$KEY --tabnum=2 --text-info --filename=/opt/NeteXt73/changelog &> $res2 &
 	yad --plug=$KEY --tabnum=3 --text-info --filename=/opt/NeteXt73/LICENSE &> $res3 &
 	yad --plug=$KEY --tabnum=4 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep fglrx_ ) --column "$TEXT_ZNITY1" --column "catalist" &> $res4 &
@@ -92,7 +92,7 @@ if [ "$1" = "kontakty" ]; then
 
 	yad --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_KONTAKT_Z_AUTORAMI" --tab="$TEXT_CHANGELOG" --tab="$TEXT_LICENCJA" \
 	--tab="catalyst" --tab="nvidia" --tab="k8" --tab="atom" --tab="i7" --tab="i7-pro" --tab="brazos" --tab="brazos-pro"  \
-	--window-icon="/opt/NeteXt73/ikony/mail.png" --on-top --width=860 --height=350 --button="$TEXT_ZAMKNIJ:1" --button="$TEXT_BUG:2"
+	--window-icon="/opt/NeteXt73/ikony/mail.png" --on-top --width=$((860*$skala)) --height=$((350*$skala)) --button="$TEXT_ZAMKNIJ:1" --button="$TEXT_BUG:2"
 	klawisz=$?
 	rm /tmp/netext73/sumy/pliki.txt $res1 $res2 $res3 $res4 $res5 $res6 $res7 $res8 $res9 $res10 $res11 -f
 	if [ "$klawisz" = "2" ]; then

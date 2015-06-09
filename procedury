@@ -96,7 +96,7 @@ if [ "$(lsb_release -a | grep 15.04)" != "" ] || [ "$(lsb_release -a | grep vivd
 else
 	export apmik="stary"
 	export katalog_apm="/etc/pm/power.d/advanced_power_management_by_ext73_*"
-	
+
 fi
 export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 
@@ -160,12 +160,14 @@ if [ ! -e $download ]; then
       mkdir -p $download
 fi
 
+export skala=1
+
 #########################################################################################################################################################################
 #procedury
 
 #pasek postępu pobierania pulsujący gdy coś długo trwa
 pobieranie(){
-yad --center --width=560 --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
+yad --center --width=$((560*$skala)) --title="$nazwa_skryptu" --text="$TEXT_POBIERANIE" --progress --pulsate --auto-close --auto-kill --window-icon="/opt/NeteXt73/ikony/download.png" --button="$TEXT_POWROT:1"
 }
 
 #pobieranie plików do instalacji kerneli
@@ -817,7 +819,7 @@ else
 		else
 			str=""
 			##
-			strona=$(yad --center --entry --width=610 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_STRONA1" --entry-text="$str" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+			strona=$(yad --center --entry --width=$((610*$skala)) --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_STRONA1" --entry-text="$str" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 			klawisz=$?
 			if [ "$klawisz" = "1" ]; then
 				exit 1
@@ -865,7 +867,7 @@ else
 		yad --center --info --title="$nazwa_skryptu"  --window-icon="/opt/NeteXt73/ikony/info.png" --image="/opt/NeteXt73/ikony/info.png" --button="gtk-ok:0"  --timeout=15 --text="$TEXT_SERVER_ERROR"
 		blad=1
 	else
-		aa=$(yad --center --height=340 --width=690 --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_PLATFORMA1 <b><span color=\"$kolor_textu\">$rodzaj</span></b>$TEXT_PLATFORMA2" --column="$TEXT_ZAZNACZ" --column="$TEXT_WYBIERZ_KERNEL" --column="$TEXT_ZNITY1" --button="$TEXT_POWROT:1" --button="gtk-ok:0" --list --radiolist $lista)
+		aa=$(yad --center --height=$((340*$skala)) --width=$((690*$skala)) --window-icon="/opt/NeteXt73/ikony/linux.png" --title="$nazwa_skryptu" --text="$TEXT_PLATFORMA1 <b><span color=\"$kolor_textu\">$rodzaj</span></b>$TEXT_PLATFORMA2" --column="$TEXT_ZAZNACZ" --column="$TEXT_WYBIERZ_KERNEL" --column="$TEXT_ZNITY1" --button="$TEXT_POWROT:1" --button="gtk-ok:0" --list --radiolist $lista)
 		klawisz=$?
 		a=$(echo $aa | cut -d "|" -f 2)	 #wybrany kernel
 		a1=$(echo $aa | cut -d "|" -f 3) #czy zainstalowany jeżeli '-' można instalować

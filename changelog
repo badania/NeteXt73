@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.87
+-	przygotowanie okien do HiDPI
 v0.8.86
 -	instalacja GCC-5 z repo NeteXt73
 v0.8.85

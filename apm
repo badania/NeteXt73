@@ -96,7 +96,7 @@ while [ $petla_duza = "tak" ]; do
 		klawisze_aktywne="--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" "
 	fi
 	if [ "$stan_apm" != "-" ]; then
-		aa=$(yad --center --columns=2 --title="$nazwa_skryptu" --width=410 --window-icon="/opt/NeteXt73/ikony/apm.png"  --image="/opt/NeteXt73/ikony/apm.png" --form \
+		aa=$(yad --center --columns=2 --title="$nazwa_skryptu" --width=$((410*$skala)) --window-icon="/opt/NeteXt73/ikony/apm.png"  --image="/opt/NeteXt73/ikony/apm.png" --form \
 		--field='':LBL "" \
 		--field="$TEXT_WERSJA_APM:RO" "$(ls $katalog_apm | cut -d "_" -f 7 | head -n 1)" \
 		--field="$TEXT_AKTUALNY_PROFIL_APM:RO" "$aktualny_apm" \
@@ -192,7 +192,7 @@ while [ $petla_duza = "tak" ]; do
 			yad --plug=$KEY --tabnum=2 --scale --min-value=$wartosc_min --max-value=$wartosc_max --value=$wartosc_batt &> $res2 &
 			yad --plug=$KEY --tabnum=3 --scale --min-value=$wartosc_min --max-value=$wartosc_max --value=$wartosc_ac   &> $res3 &
 
-			yad --notebook --key=$KEY --center --title="$nazwa_skryptu" --tab="$TEXT_STEROWANIE_JASNOSCIA" --tab="$TEXT_JASNOSC_NA_BATT" --tab="$TEXT_JASNOSC_NA_AC"  --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=340 --height=50 --button="gtk-ok:0"
+			yad --notebook --key=$KEY --center --title="$nazwa_skryptu" --tab="$TEXT_STEROWANIE_JASNOSCIA" --tab="$TEXT_JASNOSC_NA_BATT" --tab="$TEXT_JASNOSC_NA_AC"  --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=$((340*$skala)) --height=$((50*$skala)) --button="gtk-ok:0"
 			klawisz=$?
 			if [ $klawisz = 0 ]; then 
 				wart_batt=$(awk "BEGIN{print int(($(cat $res2)*$skala/$wartosc_max)+0.5)}")

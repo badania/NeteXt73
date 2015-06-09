@@ -1,3 +1,9 @@
+netext73 (0.8.87) stable; urgency=medium
+
+  * przygotowanie okien do HiDPI
+
+ -- NetBit73 <netbit73@gmail.com>  Tue, 09 Jun 2015 19:17:03 +0200
+
 netext73 (0.8.86) stable; urgency=medium
 
   * instalacja gcc-5 z repo NeteXt73

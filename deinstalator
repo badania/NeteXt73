@@ -40,7 +40,7 @@ source /opt/NeteXt73/procedury
 
 cd /tmp/netext73
 rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f
-usun=$(yad --center --title="$nazwa_skryptu" --width=420 --window-icon="/opt/NeteXt73/ikony/delete.png" --image="/opt/NeteXt73/ikony/delete.png" --text="<span color=\"$kolor_textu\">$TEXT_DEINSTALATOR</span>" --form --field="$TEXT_DEINSTALATOR1:CB"  "$TEXT_MENU_DEINSTALATOR1!$TEXT_MENU_DEINSTALATOR2!$TEXT_MENU_DEINSTALATOR4!$TEXT_MENU_DEINSTALATOR5!$TEXT_MENU_DEINSTALATOR7" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
+usun=$(yad --center --title="$nazwa_skryptu" --width=$((420*$skala)) --window-icon="/opt/NeteXt73/ikony/delete.png" --image="/opt/NeteXt73/ikony/delete.png" --text="<span color=\"$kolor_textu\">$TEXT_DEINSTALATOR</span>" --form --field="$TEXT_DEINSTALATOR1:CB"  "$TEXT_MENU_DEINSTALATOR1!$TEXT_MENU_DEINSTALATOR2!$TEXT_MENU_DEINSTALATOR4!$TEXT_MENU_DEINSTALATOR5!$TEXT_MENU_DEINSTALATOR7" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
 klawisz=$?; usun=$(echo $usun | cut -d "|" -f 1)
 
 #usuwanie apm
@@ -77,7 +77,7 @@ elif [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINS
 			dpkg -l | grep 'linux-headers'  | awk '{print $2}' | grep -x -v "linux-headers-$(uname -r)" >> /tmp/netext73/lista_kerneli.txt
 		fi
 		if [ "$(cat lista_kerneli.txt)" != "" ]; then
-		a=$(yad --center --height=440 --width=560 --window-icon="/opt/NeteXt73/ikony/delete.png" --text="$TEXT_DEINSTALATOR4  <span color=\"$kolor_textu\"><b> linux-image-$(uname -r) </b></span>,\n$TEXT_DEINSTALATOR5\n" --title="$TEXT_MENU_DEINSTALATOR1" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --checklist --list  --column="$TEXT_ZAZNACZ" --column="$TEXT_DEINSTALATOR6"  $(sed -e '/^[^#]/s:^:FALSE :' /tmp/netext73/lista_kerneli.txt ))
+		a=$(yad --center --height=$((440*$skala)) --width=$((560*$skala)) --window-icon="/opt/NeteXt73/ikony/delete.png" --text="$TEXT_DEINSTALATOR4  <span color=\"$kolor_textu\"><b> linux-image-$(uname -r) </b></span>,\n$TEXT_DEINSTALATOR5\n" --title="$TEXT_MENU_DEINSTALATOR1" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --checklist --list  --column="$TEXT_ZAZNACZ" --column="$TEXT_DEINSTALATOR6"  $(sed -e '/^[^#]/s:^:FALSE :' /tmp/netext73/lista_kerneli.txt ))
 			if [ $? = 0 ]; then
 				if [ "$a" != "" ]; then
 					if [ "$usun" = "$TEXT_MENU_DEINSTALATOR1" ]; then
