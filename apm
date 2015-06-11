@@ -90,7 +90,7 @@ while [ $petla_duza = "tak" ]; do
 	aktualny_apm=$(echo $stan_apm | awk '{print $1}')
 	menu_apm=$(echo "!conservative-conservative!ondemand-ondemand!intel-performance!intel-powersave!performance-conservative!performance-ondemand" | sed -e "s/$aktualny_apm//" -e 's/!!/!/')
 	menu=$(echo "$aktualny_apm$menu_apm" | sed 's/!!/!/')
-	if [ "$(cat /sys/class/power_supply/*/online)" != "" ];then
+	if [ "$(cat /sys/class/power_supply/*/online)" = "" ];then #!
 		klawisze_aktywne="--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" --button="$TEXT_BRIGHTNES:2" "
 	else
 		klawisze_aktywne="--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" "
@@ -182,6 +182,7 @@ while [ $petla_duza = "tak" ]; do
 			wartosc_min=$(awk "BEGIN{print int(($wartosc_max*$wartosc_min/$skala_jasnosci)+0.5)}")
 			wartosc_ac=$(awk "BEGIN{print int(($wartosc_max*$wartosc_ac/$skala_jasnosci)+0.5)}")
 			wartosc_batt=$(awk "BEGIN{print int(($wartosc_max*$wartosc_batt/$skala_jasnosci)+0.5)}")
+			#echo $wartosc_ac $wartosc_batt $wartosc_max $wartosc_min
 			#zakładki skali bateria/ac
 			if [ -e /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules ] && [ "$(grep '#SUBSYSTEM' /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules)" = "" ]; then
 				jasnosc_dziala="TRUE"
