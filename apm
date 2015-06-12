@@ -70,7 +70,7 @@ fi
 petla_duza="tak"
 while [ $petla_duza = "tak" ]; do
 	#stan apm config
-	
+
 	stan_apm #sprawdzenie stanu instalacji
 	if [ "$stan_apm" = "-" ]; then
 		#instalacja APM
@@ -83,10 +83,10 @@ while [ $petla_duza = "tak" ]; do
 			stan_apm
 		fi
 	fi
-	
+
 	#sprawdzenie stanu czeków
 	stan_apm_config
-	
+
 	aktualny_apm=$(echo $stan_apm | awk '{print $1}')
 	menu_apm=$(echo "!conservative-conservative!ondemand-ondemand!intel-performance!intel-powersave!performance-conservative!performance-ondemand" | sed -e "s/$aktualny_apm//" -e 's/!!/!/')
 	menu=$(echo "$aktualny_apm$menu_apm" | sed 's/!!/!/')
@@ -114,9 +114,9 @@ while [ $petla_duza = "tak" ]; do
 		--field="$TEXT_FIX7:CHK" "$turboacoff" \
 		--field="$TEXT_HIBERNACJA:CHK" "$hibernacja_menu" \
 		$klawisze_aktywne )
-		
+
 		klawisz=$?
-		if [ $klawisz = 0 ]; then 
+		if [ $klawisz = 0 ]; then
 			a=$(echo $aa | cut -d "|" -f 4)
 			export bfqfix=$(echo $aa | cut -d "|" -f 6)
 			export ssdfix=$(echo $aa | cut -d "|" -f 7)
@@ -148,16 +148,16 @@ while [ $petla_duza = "tak" ]; do
 			wartsc_bright=$(cat /sys/class/backlight/$katalog_jasnosc/brightness)
 			wartosc_max=$(cat /sys/class/backlight/$katalog_jasnosc/max_brightness)
 			skala_jasnosci=$wartosc_max
-			
+
 			KEY="$(echo $RANDOM)"
 			#zmienne losowe
-			#mkdir -p /tmp/netext73 
+
 			res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
 			res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)
 			res3=$(mktemp --tmpdir=/tmp/netext73 netext73_3.XXXXXXXX)
 			wartosc_batt=$(cat /etc/apm-ext73/brightness | grep 'echo' | awk '{print $2}' | head -n 1)
 			wartosc_ac=$(tac /etc/apm-ext73/brightness | grep 'echo' | awk '{print $2}' | head -n 1)
-			
+
 			#przeliczenie skali na 0-wartosc_max
 			if [ "$skala_jasnosci" -lt "20" ]; then
 				wartosc_max=10
@@ -166,7 +166,10 @@ while [ $petla_duza = "tak" ]; do
 				wartosc_max=20
 				wartosc_min=$(awk "BEGIN{print int(($wartosc_max/18)+0.5)}")
 			fi
-			
+
+			wartosc_ac=$(awk "BEGIN{print int(($wartosc_max*$wartosc_ac/$skala_jasnosci)+0.5)}")
+                        wartosc_batt=$(awk "BEGIN{print int(($wartosc_max*$wartosc_batt/$skala_jasnosci)+0.5)}")
+
 			#walidacja
 			if [ $wartosc_batt -lt $wartosc_min ]; then
 				wartosc_batt=$wartosc_min
@@ -179,16 +182,12 @@ while [ $petla_duza = "tak" ]; do
 				wartosc_ac=$wartosc_max
 			fi
 
-			wartosc_min=$(awk "BEGIN{print int(($wartosc_max*$wartosc_min/$skala_jasnosci)+0.5)}")
-			wartosc_ac=$(awk "BEGIN{print int(($wartosc_max*$wartosc_ac/$skala_jasnosci)+0.5)}")
-			wartosc_batt=$(awk "BEGIN{print int(($wartosc_max*$wartosc_batt/$skala_jasnosci)+0.5)}")
-			#echo $wartosc_ac $wartosc_batt $wartosc_max $wartosc_min
 			#zakładki skali bateria/ac
 			if [ -e /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules ] && [ "$(grep '#SUBSYSTEM' /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules)" = "" ]; then
 				jasnosc_dziala="TRUE"
 			else
 				jasnosc_dziala="FALSE"
-			fi	
+			fi
 			yad --plug=$KEY --tabnum=1 --form  --field="$TEXT_STEROWANIE_JASNOSCIA:CHK" "$jasnosc_dziala" &> $res1 &
 			yad --plug=$KEY --tabnum=2 --scale --min-value=$wartosc_min --max-value=$wartosc_max --value=$wartosc_batt &> $res2 &
 			yad --plug=$KEY --tabnum=3 --scale --min-value=$wartosc_min --max-value=$wartosc_max --value=$wartosc_ac   &> $res3 &
@@ -198,7 +197,6 @@ while [ $petla_duza = "tak" ]; do
 			if [ $klawisz = 0 ]; then 
 				wart_batt=$(awk "BEGIN{print int(($(cat $res2)*$skala_jasnosci/$wartosc_max)+0.5)}")
 				wart_ac=$(awk "BEGIN{print int(($(cat $res3)*$skala_jasnosci/$wartosc_max)+0.5)}")
-				
 				sudo sed -i "/#ac/ s/echo.*>/echo $wart_ac >/" /etc/apm-ext73/brightness
 				sudo sed -i "/#bateria/ s/echo.*>/echo $wart_batt >/" /etc/apm-ext73/brightness
 				if [ "$(cat /sys/class/power_supply/*/online)" = "0" ];then
