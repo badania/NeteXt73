@@ -1,3 +1,9 @@
+netext73 (0.8.89) stable; urgency=medium
+
+  * nowe okno APM
+
+ -- NetBit73 <netbit73@gmail.com>  Sun, 14 Jun 2015 16:08:06 +0200
+
 netext73 (0.8.88) stable; urgency=medium
 
   * Naprawa Gtk-WARNING **: Theme file for default has no directories

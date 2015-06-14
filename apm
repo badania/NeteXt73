@@ -90,14 +90,45 @@ while [ $petla_duza = "tak" ]; do
 	aktualny_apm=$(echo $stan_apm | awk '{print $1}')
 	menu_apm=$(echo "!conservative-conservative!ondemand-ondemand!intel-performance!intel-powersave!performance-conservative!performance-ondemand" | sed -e "s/$aktualny_apm//" -e 's/!!/!/')
 	menu=$(echo "$aktualny_apm$menu_apm" | sed 's/!!/!/')
-	if [ "$(cat /sys/class/power_supply/*/online)" != "" ];then
-		klawisze_aktywne="--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" --button="$TEXT_BRIGHTNES:2" "
-	else
-		klawisze_aktywne="--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" "
+	
+	#ustawienie jasności wg aktualnej
+        katalog_jasnosc=$(ls /sys/class/backlight | head -n 1)
+        wartsc_bright=$(cat /sys/class/backlight/$katalog_jasnosc/brightness)
+        wartosc_max=$(cat /sys/class/backlight/$katalog_jasnosc/max_brightness)
+        skala_jasnosci=$wartosc_max
+
+        wartosc_batt=$(cat /etc/apm-ext73/brightness | grep 'echo' | awk '{print $2}' | head -n 1)
+        wartosc_ac=$(tac /etc/apm-ext73/brightness | grep 'echo' | awk '{print $2}' | head -n 1)
+
+        wartosc_min=1
+        wartosc_max=100
+        wartosc_ac=$(awk "BEGIN{print int(($wartosc_max*$wartosc_ac/$skala_jasnosci)+0.5)}")
+        wartosc_batt=$(awk "BEGIN{print int(($wartosc_max*$wartosc_batt/$skala_jasnosci)+0.5)}")
+
+        #walidacja
+        if [ $wartosc_batt -lt $wartosc_min ]; then
+                wartosc_batt=$wartosc_min
+        elif [ $wartosc_batt -gt $wartosc_max ]; then
+                wartosc_batt=$wartosc_max
+        fi
+        if [ $wartosc_ac -lt $wartosc_min ]; then
+                wartosc_ac=$wartosc_min
+        elif [ $wartosc_ac -gt $wartosc_max ]; then
+                wartosc_ac=$wartosc_max
+        fi
+
+        #sprawdzanie czy jest bateria - włącznik sterowania podświetleniem
+        if [ "$(cat /sys/class/power_supply/*/online)" = "" ];then
+                jasnosc_dziala="$TEXT_NIE"
+        else
+                if [ -e /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules ] && [ "$(grep '#SUBSYSTEM' /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules)" = "" ]; then
+                        jasnosc_dziala="$TEXT_TAK!$TEXT_NIE"
+                else
+                        jasnosc_dziala="$TEXT_NIE!$TEXT_TAK"
+                fi
 	fi
 	if [ "$stan_apm" != "-" ]; then
 		aa=$(yad --center --columns=2 --title="$nazwa_skryptu" --width=$((410*$skala)) --window-icon="/opt/NeteXt73/ikony/apm.png"  --image="/opt/NeteXt73/ikony/apm.png" --form \
-		--field='':LBL "" \
 		--field="$TEXT_WERSJA_APM:RO" "$(ls $katalog_apm | cut -d "_" -f 7 | head -n 1)" \
 		--field="$TEXT_AKTUALNY_PROFIL_APM:RO" "$aktualny_apm" \
 		--field="$TEXT_ZMIEN_PROFIL_APM:CB" "$menu"\
@@ -105,29 +136,62 @@ while [ $petla_duza = "tak" ]; do
 		--field="$TEXT_PLANISTA:CB" "$bfqfix_menu" \
 		--field="$(echo $TEXT_PLANISTA | sed 's/HDD/SSD\/FLASH/'):CB" "$ssdfix_menu" \
 		--field='':LBL "" \
+                --field="$TEXT_STEROWANIE_JASNOSCIA:CB" "$jasnosc_dziala" \
+		--field="$TEXT_JASNOSC_NA_BATT:SCL" "$wartosc_batt" \
+                --field="$TEXT_JASNOSC_NA_AC:SCL" "$wartosc_ac" \
 		--field="$TEXT_FIX1:CHK" "$wififix" \
 		--field="$TEXT_FIX2:CHK" "$wifionoff" \
 		--field="$TEXT_FIX3:CHK" "$btfix" \
 		--field="$TEXT_FIX4:CHK" "$rts5139fix" \
 		--field="$TEXT_FIX5:CHK" "$wifin" \
+		--field='':LBL "" \
 		--field="$TEXT_FIX6:CHK" "$turbooff" \
 		--field="$TEXT_FIX7:CHK" "$turboacoff" \
+		--field='':LBL "" \
 		--field="$TEXT_HIBERNACJA:CHK" "$hibernacja_menu" \
-		$klawisze_aktywne )
+		--button="gtk-ok:0" --button="$TEXT_ZAMKNIJ:1" )
 
 		klawisz=$?
 		if [ $klawisz = 0 ]; then
-			a=$(echo $aa | cut -d "|" -f 4)
-			export bfqfix=$(echo $aa | cut -d "|" -f 6)
-			export ssdfix=$(echo $aa | cut -d "|" -f 7)
-			export wififix=$(echo $aa | cut -d "|" -f 9)
-			export wifionoff=$(echo $aa | cut -d "|" -f 10)
-			export btfix=$(echo $aa | cut -d "|" -f 11)
-			export rts5139fix=$(echo $aa | cut -d "|" -f 12)
-			export wifin=$(echo $aa | cut -d "|" -f 13)
-			export turbooff=$(echo $aa | cut -d "|" -f 14)
-			export turboacoff=$(echo $aa | cut -d "|" -f 15)
-			export hibernacja_menu=$(echo $aa | cut -d "|" -f 16)
+			a=$(echo $aa | cut -d "|" -f 3)
+			export bfqfix=$(echo $aa | cut -d "|" -f 5)
+			export ssdfix=$(echo $aa | cut -d "|" -f 6)
+			
+			export jasnosc_dziala=$(echo $aa | cut -d "|" -f 8)
+			export wart_batt1=$(echo $aa | cut -d "|" -f 9)
+			export wart_ac1=$(echo $aa | cut -d "|" -f 10)
+			
+			export wififix=$(echo $aa | cut -d "|" -f 11)
+			export wifionoff=$(echo $aa | cut -d "|" -f 12)
+			export btfix=$(echo $aa | cut -d "|" -f 13)
+			export rts5139fix=$(echo $aa | cut -d "|" -f 14)
+			export wifin=$(echo $aa | cut -d "|" -f 15)
+			
+			export turbooff=$(echo $aa | cut -d "|" -f 17)
+			export turboacoff=$(echo $aa | cut -d "|" -f 18)
+			
+			export hibernacja_menu=$(echo $aa | cut -d "|" -f 20)
+			
+			
+			wart_batt=$(awk "BEGIN{print int(($wart_batt1*$skala_jasnosci/$wartosc_max)+0.5)}")
+                        wart_ac=$(awk "BEGIN{print int(($wart_ac1*$skala_jasnosci/$wartosc_max)+0.5)}")
+                        sudo sed -i "/#ac/ s/echo.*>/echo $wart_ac >/" /etc/apm-ext73/brightness
+                        sudo sed -i "/#bateria/ s/echo.*>/echo $wart_batt >/" /etc/apm-ext73/brightness
+                        if [ "$(cat /sys/class/power_supply/*/online)" = "0" ];then
+                                sudo /etc/apm-ext73/./brightness true
+                        else
+                                sudo /etc/apm-ext73/./brightness false
+                        fi
+                        if [ "$jasnosc_dziala" = "$TEXT_TAK" ]; then
+                                #if [ "$(echo $wart | cut -d "|" -f 1)" = "TRUE" ];then
+                                        sudo sed -i 's/#SUBSYSTEM/SUBSYSTEM/g' /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules
+                        else
+                                        sudo sed -i 's/SUBSYSTEM/#SUBSYSTEM/g' /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules
+                                #fi
+                        fi
+			
+			
+			
 			#uruchomienie aktualizacji gdy zaszła jakaś zmiana
 			if [ "$bfqfix" = "blk-mq" ] || [ "$ssdfix" = "blk-mq" ]; then
 				if [ "$a" = "$aktualny_apm" ] && [ "$wififix_przed" = "$wififix" ] && [ "$wifionoff_przed" = "$wifionoff" ] && [ "$btfix_przed" = "$btfix" ] && [ "$rts5139fix_przed" = "$rts5139fix" ] && [ "$wifin_przed" = "$wifin" ] && [ "$turbooff_przed" = "$turbooff" ] && [ "$turboacoff_przed" = "$turboacoff" ] && [ "$hibernacja_menu_przed" = "$hibernacja_menu" ]; then
@@ -142,77 +206,7 @@ while [ $petla_duza = "tak" ]; do
 					zmiany_w_APM
 				fi
 			fi
-		elif [ $klawisz = 2 ]; then
-			#ustawienie jasności wg aktualnej
-			katalog_jasnosc=$(ls /sys/class/backlight | head -n 1)
-			wartsc_bright=$(cat /sys/class/backlight/$katalog_jasnosc/brightness)
-			wartosc_max=$(cat /sys/class/backlight/$katalog_jasnosc/max_brightness)
-			skala_jasnosci=$wartosc_max
-
-			KEY="$(echo $RANDOM)"
-			#zmienne losowe
-
-			res1=$(mktemp --tmpdir=/tmp/netext73 netext73_1.XXXXXXXX)
-			res2=$(mktemp --tmpdir=/tmp/netext73 netext73_2.XXXXXXXX)
-			res3=$(mktemp --tmpdir=/tmp/netext73 netext73_3.XXXXXXXX)
-			wartosc_batt=$(cat /etc/apm-ext73/brightness | grep 'echo' | awk '{print $2}' | head -n 1)
-			wartosc_ac=$(tac /etc/apm-ext73/brightness | grep 'echo' | awk '{print $2}' | head -n 1)
-
-			#przeliczenie skali na 0-wartosc_max
-			if [ "$skala_jasnosci" -lt "20" ]; then
-				wartosc_max=10
-				wartosc_min=$(awk "BEGIN{print int(($wartosc_max/8)+0.5)}")
-			else
-				wartosc_max=20
-				wartosc_min=$(awk "BEGIN{print int(($wartosc_max/18)+0.5)}")
-			fi
-
-			wartosc_ac=$(awk "BEGIN{print int(($wartosc_max*$wartosc_ac/$skala_jasnosci)+0.5)}")
-                        wartosc_batt=$(awk "BEGIN{print int(($wartosc_max*$wartosc_batt/$skala_jasnosci)+0.5)}")
-
-			#walidacja
-			if [ $wartosc_batt -lt $wartosc_min ]; then
-				wartosc_batt=$wartosc_min
-			elif [ $wartosc_batt -gt $wartosc_max ]; then
-				wartosc_batt=$wartosc_max
-			fi
-			if [ $wartosc_ac -lt $wartosc_min ]; then
-				wartosc_ac=$wartosc_min
-			elif [ $wartosc_ac -gt $wartosc_max ]; then
-				wartosc_ac=$wartosc_max
-			fi
-
-			#zakładki skali bateria/ac
-			if [ -e /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules ] && [ "$(grep '#SUBSYSTEM' /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules)" = "" ]; then
-				jasnosc_dziala="TRUE"
-			else
-				jasnosc_dziala="FALSE"
-			fi
-			yad --plug=$KEY --tabnum=1 --form  --field="$TEXT_STEROWANIE_JASNOSCIA:CHK" "$jasnosc_dziala" &> $res1 &
-			yad --plug=$KEY --tabnum=2 --scale --min-value=$wartosc_min --max-value=$wartosc_max --value=$wartosc_batt &> $res2 &
-			yad --plug=$KEY --tabnum=3 --scale --min-value=$wartosc_min --max-value=$wartosc_max --value=$wartosc_ac   &> $res3 &
-
-			yad --notebook --key=$KEY --center --title="$nazwa_skryptu" --tab="$TEXT_STEROWANIE_JASNOSCIA" --tab="$TEXT_JASNOSC_NA_BATT" --tab="$TEXT_JASNOSC_NA_AC"  --window-icon="/opt/NeteXt73/ikony/config.png" --on-top --width=$((340*$skala)) --height=$((50*$skala)) --button="gtk-ok:0"
-			klawisz=$?
-			if [ $klawisz = 0 ]; then 
-				wart_batt=$(awk "BEGIN{print int(($(cat $res2)*$skala_jasnosci/$wartosc_max)+0.5)}")
-				wart_ac=$(awk "BEGIN{print int(($(cat $res3)*$skala_jasnosci/$wartosc_max)+0.5)}")
-				sudo sed -i "/#ac/ s/echo.*>/echo $wart_ac >/" /etc/apm-ext73/brightness
-				sudo sed -i "/#bateria/ s/echo.*>/echo $wart_batt >/" /etc/apm-ext73/brightness
-				if [ "$(cat /sys/class/power_supply/*/online)" = "0" ];then
-					sudo /etc/apm-ext73/./brightness true
-				else
-					sudo /etc/apm-ext73/./brightness false
-				fi
-				if [ "$(cat $res1 | cut -d "|" -f 1)" != "$jasnosc_dziala" ]; then
-					if [ "$(cat $res1 | cut -d "|" -f 1)" = "TRUE" ];then
-						sudo sed -i 's/#SUBSYSTEM/SUBSYSTEM/g' /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules
-					elif [ "$(cat $res1 | cut -d "|" -f 1)" = "FALSE" ];then
-						sudo sed -i 's/SUBSYSTEM/#SUBSYSTEM/g' /etc/udev/rules.d/60-brightness-udev-apm-ext73.rules
-					fi
-				fi
-			fi
-			rm $res1 $res2 $res3 -f
+                        
 		fi
 	fi
 	if [ -z "$aa" ]; then
