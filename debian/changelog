@@ -1,3 +1,9 @@
+netext73 (0.8.90) stable; urgency=medium
+
+  * wyłączenie sprawdzania sensorów podczas instalacji programu
+
+ -- NetBit73 <netbit73@gmail.com>  Tue, 23 Jun 2015 09:48:31 +0200
+
 netext73 (0.8.89) stable; urgency=medium
 
   * nowe okno APM

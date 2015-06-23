@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.90
+-	wyłączenie sprawdzania sensorów podczas instalacji programu
 v0.8.89
 -	nowe okno APM
 v0.8.88

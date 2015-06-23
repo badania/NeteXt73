@@ -38,6 +38,13 @@ source /opt/NeteXt73/procedury
 #########################################################################################################################################################################
 #monitor
 
+
+#sprawdzenie sensorów jeżeli nie były włączone
+if [ "$(cat /etc/modules | grep sensors-detect)" = "" ]; then
+      xterm  -T "sensors" -e bash -c "/usr/bin/yes| sudo sensors-detect; sudo /etc/init.d/lm-sensors stop;sudo update-rc.d -f lm-sensors remove"
+fi
+
+
 cd /tmp/netext73
 if [ -e ~/.netext73/monitor ]; then
 	if [ "$(grep system ~/.netext73/monitor)" != "" ]; then
