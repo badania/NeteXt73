@@ -38,10 +38,9 @@ source /opt/NeteXt73/procedury
 #########################################################################################################################################################################
 #usuwanie zbędnych kerneli
 
-mkdir /tmp/netext73
 cd /tmp/netext73
 rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f
-usun=$(yad --center --title="$nazwa_skryptu" --width=$((420*$skala)) --window-icon="/opt/NeteXt73/ikony/delete.png" --image="/opt/NeteXt73/ikony/delete.png" --text="<span color=\"$kolor_textu\">$TEXT_DEINSTALATOR</span>" --form --field="$TEXT_MENU_DEINSTALATOR1:FBTN" --field="$TEXT_MENU_DEINSTALATOR2:FBTN" --field="$TEXT_MENU_DEINSTALATOR4:FBTN" --field="$TEXT_MENU_DEINSTALATOR5:FBTN" --field="$TEXT_MENU_DEINSTALATOR7:FBTN" --button="$TEXT_POWROT:1"  )
+usun=$(yad --center --title="$nazwa_skryptu" --width=$((420*$skala)) --window-icon="/opt/NeteXt73/ikony/delete.png" --image="/opt/NeteXt73/ikony/delete.png" --text="<span color=\"$kolor_textu\">$TEXT_DEINSTALATOR</span>" --form --field="$TEXT_DEINSTALATOR1:CB"  "$TEXT_MENU_DEINSTALATOR1!$TEXT_MENU_DEINSTALATOR2!$TEXT_MENU_DEINSTALATOR4!$TEXT_MENU_DEINSTALATOR5!$TEXT_MENU_DEINSTALATOR7" --button="gtk-ok:0" --button="$TEXT_POWROT:1"  )
 klawisz=$?; usun=$(echo $usun | cut -d "|" -f 1)
 
 #usuwanie apm
