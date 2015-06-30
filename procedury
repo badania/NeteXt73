@@ -819,10 +819,11 @@ if [ "$1" = "update" ]; then
 else
 	#tu zmienić
 	echo $kern > ~/.netext73/instalator_kerneli #zapamiętanie wybranego kernela
-	if [ "$(echo $kern | grep i7)" != "" ] || [ "$(echo $kern | grep Brazos)" != "" ]; then
+	if [ "$premium" = "tak" ]; then 
+	#if [ "$(echo $kern | grep i7)" != "" ] || [ "$(echo $kern | grep Brazos)" != "" ]; then
 		#adres kerneli premium
 		if [ "$kernel_premium" = "tak" ]; then
-			strona="$adres_glowny/kernele_premium2/"
+			strona="$adres_glowny/kernele_premium$katalog2/"
 		else
 			str=""
 			##
@@ -835,7 +836,7 @@ else
 					if [ $? = 0 ]; then
 						echo $strona > ~/.netext73/kernel_premium
 						if [ "$strona" != "" ]; then
-							strona="$adres_glowny/kernele_premium2/"
+							strona="$adres_glowny/kernele_premium$katalog2/"
 							export US1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 1) 
 							export PASS1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 3)
 							kernel_premium="tak"
@@ -844,7 +845,7 @@ else
 				fi
 			fi
 		fi
-		rm index.html -f; wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium2/ 2>&1 | pobieranie 
+		rm index.html -f; wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium$katalog2/ 2>&1 | pobieranie 
 	else
 		strona="$adres_glowny/kernele/"
 		rm index.html -f; wget $strona 2>&1 | pobieranie 

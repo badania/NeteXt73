@@ -59,31 +59,56 @@ if [ -e ~/.netext73/kernel_automat ] && [ -e ~/.netext73/instalator_kerneli ] &&
 else
 	if [ "$1" = "K8" ]; then
 		kern="K8 - od Intel C2D, AMD K8"
+		export katalog2=""
+		export premium="nie"
 	elif [ "$1" = "atom" ]; then
 		kern="Atom - Intel Atom 64bit"
+		export katalog2=""
+		export premium="nie"
 	elif [ "$1" = "sandy" ]; then
 		kern="Sandy Bridge"
+		export katalog2="2"
+		export premium="tak"
 	elif [ "$1" = "ivy" ]; then
 		kern="Ivy Bridge"
+		export katalog2="2"
+		export premium="tak"
 	elif [ "$1" = "haswell" ]; then
 		kern="Haswell"
 		export katalog2="2"
+		export premium="tak"
 	elif [ "$1" = "broadwell" ]; then
 		kern="Broadwell"
+		export katalog2="2"
+		export premium="tak"
 	elif [ "$1" = "brazos" ]; then
 		kern="Brazos"
+		export katalog2="2"
+		export premium="tak"
 	elif [ "$1" = "bulldozer" ]; then
 		kern="Bulldozer"
+		export katalog2="2"
+		export premium="tak"
 	elif [ "$1" = "piledriver" ]; then
 		kern="Piledriver"
+		export katalog2="2"
+		export premium="tak"
 	elif [ "$1" = "amd" ]; then
 		kern="Brazos - AMD Athlon II, Phenom II, Brazos, Bulldozer"
+		export katalog2=""
+		export premium="tak"
 	elif [ "$1" = "amd_pro" ]; then
 		kern="Brazos-PRO Piledriver, Steamroller"
+		export katalog2=""
+		export premium="tak"
 	elif [ "$1" = "i7" ]; then
 		kern="i7 - Intel Sandy Bridge, Ivy Bridge"
+		export katalog2=""
+		export premium="tak"
 	elif [ "$1" = "i7_pro" ]; then
 		kern="i7-PRO Haswell"
+		export katalog2=""
+		export premium="tak"
 	elif [ "$1" = "naglowki" ]; then
 		kern="$TEXT_MENU_INSTALATOR4"
 	elif [ "$1" = "lokalne" ]; then
@@ -92,14 +117,12 @@ else
 	if [ "$1" = "premium" ]; then
 		pliki="/opt/NeteXt73/kernel-premium"
 		ikona="linux-premium.png"
-		export katalog2="2"
 	elif [ "$1" = "old" ]; then
 		pliki="/opt/NeteXt73/kernel-premium_old"
 		ikona="linux-premium.png"
 	else
 		pliki="/opt/NeteXt73/kernel"
 		ikona="linux.png"
-		export katalog2=""
 	fi
 	if [ "$kern" = "" ]; then
 		yad --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/$ikona" \
@@ -201,6 +224,7 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 					rm ./index.html -f; rm $a -rf
 					mkdir $a; cd $a
 					#wywołanie funkcji pobierania odpowiednich wersji kerneli
+					
 					pobieranie_kerneli
 					if [ "$(grep $(md5sum linux-image*) $sumy_kontrolne)" != "" ] && [ "$(grep $(md5sum linux-headers*) $sumy_kontrolne)" != "" ]; then
 						echo "nie" > /tmp/netext73/ok.txt

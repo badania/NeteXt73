@@ -77,6 +77,9 @@ if [ "$1" = "kontakty" ]; then
 	res9=$(mktemp --tmpdir=/tmp/netext73 netext73_9.XXXXXXXX)
 	res10=$(mktemp --tmpdir=/tmp/netext73 netext73_10.XXXXXXXX)
 	res11=$(mktemp --tmpdir=/tmp/netext73 netext73_11.XXXXXXXX)
+	res12=$(mktemp --tmpdir=/tmp/netext73 netext73_12.XXXXXXXX)
+	res13=$(mktemp --tmpdir=/tmp/netext73 netext73_13.XXXXXXXX)
+	res14=$(mktemp --tmpdir=/tmp/netext73 netext73_14.XXXXXXXX)
 	yad --plug=$KEY --tabnum=1 --icons --image-on-top --single-click --item-width=$((150*$skala)) --read-dir=/opt/NeteXt73/kontakty &> $res1 &
 	yad --plug=$KEY --tabnum=2 --text-info --filename=/opt/NeteXt73/changelog &> $res2 &
 	yad --plug=$KEY --tabnum=3 --text-info --filename=/opt/NeteXt73/LICENSE &> $res3 &
@@ -84,17 +87,21 @@ if [ "$1" = "kontakty" ]; then
 	yad --plug=$KEY --tabnum=5 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep nvidia | grep -v -E "nvidia-settings.*|libnvidia-") --column "$TEXT_ZNITY1" --column "nvidia" &> $res5 &
 	yad --plug=$KEY --tabnum=6 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep k8 	  ) --column "$TEXT_ZNITY1" --column "kernel k8" &> $res6 &
 	yad --plug=$KEY --tabnum=7 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep atom	  ) --column "$TEXT_ZNITY1" --column "kernel atom" &> $res7 &
-	yad --plug=$KEY --tabnum=8 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep i7 	  | egrep -v pro ) --column "$TEXT_ZNITY1" --column "kernel i7" &> $res8 &
-	yad --plug=$KEY --tabnum=9 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep i7-pro ) --column "$TEXT_ZNITY1" --column "kernel i7-pro" &> $res9 &
-	yad --plug=$KEY --tabnum=10 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep brazos | egrep -v pro ) --column "$TEXT_ZNITY1" --column "kernel brazos" &> $res10 &
-	yad --plug=$KEY --tabnum=11 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep brazos-pro) --column "$TEXT_ZNITY1" --column "kernel brazos-pro" &> $res11 &
-
-
+	yad --plug=$KEY --tabnum=8 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep sandy) --column "$TEXT_ZNITY1" --column "kernel sandy" &> $res8 &
+	yad --plug=$KEY --tabnum=9 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep ivy) --column "$TEXT_ZNITY1" --column "kernel ivy" &> $res9 &
+	yad --plug=$KEY --tabnum=10 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep haswell) --column "$TEXT_ZNITY1" --column "kernel haswell" &> $res10 &
+	yad --plug=$KEY --tabnum=11 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep broadwell) --column "$TEXT_ZNITY1" --column "kernel broadwell" &> $res11 &
+	yad --plug=$KEY --tabnum=12 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep brazos | egrep -v pro ) --column "$TEXT_ZNITY1" --column "kernel brazos" &> $res12 &
+	yad --plug=$KEY --tabnum=13 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep bulldozer) --column "$TEXT_ZNITY1" --column "kernel bulldozer" &> $res13 &
+	yad --plug=$KEY --tabnum=14 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep piledriver) --column "$TEXT_ZNITY1" --column "kernel piledriver" &> $res14 &
+	
 	yad --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_KONTAKT_Z_AUTORAMI" --tab="$TEXT_CHANGELOG" --tab="$TEXT_LICENCJA" \
-	--tab="catalyst" --tab="nvidia" --tab="k8" --tab="atom" --tab="i7" --tab="i7-pro" --tab="brazos" --tab="brazos-pro"  \
+	--tab="catalyst" --tab="nvidia" --tab="k8" --tab="atom" \
+	--tab="sandy" --tab="ivy" --tab="haswell" --tab="broadwell" \
+	--tab="brazos" --tab="buldozer" --tab="piledriver" \
 	--window-icon="/opt/NeteXt73/ikony/mail.png" --on-top --width=$((860*$skala)) --height=$((350*$skala)) --button="$TEXT_ZAMKNIJ:1" --button="$TEXT_BUG:2"
 	klawisz=$?
-	rm /tmp/netext73/sumy/pliki.txt $res1 $res2 $res3 $res4 $res5 $res6 $res7 $res8 $res9 $res10 $res11 -f
+	rm /tmp/netext73/sumy/pliki.txt $res1 $res2 $res3 $res4 $res5 $res6 $res7 $res8 $res9 $res10 $res11 $res12 $res13 $res14 -f
 	if [ "$klawisz" = "2" ]; then
 		xdg-open "http://www.netext73.pl/2014/02/netext73-zgaszanie-bedow.html"
 	fi

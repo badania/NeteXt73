@@ -1,3 +1,9 @@
+netext73 (0.8.93) stable; urgency=medium
+
+  * dostosowanie okna netext73 do nowych kerneli
+
+ -- NetBit73 <netbit73@gmail.com>  Tue, 30 Jun 2015 18:39:28 +0200
+
 netext73 (0.8.92) stable; urgency=medium
 
   * dostosowanie makefile
