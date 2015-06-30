@@ -1,3 +1,9 @@
+netext73 (0.8.92) stable; urgency=medium
+
+  * dostosowanie makefile
+
+ -- NetBit73 <netbit73@gmail.com>  Tue, 30 Jun 2015 15:54:19 +0200
+
 netext73 (0.8.91) stable; urgency=medium
 
   * nparawa linkowania GCC i nowe linie kerneli premium

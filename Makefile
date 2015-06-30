@@ -15,6 +15,8 @@ GRAPHIC_KERNEL_DIR = kernel
 GRAPHIC_KERNEL_FILES = $(wildcard $(GRAPHIC_KERNEL_DIR)/*.desktop)
 GRAPHIC_KERNEL_PREMIUM_DIR = kernel-premium
 GRAPHIC_KERNEL_PREMIUM_FILES = $(wildcard $(GRAPHIC_KERNEL_PREMIUM_DIR)/*.desktop)
+GRAPHIC_KERNEL_PREMIUM_DIR_OLD = kernel-premium_old
+GRAPHIC_KERNEL_PREMIUM_FILES_OLD = $(wildcard $(GRAPHIC_KERNEL_PREMIUM_DIR_OLD)/*.desktop)
 GRAPHIC_BASE_DIR = ikony
 GRAPHIC_BASE_FILES = $(wildcard $(GRAPHIC_BASE_DIR)/*.png)
 CONTACTS_DIR = kontakty
@@ -31,6 +33,7 @@ install: install_desktopfiles \
 	 install_desktopicons \
 	 install_desktopfiles_kernel \
 	 install_desktopfiles_kernel_premium \
+	 install_desktopfiles_kernel_premium_old \
 	 install_contacts \
 	 install_menu \
 	 install_translations_files \
@@ -78,6 +81,10 @@ install_desktopfiles_kernel:
 install_desktopfiles_kernel_premium:
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_KERNEL_PREMIUM_DIR)/
 	$(INSTALL) 0755 $(GRAPHIC_KERNEL_PREMIUM_FILES) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_KERNEL_PREMIUM_DIR)
+
+install_desktopfiles_kernel_premium_old:
+	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_KERNEL_PREMIUM_DIR_OLD)/
+	$(INSTALL) 0755 $(GRAPHIC_KERNEL_PREMIUM_FILES_OLD) $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(GRAPHIC_KERNEL_PREMIUM_DIR_OLD)
 
 install_contacts:
 	$(MKDIR) -p $(DESTDIR)$(OPT_DIR)/$(PROG_NAME)/$(CONTACTS_DIR)/
