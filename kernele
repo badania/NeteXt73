@@ -40,18 +40,42 @@ source /opt/NeteXt73/procedury
 
 cd /tmp/netext73
 
-menu1="i7 - Intel Sandy Bridge, Ivy Bridge"
-menu1a="i7-PRO Haswell"
-menu2="Brazos - AMD Athlon II, Phenom II, Brazos, Bulldozer"
-menu2a="Brazos-PRO Piledriver, Steamroller"
-menu3=$TEXT_K8
-menu4="Atom - Intel Atom 64bit"
+#menu1="i7 - Intel Sandy Bridge, Ivy Bridge"
+#menu1a="i7-PRO Haswell"
+#menu2="Brazos - AMD Athlon II, Phenom II, Brazos, Bulldozer"
+#menu2a="Brazos-PRO Piledriver, Steamroller"
+#menu3=$TEXT_K8
+#menu4="Atom - Intel Atom 64bit"
+#menu5="Sandy Bridge"
+#menu6="Ivy Bridge"
+#menu7="Haswell"
+#menu8="Broadwell"
+#menu9="Brazos"
+#menu10="Bulldozer"
+#menu11="Piledriver"
 
 if [ -e ~/.netext73/kernel_automat ] && [ -e ~/.netext73/instalator_kerneli ] && [ "$(cat ~/.netext73/kernel_automat)" = "TRUE" ]; then
 	kern="$(cat ~/.netext73/instalator_kerneli)"
 else
 	if [ "$1" = "K8" ]; then
 		kern="K8 - od Intel C2D, AMD K8"
+	elif [ "$1" = "atom" ]; then
+		kern="Atom - Intel Atom 64bit"
+	elif [ "$1" = "sandy" ]; then
+		kern="Sandy Bridge"
+	elif [ "$1" = "ivy" ]; then
+		kern="Ivy Bridge"
+	elif [ "$1" = "haswell" ]; then
+		kern="Haswell"
+		export katalog2="2"
+	elif [ "$1" = "broadwell" ]; then
+		kern="Broadwell"
+	elif [ "$1" = "brazos" ]; then
+		kern="Brazos"
+	elif [ "$1" = "bulldozer" ]; then
+		kern="Bulldozer"
+	elif [ "$1" = "piledriver" ]; then
+		kern="Piledriver"
 	elif [ "$1" = "amd" ]; then
 		kern="Brazos - AMD Athlon II, Phenom II, Brazos, Bulldozer"
 	elif [ "$1" = "amd_pro" ]; then
@@ -60,8 +84,6 @@ else
 		kern="i7 - Intel Sandy Bridge, Ivy Bridge"
 	elif [ "$1" = "i7_pro" ]; then
 		kern="i7-PRO Haswell"
-	elif [ "$1" = "atom" ]; then
-		kern="Atom - Intel Atom 64bit"
 	elif [ "$1" = "naglowki" ]; then
 		kern="$TEXT_MENU_INSTALATOR4"
 	elif [ "$1" = "lokalne" ]; then
@@ -70,13 +92,18 @@ else
 	if [ "$1" = "premium" ]; then
 		pliki="/opt/NeteXt73/kernel-premium"
 		ikona="linux-premium.png"
+		export katalog2="2"
+	elif [ "$1" = "old" ]; then
+		pliki="/opt/NeteXt73/kernel-premium_old"
+		ikona="linux-premium.png"
 	else
 		pliki="/opt/NeteXt73/kernel"
 		ikona="linux.png"
+		export katalog2=""
 	fi
 	if [ "$kern" = "" ]; then
 		yad --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/$ikona" \
-		--image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="$((200*$skala))" --read-dir="$pliki" --width="$((860*$skala))" --height="$((300*$skala))" \
+		--image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="$((200*$skala))" --read-dir="$pliki" --width="$((860*$skala))" --height="$((340*$skala))" \
 		--title="$nazwa_skryptu " --button="$TEXT_MENU_INSTALATOR5:4"  --button="$TEXT_ZAMKNIJ:1" --single-click
 		klawisz=$?   
 	fi
@@ -164,7 +191,9 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 			fi
 		fi
 	#instalacja kerneli ext73
-	elif [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] || [ "$(echo $kern | grep 'Intel C2D, AMD K8')" != "" ] && [ "$blad" != "1" ]; then
+	
+	#elif [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] || [ "$(echo $kern | grep 'Intel C2D, AMD K8')" != "" ] && [ "$blad" != "1" ]; then
+	elif [ "$kern" != "" ] && [ "$blad" != "1" ]; then
 		if [ "$rodzaj" != "" ]; then
 			lista_kerneli
 			if [ "$klawisz" = "0" ] && [ "$blad" != "1" ] ; then

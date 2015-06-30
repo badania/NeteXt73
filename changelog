@@ -1,6 +1,11 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.91
+-	poprawa linkowania GCC
+-	zmiana instalatora premium
+-	nowe linie kerneli premium
+-	przeniesienie starych kerneli premium do nowego okna
 v0.8.90
 -	wyłączenie sprawdzania sensorów podczas instalacji programu
 v0.8.89

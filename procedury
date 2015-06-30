@@ -120,7 +120,7 @@ if [ -e ~/.netext73/kernel_premium ]; then
 	fi
 fi
 
-#sumy sumy kontrolne
+#sumy sumy kontrolneexport katalog2="2"
 export sumy_kontrolne='/tmp/netext73/sumy/sumy_kontrolne.txt'
 export test_serwera='/tmp/netext73/sumy/test_serwera.txt'
 export adres_sum_kontrolnych='http://dl.dropboxusercontent.com/u/2936246/weryfikacja/sumy.txt'
@@ -254,8 +254,8 @@ echo "sudo apt-get update"
 echo "sudo apt-get install gcc-5 -y"
 echo "sudo apt-get dist-upgrade -y"
 echo "sudo ln -sf /usr/bin/gcc-5 /usr/bin/gcc"
-echo "sudo ln -sf /usr/bin/bin/gcc-ar-5 /usr/bin/gcc-ar"
-echo "sudo ln -sf /usr/bin/bin/cpp-5 /usr/bin/cpp"
+echo "sudo ln -sf /usr/bin/gcc-ar-5 /usr/bin/gcc-ar"
+echo "sudo ln -sf /usr/bin/cpp-5 /usr/bin/cpp"
 echo "fi"
 
 
@@ -812,16 +812,17 @@ xterm -T instalator -e bash -c "sudo bash instaluj.sh && rm instaluj.sh -f ;tput
 lista_kerneli(){
 if [ "$1" = "update" ]; then
 	if [ "$kernel_premium" = "tak" ] ; then
-		wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/ -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie
+		wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium2/ -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie
 	else
 		wget $adres_glowny/kernele/ -O kernel.txt | wget https://www.kernel.org/ -O stable.txt 2>&1 | pobieranie
 	fi
 else
+	#tu zmienić
 	echo $kern > ~/.netext73/instalator_kerneli #zapamiętanie wybranego kernela
 	if [ "$(echo $kern | grep i7)" != "" ] || [ "$(echo $kern | grep Brazos)" != "" ]; then
 		#adres kerneli premium
 		if [ "$kernel_premium" = "tak" ]; then
-			strona="$adres_glowny/kernele_premium/"
+			strona="$adres_glowny/kernele_premium2/"
 		else
 			str=""
 			##
@@ -834,7 +835,7 @@ else
 					if [ $? = 0 ]; then
 						echo $strona > ~/.netext73/kernel_premium
 						if [ "$strona" != "" ]; then
-							strona="$adres_glowny/kernele_premium/"
+							strona="$adres_glowny/kernele_premium2/"
 							export US1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 1) 
 							export PASS1=$(cat ~/.netext73/kernel_premium | cut -d '@' -f 3)
 							kernel_premium="tak"
@@ -843,7 +844,7 @@ else
 				fi
 			fi
 		fi
-		rm index.html -f; wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium/ 2>&1 | pobieranie 
+		rm index.html -f; wget --user=$US1 --password=$PASS1  $adres_glowny/kernele_premium2/ 2>&1 | pobieranie 
 	else
 		strona="$adres_glowny/kernele/"
 		rm index.html -f; wget $strona 2>&1 | pobieranie 
