@@ -69,12 +69,13 @@ elif [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINS
 		#usuwanie kerneli
 		if [ "$usun" = "$TEXT_MENU_DEINSTALATOR1" ]; then
 			#generowanie listy na podstawie plików linux-image
-			dpkg -l | grep 'linux-image*'  | grep -v -E "linux-image-extra*|linux-image-generic" | awk '{print $2}'| grep -x -v "linux-image-$(uname -r)" > /tmp/netext73/lista_kerneli.txt
+			dpkg -l | grep 'linux-image*'  | grep 'ii' | grep -v -E "linux-image-extra*|linux-image-generic" | awk '{print $2}'| grep -x -v "linux-image-$(uname -r)" > /tmp/netext73/lista_kerneli.txt
 		#usuwanie kerneli expert
 		elif [  "$usun" = "$TEXT_MENU_DEINSTALATOR2" ]; then
 			#generowanie listy na podstawie plików linux-image oraz linux-headers
-			dpkg -l | grep 'linux-image'   | awk '{print $2}' | grep -x -v "linux-image-$(uname -r)" > /tmp/netext73/lista_kerneli.txt
-			dpkg -l | grep 'linux-headers'  | awk '{print $2}' | grep -x -v "linux-headers-$(uname -r)" >> /tmp/netext73/lista_kerneli.txt
+			dpkg -l | grep 'linux-image'   | grep 'ii' | awk '{print $2}' | grep -x -v "linux-image-$(uname -r)" > /tmp/netext73/lista_kerneli.txt
+			dpkg -l | grep 'linux-headers'  | grep 'ii' | awk '{print $2}' | grep -x -v "linux-headers-$(uname -r)" >> /tmp/netext73/lista_kerneli.txt
+			#dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | grep -x -v "linux-*-$(uname -r)" > /tmp/netext73/lista_kerneli.txt
 		fi
 		if [ "$(cat lista_kerneli.txt)" != "" ]; then
 		a=$(yad --center --height=$((440*$skala)) --width=$((560*$skala)) --window-icon="/opt/NeteXt73/ikony/delete.png" --text="$TEXT_DEINSTALATOR4  <span color=\"$kolor_textu\"><b> linux-image-$(uname -r) </b></span>,\n$TEXT_DEINSTALATOR5\n" --title="$TEXT_MENU_DEINSTALATOR1" --button="gtk-ok:0" --button="$TEXT_POWROT:1" --checklist --list  --column="$TEXT_ZAZNACZ" --column="$TEXT_DEINSTALATOR6"  $(sed -e '/^[^#]/s:^:FALSE :' /tmp/netext73/lista_kerneli.txt ))
@@ -82,15 +83,21 @@ elif [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINS
 				if [ "$a" != "" ]; then
 					if [ "$usun" = "$TEXT_MENU_DEINSTALATOR1" ]; then
 
-						#spradzanie czy są pliki linux-headers na podstawie linux-images
-						echo $a > /tmp/netext73/lista_kerneli.txt; cat /tmp/netext73/lista_kerneli.txt | sed -e "s/-generic//g" -e "s/linux-image/linux-headers/g"  >> /tmp/netext73/lista_kerneli.txt
-						cat /tmp/netext73/lista_kerneli.txt | sed 's/TRUE//g' | tr '|' '\n' > /tmp/netext73/lista.txt
+						#spradzanie czy są pliki linux-headers na podstawie linux-image
+						echo $a > /tmp/netext73/lista_kerneli.txt
+						cat /tmp/netext73/lista_kerneli.txt | sed -e "s/-generic//g" -e "s/linux-image/linux-headers/g"  >> /tmp/netext73/lista_kerneli1.txt
+						cat /tmp/netext73/lista_kerneli.txt | sed "s/linux-image/linux-headers/g"  >> /tmp/netext73/lista_kerneli2.txt
+						cat /tmp/netext73/lista_kerneli.txt | sed "s/linux-image/linux-signed-image/g"  >> /tmp/netext73/lista_kerneli3.txt
+						cat /tmp/netext73/lista_kerneli.txt | sed "s/linux-image/linux-image-extra/g"  >> /tmp/netext73/lista_kerneli4.txt
+						cat /tmp/netext73/lista_kerneli.txt /tmp/netext73/lista_kerneli1.txt /tmp/netext73/lista_kerneli3.txt /tmp/netext73/lista_kerneli3.txt /tmp/netext73/lista_kerneli4.txt > /tmp/netext73/lista_kerneli5.txt
+						cat /tmp/netext73/lista_kerneli5.txt | sed 's/TRUE//g' | tr '|' '\n' | sed '/^$/d'| sort | uniq > /tmp/netext73/lista.txt
 						for SOFT in $(cat /tmp/netext73/lista.txt)
 						do
-							if [ "$(dpkg -l $SOFT | grep 'ii' | awk '{print $1}'| head -n1)" = "ii" ]; then
-								echo $SOFT >> /tmp/netext73/kasuj.txt
+							if [ "$(dpkg -l |grep $SOFT | grep 'ii' | awk '{print $1}'| head -n1)" = "ii" ] ||[ "$(dpkg -l |grep $SOFT | grep 'rc' | awk '{print $1}'| head -n1)" = "rc" ] ; then
+								echo $SOFT >> /tmp/netext73/kasuj2.txt
 							fi
 						done
+						cat /tmp/netext73/kasuj2.txt | sort | uniq > /tmp/netext73/kasuj.txt
 					else
 						echo $a > /tmp/netext73/lista_kerneli.txt; cat /tmp/netext73/lista_kerneli.txt | tr '|' '\n' > kasuj.txt
 					fi

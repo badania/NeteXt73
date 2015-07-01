@@ -791,7 +791,7 @@ usun_kernel(){
 echo "echo \"$TEXT_KERNEL1 $(cat /tmp/netext73/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ' )\""
 echo "sudo apt-get purge $(cat /tmp/netext73/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ')"
 echo "sudo update-grub"
-echo "if [ \"$(dpkg -l | grep '^rc' | awk '{print $2}' | head -n1)\" != \"\" ]; then sudo dpkg -l | grep '^rc' | awk '{print \$2}' | xargs sudo dpkg --purge; fi"
+#echo "if [ \"$(dpkg -l | grep '^rc' | awk '{print $2}' | head -n1)\" != \"\" ]; then sudo dpkg -l | grep '^rc' | awk '{print \$2}' | xargs sudo dpkg --purge; fi"
 echo "rm /tmp/netext73/*.txt -f; rm /tmp/netext73/*.sh -f"
 }
 

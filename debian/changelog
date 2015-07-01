@@ -1,3 +1,9 @@
+netext73 (0.8.94) stable; urgency=medium
+
+  * zmiana deinstalatora kerneli
+
+ -- NetBit73 <netbit73@gmail.com>  Wed, 01 Jul 2015 10:42:58 +0200
+
 netext73 (0.8.93) stable; urgency=medium
 
   * dostosowanie okna netext73 do nowych kerneli
