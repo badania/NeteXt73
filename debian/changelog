@@ -1,3 +1,9 @@
+netext73 (0.8.95) stable; urgency=medium
+
+  * przyspieszenie generowania listy kerneli do usunięcia
+
+ -- NetBit73 <netbit73@gmail.com>  Wed, 01 Jul 2015 11:01:23 +0200
+
 netext73 (0.8.94) stable; urgency=medium
 
   * zmiana deinstalatora kerneli

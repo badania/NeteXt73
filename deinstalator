@@ -91,9 +91,10 @@ elif [ "$usun" =  "$TEXT_MENU_DEINSTALATOR1" ] || [ "$usun" =  "$TEXT_MENU_DEINS
 						cat /tmp/netext73/lista_kerneli.txt | sed "s/linux-image/linux-image-extra/g"  >> /tmp/netext73/lista_kerneli4.txt
 						cat /tmp/netext73/lista_kerneli.txt /tmp/netext73/lista_kerneli1.txt /tmp/netext73/lista_kerneli3.txt /tmp/netext73/lista_kerneli3.txt /tmp/netext73/lista_kerneli4.txt > /tmp/netext73/lista_kerneli5.txt
 						cat /tmp/netext73/lista_kerneli5.txt | sed 's/TRUE//g' | tr '|' '\n' | sed '/^$/d'| sort | uniq > /tmp/netext73/lista.txt
+						dpkg -l | grep linux > /tmp/netext73/lista_zainstalowanych.txt
 						for SOFT in $(cat /tmp/netext73/lista.txt)
 						do
-							if [ "$(dpkg -l |grep $SOFT | grep 'ii' | awk '{print $1}'| head -n1)" = "ii" ] ||[ "$(dpkg -l |grep $SOFT | grep 'rc' | awk '{print $1}'| head -n1)" = "rc" ] ; then
+							if [ "$(cat /tmp/netext73/lista_zainstalowanych.txt |grep $SOFT | grep 'ii' | awk '{print $1}'| head -n1)" = "ii" ] ||[ "$(cat /tmp/netext73/lista_zainstalowanych.txt |grep $SOFT | grep 'rc' | awk '{print $1}'| head -n1)" = "rc" ] ; then
 								echo $SOFT >> /tmp/netext73/kasuj2.txt
 							fi
 						done
