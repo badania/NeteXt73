@@ -179,7 +179,7 @@ yad --center --width=$((560*$skala)) --title="$nazwa_skryptu" --text="$TEXT_POBI
 #pobieranie plików do instalacji kerneli
 pobieranie_kerneli(){
 if [ "$kern" = "ppa mainline" ];then
-	wget $strona/$a #2>&1  | pobieranie 
+	wget $strona/$a #2>&1  | pobieranie
 	if [ "$(grep extra $a)" != "" ]; then
 		yad_wget $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep "all" | grep "linux-headers" | grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-headers"| grep -v -E "latency") $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image-[0-9]"| grep -v -E "latency")  $strona/$a/$(grep "href=" ./$a | cut -d '"' -f 8 | grep $bit2 | grep "linux-image-extra" | grep "linux-image"| grep -v -E "latency")
 	else
@@ -197,7 +197,7 @@ rm ./index.html -f
 please_wait(){
 if [ "$1" = "kill" ]; then
 	ps aux | awk '$11" "$12 == "python /opt/NeteXt73/czekaj.py" { system("kill " $2) }'
-else 
+else
 	python /opt/NeteXt73/czekaj.py &
 fi
 }
@@ -349,7 +349,7 @@ if [ "$apmik" = "stary" ]; then
 	#przegrywanie udev dla jasności
 	sudo cp /tmp/apm-ext73/60-brightness-udev-apm-ext73.rules /etc/udev/rules.d/
 	sudo chown root:root /etc/udev/rules.d/*
-	
+
 	if [ -e ~/.netext73/apm_status ]; then
 		if [ "$(ls /etc/pm/power.d/* | grep $(cat  ~/.netext73/apm_status | head -n 1))" != "" ]; then #zaznaczanie aktywnego APM wg configu
 			sudo chmod a+x $(ls /etc/pm/power.d/* | grep $(cat  ~/.netext73/apm_status | head -n 1)) 
@@ -366,7 +366,7 @@ elif [ "$apmik" = "nowy" ]; then
 	sudo cp /tmp/apm-ext73/apm_resume /etc/apm-ext73/
 	sudo cp /tmp/apm-ext73/wol /etc/apm-ext73/
 	sudo cp /tmp/apm-ext73/xfs_buffer /etc/apm-ext73/
-	sudo chown root:root /etc/apm-ext73/*	
+	sudo chown root:root /etc/apm-ext73/*
 	sudo cp /tmp/apm-ext73/*.rules /etc/udev/rules.d/
 	sudo chown root:root /etc/udev/rules.d/*
 	#APM systemd
@@ -377,7 +377,7 @@ elif [ "$apmik" = "nowy" ]; then
 	sudo chown root:root /etc/systemd/system/hybrid-sleep.target.wants/*
 	sudo chown root:root /etc/systemd/system/suspend.target.wants/*
 	#udev jeżeli notebook
-	if [ "$(ls /sys/class/power_supply/*)" != "" ]; then 
+	if [ "$(ls /sys/class/power_supply/*)" != "" ]; then
 		sudo cp /tmp/apm-ext73/udev-ext73.tar.gz -C /etc/udev/rules.d/
 		sudo chown root:root /etc/udev/rules.d/*
 		katalog="/etc/udev/rules.d/50-udev-apm-ext73.rules"
@@ -434,10 +434,10 @@ rm -Rf /tmp/apm-ext73
 apm_zmiana(){
 if [ "$apmik" = "stary" ]; then
 	sudo chmod a-x /etc/pm/power.d/*
-	sudo chmod a+x /etc/pm/power.d/$2 
+	sudo chmod a+x /etc/pm/power.d/$2
 	sudo chown root:root /etc/pm/power.d/*
 elif [ "$apmik" = "nowy" ]; then
-	if [ "$(ls /sys/class/power_supply/*)" != "" ]; then 
+	if [ "$(ls /sys/class/power_supply/*)" != "" ]; then
 		katalog="/etc/udev/rules.d/50-udev-apm-ext73.rules"
 	else
 	#dodanie apm fixa do rc.local
@@ -526,7 +526,7 @@ fi
 apm_zmiana_config(){
 #if [ "$apmik" = "stary" ]; then
 #	sudo chmod a-x /etc/pm/power.d/*
-#	sudo chmod a+x /etc/pm/power.d/$2 
+#	sudo chmod a+x /etc/pm/power.d/$2
 #	sudo chown root:root /etc/pm/power.d/*
 #elif [ "$apmik" = "nowy" ]; then
 #	sudo sed -i "s/advanced_power_management_by_ext73_* /$1/g" /etc/udev/rules.d/50-udev-apm-ext73.rules
@@ -672,19 +672,19 @@ stan_apm_config(){
 	#sprawdzenie wifi N
 	if [ -e /etc/modprobe.d/wifin.conf ] ;then
 		export wifin="FALSE"
-	else 
+	else
 		export wifin="TRUE"
 	fi
 	#sprawdzenie intel turbo bateria
 	if [ "$(grep 'echo 1 > $batintel' $katalog_apm)" != "" ];then
 		export turbooff="FALSE"
-	else 
+	else
 		export turbooff="TRUE"
 	fi
 	#sprawdzenie intel turbo AC
 	if [ "$(grep 'echo 1 > $acintel' $katalog_apm)" != "" ];then
 		export turboacoff="FALSE"
-	else 
+	else
 		export turboacoff="TRUE"
 	fi
 	#sprawdzenie BFQ/CFQ/deadline HDD
@@ -710,13 +710,13 @@ stan_apm_config(){
 				export bfqfix="deadline"; export bfqfix_menu="deadline!cfq"
 			fi
 		fi
-		
+
 		#sprawdzenie noop/deadline SSD
 		if [ "$(grep 'noop' $katalog_apm | grep '#SSD' )" != "" ] ;then
 			export ssdfix="noop"; export ssdfix_menu="noop!deadline"
 		elif [ "$(grep 'deadline' $katalog_apm | grep '#SSD')" != "" ]; then
 			export ssdfix="deadline"; export ssdfix_menu="deadline!noop"
-		fi	
+		fi
 	fi
 	#sprawdzanie hibernacji
 	if [ -e /var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla ]; then
@@ -734,9 +734,9 @@ stan_apm_config(){
 	export turbooff_przed=$turbooff
 	export turboacoff_przed=$turboacoff
 	export hibernacja_menu_przed=$hibernacja_menu
-	
-	#wysłanie danych do configu 
-	if [ "$1" = "czeki" ]; then 
+
+	#wysłanie danych do configu
+	if [ "$1" = "czeki" ]; then
 		if [ "$apmik" = "stary" ]; then
 			ls /etc/pm/power.d/ -Fl | grep '*' | awk '{print $9}' | sed -e 's/*//' -e 's/advanced_power_management_by_ext73_//' -e 's/_v.*//' > ~/.netext73/apm_status
 		elif [ "$apmik" = "nowy" ]; then
@@ -769,8 +769,8 @@ echo "sudo sed -i '/apm_status_fix/d' /etc/rc.local"
 echo "sudo rm -fr /etc/pm/power.d/advanced_power_management_by_ext73* /usr/lib/pm-utils/power.d/readahead"
 echo "sudo chmod a+x /usr/lib/pm-utils/power.d/*"
 echo "sudo chmod a+x /etc/apm/event.d/20hdparm"
-echo "sudo chown root:root /usr/lib/pm-utils/power.d/*" 
-echo "sudo chown root:root /etc/apm/event.d/20hdparm" 
+echo "sudo chown root:root /usr/lib/pm-utils/power.d/*"
+echo "sudo chown root:root /etc/apm/event.d/20hdparm"
 #przywrócenie powerbtn
 echo "if [ -e /etc/acpi/powerbtn.sh.bak ]; then"
 echo "sudo mv /etc/acpi/powerbtn.sh.bak /etc/acpi/powerbtn.sh -f"
@@ -788,7 +788,8 @@ echo "fi"
 }
 
 usun_kernel(){
-echo "echo \"$TEXT_KERNEL1 $(cat /tmp/netext73/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ' )\""
+echo "echo \"$TEXT_KERNEL1\""
+echo "echo \"$(cat /tmp/netext73/kasuj.txt | sed 's/TRUE//g' )\""
 echo "sudo apt-get purge $(cat /tmp/netext73/kasuj.txt | sed 's/TRUE//g' | tr '\n' ' ')"
 echo "sudo update-grub"
 #echo "if [ \"$(dpkg -l | grep '^rc' | awk '{print $2}' | head -n1)\" != \"\" ]; then sudo dpkg -l | grep '^rc' | awk '{print \$2}' | xargs sudo dpkg --purge; fi"

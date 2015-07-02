@@ -1,3 +1,9 @@
+netext73 (0.8.96) stable; urgency=medium
+
+  * zmiana wyglądu listy usuwanych kerneli
+
+ -- NetBit73 <netbit73@gmail.com>  Thu, 02 Jul 2015 14:43:58 +0200
+
 netext73 (0.8.95) stable; urgency=medium
 
   * przyspieszenie generowania listy kerneli do usunięcia
