@@ -1,8 +1,10 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.9.00
+-	zatwierdzenie zmian
 v0.8.97
--	poprawki w deintalatorze kerneli
+-	poprawki w deinstalatorze kerneli
 -	dostosowanie instalatora kerneli do nowych nazw
 v0.8.96
 -	zmiana wyglądu listy usuwanych kerneli
@@ -43,7 +45,7 @@ v0.8.82
 -	poprawki kodu
 v0.8.81
 -	zmiana skryptu czas.py na czekaj.py
--	dodanie zależności do skrypu pythona
+-	dodanie zależności do skryptu pythona
 -	modyfikacja makefile
 v0.8.80
 -	dodanie do zależności gcc-5
