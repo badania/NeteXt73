@@ -66,11 +66,11 @@ else
 		export katalog2=""
 		export premium="nie"
 	elif [ "$1" = "sandy" ]; then
-		kern="Sandy Bridge"
+		kern="SandyBridge"
 		export katalog2="2"
 		export premium="tak"
 	elif [ "$1" = "ivy" ]; then
-		kern="Ivy Bridge"
+		kern="IvyBridge"
 		export katalog2="2"
 		export premium="tak"
 	elif [ "$1" = "haswell" ]; then

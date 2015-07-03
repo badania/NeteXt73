@@ -1,6 +1,9 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.8.97
+-	poprawki w deintalatorze kerneli
+-	dostosowanie instalatora kerneli do nowych nazw
 v0.8.96
 -	zmiana wyglądu listy usuwanych kerneli
 -	deinstalator kerneli tylko do kerneli ext73 z uwagi na zależności
