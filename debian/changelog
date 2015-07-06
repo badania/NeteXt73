@@ -1,3 +1,9 @@
+netext73 (0.9.01) stable; urgency=medium
+
+  * modyfikacja sekcji GRUB usunięcie spejalnych ustawień dla iCorów
+
+ -- NetBit73 <netbit73@gmail.com>  Mon, 06 Jul 2015 10:12:48 +0200
+
 netext73 (0.9.00) stable; urgency=medium
 
   * zatwierdzenie zmian
