@@ -152,7 +152,7 @@ GenericName[vi]=i7-PRO Haswell
 GenericName[zh_CN]=i7-PRO Haswell
 GenericName[zh_TW]=i7-PRO Haswell
 
-Exec=/opt/NeteXt73/./kernele i7_pro
+Exec=/opt/NeteXt73/./kernele i7-pro
 Icon=/opt/NeteXt73/ikony/i7.png
 Terminal=false
 StartupNotify=true

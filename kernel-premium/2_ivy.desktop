@@ -152,7 +152,7 @@ GenericName[vi]=Ivy Bridge
 GenericName[zh_CN]=Ivy Bridge
 GenericName[zh_TW]=Ivy Bridge
 
-Exec=/opt/NeteXt73/./kernele ivy
+Exec=/opt/NeteXt73/./kernele ivybridge
 Icon=/opt/NeteXt73/ikony/i7.png
 Terminal=false
 StartupNotify=true

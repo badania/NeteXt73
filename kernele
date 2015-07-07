@@ -53,41 +53,22 @@ cd /tmp/netext73
 
 if [ -e ~/.netext73/kernel_automat ] && [ -e ~/.netext73/instalator_kerneli ] && [ "$(cat ~/.netext73/kernel_automat)" = "TRUE" ]; then
 	kern="$(cat ~/.netext73/instalator_kerneli)"
+	if [ "$kern" = "sandybridge" ] || [ "$kern" = "ivybridge" ] || [ "$kern" = "haswell" ] || [ "$kern" = "broadwell" ] || [ "$kern" = "brazos" ] || [ "$kern" = "bulldozer" ] || [ "$kern" = "piledriver" ]; then
+		#kern="$1"
+		export katalog2="2"
+		export premium="tak"
+	else
+		#kern="$1"
+		export katalog2=""
+		export premium="nie"
+	fi
 else
-	if [ "$1" = "K8" ]; then
-		kern="K8 - od Intel C2D, AMD K8"
+	if [ "$1" = "K8" ] || [ "$1" = "atom" ]; then
+		kern="$1"
 		export katalog2=""
 		export premium="nie"
-	elif [ "$1" = "atom" ]; then
-		kern="Atom - Intel Atom 64bit"
-		export katalog2=""
-		export premium="nie"
-	elif [ "$1" = "sandy" ]; then
-		kern="SandyBridge"
-		export katalog2="2"
-		export premium="tak"
-	elif [ "$1" = "ivy" ]; then
-		kern="IvyBridge"
-		export katalog2="2"
-		export premium="tak"
-	elif [ "$1" = "haswell" ]; then
-		kern="Haswell"
-		export katalog2="2"
-		export premium="tak"
-	elif [ "$1" = "broadwell" ]; then
-		kern="Broadwell"
-		export katalog2="2"
-		export premium="tak"
-	elif [ "$1" = "brazos" ]; then
-		kern="Brazos"
-		export katalog2="2"
-		export premium="tak"
-	elif [ "$1" = "bulldozer" ]; then
-		kern="Bulldozer"
-		export katalog2="2"
-		export premium="tak"
-	elif [ "$1" = "piledriver" ]; then
-		kern="Piledriver"
+	elif [ "$1" = "sandybridge" ] || [ "$1" = "ivybridge" ] || [ "$1" = "haswell" ] || [ "$1" = "broadwell" ] || [ "$1" = "brazos" ] || [ "$1" = "bulldozer" ] || [ "$1" = "piledriver" ]; then
+		kern="$1"
 		export katalog2="2"
 		export premium="tak"
 	elif [ "$1" = "amd" ]; then
@@ -98,12 +79,8 @@ else
 		kern="Brazos-PRO Piledriver, Steamroller"
 		export katalog2=""
 		export premium="tak"
-	elif [ "$1" = "i7" ]; then
-		kern="i7 - Intel Sandy Bridge, Ivy Bridge"
-		export katalog2=""
-		export premium="tak"
-	elif [ "$1" = "i7_pro" ]; then
-		kern="i7-PRO Haswell"
+	elif [ "$1" = "i7" ] || [ "$1" = "i7-pro" ]; then
+		kern="$1"
 		export katalog2=""
 		export premium="tak"
 	elif [ "$1" = "naglowki" ]; then
