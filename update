@@ -181,7 +181,7 @@ if [ "$ilosc_aktualizacji" -gt "1" ]; then
       menu="$TEXT_UPDATE8"
 fi
 
-a=$(yad --center --title="$nazwa_skryptu" --width=$((610*$skala)) --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext.png" --form \
+a=$(yad --center --title="$nazwa_skryptu" --width=$((610*$skala)) --window-icon="/opt/NeteXt73/ikony/update.png" --image="/opt/NeteXt73/ikony/update.png" --form \
 --field="Firmware/microcode:RO" "$firm" \
 --field="Kernel $twoj_kernel:RO" "$kern" \
 --field="APM $twoj_apm:RO" "$apm" \

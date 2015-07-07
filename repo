@@ -267,7 +267,7 @@ if [ "$1" = "GPG" ]; then
 #Przywróć repozytorium z kopii zapasowej
       
 	menu="$a3!$a4!$a5"
-	gpg=$(yad --center --title="$nazwa_skryptu   " --window-icon="/opt/NeteXt73/ikony/backuprepo.png" --image="/opt/NeteXt73/ikony/pgp.png" --text="<span color=\"$kolor_textu\"><b>$TEXT_BACKUP1</b></span>"  --form --field=" :CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+	gpg=$(yad --center --title="$nazwa_skryptu   " --window-icon="/opt/NeteXt73/ikony/pgp.png" --image="/opt/NeteXt73/ikony/pgp.png" --text="<span color=\"$kolor_textu\"><b>$TEXT_BACKUP1</b></span>"  --form --field=" :CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 	klawisz=$?; gpg=$(echo $gpg | cut -d "|" -f 1)
 	if [ "$klawisz" = "0" ]; then
 		
@@ -300,7 +300,7 @@ if [ "$1" = "GPG" ]; then
 				petla="tak"
 				while [ $petla = "tak" ]; do
 				IFS=]
-				wybor=$(yad --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/klucze.png" --image="/opt/NeteXt73/ikony/klucze.png" --height=$((420*$skala)) --width=$((690*$skala))  --column="" --column="$TEXT_KLUCZ" --column="$TEXT_DOSTAWCA_KLUCZA" --text="<span color=\"$kolor_textu\">$TEXT_ZAZNACZ_KLUCZE</span>" --list --checklist $(cat lista.txt)  --separator="]" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
+				wybor=$(yad --center --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/key.png" --image="/opt/NeteXt73/ikony/key.png" --height=$((420*$skala)) --width=$((690*$skala))  --column="" --column="$TEXT_KLUCZ" --column="$TEXT_DOSTAWCA_KLUCZA" --text="<span color=\"$kolor_textu\">$TEXT_ZAZNACZ_KLUCZE</span>" --list --checklist $(cat lista.txt)  --separator="]" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 				klawisz=$?
 				if [ "$klawisz" = "0" ]; then 
 					if [ "$(echo $wybor)" != "" ]; then
