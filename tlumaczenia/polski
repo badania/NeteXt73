@@ -3,9 +3,6 @@
 ## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
 ## przygotowanie skryptów optymalizacyjnych e X t 7 3
 ## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
-## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
-## tłumaczenie na język niemiecki: Karolina Franieczek
-## tłumaczenie na język francuski: Michał Radwański (enedil)
 ## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
 #
 #                   _   _      _      __  ___   _ _____ _____
@@ -91,13 +88,13 @@ export TEXT_ZMIEN_NA="Zmień na:"
 
 #########################################################################################################################################################################
 #tlumaczenia_config
-export lang1="polski!english!français"
+export lang1="polski!english" 
 export TEXT_CONFIG1="Konfigurator NeteXt73"
 export TEXT_CONFIG2="Menu konfiguracyjne NeteXt73"
 export TEXT_CONFIG3="Kolor wyróżnionych napisów"
 export TEXT_CONFIG4="Kod dostępu do kerneli premium:"
 export TEXT_CONFIG5="Adres wersji testing:"
-export TEXT_CONFIG6="Język programu:"
+export TEXT_CONFIG6="Język programu/Language:"
 export TEXT_CONFIG7="Skasuj pliki konfiguracyjne:"
 export TEXT_CONFIG8="Pliki konfiguracyjne skryptu NeteXt73 zostały skasowane"
 export TEXT_CONFIG9="Profil APM:"

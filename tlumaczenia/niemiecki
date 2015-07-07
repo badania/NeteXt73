@@ -3,9 +3,7 @@
 ## przygotowanie kerneli e X t 7 3 - ext73@wp.pl
 ## przygotowanie skryptów optymalizacyjnych e X t 7 3
 ## autor skryptu NeteXt'73 - NetBit73 - netbit73@gmail.com
-## tłumaczenie na język angielski: Tomasz Przybył (FadeMind)
 ## tłumaczenie na język niemiecki: Karolina Franieczek
-## tłumaczenie na język francuski: Michał Radwański (enedil)
 ## Licencja: GPL v3: https://www.gnu.org/licenses/gpl.txt
 #
 #                   _   _      _      __  ___   _ _____ _____
@@ -61,7 +59,7 @@ export TEXT_INSTALACJA="\n\nABGESCHLOSSEN!!! - Enter-Taste drücken"
 }
 #########################################################################################################################################################################
 tlumaczenia_config(){
-export lang1="polski!english!français"
+export lang1="polski!english"
 export TEXT_CONFIG1="NeteXt73-Konfigurator"
 export TEXT_CONFIG2="NeteXt73-Konfigurationsmenü"
 export TEXT_CONFIG3="Farbe der markierten Aufschriften"
