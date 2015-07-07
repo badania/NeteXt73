@@ -116,10 +116,14 @@ if [ -e ~/.netext73/kernel_premium ] && [ -e ~/.netext73/vsftpd/vsftpd ] && [ -e
 else
 	klawisze_aktywne="--button="$TEXT_REBOOT:2" --button="$TEXT_ZAMKNIJ:1" --single-click"
 fi
-
-yad --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="$((190*$skala))" --read-dir="/opt/NeteXt73/desktopfiles" --width="$((830*$skala))" --height="$((700*$skala))" --title="- $nazwa_skryptu -" $klawisze_aktywne
+if [ "$skala" = "2" ];then
+	wysokosc="800"
+else
+	wysokosc="670"
+fi
+yad --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image-on-top --item-width="$((190*$skala))" --read-dir="/opt/NeteXt73/desktopfiles" --width="$((820*$skala))" --height="$wysokosc" --title="- $nazwa_skryptu -" $klawisze_aktywne
 klawisz=$?
-
+# --image="/opt/NeteXt73/ikony/netext73.png"
 if [ "$klawisz" = "2" ]; then
 	restart
 elif [ "$klawisz" = "1" ]; then

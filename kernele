@@ -97,10 +97,16 @@ else
 		ikona="linux.png"
 	fi
 	if [ "$kern" = "" ]; then
+		if [ "$skala" = "2" ];then
+			wysokosc="400"
+		else
+			wysokosc="280"
+		fi
 		yad --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/$ikona" \
-		--image="/opt/NeteXt73/ikony/netext73.png" --image-on-top --item-width="$((200*$skala))" --read-dir="$pliki" --width="$((860*$skala))" --height="$((340*$skala))" \
+		 --image-on-top --item-width="$((200*$skala))" --read-dir="$pliki" --width="$((860*$skala))" --height="$wysokosc" \
 		--title="$nazwa_skryptu " --button="$TEXT_MENU_INSTALATOR5:4"  --button="$TEXT_ZAMKNIJ:1" --single-click
 		klawisz=$?   
+		# --image="/opt/NeteXt73/ikony/netext73.png"
 	fi
 fi
 
