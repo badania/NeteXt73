@@ -1,3 +1,9 @@
+netext73 (0.9.07) stable; urgency=medium
+
+  * przywrócenie menu tabeli testów pamięci
+
+ -- NetBit73 <netbit73@gmail.com>  Tue, 07 Jul 2015 21:12:14 +0200
+
 netext73 (0.9.06) stable; urgency=medium
 
   * nowe ikony, dostosowanie HiDPI

@@ -39,7 +39,7 @@ source /opt/NeteXt73/procedury
 cd /tmp/netext73
 #testy
 if [ "$1" = "testy" ]; then
-	menu="BurnTest!$MENU01!$MENU02!$MENU03"  #!$MENU04!$MENU15!$MENU16" - wyłączone testy glmark2
+	menu="BurnTest!$MENU01!$MENU02!$MENU03!$MENU04"  #!$MENU04!$MENU15!$MENU16" - wyłączone testy glmark2
 	ikonka="/opt/NeteXt73/ikony/testy.png"
 
 #inne skrypty
