@@ -53,12 +53,10 @@ cd /tmp/netext73
 
 if [ -e ~/.netext73/kernel_automat ] && [ -e ~/.netext73/instalator_kerneli ] && [ "$(cat ~/.netext73/kernel_automat)" = "TRUE" ]; then
 	kern="$(cat ~/.netext73/instalator_kerneli)"
-	if [ "$kern" = "sandybridge" ] || [ "$kern" = "ivybridge" ] || [ "$kern" = "haswell" ] || [ "$kern" = "broadwell" ] || [ "$kern" = "brazos" ] || [ "$kern" = "bulldozer" ] || [ "$kern" = "piledriver" ]; then
-		#kern="$1"
+	if [ "$(echo $kern | grep -E "sandybridge|ivybridge|haswell|broadwell|brazos|bulldozer|piledriver")" != "" ]; then
 		export katalog2="2"
 		export premium="tak"
 	else
-		#kern="$1"
 		export katalog2=""
 		export premium="nie"
 	fi
@@ -67,7 +65,7 @@ else
 		kern="$1"
 		export katalog2=""
 		export premium="nie"
-	elif [ "$1" = "sandybridge" ] || [ "$1" = "ivybridge" ] || [ "$1" = "haswell" ] || [ "$1" = "broadwell" ] || [ "$1" = "brazos" ] || [ "$1" = "bulldozer" ] || [ "$1" = "piledriver" ]; then
+	elif [ "$(echo $1 | grep -E "sandybridge|ivybridge|haswell|broadwell|brazos|bulldozer|piledriver")" != "" ]; then
 		kern="$1"
 		export katalog2="2"
 		export premium="tak"
@@ -189,7 +187,6 @@ rodzaj=$(echo $kern | cut -d " " -f 1 | awk '{print tolower($0)}')
 		fi
 	#instalacja kerneli ext73
 	
-	#elif [ "$kern" = "$menu1" ] || [ "$kern" = "$menu1a" ] || [ "$kern" = "$menu2" ] || [ "$kern" = "$menu2a" ] || [ "$kern" = "$menu3" ] || [ "$kern" = "$menu4" ] || [ "$(echo $kern | grep 'Intel C2D, AMD K8')" != "" ] && [ "$blad" != "1" ]; then
 	elif [ "$kern" != "" ] && [ "$blad" != "1" ]; then
 		if [ "$rodzaj" != "" ]; then
 			lista_kerneli

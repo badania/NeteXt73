@@ -283,7 +283,7 @@ yad --plug=$KEY --tabnum=11 --text-info --filename="lsusbsystem$losowa.log"	&> $
 yad --plug=$KEY --tabnum=12 --text="<span color=\"$kolor_textu\"><b>$TEXT_ZAZNACZ_LOGI</b></span>" --form --columns=4 --field="netext.log:CHK" --field="dmesg.log:CHK" --field="kern.log:CHK" --field="glxinfo.log:CHK" --field="apm-microcode.log:CHK" --field="lsmod.log:CHK" --field="lspci.log:CHK" --field="lsusb.log:CHK" $s1 $s2 $s3 $s4 $s5 $s6 $s7 $s8	&> $res11 &
 yad --notebook --key=$KEY --center --title="$nazwa_skryptu1 " \
 --tab="main" --tab="netext" --tab="dmesg" --tab="kern" --tab="firewall" --tab="dmidecode" \
---tab="glxinfo" --tab="APM-microcode" --tab="lsmod" --tab="lspci" --tab="lsusb" --tab="$TEXT_ZAZNACZ_LOGI" \
+--tab="glxinfo" --tab="APM-microcode" --tab="lsmod" --tab="lspci" --tab="lsusb" --tab="$TEXT_ZAZNACZ_LOGI_OPCJE" \
 --window-icon="/opt/NeteXt73/ikony/logi.png"  --width=$((600*$skala)) --height=$((600*$skala)) --on-top --button="$TEXT_PASTEBIN:0" --button="$TEXT_ZAMKNIJ:1"
 klawisz=$?
 if [ "$klawisz" = "0" ]; then

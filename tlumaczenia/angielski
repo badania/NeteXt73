@@ -107,6 +107,7 @@ export TEXT_CONFIG12="Keep a copy downloaded deb files in /var/cache/apt/archive
 export TEXT_CONFIG13="Turn on the program again"
 export TEXT_PRZESLIJ_LOGI="Send a logs"
 export TEXT_ZAZNACZ_LOGI="Select the the logs, which you want to send to the server:"
+export TEXT_ZAZNACZ_LOGI_OPCJE="Options"
 
 #########################################################################################################################################################################
 #tlumaczenia_deinstalator

@@ -45,7 +45,7 @@ if [ ! -e ~/.netext73/glmark2 ]; then
 fi
 
 #teksty w języku polskim
-if [ -e ~/.netext73/jezyk ] && [ "$(cat ~/.netext73/jezyk)" = "niemiecki" ]; then
+if [ -e ~/.netext73/jezyk ] && [ "$(cat ~/.netext73/jezyk)" = "niemiecki" ] || [ "$(cat ~/.netext73/jezyk)" = "francuski" ]; then
 	export jezyk="angielski"
 	echo 'angielski' >  ~/.netext73/jezyk
 fi
@@ -55,9 +55,6 @@ else
 	if [ "$(echo $LANG | grep pl)" != "" ]; then
 		export jezyk="polski"
 		echo 'polski' >  ~/.netext73/jezyk
-	#elif [ "$(echo $LANG | grep fr)" != "" ]; then
-	#	export jezyk="francuski"
-	#	echo 'francuski' >  ~/.netext73/jezyk
 	else
 		export jezyk="angielski"
 		echo 'angielski' >  ~/.netext73/jezyk
@@ -67,10 +64,7 @@ fi
 }
 
 source /opt/NeteXt73/tlumaczenia/angielski
-jezyczek; case $jezyk in fr*)
-	source /opt/NeteXt73/tlumaczenia/francuski
-;;
-pol*)
+jezyczek; case $jezyk in pol*)
 	source /opt/NeteXt73/tlumaczenia/polski
 ;;
 esac
@@ -87,6 +81,7 @@ export error1="dialog-error"
 export ikona_info1="dialog-information"
 export warning1="dialog-warning"
 export adres_opisu="http://www.netext73.pl/search/label/opis_netext73"
+
 if [ "$(lsb_release -a | grep 15.04)" != "" ] || [ "$(lsb_release -a | grep vivd)" != "" ]; then
 	export apmik="nowy"
 	export katalog_apm="/etc/apm-ext73/advanced_power_management_by_ext73_*"
@@ -97,9 +92,7 @@ else
 fi
 export wersja_apm=$(ls /opt/NeteXt73/APM/advanced_power_management_by_ext73_* | cut -d '_' -f 6 | tail -n 1 | sed 's/.tar.gz//')
 
-
-
-export wersje_ubu="wily!vivid!utopic!trusty!precise"
+export wersje_ubu="wily!vivid!utopic!trusty!precise!unstable"
 
 #adres serwera
 export adres_glowny="ftp://37.59.165.105"
