@@ -77,7 +77,7 @@ if [ "$1" = "kontakty" ]; then
 	res12=$(mktemp --tmpdir=/tmp/netext73 netext73_12.XXXXXXXX)
 	res13=$(mktemp --tmpdir=/tmp/netext73 netext73_13.XXXXXXXX)
 	res14=$(mktemp --tmpdir=/tmp/netext73 netext73_14.XXXXXXXX)
-	yad --plug=$KEY --tabnum=1 --icons --image-on-top --single-click --item-width=$((150*$skala)) --read-dir=/opt/NeteXt73/kontakty &> $res1 &
+	yad --plug=$KEY --tabnum=1 --icons --image-on-top --single-click --item-width=$((200*$skala)) --read-dir=/opt/NeteXt73/kontakty &> $res1 &
 	yad --plug=$KEY --tabnum=2 --text-info --filename=/opt/NeteXt73/changelog &> $res2 &
 	yad --plug=$KEY --tabnum=3 --text-info --filename=/opt/NeteXt73/LICENSE &> $res3 &
 	yad --plug=$KEY --tabnum=4 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep fglrx_ ) --column "$TEXT_ZNITY1" --column "catalist" &> $res4 &

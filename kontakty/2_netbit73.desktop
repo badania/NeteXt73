@@ -1,16 +1,16 @@
 [Desktop Entry]
-Name=NetBit73 - development graphical setup script
+Name=NetBit73 - development graphical setup script & maintainer of repository
 Name[en_GB]=NetBit73 - development graphical setup script
 Name[fr]=NetBit73 - développement l'installateur graphique NeteXt73
-Name[pl]=NetBit73 - opracowanie graficznego instalatora NeteXt73
-Comment=NetBit73 - development graphical setup script
-Comment[en_GB]=NetBit73 - development graphical setup script
+Name[pl]=NetBit73 -  autor programu NeteXt73 i opiekun repozytorium
+Comment=NetBit73 - development graphical setup script & maintainer of repository
+Comment[en_GB]=NetBit73 - development graphical setup script & maintainer of repository
 Comment[fr]=NetBit73 - développement l'installateur graphique NeteXt73
 Comment[pl]=NetBit73 - opracowanie graficznego instalatora NeteXt73
-GenericName=NetBit73 - development graphical setup script
-GenericName[en_GB]=NetBit73 - development graphical setup script
+GenericName=NetBit73 - development graphical setup script & maintainer of repositoryt
+GenericName[en_GB]=NetBit73 - development graphical setup script & maintainer of repository
 GenericName[fr]=NetBit73 - développement l'installateur graphique NeteXt73
-GenericName[pl]=NetBit73 - opracowanie graficznego instalatora NeteXt73
+GenericName[pl]=NetBit73 - autor programu NeteXt73 i opiekun repozytorium
 Exec=xdg-open 'http://www.netext73.pl/2014/01/netbit73.html'
 Icon=/opt/NeteXt73/ikony/netbit73.png
 Terminal=false
