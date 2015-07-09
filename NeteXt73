@@ -117,9 +117,9 @@ else
 	klawisze_aktywne="--button="$TEXT_REBOOT:2" --button="$TEXT_ZAMKNIJ:1" --single-click"
 fi
 if [ "$skala" = "2" ];then
-	wysokosc="800"
+	wysokosc="700"
 else
-	wysokosc="670"
+	wysokosc="630"
 fi
 yad --center --icons --class="NeteXt'73" --name="NeteXt'73" --window-icon="/opt/NeteXt73/ikony/netext.png" --image-on-top --item-width="$((190*$skala))" --read-dir="/opt/NeteXt73/desktopfiles" --width="$((820*$skala))" --height="$wysokosc" --title="- $nazwa_skryptu -" $klawisze_aktywne
 klawisz=$?

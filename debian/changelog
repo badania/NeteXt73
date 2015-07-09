@@ -1,3 +1,9 @@
+netext73 (0.9.08) stable; urgency=medium
+
+  * zmiana loga programu
+
+ -- NetBit73 <netbit73@gmail.com>  Thu, 09 Jul 2015 16:04:34 +0200
+
 netext73 (0.9.07) stable; urgency=medium
 
   * przywrócenie menu tabeli testów pamięci

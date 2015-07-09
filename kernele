@@ -100,7 +100,7 @@ else
 		if [ "$skala" = "2" ];then
 			wysokosc="400"
 		else
-			wysokosc="280"
+			wysokosc="300"
 		fi
 		yad --center --icons --class="NeteXt'73" --name="NeteXt'73" --title="$nazwa_skryptu" --window-icon="/opt/NeteXt73/ikony/$ikona" \
 		 --image-on-top --item-width="$((200*$skala))" --read-dir="$pliki" --width="$((860*$skala))" --height="$wysokosc" \
