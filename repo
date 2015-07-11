@@ -222,7 +222,7 @@ baza=(
 	"deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free"
 	"VirtualBox program do wirtualizacji systemów operacyjnych"
 	"VirtualBox is a powerful x86 and AMD64/Intel64 virtualization product"
-	"virtualbox-4.3"
+	"virtualbox-5.0"
 	
 	"ppa:pinta-maintainers/pinta-stable"
 	"Pinta program graficzny wzorowany na Paint.NET."
