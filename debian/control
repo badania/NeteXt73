@@ -37,6 +37,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
   python, 
   gcc, 
   yad, 
+  ibus, 
   lsb-core 
 Replaces: netext73
 Description: NeteXt'73 - optymalizator systemu
