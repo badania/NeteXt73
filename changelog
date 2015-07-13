@@ -2,8 +2,9 @@
 -------------------------------------
 
 v0.9.10
--	dodanie virtualbox 5.0
+-	dodanie repozytorium virtualbox 5.0
 -	dodanie do zależności ibus
+-	dodanie repozytorium kadu
 v0.9.09
 -	zmiana ikon kerneli i microcode
 v0.9.08

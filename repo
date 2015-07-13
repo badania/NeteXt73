@@ -56,7 +56,7 @@ while read linia; do
 	if [[ $ppanazwa ]]; then
 		echo "ppa:$ppanazwa/$nazwa ($wersja)" | tee -a lista.txt > /dev/null 2>&1;
 	fi
-	
+
 	let n=n+1
 done < lista_ppa.txt
 }
@@ -64,52 +64,52 @@ sofcik(){
 	echo "audacity avidemux clementine compizconfig-settings-manager digikam dropbox ffmulticonverter gimp google-chrome-stable grsync guake gufw homebank htop i-nex kadu kget kodi kubuntu-restricted-extras language-pack-gnome-pl libnss3-tools libreoffice-gtk libreoffice-kde libreoffice-style-sifr lubuntu-restricted-extras mc network-manager-openvpn openssh-client openssl oracle-java8-installer pidgin plasma plasma-scriptengines plasma-widget-homerun-kicker plasma-widget-yawp ppa-purge radiotray saidar showfoto shutter spotify-client synaptic tomahawk ubuntu-restricted-extras ufw-kde unetbootin unity-tweak-tool vlc wakeonlan widget-yawp wine1.7 wmctrl x2goclient x2goserver xubuntu-restricted-extras yakuake youtube-dl" > ~/.netext73/soft
 }
 
-baza=(	
+baza=(
 	"ppa:team-xbmc/xbmc-nightly"
 	"KODI wydanie codzienne"
 	"KODI Nightly Builds"
 	"kodi"
-	
+
 	"ppa:team-xbmc/unstable"
 	"KODI wydanie niestabilne"
 	"KODI Unstable Builds"
 	"kodi"
-	
+
 	"ppa:team-xbmc/ppa"
 	"KODI stabilne wydane"
 	"KODI XBMC Stable PPA"
-	"kodi" 
-	
+	"kodi"
+
 	"ppa:oibaf/graphics-drivers"
 	"Najnowsze graficzne sterowniki otwarte + Mesa"
 	"The latest open graphics drivers + Mesa"
 	"vainfo"
-	
+
 	"ppa:bumblebee/stable"
 	"Nvdia Optimus - bumblebee"
 	"Nvdia Optimus - bumblebee"
 	"bumblebee"
-	
+
 	"ppa:i-nex-development-team/daily"
 	"i-nex - narzędzie informujące nt. sprzętu i systemu"
 	"i-nex - tool to inform about the hardware and system"
 	"i-nex"
-	
+
 	"ppa:x2go/stable"
 	"X2Go - klient zdalnego dostępu"
 	"X2Go - everywhere@home"
 	"x2goclient"
-	
+
 	"ownCloud"
 	"owncloud-client"
 	"owncloud-client"
 	"owncloud-client"
-	
+
 	"ppa:irie/blender"
 	"Blender - darmowym/open source pakiet animacji 3D"
 	"Blender - free and open source 3D animation suite"
 	"blender"
-	
+
 	"ppa:klaus-vormweg/bluefish"
 	"Bluefish - edytor skierowany do programistów i webdeveloperów"
 	"Bluefish - editor targeted towards programmers and webdevelopers"
@@ -119,116 +119,117 @@ baza=(
 	"Darktable - wirtualna ciemnia dla fotografów"
 	"Darktable - virtual darkroom for photographers"
 	"darktable"
-	
+
 	"ppa:ffmulticonverter/stable"
 	"FF Wielu Converter - prosta graficzna aplikacja, która umożliwia konwertowanie audio, wideo oraz zdjęcia"
 	"FF Multi Converter - simple graphical application which enables you to convert audio, video, image"
 	"ffmulticonverter"
-	
+
 	"ppa:otto-kesselgulasch/gimp"
 	"Pakiet graficzny GIMP"
 	"GIMP graphics package"
 	"gimp gimp-plugin-registry gimp-gmic gmic"
-	
+
 	"ppa:inkscape.dev/stable"
 	"Inkscape edytor grafiki wektorowej"
 	"Inkscape an open-source vector graphics editor"
 	"inkscape"
-	
+
 	"ppa:dhor/myway"
 	"rawtherapee delaboratory easyimagesizer fotoxx pinta"
 	"rawtherapee delaboratory easyimagesizer fotoxx pinta"
 	"rawtherapee delaboratory easyimagesizer fotoxx pinta"
-	
+
 	"ppa:hugin/hugin-builds"
 	"Hugin - łatwy w użyciu, wieloplatformowy zestaw narzędzi do obrazowania panoramicznego - na podstawie Panorama Tools "
 	"Hugin - an easy to use cross-platform panoramic imaging toolchain based on Panorama Tools"
 	"hugin"
-	
+
 	"ppa:webupd8team/java"
 	"Instalator Oracle Java (JDK)"
 	"Oracle Java (JDK) Installer"
 	"oracle-java8-installer"
-	
+
 	"ppa:pipelight/stable"
 	"Pipelight - Silverlight"
 	"Pipelight - Silverlight"
 	"Pipelight"
-	
+
 	"ppa:kubuntu-ppa/backports"
 	"Kubuntu Backports - repozytorium nowych wersji środowiska KDE oraz najważniejszych aplikacji KDE dla Kubuntu"
 	"Kubuntu Backports - backports of new versions of KDE and major KDE apps for Kubuntu"
 	"kubuntu-desktop"
-	
+
 	"ppa:kubuntu-ppa/ppa"
 	"Kubuntu PPA"
 	"Kubuntu PPA"
 	"kubuntu-desktop"
-	
+
 	"ppa:libreoffice/ppa"
 	"LibreOffice - repozytorium najnowszych wersji pakietu biurowego LibreOffice"
 	"LibreOffice - repository of latest version of the office suite LibreOffice"
 	"libreoffice"
-	
+
 	"ppa:libreoffice/libreoffice-prereleases"
 	"LibreOffice - repozytorium najnowszych testowych wersji pakietu biurowego LibreOffice"
 	"LibreOffice - repository of latest test version of the office suite LibreOffice"
 	"libreoffice"
-	
+
 	"ppa:hydr0g3n/qbittorrent-stable"
 	"qBittorrent - Codziennie wersje stabilnej gałęzi klienta BitTorrent - qBittorrent"
 	"qBittorrent - daily builds for the stable branch of qBittorrent BitTorrent client"
 	"qbittorrent"
-	
+
 	"ppa:rednotebook/stable"
 	"Rednotebook - RedNotebook wieloplatformowy dziennik i graficzny pamiętnik"
 	"Rednotebook - RedNotebook is an multiplatform journal and graphical diary"
 	"rednotebook"
-	
+
 	"ppa:shutter/ppa"
 	"Shutter - to zaawansowane narzędzie umożliwiające użytkownikowi łatwe tworzenie zrzutów ekranu oraz ich późniejszą obróbkę"
 	"Shutter - is an advanced tool that allows the user to easily create screenshots and their subsequent processing"
 	"shutter"
-	
+
 	"ppa:stellarium/stellarium-releases"
 	"Stellarium - to darmowe, open source'owe planetarium"
 	"Stellarium - is a free open source planetarium"
 	"Stellarium"
-	
+
 	"ppa:me-davidsansome/clementine"
 	"Clementine - nowoczesny odtwarzacz muzyki i program do zarządzania kolekcją utworów"
 	"Clementine - modern music player and library organizer"
 	"clementine"
+
 	"ppa:videolan/stable-daily"
 	"VLC - to darmowy i otwarty, wieloplatformowy odtwarzacz multimedialny"
 	"VLC - is a free and open, cross-platform media player"
 	"vlc"
-	
+
 	"ppa:ubuntu-wine/ppa"
 	"WINE - Uruchamianie aplikacji Windows na Linuksie"
 	"WINE - running Windows applications on Linux"
 	"wine1.7"
-	
+
 	"deb http://repository.spotify.com stable non-free"
 	"Spotify - to serwis muzyki cyfrowej"
 	"Spotify - is a digital music service"
 	"spotify-client"
-	
+
 	"deb http://dl.google.com/linux/chrome/deb/ stable main"
 	"Chrome - zamknięta przeglądarka www Google Chrome"
 	"Chrome - closed source web browser Google Chrome"
 	"google-chrome-stable"
-	
+
 	"deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib non-free"
 	"VirtualBox program do wirtualizacji systemów operacyjnych"
 	"VirtualBox is a powerful x86 and AMD64/Intel64 virtualization product"
 	"virtualbox-5.0"
-	
+
 	"ppa:pinta-maintainers/pinta-stable"
 	"Pinta program graficzny wzorowany na Paint.NET."
 	"Pinta is a free, open source drawing/editing program modeled after Paint.NET."
 	"pinta"
-	
+
 	"ppa:plushuang-tw/uget-stable"
 	"Uget - akcelerator pobierania plików"
 	"Uget - download manager"
@@ -248,16 +249,21 @@ baza=(
 	"Ksuperkey - uruchom program uruchamiający za pomocą klawisza SuperKey"
 	"Ksuperkey - bind Superkey for open Launcher Menu"
 	"ksuperkey"
-	
+
 	"ppa:wseverin/ppa"
 	"LinSSID - graficzny skaner sieci wifi"
 	"LinSSID - Graphical Wireless Scanner"
 	"linssid"
-	
+
 	"ppa:mdoyen/homebank"
 	"Homebank - domowa księgowość"
 	"Homebank - money management"
 	"homebank"
+
+	"ppa:mati75/kadu"
+	"Kadu - komunikator"
+	"Kadu for Ubuntu"
+	"kadu"
 	)
 
 cd /tmp/netext73
@@ -265,7 +271,7 @@ cd /tmp/netext73
 #backuprepo
 if [ "$1" = "GPG" ]; then
 #Przywróć repozytorium z kopii zapasowej
-      
+
 	menu="$a3!$a4!$a5"
 	gpg=$(yad --center --title="$nazwa_skryptu   " --window-icon="/opt/NeteXt73/ikony/pgp.png" --image="/opt/NeteXt73/ikony/pgp.png" --text="<span color=\"$kolor_textu\"><b>$TEXT_BACKUP1</b></span>"  --form --field=" :CB" "$menu" --button="gtk-ok:0" --button="$TEXT_POWROT:1")
 	klawisz=$?; gpg=$(echo $gpg | cut -d "|" -f 1)
