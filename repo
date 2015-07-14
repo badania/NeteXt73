@@ -264,6 +264,11 @@ baza=(
 	"Kadu - komunikator"
 	"Kadu for Ubuntu"
 	"kadu"
+	
+	"UnofficialWhatsApp_linux64"
+	"WhatsApp-Desktop"
+	"WhatsApp-Desktop"
+	"whatsappfordesktop"
 	)
 
 cd /tmp/netext73
@@ -364,15 +369,24 @@ else
 			sed -i '/^#/d' repo.txt; sed -i '/^[ \t]*$/ d' repo.txt
 			#zaznaczanie co mieliśmy przed instalacją
 			for (( i=0; i<=$ilosc_repo; i++ )); do
-				  echo ${repo[$i]} | sed 's/ppa://'  > dane.txt
-				  if [ "$(cat repo.txt | grep -f dane.txt)" != "" ] ; then
-					r[$i]="TRUE"
-				  else
-					r[$i]="FALSE"
-				  fi
-				  echo ${repo_opis[$i]} >> 0.txt
-				  echo ${r[$i]} >> 1.txt
-				
+				if [ "$(echo ${repo[$i]})" = "UnofficialWhatsApp_linux64" ]; then
+					if [ "$(dpkg -l | grep whatsappfordesktop)" != "" ] ; then
+						r[$i]="TRUE"
+					else
+						r[$i]="FALSE"
+					fi
+					echo ${repo_opis[$i]} >> 0.txt
+					echo ${r[$i]} >> 1.txt
+				else
+					echo ${repo[$i]} | sed 's/ppa://'  > dane.txt
+					if [ "$(cat repo.txt | grep -f dane.txt)" != "" ] ; then
+						r[$i]="TRUE"
+					else
+						r[$i]="FALSE"
+					fi
+					echo ${repo_opis[$i]} >> 0.txt
+					echo ${r[$i]} >> 1.txt
+				fi
 			done
 			paste -d "@" 1.txt 0.txt | tr "\n" "@" > lista_repo.txt
 			grep TRUE lista_repo.txt | sed 's/TRUE@//g' > lista_przed.txt
@@ -402,6 +416,8 @@ else
 						if [ "${repo[$i]}" = "ppa:i-nex-development-team/daily" ]; then
 						      echo "sudo ppa-purge -y ${repo[$i]}" >> instaluj.sh
 						      echo "sudo ppa-purge -y ppa:nemh/gambas3" >> instaluj.sh
+						elif [ "${repo[$i]}" = "UnofficialWhatsApp_linux64" ]; then
+						      echo "sudo apt-get purge whatsappfordesktop" >> instaluj.sh
 						elif [ "${repo[$i]}" = "deb http://repository.spotify.com stable non-free" ]; then
 						      echo "sudo sed -i '/repository.spotify.com stable/ d' /etc/apt/sources.list"  >> instaluj.sh
 						      echo "sudo sed -i '/repository.spotify.com stable/ d' /etc/apt/sources.list.d/*"  >> instaluj.sh
@@ -428,6 +444,10 @@ else
 						      echo "sudo add-apt-repository -y ${repo[$i]}" >> instaluj.sh
 						      echo "sudo add-apt-repository -y ppa:nemh/gambas3" >> instaluj.sh
 						      echo "sudo apt-get install -y  ${paczka[$i]}" >> instaluj.txt
+						elif [ "${repo[$i]}" = "UnofficialWhatsApp_linux64" ]; then
+						      echo "wget https://github.com/Aluxian/WhatsApp-Desktop/releases/download/v1.1.0/UnofficialWhatsApp_linux64.deb" >> instaluj.sh
+						      echo "sudo dpkg -i UnofficialWhatsApp_linux64.deb" >> instaluj.sh
+						      echo "rm -f UnofficialWhatsApp_linux64.deb" >> instaluj.sh
 						elif [ "${repo[$i]}" = "deb http://repository.spotify.com stable non-free" ]; then
 						      echo "sudo add-apt-repository -y 'deb http://repository.spotify.com stable non-free'" >> instaluj.sh
 						      echo "sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 94558F59"  >> instaluj.sh
