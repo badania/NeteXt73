@@ -194,7 +194,7 @@ export TEXT_DEB1="Wskaż plik linux-headers lub linux-image, który chcesz zains
 
 #########################################################################################################################################################################
 #tlumaczenia_kontakt
-export TEXT_KONTAKT_Z_AUTORAMI="Kontakt z autorami"
+export TEXT_KONTAKT_Z_AUTORAMI="Kontakt"
 export TEXT_NETBIT="NetBit73 - opracowanie graficznego instalatora NeteXt73"
 export TEXT_EXT="e X t 7 3 - przygotowanie kerneli,skryptów APM oraz sterowników do kart graficznych"
 export TEXT_FADEMIND="FadeMind - tłumaczenie na język angielski i beta testy"

@@ -84,13 +84,13 @@ if [ "$1" = "kontakty" ]; then
 	yad --plug=$KEY --tabnum=5 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep nvidia | grep -v -E "nvidia-settings.*|libnvidia-") --column "$TEXT_ZNITY1" --column "nvidia" &> $res5 &
 	yad --plug=$KEY --tabnum=6 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep k8 	  ) --column "$TEXT_ZNITY1" --column "kernel k8" &> $res6 &
 	yad --plug=$KEY --tabnum=7 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt  | grep atom	  ) --column "$TEXT_ZNITY1" --column "kernel atom" &> $res7 &
-	yad --plug=$KEY --tabnum=8 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep sandy) --column "$TEXT_ZNITY1" --column "kernel sandy" &> $res8 &
-	yad --plug=$KEY --tabnum=9 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep ivy) --column "$TEXT_ZNITY1" --column "kernel ivy" &> $res9 &
-	yad --plug=$KEY --tabnum=10 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep haswell) --column "$TEXT_ZNITY1" --column "kernel haswell" &> $res10 &
-	yad --plug=$KEY --tabnum=11 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep broadwell) --column "$TEXT_ZNITY1" --column "kernel broadwell" &> $res11 &
+	yad --plug=$KEY --tabnum=8 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep -E "sandy|i7" | egrep -v pro ) --column "$TEXT_ZNITY1" --column "kernel sandy" &> $res8 &
+	yad --plug=$KEY --tabnum=9 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep -E "ivy|i7" | egrep -v pro  ) --column "$TEXT_ZNITY1" --column "kernel ivy" &> $res9 &
+	yad --plug=$KEY --tabnum=10 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep -E "haswell|i7-pro" ) --column "$TEXT_ZNITY1" --column "kernel haswell" &> $res10 &
+	yad --plug=$KEY --tabnum=11 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep -E "broadwell|i7-pro") --column "$TEXT_ZNITY1" --column "kernel broadwell" &> $res11 &
 	yad --plug=$KEY --tabnum=12 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep brazos | egrep -v pro ) --column "$TEXT_ZNITY1" --column "kernel brazos" &> $res12 &
-	yad --plug=$KEY --tabnum=13 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep bulldozer) --column "$TEXT_ZNITY1" --column "kernel bulldozer" &> $res13 &
-	yad --plug=$KEY --tabnum=14 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep piledriver) --column "$TEXT_ZNITY1" --column "kernel piledriver" &> $res14 &
+	yad --plug=$KEY --tabnum=13 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep -E "bulldozer|brazos-pro" ) --column "$TEXT_ZNITY1" --column "kernel bulldozer" &> $res13 &
+	yad --plug=$KEY --tabnum=14 --checklist --list $(cat /tmp/netext73/sumy/pakiety.txt | grep -E "piledriver|brazos-pro" ) --column "$TEXT_ZNITY1" --column "kernel piledriver" &> $res14 &
 	
 	yad --notebook --key=$KEY --center --title="$nazwa_skryptu1 " --tab="$TEXT_KONTAKT_Z_AUTORAMI" --tab="$TEXT_CHANGELOG" --tab="$TEXT_LICENCJA" \
 	--tab="catalyst" --tab="nvidia" --tab="k8" --tab="atom" \

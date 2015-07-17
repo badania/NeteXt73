@@ -1,6 +1,8 @@
 ﻿NeteXt'73 Changelog
 -------------------------------------
 
+v0.9.11
+-	dodanie sprawdzania starych kerneli w o Netext'73
 v0.9.10
 -	dodanie repozytorium virtualbox 5.0
 -	dodanie do zależności ibus

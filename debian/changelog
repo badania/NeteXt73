@@ -1,3 +1,9 @@
+netext73 (0.9.11) stable; urgency=medium
+
+  * dodanie sprawdzania starych kerneli w o Netext'73
+
+ -- NetBit73 <netbit73@gmail.com>  Fri, 17 Jul 2015 10:16:12 +0200
+
 netext73 (0.9.10) stable; urgency=medium
 
   * dodanie virtualbox 5.0
